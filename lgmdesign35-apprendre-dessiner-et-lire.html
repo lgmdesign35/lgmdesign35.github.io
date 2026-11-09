@@ -1,0 +1,1362 @@
+<!doctype html>
+<html lang="fr-CA" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:,">
+<title>LGMDesign35 — Apprendre, Dessiner et Lire</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+if(typeof tailwind!=='undefined'){tailwind.config={theme:{extend:{colors:{qcblue:{400:'#38bdf8',500:'#0284c7',600:'#0055a5',700:'#003399',900:'#0c4a6e'},kidyellow:'#facc15',kidpink:'#f472b6',kidgreen:'#4ade80',kidpurple:'#a78bfa'},fontFamily:{sans:['Quicksand','sans-serif'],fredoka:['Fredoka','sans-serif']}}}};}
+</script>
+<style>
+.hidden{display:none !important}
+body{font-family:'Quicksand',sans-serif;background:linear-gradient(135deg,#f0f9ff 0%,#fef9c3 50%,#fce7f3 100%);min-height:100vh;touch-action:manipulation}
+h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
+.btn-bounce,.pop-btn{transition:all .2s cubic-bezier(.175,.885,.32,1.275)}
+.btn-bounce:active,.pop-btn:active{transform:scale(.92)}
+.balloon-anim{animation:floaty 4s ease-in-out infinite alternate}
+@keyframes floaty{0%{transform:translateY(0) rotate(-3deg)}100%{transform:translateY(-20px) rotate(3deg)}}
+.no-scrollbar::-webkit-scrollbar{display:none}
+.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+.flip-card{perspective:1000px}
+.flip-card-inner{transition:transform .6s;transform-style:preserve-3d}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-card-front,.flip-card-back{backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.flip-card-back{transform:rotateY(180deg)}
+.book-card{transition:transform .25s ease,box-shadow .25s ease}
+.book-card:hover{transform:translateY(-4px);box-shadow:0 12px 24px -8px rgba(2,132,199,.15)}
+.main-tab.active{background:#0055a5;color:#fff;box-shadow:0 4px 10px rgba(0,85,165,.3)}
+.hero-dark-gradient{background-color:#0055a5 !important;background-image:linear-gradient(to right,#0ea5e9 0%,#0055a5 50%,#4338ca 100%) !important;color:#fff !important}
+.hero-dark-gradient h1{color:#fff !important}
+.hero-dark-gradient p{color:#e0f2fe !important}
+@media print{body *{visibility:hidden}#certificate-display,#certificate-display *{visibility:visible}#certificate-display{position:absolute;left:0;top:0;width:100%}}
+</style>
+</head>
+<body class="text-slate-800 flex flex-col min-h-screen overflow-x-hidden">
+
+<!-- ===== EN-TÊTE UNIQUE LGMDesign35 ===== -->
+<header class="bg-white/95 backdrop-blur-md border-b-4 border-qcblue-600 sticky top-0 z-50 shadow-md">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
+    <div class="flex items-center gap-3 cursor-pointer" onclick="switchSiteTab('accueil')">
+      <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-qcblue-700 to-sky-400 flex items-center justify-center text-white text-2xl shadow-lg shadow-qcblue-500/30 shrink-0">⚜️</div>
+      <div>
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="text-xl sm:text-2xl font-black text-qcblue-700 tracking-wide brand-font">LGM<span class="text-amber-500">Design35</span></span>
+          <span class="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-0.5 rounded-full border border-amber-300">Québec 🍁</span>
+        </div>
+        <span class="text-xs font-bold text-slate-500 block">Apprendre, Dessiner et Lire — Français québécois (2 à 10 ans)</span>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <div class="bg-gradient-to-r from-amber-400 to-yellow-500 text-slate-900 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md border-2 border-white">
+        <i class="fa-solid fa-star text-white drop-shadow"></i>
+        <span id="header-stars-count">0</span>
+        <span class="hidden sm:inline text-slate-800">Étoiles</span>
+      </div>
+      <button onclick="toggleAudio()" id="audio-toggle-btn" title="Activer / Désactiver le son" class="w-10 h-10 rounded-2xl bg-sky-100 border-2 border-sky-300 text-qcblue-600 flex items-center justify-center text-base pop-btn shadow-sm">
+        <i id="audio-icon" class="fa-solid fa-volume-high"></i>
+      </button>
+      <div class="md:hidden">
+        <button onclick="toggleMobileMenu()" title="Menu" class="p-2 text-slate-600 rounded-lg hover:bg-slate-100"><i class="fa-solid fa-bars text-xl"></i></button>
+      </div>
+    </div>
+  </div>
+  <!-- Navigation principale : 7 sections (barre bureau, style référence) -->
+  <nav class="hidden md:block bg-sky-50 border-t border-sky-100 py-1.5">
+    <div class="max-w-7xl mx-auto px-4 flex items-center text-xs sm:text-sm font-bold overflow-x-auto no-scrollbar">
+      <div class="flex gap-1">
+      <button onclick="switchSiteTab('accueil')" id="main-accueil" class="main-tab active nav-btn text-slate-700 hover:bg-sky-200 px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap"><span>🏠 Accueil</span></button>
+      <button onclick="switchSiteTab('apprendre')" id="main-apprendre" class="main-tab nav-btn text-slate-700 hover:bg-sky-200 px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap"><span>📚 Apprendre</span></button>
+      <button onclick="switchSiteTab('atelier')" id="main-atelier" class="main-tab nav-btn text-slate-700 hover:bg-sky-200 px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap"><span>🎨 Atelier</span></button>
+      <button onclick="switchSiteTab('livres')" id="main-livres" class="main-tab nav-btn text-slate-700 hover:bg-sky-200 px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap"><span>📖 Nos Livres</span></button>
+      <button onclick="switchSiteTab('histoires')" id="main-histoires" class="main-tab nav-btn text-slate-700 hover:bg-sky-200 px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap"><span>🎁 Histoires gratuites</span></button>
+      <button onclick="switchSiteTab('ressources')" id="main-ressources" class="main-tab nav-btn text-slate-700 hover:bg-sky-200 px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap"><span>⬇️ Ressources</span></button>
+      <button onclick="switchSiteTab('histoire')" id="main-histoire" class="main-tab nav-btn text-slate-700 hover:bg-sky-200 px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap"><span>💛 Notre Histoire</span></button>
+      <button onclick="switchSiteTab('contact')" id="main-contact" class="main-tab nav-btn text-slate-700 hover:bg-sky-200 px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap"><span>✉️ Contact</span></button>
+      </div>
+    </div>
+  </nav>
+  <!-- Menu mobile -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-slate-100 bg-white px-4 pt-2 pb-4 space-y-1 text-sm font-bold">
+    <button onclick="switchSiteTab('accueil'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 text-slate-700 hover:bg-sky-50 rounded-lg">🏠 Accueil</button>
+    <button onclick="switchSiteTab('apprendre'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 text-slate-700 hover:bg-sky-50 rounded-lg">📚 Apprendre</button>
+    <button onclick="switchSiteTab('atelier'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 text-pink-600 hover:bg-pink-50 rounded-lg">🎨 Atelier</button>
+    <button onclick="switchSiteTab('livres'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 text-slate-700 hover:bg-sky-50 rounded-lg">📖 Nos Livres</button>
+    <button onclick="switchSiteTab('histoires'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 text-slate-700 hover:bg-sky-50 rounded-lg">🎁 Histoires gratuites</button>
+    <button onclick="switchSiteTab('ressources'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 text-slate-700 hover:bg-sky-50 rounded-lg">⬇️ Ressources</button>
+    <button onclick="switchSiteTab('histoire'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 text-slate-700 hover:bg-sky-50 rounded-lg">💛 Notre Histoire</button>
+    <button onclick="switchSiteTab('contact'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 text-slate-700 hover:bg-sky-50 rounded-lg">✉️ Contact</button>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 py-6 w-full flex-grow">
+
+<!-- ================= PAGE : ACCUEIL (site) ================= -->
+<section id="page-accueil" class="site-page space-y-10">
+  <div class="hero-dark-gradient relative overflow-hidden rounded-3xl bg-gradient-to-r from-sky-500 via-qcblue-600 to-indigo-700 p-6 sm:p-10 text-white shadow-xl" style="background-image:linear-gradient(to right,#0ea5e9 0%,#0055a5 50%,#4338ca 100%);background-color:#0055a5;color:#ffffff">
+    <div class="max-w-2xl relative z-10 space-y-4">
+      <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-extrabold uppercase tracking-wider text-amber-300">100 % en français québécois • Sans publicité ⚜️</span>
+      <h1 class="brand-font text-3xl sm:text-5xl font-black leading-tight" style="color:#ffffff">Éveillez leur curiosité avec des histoires et jeux au Québec</h1>
+      <p class="text-sky-100 text-base sm:text-lg font-bold leading-relaxed" style="color:#e0f2fe">Des histoires qui forment votre enfant à aimer le français du Québec</p>
+      <p class="text-sky-100 text-sm sm:text-base leading-relaxed" style="color:#e0f2fe">Avec <strong>Adam et ses amis</strong>, votre enfant lit, joue, dessine et grandit en français : des histoires gratuites à lire tout de suite, des jeux pensés pour les familles et des livres à garder précieusement.</p>
+      <div class="pt-2 flex flex-wrap gap-3">
+        <button onclick="switchSiteTab('histoires')" class="brand-font px-6 py-3 bg-emerald-400 hover:bg-emerald-500 text-slate-900 font-extrabold rounded-2xl shadow-lg pop-btn text-base">🎁 Lire une histoire gratuite</button>
+        <button onclick="switchSiteTab('livres')" class="brand-font px-6 py-3 bg-amber-400 hover:bg-amber-500 text-slate-900 font-extrabold rounded-2xl shadow-lg pop-btn text-base">📚 Explorer nos livres</button>
+        <button onclick="switchSiteTab('apprendre')" class="brand-font px-6 py-3 bg-white hover:bg-sky-50 text-qcblue-700 font-extrabold rounded-2xl shadow-lg pop-btn text-base">🎈 Apprendre en jouant</button>
+        <button onclick="switchSiteTab('atelier')" class="brand-font px-6 py-3 bg-pink-500 hover:bg-pink-600 text-white font-extrabold rounded-2xl shadow-lg pop-btn text-base">🎨 Studio Dessin &amp; Jeux</button>
+      </div>
+      <div class="flex flex-wrap gap-2 pt-2">
+        <span class="px-3 py-1.5 bg-white/15 border border-white/30 rounded-full text-xs font-bold text-white">✔ 100 % français québécois</span>
+        <span class="px-3 py-1.5 bg-white/15 border border-white/30 rounded-full text-xs font-bold text-white">✔ Sans publicité</span>
+        <span class="px-3 py-1.5 bg-white/15 border border-white/30 rounded-full text-xs font-bold text-white">✔ Pour les 2 à 10 ans</span>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h2 class="brand-font text-2xl sm:text-3xl font-bold text-center text-slate-800 mb-8">Nos parcours éducatifs par groupe d'âge</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div onclick="filterBooks('2-3')" class="cursor-pointer bg-white border-2 border-sky-200 rounded-3xl p-6 text-center hover:shadow-lg transition pop-btn">
+        <div class="w-16 h-16 bg-sky-500 text-white font-black brand-font text-xl rounded-2xl flex items-center justify-center mx-auto mb-4 shadow">2-3 ans</div>
+        <h3 class="brand-font text-xl font-bold text-qcblue-700 mb-1">Éveil &amp; Garderie</h3>
+        <p class="text-xs text-slate-600 mb-3">Imagières des formes, couleurs et vocabulaire des tout-petits.</p>
+        <span class="text-xs font-extrabold text-sky-600">Voir la collection ➔</span>
+      </div>
+      <div onclick="filterBooks('4-6')" class="cursor-pointer bg-white border-2 border-emerald-200 rounded-3xl p-6 text-center hover:shadow-lg transition pop-btn">
+        <div class="w-16 h-16 bg-emerald-500 text-white font-black brand-font text-xl rounded-2xl flex items-center justify-center mx-auto mb-4 shadow">4-6 ans</div>
+        <h3 class="brand-font text-xl font-bold text-emerald-800 mb-1">Préscolaire &amp; Maternelle</h3>
+        <p class="text-xs text-slate-600 mb-3">Cahiers de graphisme, traçage et histoires illustrées.</p>
+        <span class="text-xs font-extrabold text-emerald-600">Voir la collection ➔</span>
+      </div>
+      <div onclick="filterBooks('7-10')" class="cursor-pointer bg-white border-2 border-amber-200 rounded-3xl p-6 text-center hover:shadow-lg transition pop-btn">
+        <div class="w-16 h-16 bg-amber-500 text-white font-black brand-font text-xl rounded-2xl flex items-center justify-center mx-auto mb-4 shadow">7-10 ans</div>
+        <h3 class="brand-font text-xl font-bold text-amber-800 mb-1">Primaire</h3>
+        <p class="text-xs text-slate-600 mb-3">Lectures captivantes, énigmes, cahiers d'exercices et planners.</p>
+        <span class="text-xs font-extrabold text-amber-600">Voir la collection ➔</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+      <div>
+        <h2 class="brand-font text-2xl font-bold text-slate-800">NOS COUPS DE CŒUR AU QUÉBEC</h2>
+        <p class="text-sm text-slate-500">Les vedettes de la collection <strong>Adam et ses amis</strong></p>
+      </div>
+      <button onclick="switchSiteTab('livres')" class="text-sky-600 hover:text-sky-800 text-sm font-bold">Voir tout le catalogue ➔</button>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="border border-slate-100 rounded-2xl p-4 bg-slate-50 flex gap-4 items-center">
+        <div class="w-20 h-28 bg-sky-200 rounded-xl flex-shrink-0 flex items-center justify-center font-bold text-sky-700 text-xs text-center p-2 border border-sky-300">Les aventures d'Adam et ses amis</div>
+        <div>
+          <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full">4 à 6 ans</span>
+          <h4 class="brand-font font-bold text-slate-800 text-base mt-1">Les aventures d'Adam et ses amis</h4>
+          <p class="text-xs text-slate-500 mt-1">6 histoires, 71 pages — 5,00 $ sur Etsy, gratuit sur le site dès le 25 novembre.</p>
+          <button onclick="openBookModal('aventures')" class="mt-3 text-xs font-bold text-sky-600 hover:underline">Consulter la fiche</button>
+        </div>
+      </div>
+      <div class="border border-slate-100 rounded-2xl p-4 bg-slate-50 flex gap-4 items-center">
+        <div class="w-20 h-28 bg-emerald-200 rounded-xl flex-shrink-0 flex items-center justify-center font-bold text-emerald-700 text-xs text-center p-2 border border-emerald-300">Adam et ses amis : Le jardin de la coopération</div>
+        <div>
+          <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full">4 à 6 ans</span>
+          <h4 class="brand-font font-bold text-slate-800 text-base mt-1">Adam et ses amis : Le jardin de la coopération</h4>
+          <p class="text-xs text-slate-500 mt-1">13 pages — 1,50 $ sur Etsy, aussi en livre broché.</p>
+          <button onclick="openBookModal('jardin')" class="mt-3 text-xs font-bold text-sky-600 hover:underline">Consulter la fiche</button>
+        </div>
+      </div>
+      <div class="border border-slate-100 rounded-2xl p-4 bg-slate-50 flex gap-4 items-center">
+        <div class="w-20 h-28 bg-indigo-200 rounded-xl flex-shrink-0 flex items-center justify-center font-bold text-indigo-700 text-xs text-center p-2 border border-indigo-300">Adam et ses amis : Halloween</div>
+        <div>
+          <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full">4 à 6 ans</span>
+          <h4 class="brand-font font-bold text-slate-800 text-base mt-1">Adam et ses amis : Halloween — 6 histoires</h4>
+          <p class="text-xs text-slate-500 mt-1">71 pages — 10,00 $ sur Etsy.</p>
+          <button onclick="openBookModal('halloween')" class="mt-3 text-xs font-bold text-sky-600 hover:underline">Consulter la fiche</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PAGE : APPRENDRE (appli d'apprentissage) ================= -->
+<section id="page-apprendre" class="site-page hidden space-y-5">
+  <!-- Barre de sélection d'âge (section Apprendre seulement) -->
+  <div class="bg-qcblue-700 text-white py-2.5 px-4 rounded-2xl shadow flex flex-wrap justify-between items-center gap-2 text-xs sm:text-sm font-bold">
+    <span>Niveau d'apprentissage :</span>
+    <div class="flex items-center gap-2 flex-wrap">
+      <button onclick="setAgeGroup('toddler')" id="btn-age-toddler" class="px-3.5 py-1.5 rounded-full bg-white text-qcblue-700 font-extrabold shadow-sm transition">👶 2-5 ans (Les Tout-P'tits)</button>
+      <button onclick="setAgeGroup('older')" id="btn-age-older" class="px-3.5 py-1.5 rounded-full bg-qcblue-600 text-white font-extrabold hover:bg-sky-500 transition">🧒 6-10 ans (Les Explorateurs)</button>
+    </div>
+  </div>
+
+  <!-- Sous-navigation Apprendre -->
+  <nav>
+    <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 text-center">
+      <button onclick="switchLearnTab('words')" id="ltab-words" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-qcblue-600 text-white shadow-md"><span>🎨</span> <span>Mots</span></button>
+      <button onclick="switchLearnTab('abc123')" id="ltab-abc123" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-slate-600 hover:bg-sky-100 shadow-sm"><span>🔤</span> <span>ABC &amp; 123</span></button>
+      <button onclick="switchLearnTab('cards')" id="ltab-cards" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-slate-600 hover:bg-sky-100 shadow-sm"><span>🃏</span> <span>Cartes</span></button>
+      <button onclick="switchLearnTab('games')" id="ltab-games" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-slate-600 hover:bg-sky-100 shadow-sm"><span>🎮</span> <span>Jeux</span></button>
+      <button onclick="switchLearnTab('certificat')" id="ltab-certificat" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-amber-700 hover:bg-amber-100 shadow-sm"><span>📜</span> <span>Certificat</span></button>
+      <button onclick="switchLearnTab('parents')" id="ltab-parents" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-indigo-700 hover:bg-indigo-100 shadow-sm"><span>👨‍👩‍👧</span> <span>Parents</span></button>
+    </div>
+  </nav>
+
+  <!-- Mots -->
+  <div id="section-words" class="learn-section space-y-6">
+    <div class="flex flex-wrap gap-2 justify-center" id="category-chips"></div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4" id="words-grid"></div>
+  </div>
+
+  <!-- ABC & 123 -->
+  <div id="section-abc123" class="learn-section hidden space-y-6">
+    <div class="flex justify-center gap-3 flex-wrap">
+      <button onclick="switchAbcMode('letters')" id="subtab-letters" class="px-5 py-2 rounded-full font-extrabold text-sm bg-amber-400 text-slate-900 shadow-md">🔤 L'Alphabet (A-Z)</button>
+      <button onclick="switchAbcMode('numbers')" id="subtab-numbers" class="px-5 py-2 rounded-full font-extrabold text-sm bg-white text-slate-600 shadow-sm hover:bg-sky-50">🔢 Les Chiffres (1-20)</button>
+    </div>
+    <div id="container-alphabet" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3"></div>
+    <div id="container-numbers" class="hidden grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-4"></div>
+  </div>
+
+  <!-- Cartes -->
+  <div id="section-cards" class="learn-section hidden space-y-6">
+    <div class="max-w-md mx-auto text-center space-y-4">
+      <div class="flex justify-between items-center text-xs font-bold text-slate-500">
+        <span>Clique sur la carte pour la retourner 🔄</span>
+        <span id="fc-counter" class="bg-white px-3 py-1 rounded-full border">1 / 5</span>
+      </div>
+      <div onclick="flipCard()" class="flip-card cursor-pointer h-80 w-full">
+        <div id="flashcard-inner" class="flip-card-inner relative w-full h-full rounded-3xl shadow-xl border-4 border-amber-300 bg-white">
+          <div class="flip-card-front absolute inset-0 rounded-3xl p-6 flex flex-col justify-between items-center bg-gradient-to-b from-sky-50 to-white">
+            <span id="fc-category" class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">SECTION</span>
+            <span id="fc-emoji" class="text-7xl">🦫</span>
+            <h3 id="fc-french" class="text-3xl font-black text-qcblue-700 text-center">Le castor</h3>
+            <span id="fc-phonetic" class="text-sm font-bold text-amber-600">[Le kas-tor]</span>
+            <button onclick="event.stopPropagation(); playCurrentFlashcardAudio()" class="px-4 py-2 bg-qcblue-600 text-white rounded-full text-xs font-bold flex items-center gap-2"><i class="fa-solid fa-volume-high"></i> <span>Prononcer</span></button>
+          </div>
+          <div class="flip-card-back absolute inset-0 rounded-3xl p-6 flex flex-col justify-between items-center bg-amber-50">
+            <span class="text-xs font-bold text-slate-400">Explication &amp; Signification</span>
+            <p id="fc-meaning" class="text-base font-bold text-slate-700 text-center">Grand rongeur avec une queue plate qui construit des barrages!</p>
+            <div class="bg-white p-3 rounded-2xl border border-amber-200 text-xs w-full text-center">
+              <span class="font-bold text-qcblue-700 block">En français standard :</span>
+              <span id="fc-quebec-note" class="text-slate-600">Le castor canadien</span>
+            </div>
+            <span class="text-xs text-amber-600 font-bold">✨ Clique pour retourner</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-between gap-3 flex-wrap sm:flex-nowrap">
+        <button onclick="prevFlashcard()" class="flex-1 py-3 bg-white border-2 border-slate-200 rounded-2xl font-bold text-sm text-slate-700 pop-btn">⬅️ Précédent</button>
+        <button onclick="markCardMastered()" class="px-5 py-3 bg-emerald-500 text-white rounded-2xl font-extrabold text-sm pop-btn shadow">⭐ Compris!</button>
+        <button onclick="nextFlashcard()" class="flex-1 py-3 bg-qcblue-600 text-white rounded-2xl font-extrabold text-sm pop-btn shadow">Suivant ➡️</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Jeux & Quiz (Apprendre) -->
+  <div id="section-games" class="learn-section hidden space-y-6">
+    <div class="flex justify-center gap-2 flex-wrap">
+      <button onclick="switchGameMode('quiz')" id="subtab-quiz" class="px-4 py-2 rounded-full font-extrabold text-xs sm:text-sm bg-amber-400 text-slate-900 shadow-md">❓ Quiz Sonore</button>
+      <button onclick="switchGameMode('match')" id="subtab-match" class="px-4 py-2 rounded-full font-extrabold text-xs sm:text-sm bg-white text-slate-600 shadow-sm hover:bg-sky-50">🧩 Association</button>
+      <button onclick="switchGameMode('hangman')" id="subtab-hangman" class="px-4 py-2 rounded-full font-extrabold text-xs sm:text-sm bg-white text-slate-600 shadow-sm hover:bg-sky-50">🔤 Mot Mystère</button>
+    </div>
+
+    <div id="game-quiz-container" class="max-w-xl mx-auto bg-white p-6 sm:p-8 rounded-3xl border-4 border-amber-300 shadow-xl space-y-6 text-center w-full">
+      <div class="flex justify-between items-center text-xs font-bold text-slate-400 border-b border-slate-100 pb-3 gap-2 flex-wrap">
+        <span id="quiz-question-num">Question 1 / 5</span>
+        <span class="text-amber-500 font-extrabold flex items-center gap-1"><i class="fa-solid fa-star"></i> +1 Étoile par réponse</span>
+      </div>
+      <div class="py-4 bg-amber-50 rounded-3xl border-2 border-amber-200 space-y-3">
+        <span id="quiz-emoji" class="text-7xl block">❄️</span>
+        <h3 id="quiz-prompt-text" class="text-2xl font-black text-qcblue-700">Quel est ce mot en québécois?</h3>
+        <button onclick="playQuizAudio()" class="px-4 py-1.5 bg-qcblue-600 text-white rounded-full text-xs font-bold inline-flex items-center gap-2 pop-btn shadow-sm"><i class="fa-solid fa-volume-high"></i> <span>Réécouter le mot</span></button>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="quiz-options-container"></div>
+      <div id="quiz-success-msg" class="hidden space-y-4 py-4">
+        <div class="text-6xl">🎉 ⚜️ 🏆</div>
+        <h3 class="text-2xl font-black text-emerald-600">Bravo champion! Excellent travail!</h3>
+        <button onclick="resetQuizGame()" class="px-6 py-3 bg-qcblue-600 text-white font-black rounded-2xl shadow-lg hover:bg-qcblue-700 pop-btn">Rejouer le quiz</button>
+      </div>
+    </div>
+
+    <div id="game-match-container" class="hidden max-w-2xl mx-auto bg-white p-6 rounded-3xl border-4 border-sky-300 shadow-xl space-y-6 w-full">
+      <div class="text-center space-y-1"><h3 class="text-xl font-black text-qcblue-700">Associe chaque mot à sa bonne image! 🧩</h3><p class="text-xs font-bold text-slate-500">Touche d'abord un mot, puis son image.</p></div>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="space-y-3" id="match-words-col"></div>
+        <div class="space-y-3" id="match-images-col"></div>
+      </div>
+      <div id="match-win-msg" class="hidden text-center py-4 bg-emerald-50 border-2 border-emerald-300 rounded-2xl">
+        <span class="text-4xl block mb-1">⭐ 🦫 ⭐</span>
+        <h4 class="text-lg font-black text-emerald-700">Fantastique! Association réussie!</h4>
+      </div>
+    </div>
+
+    <div id="game-hangman-container" class="hidden max-w-xl mx-auto bg-white p-6 sm:p-8 rounded-3xl border-4 border-purple-300 shadow-xl space-y-6 text-center w-full">
+      <h3 class="text-xl font-black text-qcblue-700">Le Mot Mystère Québécois 🔤</h3>
+      <div class="bg-purple-50 p-4 rounded-3xl border-2 border-purple-200 space-y-3">
+        <span id="hangman-hint-emoji" class="text-5xl block">🦫</span>
+        <p id="hangman-hint-text" class="text-xs font-bold text-purple-700">Indice : Grand rongeur</p>
+        <div id="hangman-word-display" class="flex justify-center gap-2 text-2xl sm:text-3xl font-black tracking-widest text-qcblue-700 py-2 flex-wrap"></div>
+      </div>
+      <div id="hangman-keyboard" class="flex flex-wrap justify-center gap-1.5"></div>
+      <div id="hangman-win-msg" class="hidden space-y-3 py-2">
+        <h4 class="text-lg font-black text-emerald-600">🎉 Bravo! Tu as découvert le mot!</h4>
+        <button onclick="nextHangmanWord()" class="px-5 py-2 bg-purple-600 text-white font-extrabold text-xs rounded-xl shadow pop-btn">Mot Suivant ➡️</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Certificat -->
+  <div id="section-certificat" class="learn-section hidden space-y-6">
+    <div class="text-center space-y-2">
+      <h2 class="text-2xl font-black text-qcblue-700">Ton Certificat d'Accomplissement 📜⚜️</h2>
+      <p class="text-slate-600 text-sm">Entre ton prénom pour générer ton diplôme LGMDesign35!</p>
+    </div>
+    <div class="max-w-md mx-auto flex gap-2">
+      <input type="text" id="kid-name-input" placeholder="Entre ton prénom..." class="w-full px-4 py-3 rounded-2xl border-2 border-qcblue-300 font-bold text-sm focus:outline-none focus:border-qcblue-600 bg-white">
+      <button onclick="generateCertificate()" class="px-5 py-3 bg-amber-400 text-slate-900 font-extrabold text-xs rounded-2xl shadow pop-btn whitespace-nowrap">Créer 🎓</button>
+    </div>
+    <div id="certificate-display" class="max-w-2xl mx-auto bg-gradient-to-br from-amber-50 via-white to-sky-50 border-8 border-qcblue-600 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-6 text-center relative overflow-hidden">
+      <div class="flex justify-between items-center border-b-2 border-qcblue-200 pb-4 gap-2">
+        <span class="text-3xl">⚜️</span>
+        <span class="text-xs font-black tracking-widest text-qcblue-700 uppercase">LGMDesign35 - Édition Québec</span>
+        <span class="text-3xl">⚜️</span>
+      </div>
+      <div class="space-y-2">
+        <h3 class="text-2xl sm:text-3xl font-black text-slate-800 uppercase tracking-wide">Diplôme d'Explorateur</h3>
+        <p class="text-xs font-bold text-slate-500">Décerné avec félicitations à :</p>
+        <h2 id="cert-kid-name" class="text-3xl sm:text-4xl font-black text-qcblue-700 underline decoration-amber-400 break-words">Champion / Championne</h2>
+      </div>
+      <p class="text-xs sm:text-sm text-slate-600 font-bold max-w-lg mx-auto leading-relaxed">Pour avoir maîtrisé avec succès les mots, le vocabulaire, l'alphabet et les chiffres du français québécois!</p>
+      <div class="flex justify-around items-center pt-4 border-t-2 border-qcblue-200 flex-wrap gap-3">
+        <div><span class="block text-xl">🏆</span><span class="text-[10px] font-bold text-slate-400">Étoiles : <strong id="cert-stars-count" class="text-amber-500">0</strong></span></div>
+        <div class="w-16 h-16 rounded-full bg-qcblue-600 text-white flex items-center justify-center text-xs font-black shadow-lg">LGM35 ⚜️</div>
+        <div><span class="block text-xl">🎓</span><span class="text-[10px] font-bold text-slate-400">Date : <strong id="cert-date">2026</strong></span></div>
+      </div>
+      <p class="text-xs font-bold text-slate-500">💡 Astuce : fais une capture d'écran du diplôme pour le garder et le montrer à ta famille!</p>
+    </div>
+  </div>
+
+  <!-- Parents -->
+  <div id="section-parents" class="learn-section hidden space-y-8">
+    <div class="bg-gradient-to-r from-sky-600 via-qcblue-600 to-indigo-700 rounded-3xl p-6 sm:p-8 text-white shadow-xl space-y-3">
+      <span class="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full inline-block">Guide Pédagogique LGMDesign35 ⚜️</span>
+      <h2 class="text-2xl sm:text-3xl font-black">Espace Parents &amp; Éducateurs en CPE</h2>
+      <p class="text-sm text-sky-100 max-w-2xl leading-relaxed">Plan d'action pédagogique pour accompagner le développement langagier et cognitif des enfants de 2 à 10 ans au Québec.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-white p-6 rounded-3xl border-2 border-slate-200 shadow-sm space-y-3">
+        <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-black text-xl">🧠</div>
+        <h3 class="text-lg font-black text-qcblue-700">Développement Cognitif Précoce</h3>
+        <p class="text-xs text-slate-600 leading-relaxed">L'apprentissage précoce des sonorités et du vocabulaire régional renforce les connexions neuronales et prépare l'enfant aux concepts d'analyse.</p>
+      </div>
+      <div class="bg-white p-6 rounded-3xl border-2 border-slate-200 shadow-sm space-y-3">
+        <div class="w-10 h-10 rounded-xl bg-sky-100 text-qcblue-700 flex items-center justify-center font-black text-xl">🗣️</div>
+        <h3 class="text-lg font-black text-qcblue-700">Conscience Phonologique</h3>
+        <p class="text-xs text-slate-600 leading-relaxed">L'exposition aux rimes et aux histoires traditionnelles facilite l'apprentissage de la lecture au primaire.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PAGE : ATELIER (dessin, coloriage, jeux de couleurs) ================= -->
+<section id="page-atelier" class="site-page hidden">
+  <div class="flex flex-col gap-4">
+    <div class="text-center bg-white/85 rounded-3xl p-5 shadow-sm border-2 border-amber-200">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-indigo-700">L'Atelier des P'tits Artistes 🎨</h2>
+      <p class="text-sm sm:text-base text-slate-600">Le studio de dessin &amp; jeux québécois! 🇨🇦✨ Choisis ton activité préférée.</p>
+      <div class="flex justify-center gap-2 mt-4 flex-wrap">
+        <button onclick="switchMode('home')" class="btn-bounce bg-slate-700 text-white font-bold px-4 py-2 rounded-2xl shadow text-sm">🏠 Accueil Atelier</button>
+        <button onclick="switchMode('draw')" class="btn-bounce bg-pink-500 hover:bg-pink-600 text-white font-bold px-4 py-2 rounded-2xl shadow text-sm"><i class="fa-solid fa-paintbrush"></i> Dessin Libre</button>
+        <button onclick="switchMode('color')" class="btn-bounce bg-purple-500 hover:bg-purple-600 text-white font-bold px-4 py-2 rounded-2xl shadow text-sm"><i class="fa-solid fa-fill-drip"></i> Livre Coloriage</button>
+        <button onclick="switchMode('games')" class="btn-bounce bg-indigo-500 hover:bg-indigo-600 text-white font-bold px-4 py-2 rounded-2xl shadow text-sm"><i class="fa-solid fa-gamepad"></i> Jeux de Couleurs</button>
+      </div>
+    </div>
+
+    <!-- Accueil Atelier : 3 cartes -->
+    <div id="mode-home" class="atelier-mode space-y-6">
+      <div class="text-center py-2 bg-white/80 rounded-3xl p-6 shadow-sm border-2 border-amber-200">
+        <h3 class="text-2xl sm:text-3xl font-extrabold text-indigo-700 mb-2">Allo mon ami(e) ! 👋</h3>
+        <p class="text-base text-slate-600">Qu'est-ce qu'on s'en va créer aujourd'hui ?</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div onclick="switchMode('draw')" class="btn-bounce cursor-pointer bg-gradient-to-b from-pink-400 to-rose-500 rounded-3xl p-6 text-white text-center shadow-xl border-4 border-white flex flex-col items-center">
+          <div class="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center text-5xl mb-4 shadow-inner">🎨</div>
+          <h3 class="text-2xl font-bold mb-2">Dessin &amp; Peinture</h3>
+          <p class="text-pink-100 text-sm mb-4">Dessine ce que tu veux avec des pinceaux magiques, étampes et de belles couleurs !</p>
+          <span class="bg-white text-pink-600 font-bold px-6 py-2 rounded-full shadow">C'est parti !</span>
+        </div>
+        <div onclick="switchMode('color')" class="btn-bounce cursor-pointer bg-gradient-to-b from-purple-400 to-indigo-500 rounded-3xl p-6 text-white text-center shadow-xl border-4 border-white flex flex-col items-center">
+          <div class="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center text-5xl mb-4 shadow-inner">🖌️</div>
+          <h3 class="text-2xl font-bold mb-2">Livre de Coloriage</h3>
+          <p class="text-purple-100 text-sm mb-4">Colorie le castor québécois, le château, la fusée spatiale et la voiture !</p>
+          <span class="bg-white text-purple-600 font-bold px-6 py-2 rounded-full shadow">Colorier !</span>
+        </div>
+        <div onclick="switchMode('games')" class="btn-bounce cursor-pointer bg-gradient-to-b from-amber-400 to-orange-500 rounded-3xl p-6 text-white text-center shadow-xl border-4 border-white flex flex-col items-center">
+          <div class="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center text-5xl mb-4 shadow-inner">🎈</div>
+          <h3 class="text-2xl font-bold mb-2">Jeux de Couleurs</h3>
+          <p class="text-amber-100 text-sm mb-4">Joue à éclater les ballons, trier les couleurs et trouver les paires de mémoire !</p>
+          <span class="bg-white text-amber-600 font-bold px-6 py-2 rounded-full shadow">Jouer !</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dessin libre -->
+    <div id="mode-draw" class="atelier-mode hidden flex-col gap-4">
+      <div class="bg-white p-3 sm:p-4 rounded-2xl shadow-md border-2 border-pink-200 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-2 flex-wrap">
+          <button id="tool-brush" onclick="setDrawTool('brush')" class="btn-bounce bg-pink-500 text-white p-3 rounded-xl shadow font-bold flex items-center gap-2 border-2 border-pink-600"><i class="fa-solid fa-paint-brush"></i> <span class="hidden sm:inline">Pinceau</span></button>
+          <button id="tool-stamp" onclick="setDrawTool('stamp')" class="btn-bounce bg-slate-100 text-slate-700 hover:bg-slate-200 p-3 rounded-xl font-bold flex items-center gap-2 border-2 border-slate-300"><i class="fa-solid fa-stamp"></i> <span class="hidden sm:inline">Étampes</span></button>
+          <button id="tool-eraser" onclick="setDrawTool('eraser')" class="btn-bounce bg-slate-100 text-slate-700 hover:bg-slate-200 p-3 rounded-xl font-bold flex items-center gap-2 border-2 border-slate-300"><i class="fa-solid fa-eraser"></i> <span class="hidden sm:inline">Gomme</span></button>
+        </div>
+        <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-xl border border-slate-300">
+          <button onclick="setLineWidth(6)" aria-label="Petit trait" class="w-8 h-8 rounded-full bg-white flex items-center justify-center hover:bg-slate-200 border"><span class="w-2 h-2 rounded-full bg-slate-800"></span></button>
+          <button onclick="setLineWidth(14)" aria-label="Trait moyen" class="w-8 h-8 rounded-full bg-white flex items-center justify-center hover:bg-slate-200 border"><span class="w-3.5 h-3.5 rounded-full bg-slate-800"></span></button>
+          <button onclick="setLineWidth(26)" aria-label="Gros trait" class="w-8 h-8 rounded-full bg-white flex items-center justify-center hover:bg-slate-200 border"><span class="w-5 h-5 rounded-full bg-slate-800"></span></button>
+        </div>
+        <div class="flex items-center gap-2 flex-wrap">
+          <button onclick="clearCanvas()" class="btn-bounce bg-red-100 text-red-600 hover:bg-red-200 px-3 py-2 rounded-xl font-bold text-sm flex items-center gap-1 border border-red-300"><i class="fa-solid fa-trash"></i> <span>Effacer tout</span></button>
+          <button onclick="downloadCanvas()" class="btn-bounce bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-1 shadow border border-green-600"><i class="fa-solid fa-download"></i> <span>Sauvegarder</span></button>
+        </div>
+      </div>
+      <div class="bg-white p-3 rounded-2xl shadow-md border-2 border-pink-200 flex flex-col gap-2">
+        <div id="palette-container" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1"></div>
+        <div id="stamp-container" class="hidden items-center gap-3 overflow-x-auto no-scrollbar py-1 border-t border-slate-100 pt-2">
+          <span class="text-xs font-bold text-slate-400 uppercase shrink-0">Étampes :</span>
+          <button onclick="setStamp('⚜️')" class="text-3xl p-1.5 hover:scale-125 transition">⚜️</button>
+          <button onclick="setStamp('🦫')" class="text-3xl p-1.5 hover:scale-125 transition">🦫</button>
+          <button onclick="setStamp('🍁')" class="text-3xl p-1.5 hover:scale-125 transition">🍁</button>
+          <button onclick="setStamp('⭐')" class="text-3xl p-1.5 hover:scale-125 transition">⭐</button>
+          <button onclick="setStamp('🦄')" class="text-3xl p-1.5 hover:scale-125 transition">🦄</button>
+          <button onclick="setStamp('🦖')" class="text-3xl p-1.5 hover:scale-125 transition">🦖</button>
+          <button onclick="setStamp('🌈')" class="text-3xl p-1.5 hover:scale-125 transition">🌈</button>
+          <button onclick="setStamp('🚀')" class="text-3xl p-1.5 hover:scale-125 transition">🚀</button>
+          <button onclick="setStamp('❤️')" class="text-3xl p-1.5 hover:scale-125 transition">❤️</button>
+        </div>
+      </div>
+      <div class="relative w-full bg-white rounded-3xl shadow-lg border-4 border-pink-300 overflow-hidden min-h-[400px] h-[55vh]">
+        <canvas id="paintCanvas" class="w-full h-full cursor-crosshair touch-none block"></canvas>
+      </div>
+    </div>
+
+    <!-- Livre de coloriage -->
+    <div id="mode-color" class="atelier-mode hidden flex-col gap-4">
+      <div class="bg-white p-3 rounded-2xl shadow-md border-2 border-purple-200 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="font-bold text-slate-700 text-sm sm:text-base">Dessins à colorier :</span>
+          <select id="coloring-template-select" onchange="loadColoringTemplate(this.value)" class="bg-purple-100 text-purple-900 font-bold px-3 py-2 rounded-xl border border-purple-300 focus:outline-none">
+            <option value="castor">🦫 Le Castor Québécois</option>
+            <option value="chateau">🏰 Le Château Magique</option>
+            <option value="fusee">🚀 La Fusée Espatiale</option>
+            <option value="auto">🏎️ La Voiture de Course</option>
+          </select>
+        </div>
+        <button onclick="clearColoring()" class="btn-bounce bg-purple-100 text-purple-700 hover:bg-purple-200 px-4 py-2 rounded-xl font-bold text-sm border border-purple-300"><i class="fa-solid fa-rotate-left"></i> Recommencer</button>
+      </div>
+      <div class="bg-white p-3 rounded-2xl shadow-md border-2 border-purple-200">
+        <div id="coloring-palette" class="flex items-center gap-2 overflow-x-auto no-scrollbar"></div>
+      </div>
+      <div id="coloring-svg-wrapper" class="relative w-full bg-white rounded-3xl shadow-lg border-4 border-purple-300 p-4 flex items-center justify-center min-h-[400px] h-[55vh] overflow-hidden"></div>
+    </div>
+
+    <!-- Jeux de couleurs -->
+    <div id="mode-games" class="atelier-mode hidden flex-col gap-6">
+      <div class="flex justify-center gap-2 sm:gap-4 flex-wrap">
+        <button onclick="startMiniGame('balloons')" id="tab-balloons" class="btn-bounce bg-amber-500 text-white font-bold px-4 py-2 sm:px-6 sm:py-3 rounded-2xl shadow-md border-2 border-amber-600 flex items-center gap-2">🎈 Éclate les Ballons</button>
+        <button onclick="startMiniGame('memory')" id="tab-memory" class="btn-bounce bg-slate-200 text-slate-700 font-bold px-4 py-2 sm:px-6 sm:py-3 rounded-2xl shadow-md border-2 border-slate-300 flex items-center gap-2">🧩 Jeu de Mémoire</button>
+        <button onclick="startMiniGame('sort')" id="tab-sort" class="btn-bounce bg-slate-200 text-slate-700 font-bold px-4 py-2 sm:px-6 sm:py-3 rounded-2xl shadow-md border-2 border-slate-300 flex items-center gap-2">🧺 Tri de Couleurs</button>
+      </div>
+
+      <div id="game-balloons" class="bg-gradient-to-b from-sky-200 to-indigo-100 rounded-3xl border-4 border-sky-300 p-4 sm:p-6 shadow-xl relative min-h-[450px] flex flex-col justify-between overflow-hidden">
+        <div class="bg-white/90 rounded-2xl p-4 shadow border-2 border-sky-400 z-10 flex items-center justify-between gap-3 flex-wrap">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl sm:text-3xl">🎯</span>
+            <div class="text-left">
+              <span class="text-xs uppercase tracking-wider font-bold text-slate-400">Consigne :</span>
+              <h3 id="balloon-target-text" class="text-xl sm:text-2xl font-black text-sky-800">Éclate les ballons ROUGE !</h3>
+            </div>
+          </div>
+          <div class="bg-amber-100 text-amber-800 px-4 py-2 rounded-xl font-bold text-lg border border-amber-300 shadow-inner">Score: <span id="balloon-score">0</span></div>
+        </div>
+        <div id="balloon-container" class="relative w-full h-[350px] my-4 overflow-hidden"></div>
+      </div>
+
+      <div id="game-memory" class="hidden bg-purple-50 rounded-3xl border-4 border-purple-300 p-6 shadow-xl text-center space-y-4 flex-col">
+        <div class="bg-white rounded-2xl p-3 inline-block shadow border border-purple-200"><h3 class="text-xl font-bold text-purple-800">Trouve toutes les paires de couleurs identiques ! 🧠</h3></div>
+        <div id="memory-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-3 sm:gap-4 max-w-lg mx-auto w-full"></div>
+      </div>
+
+      <div id="game-sort" class="hidden bg-emerald-50 rounded-3xl border-4 border-emerald-300 p-4 sm:p-6 shadow-xl flex-col justify-between min-h-[450px]">
+        <div class="bg-white/90 rounded-2xl p-4 text-center shadow border-2 border-emerald-400"><h3 class="text-xl font-bold text-emerald-800">Touche le panier de la bonne couleur ! 🧺</h3></div>
+        <div class="my-6 flex flex-col items-center justify-center">
+          <div id="sort-item" class="w-28 h-28 bg-white rounded-3xl shadow-2xl border-4 border-dashed border-emerald-400 flex items-center justify-center text-6xl">🍎</div>
+          <p id="sort-item-name" class="mt-2 font-bold text-emerald-900 text-lg bg-emerald-200 px-4 py-1 rounded-full">Une Pomme Rouge</p>
+        </div>
+        <div class="grid grid-cols-3 gap-3 sm:gap-6">
+          <div onclick="checkSort('red')" class="bg-red-500 hover:bg-red-600 border-4 border-red-700 rounded-3xl p-4 text-white text-center shadow-lg cursor-pointer active:scale-95 transition"><div class="text-3xl mb-1">🧺</div><span class="font-black text-base sm:text-lg uppercase">Rouge</span></div>
+          <div onclick="checkSort('blue')" class="bg-blue-500 hover:bg-blue-600 border-4 border-blue-700 rounded-3xl p-4 text-white text-center shadow-lg cursor-pointer active:scale-95 transition"><div class="text-3xl mb-1">🧺</div><span class="font-black text-base sm:text-lg uppercase">Bleu</span></div>
+          <div onclick="checkSort('yellow')" class="bg-yellow-400 hover:bg-yellow-500 border-4 border-yellow-600 rounded-3xl p-4 text-center text-yellow-950 shadow-lg cursor-pointer active:scale-95 transition"><div class="text-3xl mb-1">🧺</div><span class="font-black text-base sm:text-lg uppercase">Jaune</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PAGE : NOS LIVRES ================= -->
+<section id="page-livres" class="site-page hidden space-y-8">
+  <div class="text-center max-w-2xl mx-auto space-y-2">
+    <h1 class="brand-font text-3xl font-black text-qcblue-700">ÉDITIONS LGMDESIGN35 - CATALOGUE DE LIVRES</h1>
+    <p class="text-slate-600 text-sm">Par <strong>LGMDesign35</strong> — les livres d'<strong>Adam et ses amis</strong> que les familles du Québec s'arrachent. Choisissez le format qui convient à votre famille : le <strong>PDF à imprimer à la maison</strong> (Etsy) ou le <strong>livre broché à offrir et à garder</strong> (Amazon).</p>
+  </div>
+  <div class="flex flex-wrap justify-center gap-2 sm:gap-4">
+    <button onclick="filterBooks('all')" id="filter-all" class="filter-btn px-4 py-2 rounded-xl font-bold text-xs bg-qcblue-600 text-white shadow">Tous les titres</button>
+    <button onclick="filterBooks('2-3')" id="filter-2-3" class="filter-btn px-4 py-2 rounded-xl font-bold text-xs bg-white text-slate-600 border">2-3 ans (Pouponnière/CPE)</button>
+    <button onclick="filterBooks('4-6')" id="filter-4-6" class="filter-btn px-4 py-2 rounded-xl font-bold text-xs bg-white text-slate-600 border">4-6 ans (Préscolaire)</button>
+    <button onclick="filterBooks('7-10')" id="filter-7-10" class="filter-btn px-4 py-2 rounded-xl font-bold text-xs bg-white text-slate-600 border">7-10 ans (Primaire)</button>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="books-grid">
+    <div class="book-card bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between" data-age="4-6">
+      <div>
+        <div class="w-full h-48 bg-sky-100 rounded-xl mb-4 flex flex-col items-center justify-center p-4 border border-sky-200 text-center"><span class="text-xs font-bold text-sky-600 uppercase tracking-widest mb-1">Éditions LGMDesign35</span><span class="brand-font text-lg font-extrabold text-sky-900 leading-tight">Les aventures d'Adam et ses amis</span><span class="text-xs text-sky-700 mt-2 font-semibold">Adam et ses amis • 71 pages</span></div>
+        <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full mb-2">Préscolaire (4-6 ans)</span>
+        <h3 class="brand-font text-lg font-bold text-slate-800">Les aventures d'Adam et ses amis</h3>
+        <p class="text-xs text-slate-500 mt-1">6 histoires : le ballon volant, la grande pluie, le voyage en bateau, la nuit des étoiles, le secret de la ruche et la première neige. 71 pages.</p>
+        <p class="text-xs text-emerald-700 font-semibold mt-2">💛 Six histoires pour nourrir l'imagination, enrichir le vocabulaire et créer un rituel de lecture que votre enfant réclamera chaque soir.</p>
+        <div class="mt-3 space-y-2">
+          <a href="https://www.etsy.com/listing/4601808390" target="_blank" rel="noopener" class="block w-full text-center py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs rounded-xl shadow transition-all">📥 Version PDF — Etsy (5,00 $) ↗</a>
+          <p class="text-[11px] font-bold text-sky-700 bg-sky-50 border border-sky-200 rounded-xl px-3 py-2 text-center">🎁 Gratuit sur le site dès le 25 novembre</p>
+        </div>
+      </div>
+      <button onclick="openBookModal('aventures')" class="mt-4 w-full py-2.5 bg-sky-50 hover:bg-sky-100 text-sky-700 font-bold text-xs rounded-xl transition-all border border-sky-200">CONSULTER LA FICHE</button>
+    </div>
+    <div class="book-card bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between" data-age="4-6">
+      <div>
+        <div class="w-full h-48 bg-indigo-100 rounded-xl mb-4 flex flex-col items-center justify-center p-4 border border-indigo-200 text-center"><span class="text-xs font-bold text-indigo-600 uppercase tracking-widest mb-1">Éditions LGMDesign35</span><span class="brand-font text-lg font-extrabold text-indigo-900 leading-tight">Adam et ses amis : Halloween — 6 histoires</span><span class="text-xs text-indigo-700 mt-2 font-semibold">Adam et ses amis • 71 pages</span></div>
+        <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full mb-2">Préscolaire (4-6 ans)</span>
+        <h3 class="brand-font text-lg font-bold text-slate-800">Adam et ses amis : Halloween — 6 histoires</h3>
+        <p class="text-xs text-slate-500 mt-1">Un volume de 6 histoires sur le thème d'Halloween, avec Adam et ses amis. 71 pages.</p>
+        <p class="text-xs text-emerald-700 font-semibold mt-2">💛 Des frissons tout doux pour apprivoiser la peur, rire en famille et vivre la magie d'Halloween en français.</p>
+        <div class="mt-3 space-y-2">
+          <a href="https://www.etsy.com/listing/4603634496" target="_blank" rel="noopener" class="block w-full text-center py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs rounded-xl shadow transition-all">📥 Version PDF — Etsy (10,00 $) ↗</a>
+        </div>
+      </div>
+      <button onclick="openBookModal('halloween')" class="mt-4 w-full py-2.5 bg-sky-50 hover:bg-sky-100 text-sky-700 font-bold text-xs rounded-xl transition-all border border-sky-200">CONSULTER LA FICHE</button>
+    </div>
+    <div class="book-card bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between" data-age="4-6">
+      <div>
+        <div class="w-full h-48 bg-amber-100 rounded-xl mb-4 flex flex-col items-center justify-center p-4 border border-amber-200 text-center"><span class="text-xs font-bold text-amber-600 uppercase tracking-widest mb-1">Éditions LGMDesign35</span><span class="brand-font text-lg font-extrabold text-amber-900 leading-tight">Adam et l'aventure des lettres</span><span class="text-xs text-amber-700 mt-2 font-semibold">Adam et ses amis • 31 pages</span></div>
+        <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full mb-2">Préscolaire (4-6 ans)</span>
+        <h3 class="brand-font text-lg font-bold text-slate-800">Adam et l'aventure des lettres</h3>
+        <p class="text-xs text-slate-500 mt-1">L'alphabet français raconté en histoires : Adam découvre les lettres une à une. 31 pages.</p>
+        <p class="text-xs text-emerald-700 font-semibold mt-2">💛 L'alphabet devient une aventure : chaque lettre se découvre en histoire, pour donner le goût de lire dès le premier jour.</p>
+        <div class="mt-3 space-y-2">
+          <span class="block w-full text-center py-2.5 bg-slate-100 text-slate-500 font-bold text-xs rounded-xl border border-slate-200">⏳ Bientôt sur Etsy</span>
+        </div>
+      </div>
+      <button onclick="openBookModal('lettres')" class="mt-4 w-full py-2.5 bg-sky-50 hover:bg-sky-100 text-sky-700 font-bold text-xs rounded-xl transition-all border border-sky-200">CONSULTER LA FICHE</button>
+    </div>
+    <div class="book-card bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between" data-age="4-6">
+      <div>
+        <div class="w-full h-48 bg-rose-100 rounded-xl mb-4 flex flex-col items-center justify-center p-4 border border-rose-200 text-center"><span class="text-xs font-bold text-rose-500 uppercase tracking-widest mb-1">Éditions LGMDesign35</span><span class="brand-font text-lg font-extrabold text-rose-900 leading-tight">Adam et ses amis : 2 histoires</span><span class="text-xs text-rose-700 mt-2 font-semibold">Adam et ses amis • 25 pages</span></div>
+        <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full mb-2">Préscolaire (4-6 ans)</span>
+        <h3 class="brand-font text-lg font-bold text-slate-800">Adam et ses amis : 2 histoires</h3>
+        <p class="text-xs text-slate-500 mt-1">Deux histoires illustrées à lire avec Adam et ses amis. 25 pages.</p>
+        <p class="text-xs text-emerald-700 font-semibold mt-2">💛 Deux récits courts et tendres, parfaits pour le rituel du soir et les tout premiers lecteurs.</p>
+        <div class="mt-3 space-y-2">
+          <span class="block w-full text-center py-2.5 bg-slate-100 text-slate-500 font-bold text-xs rounded-xl border border-slate-200">⏳ Bientôt</span>
+        </div>
+      </div>
+      <button onclick="openBookModal('deuxhistoires')" class="mt-4 w-full py-2.5 bg-sky-50 hover:bg-sky-100 text-sky-700 font-bold text-xs rounded-xl transition-all border border-sky-200">CONSULTER LA FICHE</button>
+    </div>
+    <div class="book-card bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between" data-age="4-6">
+      <div>
+        <div class="w-full h-48 bg-emerald-100 rounded-xl mb-4 flex flex-col items-center justify-center p-4 border border-emerald-200 text-center"><span class="text-xs font-bold text-emerald-600 uppercase tracking-widest mb-1">Éditions LGMDesign35</span><span class="brand-font text-lg font-extrabold text-emerald-900 leading-tight">Adam et ses amis : Le jardin de la coopération</span><span class="text-xs text-emerald-700 mt-2 font-semibold">Adam et ses amis • 13 pages</span></div>
+        <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full mb-2">Préscolaire (4-6 ans)</span>
+        <h3 class="brand-font text-lg font-bold text-slate-800">Adam et ses amis : Le jardin de la coopération</h3>
+        <p class="text-xs text-slate-500 mt-1">Une histoire de coopération et d'entraide dans le jardin, avec Adam et ses amis. 13 pages.</p>
+        <p class="text-xs text-emerald-700 font-semibold mt-2">💛 Une belle leçon de coopération et d'entraide, à hauteur de jardin — le premier livre que beaucoup de familles québécoises offrent.</p>
+        <div class="mt-3 space-y-2">
+          <a href="https://www.etsy.com/listing/4601160031" target="_blank" rel="noopener" class="block w-full text-center py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs rounded-xl shadow transition-all">📥 Version PDF — Etsy (1,50 $) ↗</a>
+          <a href="https://www.amazon.ca/dp/B0HQBQCMD1" target="_blank" rel="noopener" class="block w-full text-center py-2.5 bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold text-xs rounded-xl shadow transition-all">📚 Livre broché — Amazon ↗</a>
+        </div>
+      </div>
+      <button onclick="openBookModal('jardin')" class="mt-4 w-full py-2.5 bg-sky-50 hover:bg-sky-100 text-sky-700 font-bold text-xs rounded-xl transition-all border border-sky-200">CONSULTER LA FICHE</button>
+    </div>
+    <div class="book-card bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between" data-age="4-6">
+      <div>
+        <div class="w-full h-48 bg-teal-100 rounded-xl mb-4 flex flex-col items-center justify-center p-4 border border-teal-200 text-center"><span class="text-xs font-bold text-teal-600 uppercase tracking-widest mb-1">Éditions LGMDesign35</span><span class="brand-font text-lg font-extrabold text-teal-900 leading-tight">Adam dit adieu à son doigt</span><span class="text-xs text-teal-700 mt-2 font-semibold">Adam et ses amis • 30 pages</span></div>
+        <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full mb-2">Préscolaire (4-6 ans)</span>
+        <h3 class="brand-font text-lg font-bold text-slate-800">Adam dit adieu à son doigt</h3>
+        <p class="text-xs text-slate-500 mt-1">Adam apprend à dire adieu à son doigt, étape par étape, avec douceur et fierté. 30 pages.</p>
+        <p class="text-xs text-emerald-700 font-semibold mt-2">💛 Une histoire rassurante qui accompagne votre enfant, en douceur, dans ce petit grand passage de la petite enfance.</p>
+        <div class="mt-3 space-y-2">
+          <a href="https://www.amazon.ca/dp/B0HQZ4H5B9" target="_blank" rel="noopener" class="block w-full text-center py-2.5 bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold text-xs rounded-xl shadow transition-all">📚 Livre broché — Amazon ↗</a>
+          <p class="text-[11px] font-bold text-sky-700 bg-sky-50 border border-sky-200 rounded-xl px-3 py-2 text-center">🎁 Gratuit sur le site dès le 25 novembre</p>
+        </div>
+      </div>
+      <button onclick="openBookModal('doigt')" class="mt-4 w-full py-2.5 bg-sky-50 hover:bg-sky-100 text-sky-700 font-bold text-xs rounded-xl transition-all border border-sky-200">CONSULTER LA FICHE</button>
+    </div>
+    <div class="book-card bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between" data-age="4-6">
+      <div>
+        <div class="w-full h-48 bg-violet-100 rounded-xl mb-4 flex flex-col items-center justify-center p-4 border border-violet-200 text-center"><span class="text-xs font-bold text-violet-600 uppercase tracking-widest mb-1">Éditions LGMDesign35</span><span class="brand-font text-lg font-extrabold text-violet-900 leading-tight">Adam apprend à écouter</span><span class="text-xs text-violet-700 mt-2 font-semibold">Adam et ses amis • 30 pages</span></div>
+        <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full mb-2">Préscolaire (4-6 ans)</span>
+        <h3 class="brand-font text-lg font-bold text-slate-800">Adam apprend à écouter</h3>
+        <p class="text-xs text-slate-500 mt-1">Avec son lapin, son canard, son renard et sa mamie, Adam découvre que écouter, c'est aimer. 30 pages.</p>
+        <p class="text-xs text-emerald-700 font-semibold mt-2">💛 Écouter les autres — et les plus grands — avec le cœur : une valeur qui se transmet une histoire à la fois.</p>
+        <div class="mt-3 space-y-2">
+          <span class="block w-full text-center py-2.5 bg-slate-100 text-slate-500 font-bold text-xs rounded-xl border border-slate-200">⏳ Bientôt en livre broché (Amazon)</span>
+          <p class="text-[11px] font-bold text-sky-700 bg-sky-50 border border-sky-200 rounded-xl px-3 py-2 text-center">🎁 Aperçu gratuit (5 pages) dès le 25 novembre</p>
+        </div>
+      </div>
+      <button onclick="openBookModal('ecoute')" class="mt-4 w-full py-2.5 bg-sky-50 hover:bg-sky-100 text-sky-700 font-bold text-xs rounded-xl transition-all border border-sky-200">CONSULTER LA FICHE</button>
+    </div>
+  </div>
+  <p id="books-empty-msg" class="hidden text-center text-sm font-bold text-slate-500 bg-white border border-slate-200 rounded-2xl p-6">Aucun titre du catalogue pour ce groupe d'âge pour le moment — tous nos livres actuels sont pour les 4 à 6 ans.</p>
+  <div class="bg-white border border-sky-200 rounded-3xl p-6 text-center space-y-3">
+    <h3 class="brand-font text-xl font-bold text-sky-900">📚 Déjà en ligne sur Amazon : Le jardin de la coopération</h3>
+    <p class="text-sm text-slate-600">« Adam et ses amis : Le jardin de la coopération » — une histoire illustrée pour enfants de 4 à 6 ans, $10.50 USD, ASIN B0HQBQCMD1.</p>
+    <a href="https://www.amazon.ca/dp/B0HQBQCMD1" target="_blank" rel="noopener" class="inline-block px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold text-sm rounded-xl shadow">Voir le livre sur Amazon.ca ↗</a>
+  </div>
+</section>
+
+<!-- ================= PAGE : HISTOIRES GRATUITES ================= -->
+<section id="page-histoires" class="site-page hidden space-y-8">
+  <div class="text-center max-w-2xl mx-auto space-y-3">
+    <span class="inline-block px-4 py-1.5 bg-emerald-100 text-emerald-800 rounded-full text-xs font-bold uppercase tracking-wider border border-emerald-200">🎁 100 % gratuit</span>
+    <h1 class="brand-font text-3xl sm:text-4xl font-black text-qcblue-700">Histoires gratuites — à lire tout de suite</h1>
+    <p class="text-slate-600 text-sm">Parce que le goût de lire commence par un premier cadeau : voici nos histoires françaises à découvrir en famille, sans frais et sans publicité. Bonne lecture, les petits lecteurs du Québec !</p>
+    <div class="flex flex-wrap justify-center gap-2 pt-1">
+      <span class="px-3 py-1.5 bg-white border border-slate-200 rounded-full text-xs font-bold text-slate-700 shadow-sm">✔ 100 % français québécois</span>
+      <span class="px-3 py-1.5 bg-white border border-slate-200 rounded-full text-xs font-bold text-slate-700 shadow-sm">✔ Sans publicité</span>
+      <span class="px-3 py-1.5 bg-white border border-slate-200 rounded-full text-xs font-bold text-slate-700 shadow-sm">✔ Pour les 2 à 10 ans</span>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+    <div class="bg-white border-2 border-emerald-200 rounded-3xl p-5 flex flex-col justify-between shadow-sm">
+      <div>
+        <div class="w-full h-44 bg-orange-100 rounded-2xl mb-4 flex flex-col items-center justify-center p-4 border border-orange-200 text-center"><span class="text-4xl mb-2">🎃</span><span class="brand-font text-lg font-extrabold text-orange-900 leading-tight">La citrouille courageuse</span><span class="text-xs text-orange-700 mt-2 font-semibold">Adam et ses amis • 13 pages</span></div>
+        <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full mb-2">Gratuit — disponible maintenant</span>
+        <h3 class="brand-font text-lg font-bold text-slate-800">La citrouille courageuse</h3>
+        <p class="text-xs text-slate-500 mt-1">Une petite citrouille qui trouve son courage, le soir d'Halloween. 13 pages à lire en famille — et le film à regarder ensemble !</p>
+        <p class="text-xs text-emerald-700 font-semibold mt-2">💛 Le courage se cultive dès la petite enfance : une première histoire complète, offerte avec le cœur.</p>
+      </div>
+      <div class="mt-4 space-y-2">
+        <a href="https://lgmdesign35.netlify.app/adam-citrouille.pdf" target="_blank" rel="noopener" class="block w-full text-center py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm rounded-xl shadow transition-all">📖 Lire le PDF gratuit ↗</a>
+        <a href="https://www.youtube.com/shorts/VMq2Qhd-uTU" target="_blank" rel="noopener" class="block w-full text-center py-3 bg-red-500 hover:bg-red-600 text-white font-bold text-sm rounded-xl shadow transition-all">🎬 Voir le film ↗</a>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-3xl p-5 flex flex-col justify-between shadow-sm">
+      <div>
+        <div class="w-full h-44 bg-sky-100 rounded-2xl mb-4 flex flex-col items-center justify-center p-4 border border-sky-200 text-center"><span class="text-4xl mb-2">🎈</span><span class="brand-font text-lg font-extrabold text-sky-900 leading-tight">Les aventures d'Adam et ses amis</span><span class="text-xs text-sky-700 mt-2 font-semibold">6 histoires • 71 pages</span></div>
+        <span class="inline-block px-3 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-full mb-2">Gratuit dès le 25 novembre</span>
+        <h3 class="brand-font text-lg font-bold text-slate-800">Les aventures d'Adam et ses amis</h3>
+        <p class="text-xs text-slate-500 mt-1">Le ballon volant, la grande pluie, le voyage en bateau, la nuit des étoiles, le secret de la ruche et la première neige : 6 histoires, 71 pages.</p>
+        <p class="text-xs text-emerald-700 font-semibold mt-2">💛 Notre plus grand volume, offert gratuitement sur le site dès le 25 novembre — le cadeau parfait pour les longues soirées de lecture.</p>
+      </div>
+      <div class="mt-4 space-y-2">
+        <span class="block w-full text-center py-3 bg-sky-50 text-sky-700 font-bold text-sm rounded-xl border border-sky-200">🎁 Gratuit dès le 25 novembre</span>
+        <button onclick="openBookModal('aventures')" class="w-full py-2.5 bg-white hover:bg-sky-50 text-sky-700 font-bold text-xs rounded-xl transition-all border border-sky-200">CONSULTER LA FICHE</button>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-3xl p-5 flex flex-col justify-between shadow-sm">
+      <div>
+        <div class="w-full h-44 bg-teal-100 rounded-2xl mb-4 flex flex-col items-center justify-center p-4 border border-teal-200 text-center"><span class="text-4xl mb-2">👋</span><span class="brand-font text-lg font-extrabold text-teal-900 leading-tight">Adam dit adieu à son doigt</span><span class="text-xs text-teal-700 mt-2 font-semibold">Adam et ses amis • 30 pages</span></div>
+        <span class="inline-block px-3 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-full mb-2">Gratuit dès le 25 novembre</span>
+        <h3 class="brand-font text-lg font-bold text-slate-800">Adam dit adieu à son doigt</h3>
+        <p class="text-xs text-slate-500 mt-1">Une histoire douce et rassurante pour accompagner les petits dans ce grand passage. 30 pages.</p>
+        <p class="text-xs text-emerald-700 font-semibold mt-2">💛 Gratuit sur le site dès le 25 novembre — et déjà disponible en livre broché à offrir ou à garder.</p>
+      </div>
+      <div class="mt-4 space-y-2">
+        <span class="block w-full text-center py-3 bg-sky-50 text-sky-700 font-bold text-sm rounded-xl border border-sky-200">🎁 Gratuit dès le 25 novembre</span>
+        <a href="https://www.amazon.ca/dp/B0HQZ4H5B9" target="_blank" rel="noopener" class="block w-full text-center py-2.5 bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold text-xs rounded-xl shadow transition-all">📚 Livre broché — Amazon ↗</a>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-3xl p-5 flex flex-col justify-between shadow-sm">
+      <div>
+        <div class="w-full h-44 bg-violet-100 rounded-2xl mb-4 flex flex-col items-center justify-center p-4 border border-violet-200 text-center"><span class="text-4xl mb-2">👂</span><span class="brand-font text-lg font-extrabold text-violet-900 leading-tight">Adam apprend à écouter</span><span class="text-xs text-violet-700 mt-2 font-semibold">Aperçu gratuit • 5 pages</span></div>
+        <span class="inline-block px-3 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-full mb-2">Gratuit dès le 25 novembre</span>
+        <h3 class="brand-font text-lg font-bold text-slate-800">Adam apprend à écouter — aperçu gratuit (5 pages)</h3>
+        <p class="text-xs text-slate-500 mt-1">Les 5 premières pages de la nouvelle histoire d'Adam : écouter les autres, respecter les plus grands… parce que écouter, c'est aimer !</p>
+        <p class="text-xs text-emerald-700 font-semibold mt-2">💛 Un aperçu de 5 pages pour découvrir l'histoire en famille, avant même la sortie du livre broché.</p>
+      </div>
+      <div class="mt-4 space-y-2">
+        <span class="block w-full text-center py-3 bg-sky-50 text-sky-700 font-bold text-sm rounded-xl border border-sky-200">🎁 Gratuit dès le 25 novembre</span>
+        <button onclick="openBookModal('ecoute')" class="w-full py-2.5 bg-white hover:bg-sky-50 text-sky-700 font-bold text-xs rounded-xl transition-all border border-sky-200">CONSULTER LA FICHE</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PAGE : RESSOURCES ================= -->
+<section id="page-ressources" class="site-page hidden space-y-8">
+  <div class="bg-gradient-to-r from-orange-100 via-amber-50 to-orange-50 border border-orange-200 rounded-3xl p-8 text-center space-y-3">
+    <span class="px-4 py-1.5 bg-orange-200 text-orange-800 rounded-full text-xs font-bold uppercase tracking-wider">Fichiers PDF téléchargeables</span>
+    <h1 class="brand-font text-3xl font-extrabold text-orange-950">RESSOURCES DIGITALES ET MATÉRIEL IMPRIMABLE</h1>
+    <p class="text-slate-600 text-sm max-w-2xl mx-auto">Imprimez à la maison ou à l'école nos fiches d'activités, cahiers de traçage et planners personnalisés en français québécois via Etsy !</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
+      <div>
+        <div class="w-full h-48 bg-sky-50 border-2 border-dashed border-sky-200 rounded-2xl flex flex-col items-center justify-center p-4 text-center mb-6"><span class="text-xs font-bold text-sky-600 mb-1">Livre numérique • 31 pages • 4-6 ans</span><span class="brand-font text-xl font-bold text-sky-900">Adam et l'aventure des lettres</span><span class="text-xs text-slate-500 mt-2">Par LGMDesign35</span></div>
+        <h3 class="brand-font text-xl font-bold text-slate-800 mb-2">Adam et l'aventure des lettres</h3>
+        <p class="text-sm text-slate-600 leading-relaxed mb-4">L'alphabet français raconté en histoires : 31 pages pour découvrir les lettres avec Adam et ses amis, à la maison ou en classe.</p>
+      </div>
+      <a href="https://www.etsy.com/shop/LGMDesign35" target="_blank" rel="noopener" class="block w-full text-center py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm rounded-xl transition-all shadow-md">TÉLÉCHARGER SUR ETSY ↗</a>
+    </div>
+    <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
+      <div>
+        <div class="w-full h-48 bg-emerald-50 border-2 border-dashed border-emerald-200 rounded-2xl flex flex-col items-center justify-center p-4 text-center mb-6"><span class="text-xs font-bold text-emerald-600 mb-1">PDF Imprimable • Préscolaire</span><span class="brand-font text-xl font-bold text-emerald-900">Cahier de Traçage &amp; Graphisme</span><span class="text-xs text-slate-500 mt-2">Conforme au programme québécois</span></div>
+        <h3 class="brand-font text-xl font-bold text-slate-800 mb-2">Cahier de Traçage préscolaire</h3>
+        <p class="text-sm text-slate-600 leading-relaxed mb-4">Préparation idéale à l'écriture, lignes pointillées et découverte des chiffres avec <strong>Adam et ses amis</strong>.</p>
+      </div>
+      <a href="https://www.etsy.com/shop/LGMDesign35" target="_blank" rel="noopener" class="block w-full text-center py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm rounded-xl transition-all shadow-md">TÉLÉCHARGER SUR ETSY ↗</a>
+    </div>
+    <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
+      <div>
+        <div class="w-full h-48 bg-amber-50 border-2 border-dashed border-amber-200 rounded-2xl flex flex-col items-center justify-center p-4 text-center mb-6"><span class="text-xs font-bold text-amber-600 mb-1">Pack Organisation • Primaire</span><span class="brand-font text-xl font-bold text-amber-900">Planner &amp; Routine Scolaire</span><span class="text-xs text-slate-500 mt-2">Tableaux d'autonomie imprimables</span></div>
+        <h3 class="brand-font text-xl font-bold text-slate-800 mb-2">Planner &amp; Routine Hebdomadaire</h3>
+        <p class="text-sm text-slate-600 leading-relaxed mb-4">Planification des devoirs, suivi des tâches de la maison et gestion positive des émotions.</p>
+      </div>
+      <a href="https://www.etsy.com/shop/LGMDesign35" target="_blank" rel="noopener" class="block w-full text-center py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm rounded-xl transition-all shadow-md">TÉLÉCHARGER SUR ETSY ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PAGE : NOTRE HISTOIRE ================= -->
+<section id="page-histoire" class="site-page hidden space-y-8">
+  <div class="bg-qcblue-900 text-white rounded-3xl p-8 sm:p-12 text-center space-y-4 shadow-md">
+    <span class="px-4 py-1.5 bg-qcblue-700 text-sky-200 rounded-full text-xs font-bold uppercase tracking-wider">Expérience depuis 2003 — publication depuis 2026</span>
+    <h1 class="brand-font text-3xl sm:text-5xl font-extrabold text-sky-100">NOTRE HISTOIRE, NOTRE PASSION</h1>
+    <p class="text-sky-200 text-base sm:text-lg italic max-w-3xl mx-auto leading-relaxed">« Nous avons commencé notre voyage en 2003. Depuis lors, nous explorons les secrets du monde des enfants pour les traduire à travers nos histoires. »</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 space-y-4 shadow-sm">
+      <h2 class="brand-font text-2xl font-bold text-qcblue-700">📖 Qui sommes-nous ?</h2>
+      <p class="text-slate-600 leading-relaxed text-sm sm:text-base">Bienvenue chez <strong>Éditions LGMDesign35</strong>, une maison d'édition indépendante et passionnée, dédiée exclusivement à la création de contenus éducatifs, ludiques et pédagogiques en <strong>français québécois</strong> pour les enfants de <strong>2 à 10 ans</strong>.</p>
+      <p class="text-slate-600 leading-relaxed text-sm sm:text-base">Fondée avec la conviction que les premières années de l'enfant sont déterminantes pour son éveil, notre mission est d'accompagner les parents, le personnel éducateur en CPE/garderie et les enseignants du préscolaire et du primaire.</p>
+    </div>
+    <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 space-y-4 shadow-sm">
+      <h2 class="brand-font text-2xl font-bold text-qcblue-700">🎯 Notre Vision au Québec</h2>
+      <p class="text-slate-600 leading-relaxed text-sm sm:text-base">Nous croyons fermement que l'apprentissage doit être une expérience joyeuse. Chaque ouvrage est conçu selon des normes pédagogiques rigoureuses pour stimuler :</p>
+      <ul class="space-y-2 text-sm sm:text-base text-slate-600">
+        <li class="flex items-start gap-2"><span class="text-sky-500 font-bold">•</span><span><strong>La curiosité naturelle</strong> et l'imaginaire des tout-petits.</span></li>
+        <li class="flex items-start gap-2"><span class="text-sky-500 font-bold">•</span><span><strong>Le développement cognitif et moteur</strong> adapté à la petite enfance et au primaire.</span></li>
+        <li class="flex items-start gap-2"><span class="text-sky-500 font-bold">•</span><span><strong>La fierté de la langue française</strong> dès le plus jeune âge au Québec.</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="bg-amber-50 border border-amber-200 rounded-3xl p-6 sm:p-8 space-y-4">
+    <h2 class="brand-font text-2xl font-bold text-amber-900">🌟 Nos Héros Récurrents : Adam et ses amis</h2>
+    <p class="text-slate-700 leading-relaxed text-sm sm:text-base">À travers l'ensemble de nos histoires et cahiers, les enfants retrouvent <strong>Adam et ses amis</strong>, des personnages sympathiques qui les accompagnent dans leurs apprentissages quotidiens. Cette continuité favorise l'attachement, le plaisir de la lecture et la confiance en soi.</p>
+  </div>
+  <div class="space-y-4">
+    <h2 class="brand-font text-2xl font-bold text-slate-800 text-center">🤝 Nos Engagements Qualité</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white border border-slate-200 p-6 rounded-2xl text-center space-y-2"><span class="text-3xl">⚜️</span><h4 class="brand-font font-bold text-slate-800">Français Québécois</h4><p class="text-xs text-slate-500">Un vocabulaire adapté aux familles, CPE et écoles du Québec.</p></div>
+      <div class="bg-white border border-slate-200 p-6 rounded-2xl text-center space-y-2"><span class="text-3xl">📚</span><h4 class="brand-font font-bold text-slate-800">Papier &amp; Numérique</h4><p class="text-xs text-slate-500">Imprimés sur Amazon.ca et fichiers PDF téléchargeables sur Etsy.</p></div>
+      <div class="bg-white border border-slate-200 p-6 rounded-2xl text-center space-y-2"><span class="text-3xl">❤️</span><h4 class="brand-font font-bold text-slate-800">Support Pédagogique</h4><p class="text-xs text-slate-500">Des outils pensés pour répondre aux besoins concrets des éducateurs.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PAGE : CONTACT ================= -->
+<section id="page-contact" class="site-page hidden space-y-8">
+  <div class="text-center max-w-2xl mx-auto space-y-2">
+    <h1 class="brand-font text-3xl font-extrabold text-sky-900">CONTACTEZ-NOUS</h1>
+    <p class="text-slate-600 text-sm">Des questions sur nos livres ou nos ressources numériques ? L'équipe des <strong>Éditions LGMDesign35</strong> est à votre écoute ! Le bouton ci-dessous ouvre ton application courriel, déjà adressé à lgmdesign35@gmail.com.</p>
+  </div>
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="lg:col-span-2 bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm">
+      <form onsubmit="handleContactSubmit(event)" class="space-y-4">
+        <div><label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2" for="contact-name">Nom complet *</label><input id="contact-name" type="text" required placeholder="Ex. Tremblay, Marie" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm"></div>
+        <div><label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2" for="contact-email">Adresse courriel *</label><input id="contact-email" type="email" required placeholder="votre.courriel@exemple.ca" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm"></div>
+        <div><label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2" for="contact-subject">Sujet de votre demande</label>
+          <select id="contact-subject" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm">
+            <option>Question sur nos livres (Amazon.ca)</option>
+            <option>Ressources numériques PDF (Etsy)</option>
+            <option>Demande d'échantillons ou matériel pour CPE/Garderies</option>
+            <option>Autre question</option>
+          </select>
+        </div>
+        <div><label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2" for="contact-message">Votre message *</label><textarea id="contact-message" required rows="5" placeholder="Rédigez votre message ici..." class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm resize-none"></textarea></div>
+        <button type="submit" class="w-full py-4 bg-qcblue-600 hover:bg-qcblue-700 text-white font-bold brand-font rounded-xl shadow-md transition-all text-base">Ouvrir mon courriel et envoyer ✉️</button>
+      </form>
+      <div id="contact-success" class="hidden mt-4 p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-sm font-semibold text-center">Ton application courriel s'ouvre avec le message déjà rempli, adressé à lgmdesign35@gmail.com. Il ne reste qu'à appuyer sur Envoyer là-bas!</div>
+    </div>
+    <div class="space-y-6">
+      <div class="bg-sky-50 border border-sky-200 rounded-3xl p-6 space-y-3">
+        <h3 class="brand-font text-lg font-bold text-sky-900">📬 Service à la clientèle</h3>
+        <p class="text-xs text-slate-600 leading-relaxed">Notre équipe répond à vos messages sous 24h à 48h ouvrables.<br><strong>Courriel :</strong> lgmdesign35@gmail.com</p>
+        <a href="mailto:lgmdesign35@gmail.com" class="inline-block px-4 py-2 bg-qcblue-600 text-white text-xs font-bold rounded-xl">Écrire directement</a>
+      </div>
+      <div class="bg-slate-50 border border-slate-200 rounded-3xl p-6 text-center space-y-2">
+        <div class="w-12 h-12 bg-sky-200 rounded-full mx-auto flex items-center justify-center font-bold text-sky-800">35</div>
+        <h4 class="brand-font font-bold text-slate-800">Éditions LGMDesign35</h4>
+        <p class="text-xs text-slate-500">100% Contenu Éducatif en Français Québécois</p>
+        <a href="https://lgmdesign35.netlify.app/" target="_blank" rel="noopener" class="text-xs font-bold text-sky-600 hover:underline block">lgmdesign35.netlify.app ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- Modale livre -->
+<div id="book-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[60] hidden items-center justify-center p-4">
+  <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+    <button onclick="closeBookModal()" class="absolute top-4 right-4 w-8 h-8 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-500 font-bold">✕</button>
+    <div id="modal-cover" class="w-full h-48 rounded-2xl flex flex-col items-center justify-center p-4 text-center border"></div>
+    <div>
+      <span id="modal-age" class="text-xs font-bold px-3 py-1 rounded-full inline-block mb-2"></span>
+      <h3 id="modal-title" class="brand-font text-2xl font-bold text-slate-800"></h3>
+      <p id="modal-desc" class="text-sm text-slate-600 mt-2 leading-relaxed"></p>
+    </div>
+    <div class="pt-2 flex gap-3 flex-wrap">
+      <a id="modal-link-main" href="https://www.etsy.com/shop/LGMDesign35" target="_blank" rel="noopener" class="flex-1 py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs text-center rounded-xl transition-all min-w-[160px]">Voir dans la boutique Etsy ↗</a>
+      <a id="modal-link-extra" href="https://lgmdesign35.netlify.app/" target="_blank" rel="noopener" class="hidden flex-1 py-3 bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs text-center rounded-xl transition-all min-w-[160px]">Notre site ↗</a>
+      <button onclick="closeBookModal()" class="py-3 px-4 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs rounded-xl">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Pied de page avec liens réels -->
+<footer class="bg-slate-900 text-white pt-12 pb-8 mt-12 border-t border-slate-800">
+  <div class="max-w-6xl mx-auto px-4 space-y-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-slate-800">
+      <div class="space-y-3">
+        <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-sky-500 flex items-center justify-center text-white font-bold text-xs">LGM</div><span class="brand-font text-xl font-bold text-sky-400">Éditions LGMDesign35</span></div>
+        <p class="text-xs text-slate-400 leading-relaxed">Maison d'édition québécoise indépendante. Créateur de livres et ressources pédagogiques 100% en français pour les enfants de 2 à 10 ans.</p>
+      </div>
+      <div class="space-y-3">
+        <h4 class="brand-font text-sm font-bold text-amber-400 uppercase tracking-wider">Navigation</h4>
+        <ul class="space-y-2 text-xs text-slate-300">
+          <li><button onclick="switchSiteTab('accueil')" class="hover:text-sky-400 transition-colors">Accueil</button></li>
+          <li><button onclick="switchSiteTab('apprendre')" class="hover:text-sky-400 transition-colors">Apprendre le français québécois</button></li>
+          <li><button onclick="switchSiteTab('atelier')" class="hover:text-sky-400 transition-colors">Atelier — Dessin &amp; Coloriage</button></li>
+          <li><button onclick="switchSiteTab('livres')" class="hover:text-sky-400 transition-colors">Nos Livres (Amazon.ca)</button></li>
+          <li><button onclick="switchSiteTab('histoires')" class="hover:text-sky-400 transition-colors">Histoires gratuites</button></li>
+          <li><button onclick="switchSiteTab('ressources')" class="hover:text-sky-400 transition-colors">Ressources Digitales (Etsy)</button></li>
+          <li><button onclick="switchSiteTab('histoire')" class="hover:text-sky-400 transition-colors">Notre Histoire (2003)</button></li>
+          <li><button onclick="switchSiteTab('contact')" class="hover:text-sky-400 transition-colors">Contactez-nous</button></li>
+        </ul>
+      </div>
+      <div class="space-y-4">
+        <h4 class="brand-font text-sm font-bold text-amber-400 uppercase tracking-wider">Pour nous suivre &amp; commander</h4>
+        <p class="text-xs text-slate-300 leading-relaxed">Pour la suite et pour découvrir toutes nos nouveautés, visitez nos plateformes :</p>
+        <div class="grid grid-cols-2 gap-2 text-xs font-bold">
+          <a href="https://www.youtube.com/channel/UCCf-YvrdUnc-TosFoAh7Wvw" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2 bg-slate-800 hover:bg-red-600 text-slate-200 hover:text-white rounded-xl transition-all"><span>▶</span> YouTube</a>
+          <a href="https://www.tiktok.com/@lgm.design" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded-xl transition-all"><span>🎵</span> TikTok</a>
+          <a href="https://www.pinterest.com/lgmdesign35/" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2 bg-slate-800 hover:bg-rose-600 text-slate-200 hover:text-white rounded-xl transition-all"><span>📌</span> Pinterest</a>
+          <a href="https://www.instagram.com/lgmdesign35/" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2 bg-slate-800 hover:bg-pink-600 text-slate-200 hover:text-white rounded-xl transition-all"><span>📷</span> Instagram</a>
+          <a href="https://www.amazon.ca/dp/B0HQBQCMD1" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2 bg-slate-800 hover:bg-amber-600 text-slate-200 hover:text-white rounded-xl transition-all"><span>📚</span> Amazon KDP</a>
+          <a href="https://www.etsy.com/shop/LGMDesign35" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2 bg-slate-800 hover:bg-orange-600 text-slate-200 hover:text-white rounded-xl transition-all"><span>🛒</span> Etsy</a>
+        </div>
+        <a href="https://lgmdesign35.netlify.app/" target="_blank" rel="noopener" class="text-xs font-bold text-sky-400 hover:underline block">🌐 Notre site : lgmdesign35.netlify.app ↗</a>
+      </div>
+    </div>
+    <div class="flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-2 text-center">
+      <span>© 2026 Éditions LGMDesign35. Tous droits réservés. | Conçu pour le Québec.</span>
+      <span>www.lgmdesign35.netlify.app</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast québécois -->
+<div id="toast-quebec" class="fixed bottom-6 right-4 sm:right-6 translate-y-40 transition-transform duration-300 z-[70] bg-amber-400 text-amber-950 px-5 py-3 rounded-2xl shadow-2xl border-4 border-white font-black text-base sm:text-lg flex items-center gap-3 max-w-[92vw]">
+  <span class="text-3xl">⚜️</span>
+  <span id="toast-text">Super beau mon ami !</span>
+</div>
+
+<script>
+/* ============ ÉTAT GLOBAL (mémoire de session seulement) ============ */
+var state={ageGroup:'toddler',activeCategory:'all',stars:0,audioEnabled:true,flashcardIndex:0,quizIndex:0,quizList:[]};
+function addStars(n){state.stars+=n;updateStarsDisplay();}
+function updateStarsDisplay(){var el=document.getElementById('header-stars-count');if(el)el.innerText=state.stars;var c=document.getElementById('cert-stars-count');if(c)c.innerText=state.stars;}
+function toggleAudio(){state.audioEnabled=!state.audioEnabled;document.getElementById('audio-icon').className=state.audioEnabled?'fa-solid fa-volume-high':'fa-solid fa-volume-xmark text-rose-500';if(!state.audioEnabled&&'speechSynthesis' in window)window.speechSynthesis.cancel();}
+function playSpeech(text){if(!state.audioEnabled)return;if('speechSynthesis' in window){window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(text);u.lang='fr-CA';u.rate=0.85;u.pitch=1.1;window.speechSynthesis.speak(u);}}
+function triggerConfetti(){if(window.confetti){confetti({particleCount:60,spread:70,origin:{y:0.6}});}}
+var toastTimer=null;
+function showToast(text){var t=document.getElementById('toast-quebec');document.getElementById('toast-text').innerText=text;t.classList.remove('translate-y-40');if(toastTimer)clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.add('translate-y-40');},2600);}
+
+/* ============ AUDIO FX (créé au premier geste) ============ */
+var audioCtx=null;
+function getAudioCtx(){if(!audioCtx){try{audioCtx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){return null;}}if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume();return audioCtx;}
+function playSound(type){if(!state.audioEnabled)return;var ac=getAudioCtx();if(!ac)return;var osc=ac.createOscillator();var gain=ac.createGain();osc.connect(gain);gain.connect(ac.destination);var now=ac.currentTime;
+if(type==='pop'){osc.type='sine';osc.frequency.setValueAtTime(400,now);osc.frequency.exponentialRampToValueAtTime(800,now+0.08);gain.gain.setValueAtTime(0.4,now);gain.gain.exponentialRampToValueAtTime(0.01,now+0.08);osc.start();osc.stop(now+0.08);}
+else if(type==='cheer'){osc.type='triangle';osc.frequency.setValueAtTime(300,now);osc.frequency.linearRampToValueAtTime(600,now+0.2);gain.gain.setValueAtTime(0.3,now);gain.gain.linearRampToValueAtTime(0.01,now+0.3);osc.start();osc.stop(now+0.3);}
+else{osc.type='sawtooth';osc.frequency.setValueAtTime(180,now);osc.frequency.linearRampToValueAtTime(110,now+0.2);gain.gain.setValueAtTime(0.25,now);gain.gain.linearRampToValueAtTime(0.01,now+0.2);osc.start();osc.stop(now+0.2);}}
+var quebecPhrases=["Bravo mon ami !","C'est super beau !","Lâche pas !","Fantastique !","Capoté !","Champion !","Tu es vraiment doué !"];
+function speakQuebec(text){showToast(text);playSpeech(text);}
+
+/* ============ NAVIGATION PRINCIPALE (site) ============ */
+function toggleMobileMenu(){var m=document.getElementById('mobile-menu');if(m)m.classList.toggle('hidden');}
+function switchSiteTab(tabId){
+  var mm=document.getElementById('mobile-menu');if(mm)mm.classList.add('hidden');
+  document.querySelectorAll('.site-page').forEach(function(s){s.classList.add('hidden');});
+  var target=document.getElementById('page-'+tabId);if(target)target.classList.remove('hidden');
+  document.querySelectorAll('.main-tab').forEach(function(b){b.classList.remove('active');});
+  var btn=document.getElementById('main-'+tabId);if(btn)btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  playSound('pop');
+}
+
+/* ============ SITE : LIVRES ============ */
+function filterBooks(age){
+  switchSiteTab('livres');
+  document.querySelectorAll('.filter-btn').forEach(function(btn){btn.classList.remove('bg-qcblue-600','text-white');btn.classList.add('bg-white','text-slate-600');});
+  var activeBtn=document.getElementById('filter-'+age);
+  if(activeBtn){activeBtn.classList.remove('bg-white','text-slate-600');activeBtn.classList.add('bg-qcblue-600','text-white');}
+  var visible=0;
+  document.querySelectorAll('#books-grid .book-card').forEach(function(card){
+    if(age==='all'||card.getAttribute('data-age')===age){card.classList.remove('hidden');visible++;}else card.classList.add('hidden');
+  });
+  var emptyMsg=document.getElementById('books-empty-msg');
+  if(emptyMsg)emptyMsg.classList.toggle('hidden',visible>0);
+}
+var ETSY_SHOP_URL='https://www.etsy.com/shop/LGMDesign35';
+var SITE_URL='https://lgmdesign35.netlify.app/';
+var booksData={
+  aventures:{title:"Les aventures d'Adam et ses amis",age:'Préscolaire (4-6 ans)',ageColor:'bg-emerald-100 text-emerald-700',bgColor:'bg-sky-100 border-sky-200 text-sky-900',desc:"6 histoires avec Adam et ses amis : le ballon volant, la grande pluie, le voyage en bateau, la nuit des étoiles, le secret de la ruche et la première neige. 71 pages, pour les 4 à 6 ans. Par LGMDesign35. Version PDF sur Etsy — et gratuit sur notre site à partir du 25 novembre!",linkMain:{href:'https://www.etsy.com/listing/4601808390',label:'📥 Version PDF — Etsy (5,00 $) ↗'},linkExtra:{href:SITE_URL,label:'🎁 Gratuit sur le site dès le 25 novembre ↗'}},
+  halloween:{title:'Adam et ses amis : Halloween — 6 histoires',age:'Préscolaire (4-6 ans)',ageColor:'bg-emerald-100 text-emerald-700',bgColor:'bg-indigo-100 border-indigo-200 text-indigo-900',desc:"Un volume de 6 histoires sur le thème d'Halloween, avec Adam et ses amis. 71 pages, pour les 4 à 6 ans. Par LGMDesign35. Des frissons tout doux, en version PDF sur Etsy.",linkMain:{href:'https://www.etsy.com/listing/4603634496',label:'📥 Version PDF — Etsy (10,00 $) ↗'}},
+  lettres:{title:"Adam et l'aventure des lettres",age:'Préscolaire (4-6 ans)',ageColor:'bg-emerald-100 text-emerald-700',bgColor:'bg-amber-100 border-amber-200 text-amber-900',desc:"L'alphabet français raconté en histoires : Adam découvre les lettres une à une, accompagné de ses amis. 31 pages, pour les 4 à 6 ans. Par LGMDesign35. Bientôt sur Etsy."},
+  deuxhistoires:{title:'Adam et ses amis : 2 histoires',age:'Préscolaire (4-6 ans)',ageColor:'bg-emerald-100 text-emerald-700',bgColor:'bg-rose-100 border-rose-200 text-rose-900',desc:"Deux histoires illustrées à lire avec Adam et ses amis. 25 pages, pour les 4 à 6 ans. Par LGMDesign35. Bientôt disponible."},
+  jardin:{title:'Adam et ses amis : Le jardin de la coopération',age:'Préscolaire (4-6 ans)',ageColor:'bg-emerald-100 text-emerald-700',bgColor:'bg-emerald-100 border-emerald-200 text-emerald-900',desc:"Une histoire de coopération et d'entraide dans le jardin, avec Adam et ses amis. 13 pages, pour les 4 à 6 ans. Par LGMDesign35. Au choix : la version PDF sur Etsy ou le livre broché sur Amazon.ca.",linkMain:{href:'https://www.etsy.com/listing/4601160031',label:'📥 Version PDF — Etsy (1,50 $) ↗'},linkExtra:{href:'https://www.amazon.ca/dp/B0HQBQCMD1',label:'📚 Livre broché — Amazon ↗'}},
+  doigt:{title:'Adam dit adieu à son doigt',age:'Préscolaire (4-6 ans)',ageColor:'bg-emerald-100 text-emerald-700',bgColor:'bg-teal-100 border-teal-200 text-teal-900',desc:"Adam apprend à dire adieu à son doigt, étape par étape, avec douceur et fierté. 30 pages, pour les 4 à 6 ans. Par LGMDesign35. Déjà en livre broché sur Amazon — et gratuit sur notre site à partir du 25 novembre!",linkMain:{href:'https://www.amazon.ca/dp/B0HQZ4H5B9',label:'📚 Livre broché — Amazon ↗'},linkExtra:{href:SITE_URL,label:'🎁 Gratuit sur le site dès le 25 novembre ↗'}},
+  ecoute:{title:'Adam apprend à écouter',age:'Préscolaire (4-6 ans)',ageColor:'bg-emerald-100 text-emerald-700',bgColor:'bg-violet-100 border-violet-200 text-violet-900',desc:"Avec son lapin, son canard, son renard et sa mamie, Adam découvre que écouter, c'est aimer. 30 pages, pour les 4 à 6 ans. Par LGMDesign35. Bientôt en livre broché sur Amazon — aperçu gratuit de 5 pages sur notre site dès le 25 novembre!"}
+};
+function openBookModal(key){var d=booksData[key];if(!d)return;
+  document.getElementById('modal-title').innerText=d.title;
+  document.getElementById('modal-desc').innerText=d.desc;
+  var ageSpan=document.getElementById('modal-age');ageSpan.innerText='Groupe : '+d.age;ageSpan.className='text-xs font-bold px-3 py-1 rounded-full inline-block mb-2 '+d.ageColor;
+  var cover=document.getElementById('modal-cover');cover.className='w-full h-48 rounded-2xl flex flex-col items-center justify-center p-4 text-center border '+d.bgColor;
+  cover.innerHTML='<span class="text-xs font-bold uppercase tracking-widest mb-1">Éditions LGMDesign35</span><span class="brand-font text-xl font-extrabold leading-tight"></span><span class="text-xs mt-2 font-semibold">Adam et ses amis</span>';
+  cover.querySelector('.brand-font').innerText=d.title;
+  var mainLink=document.getElementById('modal-link-main');
+  if(mainLink){
+    if(d.linkMain){mainLink.href=d.linkMain.href;mainLink.innerText=d.linkMain.label;mainLink.classList.remove('hidden');}
+    else mainLink.classList.add('hidden');
+  }
+  var extraLink=document.getElementById('modal-link-extra');
+  if(extraLink){
+    if(d.linkExtra){extraLink.href=d.linkExtra.href;extraLink.innerText=d.linkExtra.label;extraLink.classList.remove('hidden');}
+    else extraLink.classList.add('hidden');
+  }
+  var m=document.getElementById('book-modal');m.classList.remove('hidden');m.classList.add('flex');
+}
+function closeBookModal(){var m=document.getElementById('book-modal');m.classList.add('hidden');m.classList.remove('flex');}
+function handleContactSubmit(e){e.preventDefault();
+  var name=document.getElementById('contact-name').value.trim();
+  var email=document.getElementById('contact-email').value.trim();
+  var subject=document.getElementById('contact-subject').value;
+  var msg=document.getElementById('contact-message').value.trim();
+  var body='Nom : '+name+'\nCourriel : '+email+'\n\n'+msg;
+  window.location.href='mailto:lgmdesign35@gmail.com?subject='+encodeURIComponent('[LGMDesign35] '+subject)+'&body='+encodeURIComponent(body);
+  document.getElementById('contact-success').classList.remove('hidden');
+}
+
+/* ============ APPRENDRE : DONNÉES ============ */
+var ALPHABET_DATA=[
+{letter:'A',word:'Abeille',emoji:'🐝',sentence:'A comme Abeille.'},{letter:'B',word:'Bleuet',emoji:'🫐',sentence:'B comme Bleuet.'},{letter:'C',word:'Castor',emoji:'🦫',sentence:'C comme Castor.'},{letter:'D',word:'Dindon',emoji:'🦃',sentence:'D comme Dindon.'},{letter:'E',word:'Érable',emoji:'🍁',sentence:'E comme Érable.'},{letter:'F',word:'Flocon',emoji:'❄️',sentence:'F comme Flocon.'},{letter:'G',word:'Gâteau',emoji:'🎂',sentence:'G comme Gâteau.'},{letter:'H',word:'Hibou',emoji:'🦉',sentence:'H comme Hibou.'},{letter:'I',word:'Igloo',emoji:'🧊',sentence:'I comme Igloo.'},{letter:'J',word:'Jardin',emoji:'🌻',sentence:'J comme Jardin.'},{letter:'K',word:'Kayak',emoji:'🛶',sentence:'K comme Kayak.'},{letter:'L',word:'Loup',emoji:'🐺',sentence:'L comme Loup.'},{letter:'M',word:'Mitaines',emoji:'🧤',sentence:'M comme Mitaines.'},{letter:'N',word:'Neige',emoji:'☃️',sentence:'N comme Neige.'},{letter:'O',word:'Orignal',emoji:'🫎',sentence:'O comme Orignal.'},{letter:'P',word:'Poutine',emoji:'🍟',sentence:'P comme Poutine.'},{letter:'Q',word:'Québec',emoji:'⚜️',sentence:'Q comme Québec.'},{letter:'R',word:'Raton',emoji:'🦝',sentence:'R comme Raton.'},{letter:'S',word:'Sapin',emoji:'🌲',sentence:'S comme Sapin.'},{letter:'T',word:'Tuque',emoji:'🧶',sentence:'T comme Tuque.'},{letter:'U',word:'Unicycle',emoji:'🚲',sentence:'U comme Unicycle.'},{letter:'V',word:'Vache',emoji:'🐮',sentence:'V comme Vache.'},{letter:'W',word:'Wapiti',emoji:'🦌',sentence:'W comme Wapiti.'},{letter:'X',word:'Xylophone',emoji:'🎼',sentence:'X comme Xylophone.'},{letter:'Y',word:'Yak',emoji:'🦬',sentence:'Y comme Yak.'},{letter:'Z',word:'Zèbre',emoji:'🏁',sentence:'Z comme Zèbre.'}];
+var NUMBER_WORDS=['','Un','Deux','Trois','Quatre','Cinq','Six','Sept','Huit','Neuf','Dix','Onze','Douze','Treize','Quatorze','Quinze','Seize','Dix-sept','Dix-huit','Dix-neuf','Vingt'];
+var HANGMAN_WORDS=[
+{word:'CASTOR',hint:'Grand rongeur avec une queue plate',emoji:'🦫'},
+{word:'TUQUE',hint:"Bonnet chaud d'hiver",emoji:'🧶'},
+{word:'NEIGE',hint:'Flocons blancs en hiver',emoji:'❄️'},
+{word:'POUTINE',hint:'Plat savoureux du Québec',emoji:'🍟'}];
+var KIDS_DATA={
+toddler:{categories:[{id:'animaux',name:'Les Animaux 🐾'},{id:'couleurs',name:'Les Couleurs 🎨'},{id:'nourriture',name:'Miam Miam! 🍎'}],
+words:[
+{fr:'Le castor',std:'Le castor canadien',meaning:'Grand rongeur avec une queue plate!',emoji:'🦫',cat:'animaux',phonetic:'Le kas-tor'},
+{fr:"L'orignal",std:"L'élan",meaning:'Le plus grand animal de la forêt du Québec!',emoji:'🫎',cat:'animaux',phonetic:'Lo-ri-gnal'},
+{fr:'Le caribou',std:'Le renne',meaning:'Un bel animal du Nord qui adore la neige!',emoji:'🦌',cat:'animaux',phonetic:'Le ka-ri-bou'},
+{fr:'Bleu fleurdelisé',std:'Le bleu du Québec',meaning:'La couleur du drapeau du Québec!',emoji:'🟦',cat:'couleurs',phonetic:'Bleu fleur-de-li-sé'},
+{fr:"Le sirop d'érable",std:"Sirop d'érable",meaning:'Le sirop sucré fait au Québec!',emoji:'🍁',cat:'nourriture',phonetic:'Le si-ro dé-rable'}]},
+older:{categories:[{id:'expressions',name:'Expressions Québécoises ⚜️'},{id:'meteo',name:"La Météo & L'Hiver ❄️"}],
+words:[
+{fr:"C'est le fun!",std:"C'est très amusant!",meaning:'Une activité super amusante!',emoji:'🎉',cat:'expressions',phonetic:'Sè le feun'},
+{fr:'Attache ta tuque!',std:'Prépare-toi bien!',meaning:'Prépare-toi, ça va aller vite!',emoji:'🎩',cat:'expressions',phonetic:'A-tash ta tuk'},
+{fr:'La tuque',std:"Le bonnet d'hiver",meaning:"Le bonnet chaud pour l'hiver!",emoji:'🧶',cat:'meteo',phonetic:'La tuk'}]}};
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+/* ============ APPRENDRE : NAVIGATION ============ */
+function switchLearnTab(tabId){
+  document.querySelectorAll('.learn-tab').forEach(function(b){b.classList.remove('bg-qcblue-600','text-white','shadow-md');if(!b.classList.contains('bg-white'))b.classList.add('bg-white');b.classList.add('text-slate-600');});
+  var btn=document.getElementById('ltab-'+tabId);
+  if(btn){btn.classList.remove('bg-white','text-slate-600','text-amber-700','text-indigo-700');btn.classList.add('bg-qcblue-600','text-white','shadow-md');}
+  document.querySelectorAll('.learn-section').forEach(function(s){s.classList.add('hidden');});
+  var sec=document.getElementById('section-'+tabId);if(sec)sec.classList.remove('hidden');
+  if(tabId==='cards')renderFlashcard();
+  playSound('pop');
+}
+function setAgeGroup(group){
+  state.ageGroup=group;state.activeCategory='all';state.flashcardIndex=0;
+  var t=document.getElementById('btn-age-toddler'),o=document.getElementById('btn-age-older');
+  if(group==='toddler'){t.className='px-3.5 py-1.5 rounded-full bg-white text-qcblue-700 font-extrabold shadow-sm transition';o.className='px-3.5 py-1.5 rounded-full bg-qcblue-600 text-white font-extrabold hover:bg-sky-500 transition';}
+  else{t.className='px-3.5 py-1.5 rounded-full bg-qcblue-600 text-white font-extrabold hover:bg-sky-500 transition';o.className='px-3.5 py-1.5 rounded-full bg-white text-qcblue-700 font-extrabold shadow-sm transition';}
+  renderCategoryChips();renderWordsGrid();initMatchGame();renderFlashcard();playSound('pop');
+}
+function renderCategoryChips(){
+  var container=document.getElementById('category-chips');var cats=KIDS_DATA[state.ageGroup].categories;
+  var html='<button data-cat="all" onclick="filterCategory(\'all\')" class="cat-chip px-4 py-2 rounded-2xl border font-bold text-xs bg-amber-400 text-slate-900">⭐ Tous les mots</button>';
+  cats.forEach(function(c){html+='<button data-cat="'+c.id+'" onclick="filterCategory(\''+c.id+'\')" class="cat-chip px-4 py-2 rounded-2xl border font-bold text-xs bg-white text-slate-600">'+esc(c.name)+'</button>';});
+  container.innerHTML=html;
+}
+function filterCategory(catId){state.activeCategory=catId;
+  document.querySelectorAll('.cat-chip').forEach(function(b){var on=b.getAttribute('data-cat')===catId;b.className='cat-chip px-4 py-2 rounded-2xl border font-bold text-xs '+(on?'bg-amber-400 text-slate-900':'bg-white text-slate-600');});
+  renderWordsGrid();playSound('pop');}
+function renderWordsGrid(){
+  var container=document.getElementById('words-grid');var all=KIDS_DATA[state.ageGroup].words;
+  var filtered=state.activeCategory==='all'?all:all.filter(function(w){return w.cat===state.activeCategory;});
+  container.innerHTML='';
+  filtered.forEach(function(w){
+    var d=document.createElement('div');d.className='bg-white rounded-3xl p-4 border-2 border-sky-100 shadow-md text-center cursor-pointer pop-btn';
+    d.innerHTML='<span class="text-5xl block my-2">'+w.emoji+'</span><h4 class="font-black text-lg text-qcblue-700">'+esc(w.fr)+'</h4><span class="text-xs font-bold text-amber-600">['+esc(w.phonetic)+']</span><span class="block text-[11px] font-bold text-slate-400 mt-1">🔊 Touche pour écouter</span>';
+    d.onclick=function(){playSpeech(w.fr);playSound('pop');};
+    container.appendChild(d);
+  });
+}
+function renderAlphabet(){
+  var c=document.getElementById('container-alphabet');c.innerHTML='';
+  ALPHABET_DATA.forEach(function(a){
+    var d=document.createElement('div');d.className='bg-white p-4 rounded-3xl border-2 border-sky-100 shadow-sm text-center cursor-pointer pop-btn';
+    d.innerHTML='<span class="text-3xl font-black text-qcblue-700 block">'+a.letter+'</span><span class="text-3xl block my-1">'+a.emoji+'</span><span class="text-xs font-bold text-slate-500 block">'+esc(a.word)+'</span>';
+    d.onclick=function(){playSpeech(a.letter+'. '+a.sentence);playSound('pop');};
+    c.appendChild(d);
+  });
+}
+function renderNumbers(){
+  var c=document.getElementById('container-numbers');c.innerHTML='';
+  for(var i=1;i<=20;i++){(function(n){
+    var d=document.createElement('div');d.className='bg-white p-4 rounded-3xl border-2 border-amber-100 shadow-sm text-center cursor-pointer pop-btn';
+    d.innerHTML='<span class="text-4xl font-black text-amber-500 block">'+n+'</span><span class="text-xs font-bold text-slate-500 block mt-1">'+NUMBER_WORDS[n]+'</span>';
+    d.onclick=function(){playSpeech(NUMBER_WORDS[n]+'. Chiffre '+n);playSound('pop');};
+    c.appendChild(d);
+  })(i);}
+}
+function switchAbcMode(mode){
+  document.getElementById('container-alphabet').classList.toggle('hidden',mode!=='letters');
+  document.getElementById('container-numbers').classList.toggle('hidden',mode!=='numbers');
+  var l=document.getElementById('subtab-letters'),n=document.getElementById('subtab-numbers');
+  l.className='px-5 py-2 rounded-full font-extrabold text-sm '+(mode==='letters'?'bg-amber-400 text-slate-900 shadow-md':'bg-white text-slate-600 shadow-sm hover:bg-sky-50');
+  n.className='px-5 py-2 rounded-full font-extrabold text-sm '+(mode==='numbers'?'bg-amber-400 text-slate-900 shadow-md':'bg-white text-slate-600 shadow-sm hover:bg-sky-50');
+  playSound('pop');
+}
+function getCurrentWords(){return KIDS_DATA[state.ageGroup].words;}
+function renderFlashcard(){
+  var words=getCurrentWords();if(state.flashcardIndex>=words.length)state.flashcardIndex=0;
+  var word=words[state.flashcardIndex];if(!word)return;
+  var card=document.querySelector('.flip-card');if(card)card.classList.remove('flipped');
+  document.getElementById('fc-category').innerText='⚜️ '+word.cat.toUpperCase();
+  document.getElementById('fc-emoji').innerText=word.emoji;
+  document.getElementById('fc-french').innerText=word.fr;
+  document.getElementById('fc-phonetic').innerText='['+word.phonetic+']';
+  document.getElementById('fc-meaning').innerText=word.meaning;
+  document.getElementById('fc-quebec-note').innerText=word.std;
+  document.getElementById('fc-counter').innerText=(state.flashcardIndex+1)+' / '+words.length;
+}
+function flipCard(){document.querySelector('.flip-card').classList.toggle('flipped');playSound('pop');}
+function playCurrentFlashcardAudio(){var w=getCurrentWords()[state.flashcardIndex];if(w)playSpeech(w.fr);}
+function nextFlashcard(){if(state.flashcardIndex<getCurrentWords().length-1){state.flashcardIndex++;renderFlashcard();playSound('pop');}}
+function prevFlashcard(){if(state.flashcardIndex>0){state.flashcardIndex--;renderFlashcard();playSound('pop');}}
+function markCardMastered(){addStars(1);triggerConfetti();speakQuebec('Bravo! Carte comprise! ⭐');if(state.flashcardIndex<getCurrentWords().length-1){state.flashcardIndex++;renderFlashcard();}}
+function switchGameMode(mode){
+  document.getElementById('game-quiz-container').classList.toggle('hidden',mode!=='quiz');
+  document.getElementById('game-match-container').classList.toggle('hidden',mode!=='match');
+  document.getElementById('game-hangman-container').classList.toggle('hidden',mode!=='hangman');
+  ['quiz','match','hangman'].forEach(function(m){var b=document.getElementById('subtab-'+m);b.className='px-4 py-2 rounded-full font-extrabold text-xs sm:text-sm '+(m===mode?'bg-amber-400 text-slate-900 shadow-md':'bg-white text-slate-600 shadow-sm hover:bg-sky-50');});
+  playSound('pop');
+}
+/* Quiz */
+function initQuizGame(){
+  var all=KIDS_DATA.toddler.words.concat(KIDS_DATA.older.words);
+  state.quizList=all.slice().sort(function(){return Math.random()-0.5;}).slice(0,5);
+  state.quizIndex=0;
+  document.getElementById('quiz-options-container').classList.remove('hidden');
+  document.getElementById('quiz-success-msg').classList.add('hidden');
+  renderQuizQuestion();
+}
+function renderQuizQuestion(){
+  if(state.quizIndex>=state.quizList.length){
+    document.getElementById('quiz-options-container').classList.add('hidden');
+    document.getElementById('quiz-success-msg').classList.remove('hidden');
+    document.getElementById('quiz-question-num').innerText='Terminé!';
+    addStars(3);triggerConfetti();speakQuebec('Bravo champion! Quiz terminé! 🏆');return;
+  }
+  var current=state.quizList[state.quizIndex];
+  document.getElementById('quiz-question-num').innerText='Question '+(state.quizIndex+1)+' / '+state.quizList.length;
+  document.getElementById('quiz-emoji').innerText=current.emoji;
+  var pool=KIDS_DATA.toddler.words.concat(KIDS_DATA.older.words).filter(function(w){return w.fr!==current.fr;});
+  var choices=[current].concat(pool.sort(function(){return Math.random()-0.5;}).slice(0,3)).sort(function(){return Math.random()-0.5;});
+  var box=document.getElementById('quiz-options-container');box.innerHTML='';
+  choices.forEach(function(ch){
+    var b=document.createElement('button');b.className='p-4 rounded-2xl border-2 border-slate-200 bg-white font-extrabold text-slate-700 flex justify-between items-center gap-2 pop-btn hover:border-amber-400';
+    b.innerHTML='<span>'+esc(ch.fr)+'</span><span class="text-2xl">'+ch.emoji+'</span>';
+    b.onclick=function(){checkQuizChoice(ch.fr,current.fr);};
+    box.appendChild(b);
+  });
+}
+function checkQuizChoice(selected,correct){
+  if(selected===correct){addStars(1);playSound('cheer');triggerConfetti();showToast('Bonne réponse! ⭐');state.quizIndex++;setTimeout(renderQuizQuestion,450);}
+  else{playSound('wrong');showToast('Essaie encore! 🎈');}
+}
+function playQuizAudio(){var c=state.quizList[state.quizIndex];if(c)playSpeech(c.fr);}
+function resetQuizGame(){initQuizGame();playSound('pop');}
+/* Association */
+var selectedMatchStr=null,selectedMatchBtn=null,matchFound=0,matchTotal=0;
+function initMatchGame(){
+  selectedMatchStr=null;selectedMatchBtn=null;matchFound=0;
+  var words=getCurrentWords().slice(0,3);matchTotal=words.length;
+  document.getElementById('match-win-msg').classList.add('hidden');
+  var wc=document.getElementById('match-words-col');wc.innerHTML='';
+  words.forEach(function(w){
+    var b=document.createElement('button');b.className='w-full p-3 bg-white border-2 border-slate-200 rounded-2xl font-black text-sm text-slate-700 pop-btn';
+    b.innerText=w.fr;b.onclick=function(){selectMatchWord(b,w.fr);};wc.appendChild(b);
+  });
+  var ic=document.getElementById('match-images-col');ic.innerHTML='';
+  words.slice().sort(function(){return Math.random()-0.5;}).forEach(function(w){
+    var b=document.createElement('button');b.className='w-full p-3 bg-white border-2 border-slate-200 rounded-2xl text-3xl pop-btn';
+    b.innerText=w.emoji;b.onclick=function(){selectMatchImage(b,w.fr);};ic.appendChild(b);
+  });
+}
+function selectMatchWord(btn,str){
+  if(btn.disabled)return;
+  document.querySelectorAll('#match-words-col button').forEach(function(b){if(!b.disabled)b.classList.remove('border-amber-400','bg-amber-50');});
+  selectedMatchStr=str;selectedMatchBtn=btn;btn.classList.add('border-amber-400','bg-amber-50');playSpeech(str);playSound('pop');
+}
+function selectMatchImage(btn,str){
+  if(btn.disabled)return;
+  if(!selectedMatchStr){showToast("Touche d'abord un mot! 👈");return;}
+  if(selectedMatchStr===str){
+    btn.disabled=true;btn.classList.add('border-emerald-400','bg-emerald-50','opacity-70');
+    selectedMatchBtn.disabled=true;selectedMatchBtn.classList.add('border-emerald-400','bg-emerald-50','opacity-70');
+    selectedMatchStr=null;selectedMatchBtn=null;matchFound++;addStars(1);playSound('cheer');
+    if(matchFound>=matchTotal){document.getElementById('match-win-msg').classList.remove('hidden');triggerConfetti();speakQuebec('Fantastique! Association réussie! ⭐');}
+    else showToast('Bravo! Bonne association! 🧩');
+  }else{playSound('wrong');showToast('Pas tout à fait… essaie une autre image!');}
+}
+/* Mot mystère */
+var hangmanState={currentIdx:0,guessedLetters:[]};
+function initHangmanGame(){
+  hangmanState.guessedLetters=[];
+  var item=HANGMAN_WORDS[hangmanState.currentIdx];
+  document.getElementById('hangman-hint-emoji').innerText=item.emoji;
+  document.getElementById('hangman-hint-text').innerText='Indice : '+item.hint;
+  document.getElementById('hangman-win-msg').classList.add('hidden');
+  renderHangmanWord();renderHangmanKeyboard();
+}
+function renderHangmanWord(){
+  var item=HANGMAN_WORDS[hangmanState.currentIdx];
+  document.getElementById('hangman-word-display').innerText=item.word.split('').map(function(l){return hangmanState.guessedLetters.indexOf(l)>=0?l:'_';}).join(' ');
+}
+function renderHangmanKeyboard(){
+  var kb=document.getElementById('hangman-keyboard');kb.innerHTML='';
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZÉ'.split('').forEach(function(l){
+    var b=document.createElement('button');b.className='w-9 h-9 rounded-xl font-black text-xs bg-purple-100 text-purple-700 pop-btn';b.innerText=l;
+    b.onclick=function(){guessHangmanLetter(l,b);};kb.appendChild(b);
+  });
+}
+function guessHangmanLetter(l,btn){
+  if(hangmanState.guessedLetters.indexOf(l)>=0)return;
+  hangmanState.guessedLetters.push(l);
+  var item=HANGMAN_WORDS[hangmanState.currentIdx];
+  var good=item.word.indexOf(l)>=0;
+  if(btn){btn.disabled=true;btn.className='w-9 h-9 rounded-xl font-black text-xs pop-btn '+(good?'bg-emerald-500 text-white':'bg-slate-200 text-slate-400');}
+  playSound(good?'pop':'wrong');renderHangmanWord();
+  var won=item.word.split('').every(function(ch){return hangmanState.guessedLetters.indexOf(ch)>=0;});
+  if(won){document.getElementById('hangman-win-msg').classList.remove('hidden');addStars(2);triggerConfetti();speakQuebec('Bravo! Le mot était '+item.word+'! 🎉');}
+}
+function nextHangmanWord(){hangmanState.currentIdx=(hangmanState.currentIdx+1)%HANGMAN_WORDS.length;initHangmanGame();playSound('pop');}
+/* Certificat */
+function generateCertificate(){
+  var name=document.getElementById('kid-name-input').value.trim()||'Champion';
+  document.getElementById('cert-kid-name').innerText=name;
+  document.getElementById('cert-stars-count').innerText=state.stars;
+  document.getElementById('cert-date').innerText=new Date().toLocaleDateString('fr-CA');
+  triggerConfetti();speakQuebec('Félicitations '+name+'! 🎓');
+}
+
+/* ============ ATELIER : DESSIN LIBRE ============ */
+var paintCanvas=document.getElementById('paintCanvas');
+var pctx=paintCanvas.getContext('2d');
+var isDrawing=false,currentTool='brush',currentColor='#ec4899',currentLineWidth=14,currentStamp='⚜️';
+var colorPalette=['#ec4899','#ef4444','#f97316','#eab308','#22c55e','#06b6d4','#3b82f6','#a855f7','#ffffff','#000000'];
+function buildPalette(containerId,ringClass,onPick){
+  var container=document.getElementById(containerId);container.innerHTML='';
+  colorPalette.forEach(function(hex,idx){
+    var btn=document.createElement('button');btn.className='w-10 h-10 rounded-full border-4 border-white shadow-md btn-bounce flex-shrink-0'+(idx===(containerId==='coloring-palette'?1:0)?' scale-125 ring-2 '+ringClass:'');
+    btn.style.backgroundColor=hex;btn.setAttribute('aria-label','Couleur '+hex);
+    btn.onclick=function(){container.querySelectorAll('button').forEach(function(b){b.classList.remove('scale-125','ring-2','ring-pink-500','ring-purple-500');});btn.classList.add('scale-125','ring-2',ringClass);onPick(hex);playSound('pop');};
+    container.appendChild(btn);
+  });
+}
+function initDrawPalette(){buildPalette('palette-container','ring-pink-500',function(hex){currentColor=hex;if(currentTool==='eraser')setDrawTool('brush');});}
+function initColoringPalette(){buildPalette('coloring-palette','ring-purple-500',function(hex){selectedColoringColor=hex;});}
+function resizePaintCanvas(){
+  if(!paintCanvas||!paintCanvas.parentElement)return;
+  var parent=paintCanvas.parentElement;
+  var w=parent.clientWidth,h=parent.clientHeight;
+  if(!w||!h)return;
+  var tmp=document.createElement('canvas');tmp.width=paintCanvas.width;tmp.height=paintCanvas.height;
+  if(paintCanvas.width&&paintCanvas.height)tmp.getContext('2d').drawImage(paintCanvas,0,0);
+  paintCanvas.width=w;paintCanvas.height=h;
+  pctx.lineCap='round';pctx.lineJoin='round';
+  pctx.fillStyle='#ffffff';pctx.fillRect(0,0,w,h);
+  if(tmp.width&&tmp.height)pctx.drawImage(tmp,0,0);
+}
+function setDrawTool(tool){
+  currentTool=tool;
+  [['brush','tool-brush'],['stamp','tool-stamp'],['eraser','tool-eraser']].forEach(function(pair){
+    var el=document.getElementById(pair[1]);
+    el.className=tool===pair[0]?'btn-bounce bg-pink-500 text-white p-3 rounded-xl shadow font-bold flex items-center gap-2 border-2 border-pink-600':'btn-bounce bg-slate-100 text-slate-700 hover:bg-slate-200 p-3 rounded-xl font-bold flex items-center gap-2 border-2 border-slate-300';
+  });
+  var sc=document.getElementById('stamp-container');
+  if(tool==='stamp'){sc.classList.remove('hidden');sc.classList.add('flex');}else{sc.classList.add('hidden');sc.classList.remove('flex');}
+  playSound('pop');
+}
+function setLineWidth(w){currentLineWidth=w;playSound('pop');}
+function setStamp(e){currentStamp=e;playSound('pop');showToast('Étampe : '+e);}
+function getCanvasPos(e){var r=paintCanvas.getBoundingClientRect();var cx=e.touches?e.touches[0].clientX:e.clientX;var cy=e.touches?e.touches[0].clientY:e.clientY;return{x:cx-r.left,y:cy-r.top};}
+function startDrawing(e){var pos=getCanvasPos(e);
+  if(currentTool==='stamp'){pctx.font=(currentLineWidth*3)+'px serif';pctx.textAlign='center';pctx.textBaseline='middle';pctx.fillText(currentStamp,pos.x,pos.y);playSound('pop');return;}
+  isDrawing=true;pctx.beginPath();pctx.moveTo(pos.x,pos.y);
+  pctx.strokeStyle=currentTool==='eraser'?'#ffffff':currentColor;pctx.lineWidth=currentLineWidth;pctx.lineTo(pos.x+0.1,pos.y+0.1);pctx.stroke();
+}
+function drawMove(e){if(!isDrawing)return;var pos=getCanvasPos(e);pctx.strokeStyle=currentTool==='eraser'?'#ffffff':currentColor;pctx.lineWidth=currentLineWidth;pctx.lineTo(pos.x,pos.y);pctx.stroke();}
+function stopDrawing(){if(isDrawing){pctx.closePath();isDrawing=false;}}
+function clearCanvas(){pctx.fillStyle='#ffffff';pctx.fillRect(0,0,paintCanvas.width,paintCanvas.height);playSound('wrong');showToast('Toile effacée! On recommence! 🎨');}
+function downloadCanvas(){var link=document.createElement('a');link.download='mon-dessin-quebec.png';link.href=paintCanvas.toDataURL('image/png');document.body.appendChild(link);link.click();link.remove();addStars(1);speakQuebec('Super beau dessin ! Téléchargé !');triggerConfetti();}
+paintCanvas.addEventListener('mousedown',startDrawing);
+paintCanvas.addEventListener('mousemove',drawMove);
+paintCanvas.addEventListener('mouseup',stopDrawing);
+paintCanvas.addEventListener('mouseleave',stopDrawing);
+paintCanvas.addEventListener('touchstart',function(e){e.preventDefault();startDrawing(e);},{passive:false});
+paintCanvas.addEventListener('touchmove',function(e){e.preventDefault();drawMove(e);},{passive:false});
+paintCanvas.addEventListener('touchend',stopDrawing);
+
+/* ============ ATELIER : NAVIGATION INTERNE ============ */
+function switchMode(mode){
+  playSound('pop');
+  ['home','draw','color','games'].forEach(function(m){var el=document.getElementById('mode-'+m);if(el){el.classList.add('hidden');el.classList.remove('flex');}});
+  var active=document.getElementById('mode-'+mode);
+  if(active){active.classList.remove('hidden');if(mode!=='home')active.classList.add('flex');}
+  if(mode==='draw'){requestAnimationFrame(function(){resizePaintCanvas();});setTimeout(resizePaintCanvas,80);}
+  else if(mode==='color'){if(!currentColoringSvg)loadColoringTemplate('castor');}
+  else if(mode==='games'){startMiniGame('balloons');}
+}
+
+/* ============ ATELIER : COLORIAGE ============ */
+var selectedColoringColor='#ef4444',currentColoringSvg='';
+var coloringTemplates={
+castor:'<svg viewBox="0 0 400 400" class="w-full h-full max-h-[500px]"><rect width="400" height="400" fill="#f8fafc" class="colorable" stroke="#334155" stroke-width="4"/><path class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="6" d="M 120 200 C 100 280, 140 350, 260 350 C 320 350, 320 280, 280 200 C 260 160, 140 160, 120 200 Z"/><path class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="6" d="M 280 290 C 370 300, 390 380, 310 370 C 270 365, 275 320, 280 290 Z"/><circle class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="6" cx="200" cy="150" r="70"/><circle class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="6" cx="140" cy="90" r="22"/><circle class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="6" cx="260" cy="90" r="22"/><ellipse class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="5" cx="200" cy="165" rx="30" ry="20"/><ellipse fill="#1e293b" cx="200" cy="155" rx="12" ry="8"/><rect class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="4" x="190" y="180" width="9" height="16" rx="2"/><rect class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="4" x="201" y="180" width="9" height="16" rx="2"/><circle fill="#1e293b" cx="175" cy="135" r="8"/><circle fill="#ffffff" cx="173" cy="133" r="3"/><circle fill="#1e293b" cx="225" cy="135" r="8"/><circle fill="#ffffff" cx="223" cy="133" r="3"/><path class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="6" d="M 140 110 Q 200 40 260 110 Z"/><circle class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="5" cx="200" cy="45" r="15"/></svg>',
+chateau:'<svg viewBox="0 0 400 400" class="w-full h-full max-h-[500px]"><rect width="400" height="400" fill="#f8fafc" class="colorable" stroke="#334155" stroke-width="4"/><rect class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="6" x="110" y="180" width="180" height="170"/><rect class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="6" x="60" y="120" width="60" height="230"/><polygon class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="6" points="50,120 90,40 130,120"/><rect class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="6" x="280" y="120" width="60" height="230"/><polygon class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="6" points="270,120 310,40 350,120"/><path class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="6" d="M 165 350 L 165 260 Q 200 230 235 260 L 235 350 Z"/><circle class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="5" cx="90" cy="180" r="14"/><circle class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="5" cx="310" cy="180" r="14"/><line x1="90" y1="40" x2="90" y2="10" stroke="#1e293b" stroke-width="4"/><polygon class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="4" points="90,10 130,25 90,40"/></svg>',
+fusee:'<svg viewBox="0 0 400 400" class="w-full h-full max-h-[500px]"><rect width="400" height="400" fill="#0f172a" class="colorable" stroke="#334155" stroke-width="4"/><polygon class="colorable" fill="#ffffff" points="70,50 75,65 90,65 78,75 82,90 70,80 58,90 62,75 50,65 65,65"/><polygon class="colorable" fill="#ffffff" points="320,80 323,90 335,90 325,97 328,110 320,102 312,110 315,97 305,90 317,90"/><path class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="6" d="M 200 50 C 260 120, 250 280, 250 290 L 150 290 C 150 280, 140 120, 200 50 Z"/><path class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="6" d="M 200 50 C 235 90, 235 120, 235 120 L 165 120 C 165 120, 165 90, 200 50 Z"/><path class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="6" d="M 150 220 L 90 290 L 150 290 Z"/><path class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="6" d="M 250 220 L 310 290 L 250 290 Z"/><circle class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="6" cx="200" cy="180" r="30"/><circle class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="4" cx="200" cy="180" r="20"/><polygon class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="5" points="165,290 200,370 235,290"/></svg>',
+auto:'<svg viewBox="0 0 400 400" class="w-full h-full max-h-[500px]"><rect width="400" height="400" fill="#f8fafc" class="colorable" stroke="#334155" stroke-width="4"/><path class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="6" d="M 50 240 L 70 170 Q 140 120 250 140 L 340 180 L 360 240 Q 370 270 340 270 L 50 270 Z"/><path class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="5" d="M 120 170 L 170 145 L 170 190 L 105 190 Z"/><path class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="5" d="M 185 145 L 240 150 L 240 190 L 185 190 Z"/><circle class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="6" cx="110" cy="270" r="40"/><circle class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="5" cx="110" cy="270" r="20"/><circle class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="6" cx="290" cy="270" r="40"/><circle class="colorable" fill="#ffffff" stroke="#1e293b" stroke-width="5" cx="290" cy="270" r="20"/></svg>'};
+function loadColoringTemplate(key){
+  currentColoringSvg=key;
+  var sel=document.getElementById('coloring-template-select');if(sel)sel.value=key;
+  var wrapper=document.getElementById('coloring-svg-wrapper');
+  wrapper.innerHTML=coloringTemplates[key];
+  wrapper.querySelectorAll('.colorable').forEach(function(el){
+    el.style.cursor='pointer';
+    el.addEventListener('click',function(e){e.stopPropagation();el.setAttribute('fill',selectedColoringColor);playSound('pop');speakQuebec(quebecPhrases[Math.floor(Math.random()*quebecPhrases.length)]);});
+  });
+}
+function clearColoring(){loadColoringTemplate(currentColoringSvg||'castor');playSound('wrong');showToast('Coloriage recommencé! 🖌️');}
+
+/* ============ ATELIER : JEUX DE COULEURS ============ */
+function startMiniGame(gameKey){
+  playSound('pop');
+  ['balloons','memory','sort'].forEach(function(g){
+    var tab=document.getElementById('tab-'+g);var sec=document.getElementById('game-'+g);
+    if(g===gameKey){tab.className='btn-bounce bg-amber-500 text-white font-bold px-4 py-2 sm:px-6 sm:py-3 rounded-2xl shadow-md border-2 border-amber-600 flex items-center gap-2';sec.classList.remove('hidden');sec.classList.add('flex');}
+    else{tab.className='btn-bounce bg-slate-200 text-slate-700 font-bold px-4 py-2 sm:px-6 sm:py-3 rounded-2xl shadow-md border-2 border-slate-300 flex items-center gap-2';sec.classList.add('hidden');sec.classList.remove('flex');}
+  });
+  if(gameKey==='balloons')initBalloonGame();
+  if(gameKey==='memory')initMemoryGame();
+  if(gameKey==='sort')initSortGame();
+}
+var balloonScore=0;
+var balloonColors=[{name:'ROUGE',hex:'#ef4444'},{name:'BLEU',hex:'#3b82f6'},{name:'JAUNE',hex:'#eab308'},{name:'VERT',hex:'#22c55e'}];
+var targetColor=balloonColors[0];
+function initBalloonGame(){balloonScore=0;document.getElementById('balloon-score').innerText=balloonScore;nextBalloonRound();}
+function nextBalloonRound(){
+  targetColor=balloonColors[Math.floor(Math.random()*balloonColors.length)];
+  document.getElementById('balloon-target-text').innerText='Éclate les ballons '+targetColor.name+' !';
+  showToast('Trouve la couleur '+targetColor.name+' ! 🎈');
+  var container=document.getElementById('balloon-container');container.innerHTML='';
+  for(var i=0;i<7;i++){(function(){
+    var rc=Math.random()>0.4?targetColor:balloonColors[Math.floor(Math.random()*balloonColors.length)];
+    var b=document.createElement('div');
+    b.className='absolute cursor-pointer balloon-anim flex items-center justify-center';
+    b.style.left=(5+Math.random()*72)+'%';b.style.top=(5+Math.random()*55)+'%';b.style.animationDelay=(Math.random()*2)+'s';
+    b.innerHTML='<div class="relative flex flex-col items-center"><div class="w-16 h-20 sm:w-20 sm:h-24 rounded-full shadow-lg border-2 border-white/40 flex items-start justify-center" style="background-color:'+rc.hex+'"><div class="w-4 h-6 bg-white/30 rounded-full mt-3 -ml-5" style="transform:rotate(-30deg)"></div></div><div style="width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid '+rc.hex+'"></div><div class="w-0.5 h-8 bg-slate-400"></div></div>';
+    b.onclick=function(){
+      if(rc.name===targetColor.name){playSound('pop');balloonScore+=10;document.getElementById('balloon-score').innerText=balloonScore;b.style.transform='scale(0)';b.style.transition='transform .2s';setTimeout(function(){b.remove();},200);
+        if(balloonScore%30===0){addStars(1);speakQuebec(quebecPhrases[Math.floor(Math.random()*quebecPhrases.length)]);triggerConfetti();}
+        setTimeout(function(){if(container.querySelectorAll('.balloon-anim').length<=3)nextBalloonRound();},500);
+      }else{playSound('wrong');speakQuebec('Oups! Essaie encore mon ami !');}
+    };
+    container.appendChild(b);
+  })();}
+}
+var memoryColors=['#ef4444','#3b82f6','#22c55e','#eab308','#a855f7','#f97316'];
+var flippedCards=[],matchedPairs=0;
+function initMemoryGame(){
+  var grid=document.getElementById('memory-grid');grid.innerHTML='';flippedCards=[];matchedPairs=0;
+  var deck=memoryColors.concat(memoryColors).sort(function(){return Math.random()-0.5;});
+  deck.forEach(function(hex){
+    var card=document.createElement('div');
+    card.className='w-full h-24 sm:h-28 bg-white rounded-2xl shadow-md border-4 border-purple-200 cursor-pointer flex items-center justify-center text-3xl font-bold btn-bounce';
+    card.dataset.color=hex;card.innerHTML='❓';
+    card.onclick=function(){handleMemoryFlip(card);};
+    grid.appendChild(card);
+  });
+}
+function handleMemoryFlip(card){
+  if(flippedCards.length>=2||card.classList.contains('matched')||flippedCards.indexOf(card)>=0)return;
+  playSound('pop');card.style.backgroundColor=card.dataset.color;card.innerHTML='';flippedCards.push(card);
+  if(flippedCards.length===2){
+    var c1=flippedCards[0],c2=flippedCards[1];
+    if(c1.dataset.color===c2.dataset.color){playSound('cheer');c1.classList.add('matched','border-green-400');c2.classList.add('matched','border-green-400');flippedCards=[];matchedPairs++;addStars(1);
+      if(matchedPairs===memoryColors.length){setTimeout(function(){speakQuebec('Champion ! Tu as trouvé toutes les paires ! 🏆');triggerConfetti();},400);}
+    }else{playSound('wrong');setTimeout(function(){c1.style.backgroundColor='#ffffff';c1.innerHTML='❓';c2.style.backgroundColor='#ffffff';c2.innerHTML='❓';flippedCards=[];},800);}
+  }
+}
+var sortItems=[
+{name:'Une Pomme',color:'red',emoji:'🍎'},{name:'Une Fraise',color:'red',emoji:'🍓'},
+{name:'Un Myrtille / Bleuet',color:'blue',emoji:'🫐'},{name:'Un Dauphin Bleu',color:'blue',emoji:'🐬'},
+{name:'Une Banane',color:'yellow',emoji:'🍌'},{name:'Le Soleil',color:'yellow',emoji:'☀️'}];
+var currentSortItem=null;
+function initSortGame(){nextSortItem();}
+function nextSortItem(){currentSortItem=sortItems[Math.floor(Math.random()*sortItems.length)];document.getElementById('sort-item').innerText=currentSortItem.emoji;document.getElementById('sort-item-name').innerText=currentSortItem.name;}
+function checkSort(chosen){
+  if(!currentSortItem)return;
+  if(chosen===currentSortItem.color){playSound('cheer');addStars(1);speakQuebec('Oui ! Bonne couleur ! 👏');triggerConfetti();nextSortItem();}
+  else{playSound('wrong');speakQuebec('Oups ! Réessaie mon ami(e) !');}
+}
+
+/* ============ INITIALISATION UNIQUE ============ */
+window.addEventListener('load',function(){
+  updateStarsDisplay();
+  renderCategoryChips();renderWordsGrid();renderAlphabet();renderNumbers();
+  initQuizGame();initMatchGame();initHangmanGame();renderFlashcard();
+  document.getElementById('cert-date').innerText=new Date().toLocaleDateString('fr-CA');
+  initDrawPalette();initColoringPalette();
+  /* Le canvas reste à 0 tant que l'Atelier est caché : on le dimensionne à la première ouverture du mode dessin (voir switchMode). */
+});
+window.addEventListener('resize',function(){
+  var drawSec=document.getElementById('mode-draw');
+  if(drawSec&&!drawSec.classList.contains('hidden')&&!document.getElementById('page-atelier').classList.contains('hidden'))resizePaintCanvas();
+});
+document.getElementById('book-modal').addEventListener('click',function(e){if(e.target===this)closeBookModal();});
+</script>
+</body>
+</html>
