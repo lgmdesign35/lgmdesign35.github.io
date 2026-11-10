@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="fr-CA" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:,">
+<title>Contact — LGMDesign35</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+if(typeof tailwind!=='undefined'){tailwind.config={theme:{extend:{colors:{qcblue:{400:'#38bdf8',500:'#0284c7',600:'#0055a5',700:'#003399',900:'#0c4a6e'},kidyellow:'#facc15',kidpink:'#f472b6',kidgreen:'#4ade80',kidpurple:'#a78bfa'},fontFamily:{sans:['Quicksand','sans-serif'],fredoka:['Fredoka','sans-serif']}}}};}
+</script>
+<style>
+.hidden{display:none !important}
+body{font-family:'Quicksand',sans-serif;background:linear-gradient(135deg,#f0f9ff 0%,#fef9c3 50%,#fce7f3 100%);min-height:100vh;touch-action:manipulation}
+h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
+.btn-bounce,.pop-btn{transition:all .2s cubic-bezier(.175,.885,.32,1.275)}
+.btn-bounce:active,.pop-btn:active{transform:scale(.92)}
+.balloon-anim{animation:floaty 4s ease-in-out infinite alternate}
+@keyframes floaty{0%{transform:translateY(0) rotate(-3deg)}100%{transform:translateY(-20px) rotate(3deg)}}
+.balloon-float{animation:floaty 3s ease-in-out infinite alternate}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.shake{animation:shake .35s ease-in-out}
+.game-tab.active-game{background:#f59e0b !important;color:#1e293b !important;box-shadow:0 4px 10px rgba(245,158,11,.4)}
+#course-bar{transition:width 1s linear}
+.no-scrollbar::-webkit-scrollbar{display:none}
+.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+.flip-card{perspective:1000px}
+.flip-card-inner{transition:transform .6s;transform-style:preserve-3d}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-card-front,.flip-card-back{backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.flip-card-back{transform:rotateY(180deg)}
+.book-card{transition:transform .25s ease,box-shadow .25s ease}
+.book-card:hover{transform:translateY(-4px);box-shadow:0 12px 24px -8px rgba(2,132,199,.15)}
+.main-tab.active{background:#0055a5;color:#fff;box-shadow:0 4px 10px rgba(0,85,165,.3)}
+.hero-dark-gradient{background-color:#0055a5 !important;background-image:linear-gradient(to right,#0ea5e9 0%,#0055a5 50%,#4338ca 100%) !important;color:#fff !important}
+.hero-dark-gradient h1{color:#fff !important}
+.hero-dark-gradient p{color:#e0f2fe !important}
+@media print{body *{visibility:hidden}#certificate-display,#certificate-display *{visibility:visible}#certificate-display{position:absolute;left:0;top:0;width:100%}}
+</style>
+
+<style>
+/* Lapin guide : curseur personnalise (souris seulement) */
+@media (pointer:fine){
+  body{cursor:url("data:image/png;base64,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") 20 20, auto;}
+  a,button,[onclick],input,select,textarea,label{cursor:url("data:image/png;base64,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") 20 20, pointer;}
+}
+#helper-follower{position:fixed;left:0;top:0;width:48px;height:48px;z-index:9999;pointer-events:none;opacity:0;transition:opacity .3s;}
+#helper-follower img{width:48px;height:48px;border-radius:9999px;border:3px solid #fff;box-shadow:0 4px 14px rgba(0,0,0,.28);display:block;}
+#helper-follower.helper-hi img{animation:helper-wave .6s ease;}
+@keyframes helper-wave{0%{transform:scale(1) rotate(0deg)}30%{transform:scale(1.18) rotate(-8deg)}60%{transform:scale(1.18) rotate(8deg)}100%{transform:scale(1.12) rotate(0deg)}}
+@media (pointer:coarse){#helper-follower{display:none;}}
+.mascot-chip{display:flex;align-items:center;gap:.65rem;}
+.mascot-chip>img{width:64px;height:64px;border-radius:9999px;border:3px solid #fff;box-shadow:0 4px 14px rgba(0,0,0,.28);flex:none;}
+@media (max-width:480px){.mascot-chip>img{width:52px;height:52px;}}
+</style>
+</head>
+<body class="text-slate-800 flex flex-col min-h-screen overflow-x-hidden">
+<header class="bg-white/95 backdrop-blur-md border-b-4 border-qcblue-600 sticky top-0 z-50 shadow-md">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
+    <a href="index.html" class="flex items-center gap-3">
+      <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-qcblue-700 to-sky-400 flex items-center justify-center text-white text-2xl shadow-lg shadow-qcblue-500/30 shrink-0">⚜️</div>
+      <div>
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="text-xl sm:text-2xl font-black text-qcblue-700 tracking-wide brand-font">LGM<span class="text-amber-500">Design35</span></span>
+          <span class="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-0.5 rounded-full border border-amber-300">Québec 🍁</span>
+        </div>
+        <span class="text-xs font-bold text-slate-500 block">Apprendre, Dessiner et Lire — Français québécois (1 à 6 ans)</span>
+      </div>
+    </a>
+    <div class="flex items-center gap-3">
+      <div class="bg-gradient-to-r from-amber-400 to-yellow-500 text-slate-900 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md border-2 border-white">
+        <span>⭐</span><span class="hidden sm:inline text-slate-800">Étoiles</span>
+      </div>
+    </div>
+  </div>
+  <nav class="bg-sky-50 border-t border-sky-100 py-1.5">
+    <div class="max-w-7xl mx-auto px-4 flex gap-1 overflow-x-auto no-scrollbar text-xs sm:text-sm"><a href="index.html" class="main-tab nav-btn px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap text-slate-700 hover:bg-sky-200"><span>🏠 Accueil</span></a><a href="livres.html" class="main-tab nav-btn px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap text-slate-700 hover:bg-sky-200"><span>📖 Livres</span></a><a href="histoires-gratuites.html" class="main-tab nav-btn px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap text-slate-700 hover:bg-sky-200"><span>🎁 Histoires gratuites</span></a><a href="videos.html" class="main-tab nav-btn px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap text-slate-700 hover:bg-sky-200"><span>🎬 Vidéos</span></a><a href="contact.html" class="main-tab nav-btn px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap active"><span>✉️ Contact</span></a></div>
+  </nav>
+</header>
+<main class="max-w-6xl mx-auto px-4 py-8 w-full space-y-10 flex-1">
+<div class="hero-dark-gradient relative overflow-hidden rounded-3xl p-6 sm:p-10 text-white shadow-xl">
+    <div class="max-w-2xl relative z-10 space-y-4">
+      <h1 class="brand-font text-3xl sm:text-5xl font-black leading-tight" style="color:#ffffff">Contact ✉️</h1>
+      <p class="text-sky-100 text-base sm:text-lg font-bold leading-relaxed" style="color:#e0f2fe">Une question, une idée d'histoire, une collaboration ? Écrivez-nous — on lit tous les messages.</p>
+      <div class="mascot-chip pt-2"><img src="images/mascotte-lapin.png" alt="Le lapin d'Adam, votre petit guide" onerror="this.style.display='none'"><div class="bg-white/95 text-slate-800 text-xs sm:text-sm font-bold rounded-2xl rounded-bl-sm px-3.5 py-2.5 shadow-lg max-w-xs">Salut ! Moi, c'est le lapin d'Adam 🐰 Tes parents peuvent m'écrire — je transmets !</div></div>
+      <div class="flex flex-wrap gap-2 pt-2">
+        <span class="px-3 py-1.5 bg-white/15 border border-white/30 rounded-full text-xs font-bold text-white">✔ 100 % français québécois</span>
+        <span class="px-3 py-1.5 bg-white/15 border border-white/30 rounded-full text-xs font-bold text-white">✔ Sans publicité</span>
+        <span class="px-3 py-1.5 bg-white/15 border border-white/30 rounded-full text-xs font-bold text-white">✔ Pour les 1 à 6 ans</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-4">
+      <h2 class="brand-font text-2xl font-bold text-qcblue-700">✉️ Écrivez-nous</h2>
+      <p class="text-sm text-slate-600 leading-relaxed">Une question, une idée d'histoire, une collaboration ? Écrivez-nous — on lit tous les messages.</p>
+      <a href="mailto:lgmdesign35@gmail.com" class="block w-full text-center py-3 bg-qcblue-600 hover:bg-qcblue-700 text-white font-bold text-sm rounded-xl shadow transition-all">✉️ lgmdesign35@gmail.com</a>
+      <p class="text-xs text-slate-500 text-center">Service à la clientèle — Réponse sous 24h à 48h.</p>
+    </div>
+    <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-4">
+      <h2 class="brand-font text-2xl font-bold text-qcblue-700">🌐 Suivez-nous</h2>
+      <p class="text-sm text-slate-600 leading-relaxed">Nouvelles histoires, vidéos et nouveautés — retrouvez-nous sur :</p>
+      <div class="grid grid-cols-2 gap-2 text-xs font-bold">
+        <a href="https://www.youtube.com/@LGMDesign35" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2.5 bg-red-50 hover:bg-red-100 text-red-700 rounded-xl transition-all">▶ YouTube</a>
+        <a href="https://www.tiktok.com/@lgm.design" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition-all">🎵 TikTok</a>
+        <a href="https://www.instagram.com/lgmdesign35/" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2.5 bg-pink-50 hover:bg-pink-100 text-pink-700 rounded-xl transition-all">📷 Instagram</a>
+        <a href="https://www.pinterest.com/lgmdesign35/" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-xl transition-all">📌 Pinterest</a>
+        <a href="https://www.facebook.com/profile.php?id=61596073183903" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2.5 bg-sky-50 hover:bg-sky-100 text-sky-700 rounded-xl transition-all">👍 Facebook</a>
+        <a href="https://www.threads.com/@lgmdesign35" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition-all">🧵 Threads</a>
+        <a href="https://www.tumblr.com/lgmdesign35" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl transition-all">ⓣ Tumblr</a>
+        <a href="https://www.etsy.com/shop/LGMDesign35" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2.5 bg-orange-50 hover:bg-orange-100 text-orange-700 rounded-xl transition-all">🛒 Etsy</a>
+      </div>
+    </div>
+  </div>
+  <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+    <h2 class="brand-font text-2xl font-bold text-qcblue-700 text-center">💛 Pour les parents — que va apprendre votre enfant ?</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-sky-50 border border-sky-200 rounded-2xl p-4 text-center"><div class="text-3xl mb-2">🎯</div><h3 class="font-bold text-slate-800 text-sm mb-1">Concentration et attention</h3><p class="text-xs text-slate-600">Suivre l'histoire page par page, et terminer les jeux jusqu'au bout.</p></div>
+      <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 text-center"><div class="text-3xl mb-2">✏️</div><h3 class="font-bold text-slate-800 text-sm mb-1">Motricité fine</h3><p class="text-xs text-slate-600">Le traçage et le coloriage dans les lignes, dans les cahiers et les livres de coloriage.</p></div>
+      <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-center"><div class="text-3xl mb-2">🌍</div><h3 class="font-bold text-slate-800 text-sm mb-1">Apprentissage du français</h3><p class="text-xs text-slate-600">Les lettres et les chiffres en français québécois, pour les petits de 1 à 6 ans.</p></div>
+      <div class="bg-rose-50 border border-rose-200 rounded-2xl p-4 text-center"><div class="text-3xl mb-2">💛</div><h3 class="font-bold text-slate-800 text-sm mb-1">Les valeurs des histoires</h3><p class="text-xs text-slate-600">La coopération, la propreté et la gentillesse — dans chaque aventure d'Adam et ses amis.</p></div>
+    </div>
+  </div>
+  <div class="bg-sky-50 border-2 border-sky-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-4">
+    <h2 class="brand-font text-2xl font-bold text-qcblue-700 text-center">🛒 Comment acheter ?</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+      <div class="bg-white rounded-2xl p-4 border border-sky-200"><div class="text-2xl font-black text-qcblue-600 brand-font mb-1">1</div><h3 class="font-bold text-slate-800 text-sm mb-1">Choisissez votre livre</h3><p class="text-xs text-slate-600">Parcourez nos livres ici, puis cliquez sur le bouton d'achat — il vous mène à la page du produit sur notre boutique Etsy.</p></div>
+      <div class="bg-white rounded-2xl p-4 border border-sky-200"><div class="text-2xl font-black text-qcblue-600 brand-font mb-1">2</div><h3 class="font-bold text-slate-800 text-sm mb-1">Payez en sécurité sur Etsy</h3><p class="text-xs text-slate-600">Le paiement et la protection sont entièrement gérés par Etsy — sans partager vos données de paiement ici.</p></div>
+      <div class="bg-white rounded-2xl p-4 border border-sky-200"><div class="text-2xl font-black text-qcblue-600 brand-font mb-1">3</div><h3 class="font-bold text-slate-800 text-sm mb-1">Téléchargez et imprimez</h3><p class="text-xs text-slate-600">Tous nos livres sont des PDF de haute qualité : téléchargement immédiat après le paiement, à lire sur tablette ou à imprimer à la maison.</p></div>
+    </div>
+  </div>
+</main>
+<footer class="bg-slate-900 text-white pt-12 pb-8 mt-12 border-t border-slate-800">
+  <div class="max-w-6xl mx-auto px-4 space-y-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-slate-800">
+      <div class="space-y-3">
+        <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-sky-500 flex items-center justify-center text-white font-bold text-xs">LGM</div><span class="brand-font text-xl font-bold text-sky-400">Éditions LGMDesign35</span></div>
+        <p class="text-xs text-slate-400 leading-relaxed">Maison d'édition québécoise indépendante. Créateur de livres et ressources pédagogiques 100% en français pour les enfants de 1 à 6 ans.</p>
+        <p class="text-xs text-slate-400 leading-relaxed">Pour les parents : des histoires qui forment votre enfant à aimer le français du Québec — sans publicité, sans compte, sans suivi.</p>
+      </div>
+      <div class="space-y-3">
+        <h4 class="brand-font text-sm font-bold text-amber-400 uppercase tracking-wider">Navigation</h4>
+        <ul class="space-y-2 text-xs text-slate-300">
+          <li><a href="index.html" class="hover:text-sky-400 transition-colors">Accueil — Apprendre, Dessiner et Lire</a></li>
+          <li><a href="livres.html" class="hover:text-sky-400 transition-colors">Nos Livres</a></li>
+          <li><a href="histoires-gratuites.html" class="hover:text-sky-400 transition-colors">Histoires gratuites</a></li>
+          <li><a href="videos.html" class="hover:text-sky-400 transition-colors">Vidéos</a></li>
+          <li><a href="contact.html" class="hover:text-sky-400 transition-colors">Contactez-nous</a></li>
+          <li><a href="privacy.html" class="hover:text-sky-400 transition-colors">Confidentialité</a></li>
+        </ul>
+      </div>
+      <div class="space-y-4">
+        <h4 class="brand-font text-sm font-bold text-amber-400 uppercase tracking-wider">Pour nous suivre &amp; commander</h4>
+        <p class="text-xs text-slate-300 leading-relaxed">Pour la suite et pour découvrir toutes nos nouveautés, visitez nos plateformes :</p>
+        <div class="grid grid-cols-2 gap-2 text-xs font-bold">
+          <a href="https://www.youtube.com/channel/UCCf-YvrdUnc-TosFoAh7Wvw" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2 bg-slate-800 hover:bg-red-600 text-slate-200 hover:text-white rounded-xl transition-all"><span>▶</span> YouTube</a>
+          <a href="https://www.tiktok.com/@lgm.design" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded-xl transition-all"><span>🎵</span> TikTok</a>
+          <a href="https://www.pinterest.com/lgmdesign35/" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2 bg-slate-800 hover:bg-rose-600 text-slate-200 hover:text-white rounded-xl transition-all"><span>📌</span> Pinterest</a>
+          <a href="https://www.instagram.com/lgmdesign35/" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2 bg-slate-800 hover:bg-pink-600 text-slate-200 hover:text-white rounded-xl transition-all"><span>📷</span> Instagram</a>
+          <a href="https://www.facebook.com/profile.php?id=61596073183903" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2 bg-slate-800 hover:bg-sky-600 text-slate-200 hover:text-white rounded-xl transition-all"><span>👍</span> Facebook</a>
+          <a href="https://www.threads.com/@lgmdesign35" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded-xl transition-all"><span>🧵</span> Threads</a>
+          <a href="https://www.tumblr.com/lgmdesign35" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2 bg-slate-800 hover:bg-indigo-600 text-slate-200 hover:text-white rounded-xl transition-all"><span>ⓣ</span> Tumblr</a>
+          <a href="https://www.etsy.com/shop/LGMDesign35" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2 bg-slate-800 hover:bg-orange-600 text-slate-200 hover:text-white rounded-xl transition-all"><span>🛒</span> Etsy</a>
+        </div>
+        <a href="https://lgmdesign35.com/" target="_blank" rel="noopener" class="text-xs font-bold text-sky-400 hover:underline block">🌐 Notre site : lgmdesign35.com ↗</a>
+      </div>
+    </div>
+    <div class="flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-2 text-center">
+      <span>© 2026 Éditions LGMDesign35. Tous droits réservés. | Conçu pour le Québec.</span>
+      <span>www.lgmdesign35.com</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Lapin guide : compagnon qui suit la souris (ordinateurs seulement) -->
+<div id="helper-follower" aria-hidden="true"><img src="images/mascotte-lapin.png" alt="" onerror="this.parentNode.style.display='none'"></div>
+<script>
+(function(){if(!window.matchMedia||!window.matchMedia('(pointer:fine)').matches)return;var f=document.getElementById('helper-follower');if(!f)return;var x=window.innerWidth/2,y=window.innerHeight/2,tx=x,ty=y,shown=false;function loop(){x+=(tx-x)*0.2;y+=(ty-y)*0.2;f.style.transform='translate('+(x-24)+'px,'+(y-24)+'px)';requestAnimationFrame(loop);}document.addEventListener('mousemove',function(e){tx=e.clientX;ty=e.clientY;if(!shown){shown=true;f.style.opacity='1';}});document.addEventListener('mouseleave',function(){f.style.opacity='0';shown=false;});document.addEventListener('mouseover',function(e){if(e.target.closest('a,button,[onclick],input,select,textarea,label'))f.classList.add('helper-hi');});document.addEventListener('mouseout',function(e){if(e.target.closest('a,button,[onclick],input,select,textarea,label'))f.classList.remove('helper-hi');});requestAnimationFrame(loop);})();
+</script>
+
+</body>
+</html>
