@@ -74,6 +74,8 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
 .mascot-chip>img{width:64px;height:64px;border-radius:9999px;border:3px solid #fff;box-shadow:0 4px 14px rgba(0,0,0,.28);flex:none;}
 @media (max-width:480px){.mascot-chip>img{width:52px;height:52px;}}
 </style>
+<!-- CHRISTMAS: thème de Noël — supprimer cette ligne pour revenir au thème normal -->
+<link rel="stylesheet" href="christmas.css">
 </head>
 <body class="text-slate-800 flex flex-col min-h-screen overflow-x-hidden">
 <header class="bg-white/95 backdrop-blur-md border-b-4 border-qcblue-600 sticky top-0 z-50 shadow-md">
@@ -213,5 +215,7 @@ function copyContactEmail(btn){var addr='lgmdesign35'+'@'+'gmail.com';function d
 document.getElementById('page-contact-form').addEventListener('submit',function(e){e.preventDefault();var f=e.target;var ok=document.getElementById('pc-success');var err=document.getElementById('pc-error');var btn=f.querySelector('button[type="submit"]');if(ok)ok.classList.add('hidden');if(err)err.classList.add('hidden');var fd=new FormData(f);fd.append('_subject','Nouveau message — lgmdesign35.com');if(btn){btn.disabled=true;btn.textContent='Envoi en cours…';}fetch('https://formspree.io/f/xeagalwv',{method:'POST',body:fd,headers:{'Accept':'application/json'}}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);if(ok)ok.classList.remove('hidden');f.reset();}).catch(function(){if(err)err.classList.remove('hidden');}).finally(function(){if(btn){btn.disabled=false;btn.textContent='Envoyer le message ✉️';}});});
 </script>
 
+<!-- CHRISTMAS: neige de Noël — supprimer cette ligne pour revenir au thème normal -->
+<script src="christmas.js" defer></script>
 </body>
 </html>

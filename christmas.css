@@ -1,0 +1,59 @@
+/* ============================================================
+   CHRISTMAS — Thème de Noël (saisonnier, RÉVERSIBLE)
+   ------------------------------------------------------------
+   Pour revenir au thème normal après les Fêtes :
+   1. Supprimer le <link href="christmas.css"> dans chaque page
+   2. Supprimer le <script src="christmas.js"> dans chaque page
+   3. Supprimer les blocs marqués <!-- CHRISTMAS ... -->
+   4. Supprimer ce fichier, christmas.js, images/noel-hero.jpg
+      et images/curseur-pere-noel.png
+   Aucune autre modification du site n'est nécessaire.
+   ============================================================ */
+
+/* --- Curseur de Noël : le père Noël (souris seulement) ---
+   @media (pointer:fine) = seulement les appareils avec une souris :
+   sur mobile / tactile, aucun curseur personnalisé n'est appliqué.
+   Le point chaud (20 20) est le centre de l'image 40×40, comme
+   le curseur lapin d'origine. Les liens et boutons gardent la
+   forme « pointer » en repli si l'image ne charge pas. */
+@media (pointer:fine){
+  body{cursor:url("images/curseur-pere-noel.png") 20 20, auto !important}
+  a,button,[onclick],input,select,textarea,label{cursor:url("images/curseur-pere-noel.png") 20 20, pointer !important}
+}
+
+/* --- Palette de Noël : rouge, vert sapin et or, sur fond crème hivernal --- */
+body{background:linear-gradient(180deg,#fffdf6 0%,#fdeeee 42%,#eef6ec 100%) !important}
+
+/* En-tête : bordure rouge, navigation vert pâle */
+header{border-bottom-color:#b91c1c !important}
+header nav{background-color:#eaf5ea !important;border-top-color:#cfe3cf !important}
+
+/* Héros : dégradé rouge → vert sapin (remplace le bleu) */
+.hero-dark-gradient{background-color:#14532d !important;background-image:linear-gradient(to right,#991b1b 0%,#b91c1c 35%,#166534 75%,#14532d 100%) !important;color:#fff !important}
+.hero-dark-gradient h1{color:#fff !important}
+.hero-dark-gradient p{color:#fef3c7 !important}
+
+/* Onglet actif de navigation : rouge au lieu de bleu */
+.main-tab.active{background:#b91c1c !important;color:#fff !important;box-shadow:0 4px 10px rgba(185,28,28,.35) !important}
+
+/* Barre d'âge de la section Apprendre : verte */
+#page-apprendre .bg-qcblue-700{background-color:#166534 !important}
+
+/* Pied de page : vert sapin profond, bordure dorée */
+footer{background:linear-gradient(180deg,#14532d 0%,#052e16 100%) !important;border-top:4px solid #d4a017 !important}
+
+/* --- Neige qui tombe (flocons créés par christmas.js) --- */
+#xmas-snow{position:fixed;inset:0;pointer-events:none;z-index:60;overflow:hidden}
+.xmas-flake{position:absolute;top:-6%;color:#fff;text-shadow:0 0 5px rgba(255,255,255,.95),0 0 2px rgba(180,200,230,.8);animation-name:xmas-fall;animation-timing-function:linear;animation-iteration-count:infinite;will-change:transform}
+@keyframes xmas-fall{0%{transform:translateY(-5vh) translateX(0) rotate(0deg)}50%{transform:translateY(55vh) translateX(2vw) rotate(180deg)}100%{transform:translateY(112vh) translateX(-1vw) rotate(340deg)}}
+
+/* --- Guirlande en haut de page (injectée par christmas.js) --- */
+.xmas-garland{background:linear-gradient(90deg,#7f1d1d,#166534,#7f1d1d);color:#fff;text-align:center;font-size:17px;letter-spacing:8px;line-height:1;padding:7px 4px 5px;white-space:nowrap;overflow:hidden}
+
+/* --- Bannière de Noël --- */
+.xmas-banner-card{background:linear-gradient(135deg,#7f1d1d 0%,#b91c1c 48%,#166534 100%);border:3px solid #f59e0b}
+.xmas-badge{display:inline-block;background:#fbbf24;color:#7f1d1d;font-weight:900;font-size:.8rem;padding:.35rem .9rem;border-radius:9999px;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.xmas-badge-green{display:inline-block;background:#166534;color:#fff;font-weight:800;font-size:.72rem;padding:.25rem .75rem;border-radius:9999px;border:2px solid #fbbf24}
+
+/* --- Carte de livre vedette : bordure dorée --- */
+.xmas-feature{border:2px solid #f59e0b !important;box-shadow:0 10px 26px -10px rgba(185,28,28,.35) !important}

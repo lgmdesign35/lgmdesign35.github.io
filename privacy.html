@@ -74,6 +74,8 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
 .mascot-chip>img{width:64px;height:64px;border-radius:9999px;border:3px solid #fff;box-shadow:0 4px 14px rgba(0,0,0,.28);flex:none;}
 @media (max-width:480px){.mascot-chip>img{width:52px;height:52px;}}
 </style>
+<!-- CHRISTMAS: thème de Noël — supprimer cette ligne pour revenir au thème normal -->
+<link rel="stylesheet" href="christmas.css">
 </head>
 <body class="text-slate-800 flex flex-col min-h-screen overflow-x-hidden">
 <header class="bg-white/95 backdrop-blur-md border-b-4 border-qcblue-600 sticky top-0 z-50 shadow-md">
@@ -176,5 +178,7 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
 (function(){if(!window.matchMedia||!window.matchMedia('(pointer:fine)').matches)return;var f=document.getElementById('helper-follower');if(!f)return;var x=window.innerWidth/2,y=window.innerHeight/2,tx=x,ty=y,shown=false;function loop(){x+=(tx-x)*0.2;y+=(ty-y)*0.2;f.style.transform='translate('+(x-24)+'px,'+(y-24)+'px)';requestAnimationFrame(loop);}document.addEventListener('mousemove',function(e){tx=e.clientX;ty=e.clientY;if(!shown){shown=true;f.style.opacity='1';}});document.addEventListener('mouseleave',function(){f.style.opacity='0';shown=false;});document.addEventListener('mouseover',function(e){if(e.target.closest('a,button,[onclick],input,select,textarea,label'))f.classList.add('helper-hi');});document.addEventListener('mouseout',function(e){if(e.target.closest('a,button,[onclick],input,select,textarea,label'))f.classList.remove('helper-hi');});requestAnimationFrame(loop);})();
 </script>
 
+<!-- CHRISTMAS: neige de Noël — supprimer cette ligne pour revenir au thème normal -->
+<script src="christmas.js" defer></script>
 </body>
 </html>
