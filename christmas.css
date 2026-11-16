@@ -57,3 +57,42 @@ footer{background:linear-gradient(180deg,#14532d 0%,#052e16 100%) !important;bor
 
 /* --- Carte de livre vedette : bordure dorée --- */
 .xmas-feature{border:2px solid #f59e0b !important;box-shadow:0 10px 26px -10px rgba(185,28,28,.35) !important}
+
+/* --- Image du père Noël dans le héros (bureau seulement) ---
+   Le héros garde ~400 px de vide à droite sur grand écran : l'image
+   le remplit sans allonger le héros (position absolue, centrée
+   verticalement). Masquée sous 1024 px : sur mobile, la mise en
+   page empilée actuelle est conservée. */
+.xmas-hero-img{display:none}
+@media (min-width:1024px){
+  .xmas-hero-img{position:absolute;right:2.5rem;top:50%;transform:translateY(-50%);z-index:5;display:block;width:240px}
+  .xmas-hero-img img{display:block;width:100%;height:auto;border-radius:1rem;border:4px solid rgba(255,255,255,.9);box-shadow:0 12px 30px rgba(0,0,0,.35)}
+}
+@media (min-width:1280px){
+  .xmas-hero-img{width:300px}
+}
+
+/* --- Pastille de Noël dans le héros (au-dessus de la ligne de flottaison) ---
+   Pastille dorée compacte, sur la même ligne que le badge « 100 % en
+   français québécois » sur bureau, sur sa propre ligne sur mobile. */
+.xmas-hero-chip{display:inline-block;margin-top:.6rem;background:#fbbf24;color:#7f1d1d;font-weight:900;font-size:.85rem;padding:.4rem .95rem;border-radius:9999px;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.3);text-decoration:none;white-space:nowrap}
+.xmas-hero-chip:hover{background:#f59e0b}
+
+/* --- En-tête mobile resserré (≤ 600 px) ---
+   Panier sur une ligne, slogan sur 2 lignes maximum, sans rien
+   masquer (logo, son et menu restent visibles). Une seule règle CSS
+   couvre les 8 pages qui partagent cet en-tête. */
+@media (max-width:600px){
+  header .max-w-7xl{padding-left:.6rem !important;padding-right:.6rem !important}
+  header .max-w-7xl > div{gap:.5rem !important}
+  header .w-12.h-12{width:2.5rem !important;height:2.5rem !important;font-size:1.25rem !important}
+  header .brand-font{font-size:1.125rem !important}
+  header a[href="panier.html"]{white-space:nowrap !important;padding-left:.6rem !important;padding-right:.6rem !important}
+  /* Slogan raccourci sur mobile : le texte complet (« Apprendre, Dessiner
+     et Lire — Français québécois (1 à 6 ans) ») ne tient pas en 2 lignes
+     dans la largeur restante (~120 px) ; on affiche l'essentiel
+     (français québécois, 1 à 6 ans). Le slogan complet reste visible
+     sur bureau. */
+  header span.text-xs.font-bold.text-slate-500{font-size:0 !important;line-height:0 !important}
+  header span.text-xs.font-bold.text-slate-500::after{content:"Français québécois (1 à 6 ans)";display:-webkit-box !important;-webkit-line-clamp:2 !important;-webkit-box-orient:vertical !important;overflow:hidden !important;font-size:11px !important;line-height:1.3 !important;font-weight:700 !important;color:#64748b !important}
+}
