@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="fr-CA" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:,">
+<title>Livre de coloriage — 100 dessins à colorier — LGMDesign35</title>
+<meta name="description" content="Livre de coloriage gratuit pour les 1 à 6 ans : 100 dessins d'Adam et ses amis à colorier en ligne — Noël, Halloween, Pâques, anniversaire, héros et plus. Du plus facile au plus difficile, en français québécois sur lgmdesign35.com.">
+<link rel="canonical" href="https://lgmdesign35.com/coloriage.html">
+<link rel="alternate" hreflang="fr-CA" href="https://lgmdesign35.com/coloriage.html">
+<link rel="alternate" hreflang="x-default" href="https://lgmdesign35.com/coloriage.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LGMDesign35">
+<meta property="og:locale" content="fr_CA">
+<meta property="og:title" content="Livre de coloriage — 100 dessins à colorier — LGMDesign35">
+<meta property="og:description" content="100 dessins gratuits d'Adam et ses amis à colorier en ligne, du plus facile au plus difficile. Pour les 1 à 6 ans, en français québécois.">
+<meta property="og:url" content="https://lgmdesign35.com/coloriage.html">
+<meta property="og:image" content="https://lgmdesign35.com/images/coloriage-noel-01.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Livre de coloriage — 100 dessins à colorier — LGMDesign35">
+<meta name="twitter:description" content="100 dessins gratuits d'Adam et ses amis à colorier en ligne, du plus facile au plus difficile. Pour les 1 à 6 ans.">
+<meta name="twitter:image" content="https://lgmdesign35.com/images/coloriage-noel-01.png">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<script>
+if(typeof tailwind!=='undefined'){tailwind.config={theme:{extend:{colors:{qcblue:{400:'#38bdf8',500:'#0284c7',600:'#0055a5',700:'#003399',900:'#0c4a6e'},kidyellow:'#facc15',kidpink:'#f472b6',kidgreen:'#4ade80',kidpurple:'#a78bfa'},fontFamily:{sans:['Quicksand','sans-serif'],fredoka:['Fredoka','sans-serif']}}}};}
+</script>
+<style>
+.hidden{display:none !important}
+body{font-family:'Quicksand',sans-serif;background:linear-gradient(135deg,#f0f9ff 0%,#fef9c3 50%,#fce7f3 100%);min-height:100vh;touch-action:manipulation}
+h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
+.pop-btn{transition:all .2s cubic-bezier(.175,.885,.32,1.275)}
+.pop-btn:active{transform:scale(.92)}
+.hero-dark-gradient{background-color:#0055a5 !important;background-image:linear-gradient(to right,#0ea5e9 0%,#0055a5 50%,#4338ca 100%) !important;color:#fff !important}
+.hero-dark-gradient h1{color:#fff !important}
+.hero-dark-gradient p{color:#e0f2fe !important}
+.draw-card{transition:transform .25s ease,box-shadow .25s ease;cursor:pointer}
+.draw-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 14px 28px -10px rgba(2,132,199,.35)}
+.pill{transition:all .15s ease;cursor:pointer}
+.pill.active{background:#0055a5 !important;color:#fff !important;border-color:#0055a5 !important}
+#color-canvas{touch-action:none;cursor:pointer;display:block;width:100%;height:auto}
+.color-btn{transition:transform .15s ease;cursor:pointer}
+.color-btn.selected{outline:4px solid #f59e0b;outline-offset:2px;transform:scale(1.15)}
+.color-btn:active{transform:scale(.9)}
+</style>
+<!-- CHRISTMAS: thème de Noël — supprimer cette ligne pour revenir au thème normal -->
+<link rel="stylesheet" href="christmas.css">
+</head>
+<body class="text-slate-800 flex flex-col min-h-screen overflow-x-hidden">
+<header class="bg-white/95 backdrop-blur-md border-b-4 border-qcblue-600 sticky top-0 z-50 shadow-md">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
+    <a href="index.html" class="flex items-center gap-3">
+      <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-qcblue-700 to-sky-400 flex items-center justify-center text-white text-2xl shadow-lg shadow-qcblue-500/30 shrink-0">⚜️</div>
+      <div>
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="text-xl sm:text-2xl font-black text-qcblue-700 tracking-wide brand-font">LGM<span class="text-amber-500">Design35</span></span>
+          <span class="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-0.5 rounded-full border border-amber-300">Québec 🍁</span>
+        </div>
+        <span class="text-xs font-bold text-slate-500 block">Apprendre, Dessiner et Lire — Français québécois (1 à 6 ans)</span>
+      </div>
+    </a>
+    <div class="flex items-center gap-3">
+      <a href="panier.html" class="bg-amber-400 hover:bg-amber-500 text-slate-900 px-3 py-1.5 rounded-full font-black text-xs sm:text-sm shadow-md border-2 border-white">🛒 Panier (<span data-cart-count>0</span>)</a>
+    </div>
+  </div>
+  <nav class="bg-sky-50 border-t border-sky-100 py-1.5">
+    <div class="max-w-7xl mx-auto px-4 flex gap-1 overflow-x-auto no-scrollbar text-xs sm:text-sm"><a href="index.html" class="main-tab nav-btn px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap text-slate-700 hover:bg-sky-200"><span>🏠 Accueil</span></a><a href="livres.html" class="main-tab nav-btn px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap text-slate-700 hover:bg-sky-200"><span>📖 Livres</span></a><a href="histoires-gratuites.html" class="main-tab nav-btn px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap text-slate-700 hover:bg-sky-200"><span>🎁 Histoires gratuites</span></a><a href="videos.html" class="main-tab nav-btn px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap text-slate-700 hover:bg-sky-200"><span>🎬 Vidéos</span></a><a href="puzzles.html" class="main-tab nav-btn px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap text-slate-700 hover:bg-sky-200"><span>🧩 Puzzles</span></a><a href="coloriage.html" class="main-tab nav-btn px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap active" style="background:#0055a5;color:#fff"><span>🎨 Coloriage</span></a><a href="blog-parler-francais-quebecois.html" class="main-tab nav-btn px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap text-slate-700 hover:bg-sky-200"><span>✏️ Blogue</span></a><a href="contact.html" class="main-tab nav-btn px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap text-slate-700 hover:bg-sky-200"><span>✉️ Contact</span></a></div>
+  </nav>
+</header>
+<main class="max-w-6xl mx-auto px-4 py-8 w-full space-y-8 flex-1">
+
+  <div class="hero-dark-gradient relative overflow-hidden rounded-3xl p-6 sm:p-10 text-white shadow-xl">
+    <div class="max-w-2xl relative z-10 space-y-4">
+      <h1 class="brand-font text-3xl sm:text-5xl font-black leading-tight" style="color:#ffffff">Livre de coloriage 🎨</h1>
+      <p class="text-sky-100 text-base sm:text-lg font-bold leading-relaxed" style="color:#e0f2fe">100 dessins d'Adam et ses amis à colorier en ligne ! Choisis ton dessin, choisis ta couleur, et touche une zone pour la remplir.</p>
+      <div class="flex flex-wrap gap-2 pt-2">
+        <span class="px-3 py-1.5 bg-white/15 border border-white/30 rounded-full text-xs font-bold text-white">✔ 100 dessins</span>
+        <span class="px-3 py-1.5 bg-white/15 border border-white/30 rounded-full text-xs font-bold text-white">✔ Du plus facile au plus difficile</span>
+        <span class="px-3 py-1.5 bg-white/15 border border-white/30 rounded-full text-xs font-bold text-white">✔ Gratuit · Pour les 1 à 6 ans</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Écran 1 : galerie -->
+  <section id="screen-gallery" class="space-y-5">
+    <div class="text-center space-y-3">
+      <h2 class="brand-font text-2xl sm:text-3xl font-black text-slate-800">1. Choisis ton dessin ! 🎨</h2>
+      <p class="text-sm font-bold text-slate-500">Touche une image pour commencer à colorier.</p>
+      <div id="filter-occasions" class="flex flex-wrap justify-center gap-2 max-w-3xl mx-auto"></div>
+      <div id="filter-difficulty" class="flex flex-wrap justify-center gap-2 max-w-3xl mx-auto"></div>
+      <p id="gallery-count" class="text-xs font-bold text-slate-400"></p>
+    </div>
+    <div id="drawing-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 max-w-5xl mx-auto"></div>
+    <p class="text-center text-xs font-bold text-slate-400">Astuce pour les parents : aucun compte, aucune publicité. Le coloriage se fait sur cet appareil.</p>
+    <p class="text-center"><a href="coin-des-artistes.html" class="pop-btn inline-block bg-amber-400 hover:bg-amber-500 text-slate-900 font-black px-5 py-2 rounded-full shadow border-2 border-white text-sm">🖼️ Voir les œuvres des petits artistes →</a></p>
+  </section>
+
+  <!-- Écran 2 : coloriage -->
+  <section id="screen-color" class="space-y-5 hidden">
+    <div class="text-center space-y-1">
+      <button onclick="showGallery()" class="text-sm font-black text-qcblue-600 hover:underline">← Retour à la galerie</button>
+      <h2 id="color-title" class="brand-font text-2xl sm:text-3xl font-black text-slate-800"></h2>
+      <div id="color-badges" class="flex flex-wrap justify-center gap-2"></div>
+      <p class="text-sm font-bold text-slate-500">Choisis une couleur, puis touche une zone du dessin pour la remplir !</p>
+    </div>
+    <div class="max-w-xl mx-auto bg-white p-3 rounded-2xl shadow-md border-2 border-purple-200">
+      <div id="palette" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1"></div>
+    </div>
+    <div class="max-w-xl mx-auto bg-white rounded-3xl shadow-lg border-4 border-purple-300 overflow-hidden">
+      <canvas id="color-canvas" width="900" height="900"></canvas>
+    </div>
+    <div class="flex flex-wrap justify-center gap-3">
+      <button onclick="undoFill()" class="pop-btn bg-white hover:bg-slate-100 text-slate-700 font-black px-5 py-3 rounded-2xl shadow border-2 border-slate-300 text-sm sm:text-base">↩️ Annuler</button>
+      <button onclick="resetDrawing()" class="pop-btn bg-purple-100 hover:bg-purple-200 text-purple-700 font-black px-5 py-3 rounded-2xl shadow border-2 border-purple-300 text-sm sm:text-base">🔄 Recommencer</button>
+      <button onclick="downloadDrawing()" class="pop-btn bg-green-500 hover:bg-green-600 text-white font-black px-5 py-3 rounded-2xl shadow border-2 border-green-600 text-sm sm:text-base">⬇️ Télécharger</button>
+      <button onclick="nextDrawing()" class="pop-btn bg-amber-400 hover:bg-amber-500 text-slate-900 font-black px-5 py-3 rounded-2xl shadow border-2 border-white text-sm sm:text-base">Dessin suivant →</button>
+    </div>
+    <p class="text-center text-xs font-bold text-slate-400">Ton dessin téléchargé est à toi : imprime-le ou garde-le en souvenir ! 🖼️</p>
+  </section>
+
+</main>
+<footer class="bg-qcblue-900 text-white mt-8">
+  <div class="max-w-6xl mx-auto px-4 py-6 text-center space-y-2">
+    <p class="brand-font font-black text-lg">LGM<span class="text-amber-400">Design35</span> — Adam et ses amis</p>
+    <p class="text-sky-200 text-xs font-bold">Des histoires qui forment votre enfant à aimer le français du Québec · 1 à 6 ans</p>
+    <p class="text-xs"><a href="index.html" class="underline font-bold">Accueil</a> · <a href="livres.html" class="underline font-bold">Livres</a> · <a href="contact.html" class="underline font-bold">Contact</a> · <a href="https://lgmdesign35.com" class="underline font-bold">lgmdesign35.com</a></p>
+  </div>
+</footer>
+<script src="christmas.js"></script>
+<script>
+/* Livre de coloriage — LGMDesign35 : 100 dessins, remplissage par touche */
+const DRAWINGS = [
+  {id:'noel-01',title:"La grosse boule de Noël",occasion:"Noël",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-noel-01.png'},
+  {id:'noel-02',title:"La grande canne en sucre d'orge",occasion:"Noël",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-noel-02.png'},
+  {id:'noel-03',title:"Adam en petit lutin de Noël",occasion:"Noël",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-noel-03.png'},
+  {id:'noel-04',title:"Le Père Noël lit une lettre",occasion:"Noël",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-noel-04.png'},
+  {id:'noel-05',title:"Adam écrit sa lettre au Père Noël",occasion:"Noël",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-noel-05.png'},
+  {id:'noel-06',title:"La maison en pain d'épice",occasion:"Noël",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-noel-06.png'},
+  {id:'noel-07',title:"Le marché de Noël",occasion:"Noël",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-noel-07.png'},
+  {id:'noel-08',title:"Le Père Noël dans son atelier",occasion:"Noël",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-noel-08.png'},
+  {id:'noel-09',title:"Le Père Noël sur le toit",occasion:"Noël",difficulty:'difficile',age:'6-8 ans',img:'images/coloriage-noel-09.png'},
+  {id:'noel-10',title:"La grande fête de Noël",occasion:"Noël",difficulty:'difficile',age:'6-8 ans',img:'images/coloriage-noel-10.png'},
+  {id:'halloween-01',title:"La citrouille souriante",occasion:"Halloween",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-halloween-01.png'},
+  {id:'halloween-02',title:"Le petit fantôme gentil",occasion:"Halloween",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-halloween-02.png'},
+  {id:'halloween-03',title:"Le chapeau de sorcière",occasion:"Halloween",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-halloween-03.png'},
+  {id:'halloween-04',title:"Le bonbon géant",occasion:"Halloween",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-halloween-04.png'},
+  {id:'halloween-05',title:"La maison hantée gentille",occasion:"Halloween",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-halloween-05.png'},
+  {id:'halloween-06',title:"Le chat noir et la citrouille",occasion:"Halloween",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-halloween-06.png'},
+  {id:'halloween-07',title:"La chauve-souris joyeuse",occasion:"Halloween",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-halloween-07.png'},
+  {id:'halloween-08',title:"L'araignée et sa toile",occasion:"Halloween",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-halloween-08.png'},
+  {id:'halloween-09',title:"La chasse aux bonbons",occasion:"Halloween",difficulty:'difficile',age:'6-8 ans',img:'images/coloriage-halloween-09.png'},
+  {id:'halloween-10',title:"La fête d'Halloween",occasion:"Halloween",difficulty:'difficile',age:'6-8 ans',img:'images/coloriage-halloween-10.png'},
+  {id:'paques-01',title:"Le lapin de Pâques et son œuf",occasion:"Pâques",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-paques-01.png'},
+  {id:'paques-02',title:"Le panier de Pâques",occasion:"Pâques",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-paques-02.png'},
+  {id:'paques-03',title:"Le poussin sort de son œuf",occasion:"Pâques",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-paques-03.png'},
+  {id:'paques-04',title:"Le lapin en chocolat",occasion:"Pâques",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-paques-04.png'},
+  {id:'paques-05',title:"Adam et Lapin cherchent les œufs",occasion:"Pâques",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-paques-05.png'},
+  {id:'paques-06',title:"Canard et son panier d'œufs",occasion:"Pâques",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-paques-06.png'},
+  {id:'paques-07',title:"Adam peint les œufs de Pâques",occasion:"Pâques",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-paques-07.png'},
+  {id:'paques-08',title:"Renard et Lapin sous l'arbre à œufs",occasion:"Pâques",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-paques-08.png'},
+  {id:'paques-09',title:"La grande chasse aux œufs",occasion:"Pâques",difficulty:'difficile',age:'6-8 ans',img:'images/coloriage-paques-09.png'},
+  {id:'paques-10',title:"La fête de Pâques au jardin",occasion:"Pâques",difficulty:'difficile',age:'6-8 ans',img:'images/coloriage-paques-10.png'},
+  {id:'valentin-01',title:"Adam et son grand cœur",occasion:"Saint-Valentin",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-valentin-01.png'},
+  {id:'valentin-02',title:"Lapin et son ballon en cœur",occasion:"Saint-Valentin",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-valentin-02.png'},
+  {id:'valentin-03',title:"Canard offre une fleur",occasion:"Saint-Valentin",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-valentin-03.png'},
+  {id:'valentin-04',title:"Renard câline un grand cœur",occasion:"Saint-Valentin",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-valentin-04.png'},
+  {id:'valentin-05',title:"Adam offre un cœur à Lapin",occasion:"Saint-Valentin",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-valentin-05.png'},
+  {id:'valentin-06',title:"Canard et Renard partagent un bouquet",occasion:"Saint-Valentin",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-valentin-06.png'},
+  {id:'valentin-07',title:"Trois amis et leurs ballons en cœur",occasion:"Saint-Valentin",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-valentin-07.png'},
+  {id:'valentin-08',title:"Les deux tourtereaux",occasion:"Saint-Valentin",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-valentin-08.png'},
+  {id:'valentin-09',title:"La fête de la Saint-Valentin",occasion:"Saint-Valentin",difficulty:'difficile',age:'6-8 ans',img:'images/coloriage-valentin-09.png'},
+  {id:'valentin-10',title:"Le jardin des cœurs",occasion:"Saint-Valentin",difficulty:'difficile',age:'6-8 ans',img:'images/coloriage-valentin-10.png'},
+  {id:'anniversaire-01',title:"Le gâteau d'anniversaire",occasion:"Anniversaire",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-anniversaire-01.png'},
+  {id:'anniversaire-02',title:"Lapin et son ballon de fête",occasion:"Anniversaire",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-anniversaire-02.png'},
+  {id:'anniversaire-03',title:"Canard et son cadeau",occasion:"Anniversaire",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-anniversaire-03.png'},
+  {id:'anniversaire-04',title:"Le grand cadeau",occasion:"Anniversaire",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-anniversaire-04.png'},
+  {id:'anniversaire-05',title:"Adam souffle ses bougies",occasion:"Anniversaire",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-anniversaire-05.png'},
+  {id:'anniversaire-06',title:"Les amis fêtent l'anniversaire",occasion:"Anniversaire",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-anniversaire-06.png'},
+  {id:'anniversaire-07',title:"La piñata",occasion:"Anniversaire",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-anniversaire-07.png'},
+  {id:'anniversaire-08',title:"La table d'anniversaire",occasion:"Anniversaire",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-anniversaire-08.png'},
+  {id:'anniversaire-09',title:"La grande fête d'anniversaire",occasion:"Anniversaire",difficulty:'difficile',age:'6-8 ans',img:'images/coloriage-anniversaire-09.png'},
+  {id:'anniversaire-10',title:"La fête d'anniversaire au jardin",occasion:"Anniversaire",difficulty:'difficile',age:'6-8 ans',img:'images/coloriage-anniversaire-10.png'},
+  {id:'ete-01',title:"Le soleil souriant",occasion:"Été",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-ete-01.png'},
+  {id:'ete-02',title:"La glace à trois boules",occasion:"Été",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-ete-02.png'},
+  {id:'ete-03',title:"Le château de sable",occasion:"Été",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-ete-03.png'},
+  {id:'ete-04',title:"Le ballon de plage et l'étoile de mer",occasion:"Été",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-ete-04.png'},
+  {id:'ete-05',title:"Adam nage à la mer",occasion:"Été",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-ete-05.png'},
+  {id:'ete-06',title:"Le pique-nique en famille",occasion:"Été",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-ete-06.png'},
+  {id:'ete-07',title:"Le stand de limonade",occasion:"Été",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-ete-07.png'},
+  {id:'ete-08',title:"Le camping sous les étoiles",occasion:"Été",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-ete-08.png'},
+  {id:'ete-09',title:"Le feu d'artifice d'été",occasion:"Été",difficulty:'difficile',age:'6-8 ans',img:'images/coloriage-ete-09.png'},
+  {id:'ete-10',title:"Le panier de fruits d'été",occasion:"Été",difficulty:'difficile',age:'6-8 ans',img:'images/coloriage-ete-10.png'},
+  {id:'hiver-01',title:"Le bonhomme de neige souriant",occasion:"Hiver",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-hiver-01.png'},
+  {id:'hiver-02',title:"Le gros flocon de neige",occasion:"Hiver",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-hiver-02.png'},
+  {id:'hiver-03',title:"Le chocolat chaud aux guimauves",occasion:"Hiver",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-hiver-03.png'},
+  {id:'hiver-04',title:"Le pingouin sur la glace",occasion:"Hiver",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-hiver-04.png'},
+  {id:'hiver-05',title:"Adam fait de la luge",occasion:"Hiver",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-hiver-05.png'},
+  {id:'hiver-06',title:"Adam et Canard patinent sur le lac",occasion:"Hiver",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-hiver-06.png'},
+  {id:'hiver-07',title:"La bataille de boules de neige",occasion:"Hiver",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-hiver-07.png'},
+  {id:'hiver-08',title:"L'igloo et le phoque",occasion:"Hiver",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-hiver-08.png'},
+  {id:'hiver-09',title:"La forêt d'hiver et ses animaux",occasion:"Hiver",difficulty:'difficile',age:'6-8 ans',img:'images/coloriage-hiver-09.png'},
+  {id:'hiver-10',title:"Le village d'hiver sous la neige",occasion:"Hiver",difficulty:'difficile',age:'6-8 ans',img:'images/coloriage-hiver-10.png'},
+  {id:'automne-01',title:"La feuille d'érable souriante",occasion:"Automne",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-automne-01.png'},
+  {id:'automne-02',title:"La pomme rouge",occasion:"Automne",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-automne-02.png'},
+  {id:'automne-03',title:"L'écureuil et le gland",occasion:"Automne",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-automne-03.png'},
+  {id:'automne-04',title:"Le champignon souriant",occasion:"Automne",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-automne-04.png'},
+  {id:'automne-05',title:"La cueillette des pommes",occasion:"Automne",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-automne-05.png'},
+  {id:'automne-06',title:"Le canard et le parapluie",occasion:"Automne",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-automne-06.png'},
+  {id:'automne-07',title:"Le champ de citrouilles",occasion:"Automne",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-automne-07.png'},
+  {id:'automne-08',title:"La promenade en forêt",occasion:"Automne",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-automne-08.png'},
+  {id:'automne-09',title:"La récolte d'automne",occasion:"Automne",difficulty:'difficile',age:'6-8 ans',img:'images/coloriage-automne-09.png'},
+  {id:'automne-10',title:"La forêt d'automne",occasion:"Automne",difficulty:'difficile',age:'6-8 ans',img:'images/coloriage-automne-10.png'},
+  {id:'printemps-01',title:"La fleur souriante et le papillon",occasion:"Printemps",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-printemps-01.png'},
+  {id:'printemps-02',title:"L'abeille et la fleur",occasion:"Printemps",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-printemps-02.png'},
+  {id:'printemps-03',title:"L'oiseau sur la branche fleurie",occasion:"Printemps",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-printemps-03.png'},
+  {id:'printemps-04',title:"La coccinelle sur la feuille",occasion:"Printemps",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-printemps-04.png'},
+  {id:'printemps-05',title:"Adam arrose les fleurs",occasion:"Printemps",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-printemps-05.png'},
+  {id:'printemps-06',title:"Lapin parmi les tulipes",occasion:"Printemps",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-printemps-06.png'},
+  {id:'printemps-07',title:"Canard sous la pluie et l'arc-en-ciel",occasion:"Printemps",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-printemps-07.png'},
+  {id:'printemps-08',title:"Le pique-nique d'Adam et Renard",occasion:"Printemps",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-printemps-08.png'},
+  {id:'printemps-09',title:"Le grand jardin du printemps",occasion:"Printemps",difficulty:'difficile',age:'6-8 ans',img:'images/coloriage-printemps-09.png'},
+  {id:'printemps-10',title:"Le pique-nique de printemps au parc",occasion:"Printemps",difficulty:'difficile',age:'6-8 ans',img:'images/coloriage-printemps-10.png'},
+  {id:'heros-01',title:"Adam l'Araignée",occasion:"Héros et aventures",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-heros-01.png'},
+  {id:'heros-02',title:"Adam la Chauve-Souris",occasion:"Héros et aventures",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-heros-02.png'},
+  {id:'heros-03',title:"Super Adam",occasion:"Héros et aventures",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-heros-03.png'},
+  {id:'heros-04',title:"Adam le Pompier",occasion:"Héros et aventures",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-heros-04.png'},
+  {id:'heros-05',title:"Adam le Policier",occasion:"Héros et aventures",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-heros-05.png'},
+  {id:'heros-06',title:"Adam le Pirate",occasion:"Héros et aventures",difficulty:'facile',age:'2-4 ans',img:'images/coloriage-heros-06.png'},
+  {id:'heros-07',title:"Adam et la princesse",occasion:"Héros et aventures",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-heros-07.png'},
+  {id:'heros-08',title:"Adam et le dinosaure",occasion:"Héros et aventures",difficulty:'moyen',age:'4-6 ans',img:'images/coloriage-heros-08.png'},
+  {id:'heros-09',title:"Adam l'Astronaute",occasion:"Héros et aventures",difficulty:'difficile',age:'6-8 ans',img:'images/coloriage-heros-09.png'},
+  {id:'heros-10',title:"Adam et la sirène",occasion:"Héros et aventures",difficulty:'difficile',age:'6-8 ans',img:'images/coloriage-heros-10.png'}
+];
+const OCCASIONS = [
+  {name:'Noël', emoji:'🎄'},
+  {name:'Halloween', emoji:'🎃'},
+  {name:'Pâques', emoji:'🐣'},
+  {name:'Saint-Valentin', emoji:'❤️'},
+  {name:'Anniversaire', emoji:'🎂'},
+  {name:'Été', emoji:'☀️'},
+  {name:'Hiver', emoji:'❄️'},
+  {name:'Automne', emoji:'🍂'},
+  {name:'Printemps', emoji:'🌸'},
+  {name:'Héros et aventures', emoji:'🦸'}
+];
+const DIFFS = {
+  facile: {label:'Facile · 2-4 ans', dot:'🟢', color:'#22c55e'},
+  moyen: {label:'Moyen · 4-6 ans', dot:'🟡', color:'#eab308'},
+  difficile: {label:'Difficile · 6-8 ans', dot:'🔴', color:'#ef4444'}
+};
+const PALETTE = ['#ef4444','#f97316','#eab308','#84cc16','#22c55e','#14b8a6','#06b6d4','#3b82f6','#8b5cf6','#a855f7','#ec4899','#f43f5e','#f59e0b','#a16207','#ffffff','#000000'];
+const W = 900, H = 900;
+
+let occFilter = 'Toutes', diffFilter = 'Tous';
+let current = null;         /* drawing entry currently open */
+let currentColor = '#ef4444';
+let lineMask = null;        /* Uint8Array W*H : 1 = trait noir (barrière) */
+let undoStack = [];
+let ready = false;
+
+const $ = id => document.getElementById(id);
+function show(id){
+  $('screen-gallery').classList.toggle('hidden', id !== 'screen-gallery');
+  $('screen-color').classList.toggle('hidden', id !== 'screen-color');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+/* --- Galerie : filtres --- */
+function countOcc(name){ return DRAWINGS.filter(d => d.occasion === name).length; }
+function countDiff(key){ return DRAWINGS.filter(d => d.difficulty === key).length; }
+function renderPills(){
+  let h = `<button data-occ="Toutes" class="pill pop-btn px-3 py-1.5 rounded-full border-2 border-slate-300 bg-white text-xs sm:text-sm font-black ${occFilter==='Toutes'?'active':''}">Toutes (100)</button>`;
+  OCCASIONS.forEach(o => {
+    h += `<button data-occ="${o.name}" class="pill pop-btn px-3 py-1.5 rounded-full border-2 border-slate-300 bg-white text-xs sm:text-sm font-black ${occFilter===o.name?'active':''}">${o.emoji} ${o.name} (${countOcc(o.name)})</button>`;
+  });
+  $('filter-occasions').innerHTML = h;
+  let d = `<button data-diff="Tous" class="pill pop-btn px-3 py-1.5 rounded-full border-2 border-slate-300 bg-white text-xs sm:text-sm font-black ${diffFilter==='Tous'?'active':''}">Tous les niveaux (100)</button>`;
+  Object.keys(DIFFS).forEach(k => {
+    d += `<button data-diff="${k}" class="pill pop-btn px-3 py-1.5 rounded-full border-2 border-slate-300 bg-white text-xs sm:text-sm font-black ${diffFilter===k?'active':''}">${DIFFS[k].dot} ${DIFFS[k].label} (${countDiff(k)})</button>`;
+  });
+  $('filter-difficulty').innerHTML = d;
+  document.querySelectorAll('#filter-occasions .pill').forEach(b => b.onclick = () => { occFilter = b.dataset.occ; renderPills(); renderGrid(); });
+  document.querySelectorAll('#filter-difficulty .pill').forEach(b => b.onclick = () => { diffFilter = b.dataset.diff; renderPills(); renderGrid(); });
+}
+function filtered(){
+  return DRAWINGS.filter(d => (occFilter === 'Toutes' || d.occasion === occFilter) && (diffFilter === 'Tous' || d.difficulty === diffFilter));
+}
+function badgeHtml(d){
+  const occ = OCCASIONS.find(o => o.name === d.occasion);
+  return `<span class="px-2 py-0.5 bg-sky-100 text-sky-800 text-[11px] font-black rounded-full">${occ ? occ.emoji + ' ' : ''}${d.occasion}</span>` +
+         `<span class="px-2 py-0.5 text-[11px] font-black rounded-full" style="background:${DIFFS[d.difficulty].color}22;color:${DIFFS[d.difficulty].color==='#eab308' ? '#a16207' : DIFFS[d.difficulty].color}">${DIFFS[d.difficulty].dot} ${DIFFS[d.difficulty].label}</span>`;
+}
+function renderGrid(){
+  const list = filtered();
+  $('gallery-count').textContent = list.length + (list.length > 1 ? ' dessins' : ' dessin');
+  $('drawing-grid').innerHTML = list.map(d =>
+    `<div class="draw-card bg-white rounded-3xl border-2 border-slate-200 shadow overflow-hidden" data-id="${d.id}" onclick="openDrawing('${d.id}')">` +
+    `<img src="${d.img}" alt="${d.title.replace(/"/g, '&quot;')}" loading="lazy" class="w-full aspect-square object-cover">` +
+    `<div class="p-3 space-y-2"><p class="font-black text-sm leading-tight">${d.title}</p>` +
+    `<div class="flex flex-wrap gap-1">${badgeHtml(d)}</div></div></div>`
+  ).join('');
+}
+
+/* --- Coloriage : préparation --- */
+const displayCtx = $('color-canvas').getContext('2d');
+const fillCanvas = document.createElement('canvas'); fillCanvas.width = W; fillCanvas.height = H;
+const fillCtx = fillCanvas.getContext('2d', {willReadFrequently: true});
+const lineCanvas = document.createElement('canvas'); lineCanvas.width = W; lineCanvas.height = H;
+const lineCtx = lineCanvas.getContext('2d');
+
+function renderPalette(){
+  $('palette').innerHTML = PALETTE.map(c =>
+    `<button data-color="${c}" class="color-btn w-10 h-10 sm:w-11 sm:h-11 rounded-full border-4 border-white shadow-md shrink-0 ${c===currentColor?'selected':''}" style="background:${c}" aria-label="Couleur ${c}"></button>`
+  ).join('');
+  document.querySelectorAll('#palette .color-btn').forEach(b => b.onclick = () => { currentColor = b.dataset.color; renderPalette(); });
+}
+function hexToRgb(hex){
+  return [parseInt(hex.slice(1,3),16), parseInt(hex.slice(3,5),16), parseInt(hex.slice(5,7),16)];
+}
+function openDrawing(id){
+  current = DRAWINGS.find(d => d.id === id);
+  if (!current) return;
+  ready = false;
+  undoStack = [];
+  $('color-title').textContent = current.title;
+  $('color-badges').innerHTML = badgeHtml(current);
+  renderPalette();
+  const img = new Image();
+  img.onload = () => {
+    /* couche des traits : blanc -> transparent, noir/gris -> noir opaque */
+    const src = document.createElement('canvas'); src.width = W; src.height = H;
+    const sctx = src.getContext('2d', {willReadFrequently: true});
+    sctx.drawImage(img, 0, 0, W, H);
+    const sd = sctx.getImageData(0, 0, W, H).data;
+    const ld = lineCtx.createImageData(W, H);
+    lineMask = new Uint8Array(W * H);
+    for (let i = 0, j = 0; i < sd.length; i += 4, j++){
+      const lum = sd[i]; /* image en niveaux de gris */
+      lineMask[j] = lum < 180 ? 1 : 0;
+      ld.data[i] = 0; ld.data[i+1] = 0; ld.data[i+2] = 0;
+      ld.data[i+3] = 255 - lum;
+    }
+    lineCtx.putImageData(ld, 0, 0);
+    fillCtx.clearRect(0, 0, W, H);
+    redraw();
+    ready = true;
+  };
+  img.src = current.img;
+  show('screen-color');
+}
+function redraw(){
+  displayCtx.fillStyle = '#ffffff';
+  displayCtx.fillRect(0, 0, W, H);
+  displayCtx.drawImage(fillCanvas, 0, 0);
+  displayCtx.drawImage(lineCanvas, 0, 0);
+}
+function showGallery(){ show('screen-gallery'); }
+
+/* --- Remplissage par touche (scanline flood fill) --- */
+function floodFill(sx, sy, hex){
+  if (!lineMask) return false;
+  if (sx < 0 || sy < 0 || sx >= W || sy >= H) return false;
+  const start = sy * W + sx;
+  if (lineMask[start]) return false; /* touché sur un trait : rien à faire */
+  const nc = hexToRgb(hex);
+  const fd = fillCtx.getImageData(0, 0, W, H);
+  const data = fd.data;
+  const si = start * 4;
+  const tr = data[si], tg = data[si+1], tb = data[si+2], ta = data[si+3];
+  if (tr === nc[0] && tg === nc[1] && tb === nc[2] && ta === 255) return false; /* déjà cette couleur */
+  const match = i => {
+    const p = i * 4;
+    return data[p] === tr && data[p+1] === tg && data[p+2] === tb && data[p+3] === ta;
+  };
+  const changed = [];
+  const stack = [[sx, sy]];
+  while (stack.length){
+    const pt = stack.pop();
+    const x = pt[0], y = pt[1];
+    let i = y * W + x;
+    if (lineMask[i] || !match(i)) continue;
+    let x0 = x;
+    while (x0 >= 0 && !lineMask[y*W+x0] && match(y*W+x0)) x0--;
+    x0++;
+    let x1 = x;
+    while (x1 < W && !lineMask[y*W+x1] && match(y*W+x1)) x1++;
+    x1--;
+    for (let xx = x0; xx <= x1; xx++){
+      const p = (y*W+xx) * 4;
+      data[p] = nc[0]; data[p+1] = nc[1]; data[p+2] = nc[2]; data[p+3] = 255;
+      changed.push(y*W+xx);
+    }
+    for (let k = 0; k < 2; k++){
+      const ny = k === 0 ? y - 1 : y + 1;
+      if (ny < 0 || ny >= H) continue;
+      let xx = x0;
+      while (xx <= x1){
+        while (xx <= x1 && (lineMask[ny*W+xx] || !match(ny*W+xx))) xx++;
+        if (xx > x1) break;
+        stack.push([xx, ny]);
+        while (xx <= x1 && !lineMask[ny*W+xx] && match(ny*W+xx)) xx++;
+      }
+    }
+  }
+  if (!changed.length) return false;
+  fillCtx.putImageData(fd, 0, 0);
+  undoStack.push({indices: new Uint32Array(changed), prev: [tr, tg, tb, ta], next: [nc[0], nc[1], nc[2], 255]});
+  if (undoStack.length > 50) undoStack.shift();
+  redraw();
+  return true;
+}
+$('color-canvas').addEventListener('pointerdown', e => {
+  if (!ready || !current) return;
+  const r = $('color-canvas').getBoundingClientRect();
+  const x = Math.floor((e.clientX - r.left) / r.width * W);
+  const y = Math.floor((e.clientY - r.top) / r.height * H);
+  floodFill(x, y, currentColor);
+});
+function undoFill(){
+  const last = undoStack.pop();
+  if (!last) return;
+  const fd = fillCtx.getImageData(0, 0, W, H);
+  const data = fd.data;
+  for (let n = 0; n < last.indices.length; n++){
+    const p = last.indices[n] * 4;
+    data[p] = last.prev[0]; data[p+1] = last.prev[1]; data[p+2] = last.prev[2]; data[p+3] = last.prev[3];
+  }
+  fillCtx.putImageData(fd, 0, 0);
+  redraw();
+}
+function resetDrawing(){
+  fillCtx.clearRect(0, 0, W, H);
+  undoStack = [];
+  redraw();
+}
+function downloadDrawing(){
+  if (!current) return;
+  const ex = document.createElement('canvas'); ex.width = W; ex.height = H;
+  const ectx = ex.getContext('2d');
+  ectx.fillStyle = '#ffffff'; ectx.fillRect(0, 0, W, H);
+  ectx.drawImage(fillCanvas, 0, 0);
+  ectx.drawImage(lineCanvas, 0, 0);
+  ex.toBlob(blob => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'coloriage-' + current.id + '.png';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+  }, 'image/png');
+}
+function nextDrawing(){
+  if (!current) return;
+  const list = filtered();
+  const i = list.findIndex(d => d.id === current.id);
+  const next = list[(i + 1) % list.length] || DRAWINGS[0];
+  openDrawing(next.id);
+}
+
+/* --- Pour les tests automatisés --- */
+window.__coloring = {
+  get ready(){ return ready; },
+  pixel(x, y){
+    const d = displayCtx.getImageData(x, y, 1, 1).data;
+    return [d[0], d[1], d[2], d[3]];
+  },
+  barrier(x, y){ return lineMask ? lineMask[y*W+x] : -1; }
+};
+
+/* --- Démarrage --- */
+renderPills();
+renderGrid();
+show('screen-gallery');
+</script>
+</body>
+</html>
