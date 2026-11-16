@@ -135,8 +135,10 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
   <section id="formulaire-oeuvre" class="max-w-2xl mx-auto bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-4">
     <h2 class="brand-font text-2xl font-bold text-qcblue-700 text-center">📮 Envoyer une œuvre</h2>
     <p class="text-sm text-slate-600 leading-relaxed text-center">Remplissez ce formulaire, <strong>parent ou tuteur seulement</strong>. Nous vous répondrons par courriel quand l'œuvre sera publiée.</p>
-    <form id="artwork-form" action="https://formspree.io/f/xeagalwv" method="POST" class="space-y-4" enctype="multipart/form-data">
+    <form id="artwork-form" action="https://formsubmit.co/lgmdesign35@gmail.com" method="POST" class="space-y-4" enctype="multipart/form-data">
       <input type="hidden" name="_subject" value="Nouvelle œuvre — Coin des artistes">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="oeuvre_type" value="galerie">
       <div>
         <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2" for="af-firstname">Prénom de l'enfant *</label>
@@ -176,7 +178,7 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
         <input id="af-consent" name="consentement" type="checkbox" required class="mt-1 w-5 h-5 shrink-0 accent-amber-500">
         <span class="text-sm font-semibold text-slate-700 leading-relaxed">Je suis le parent ou le tuteur de l'enfant et j'autorise la publication de cette œuvre (prénom et âge seulement) sur lgmdesign35.com. *</span>
       </label>
-      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
       <button type="submit" class="pop-btn block w-full text-center py-3 bg-amber-400 hover:bg-amber-500 text-slate-900 font-black text-sm sm:text-base rounded-xl shadow border-2 border-white">Envoyer mon œuvre 🎨</button>
     </form>
     <div id="af-success" class="hidden mt-3 p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-sm font-semibold text-center">Merci ! 🎉 Votre œuvre a bien été envoyée. L'équipe LGMDesign35 va la vérifier et vous écrira quand elle sera publiée. Bravo, petit artiste !</div>
@@ -247,7 +249,7 @@ function renderGallery(){
   ).join('');
 }
 
-/* --- Formulaire d'envoi (Formspree, comme la page Contact) --- */
+/* --- Formulaire d'envoi (FormSubmit — Formspree gratuit refuse les photos : HTTP 400 "File Uploads Not Permitted") --- */
 document.getElementById('artwork-form').addEventListener('submit', function(e){
   e.preventDefault();
   var f = e.target;
@@ -260,8 +262,9 @@ document.getElementById('artwork-form').addEventListener('submit', function(e){
   }
   var fd = new FormData(f);
   if (btn){ btn.disabled = true; btn.textContent = 'Envoi en cours…'; }
-  fetch('https://formspree.io/f/xeagalwv', {method:'POST', body:fd, headers:{'Accept':'application/json'}})
-    .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); if (ok) ok.classList.remove('hidden'); f.reset(); })
+  fetch('https://formsubmit.co/ajax/lgmdesign35@gmail.com', {method:'POST', body:fd, headers:{'Accept':'application/json'}})
+    .then(function(r){ return r.json().then(function(d){ if (!r.ok || !d || (d.success !== true && d.success !== 'true')) throw new Error('submit failed'); }); })
+    .then(function(){ if (ok) ok.classList.remove('hidden'); f.reset(); })
     .catch(function(){ if (err) err.classList.remove('hidden'); })
     .finally(function(){ if (btn){ btn.disabled = false; btn.textContent = 'Envoyer mon œuvre 🎨'; } });
 });
