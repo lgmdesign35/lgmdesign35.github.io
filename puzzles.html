@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="fr-CA" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:,">
+<title>Puzzles des héros — Adam et ses amis — LGMDesign35</title>
+<meta name="description" content="Puzzles gratuits pour les 1 à 6 ans : Adam en super-héros, en pompier et en policier. 5 héros, 8 niveaux, de 4 à 50 pièces. Jouez en français québécois sur lgmdesign35.com.">
+<link rel="canonical" href="https://lgmdesign35.com/puzzles.html">
+<link rel="alternate" hreflang="fr-CA" href="https://lgmdesign35.com/puzzles.html">
+<link rel="alternate" hreflang="x-default" href="https://lgmdesign35.com/puzzles.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LGMDesign35">
+<meta property="og:locale" content="fr_CA">
+<meta property="og:title" content="Puzzles des héros — Adam et ses amis — LGMDesign35">
+<meta property="og:description" content="Puzzles gratuits pour les 1 à 6 ans : Adam en super-héros, en pompier et en policier. 5 héros, 8 niveaux, de 4 à 50 pièces.">
+<meta property="og:url" content="https://lgmdesign35.com/puzzles.html">
+<meta property="og:image" content="https://lgmdesign35.com/images/puzzle-super-adam.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Puzzles des héros — Adam et ses amis — LGMDesign35">
+<meta name="twitter:description" content="Puzzles gratuits pour les 1 à 6 ans : Adam en super-héros, en pompier et en policier. 5 héros, 8 niveaux, de 4 à 50 pièces.">
+<meta name="twitter:image" content="https://lgmdesign35.com/images/puzzle-super-adam.webp">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+if(typeof tailwind!=='undefined'){tailwind.config={theme:{extend:{colors:{qcblue:{400:'#38bdf8',500:'#0284c7',600:'#0055a5',700:'#003399',900:'#0c4a6e'},kidyellow:'#facc15',kidpink:'#f472b6',kidgreen:'#4ade80',kidpurple:'#a78bfa'},fontFamily:{sans:['Quicksand','sans-serif'],fredoka:['Fredoka','sans-serif']}}}};}
+</script>
+<style>
+.hidden{display:none !important}
+body{font-family:'Quicksand',sans-serif;background:linear-gradient(135deg,#f0f9ff 0%,#fef9c3 50%,#fce7f3 100%);min-height:100vh;touch-action:manipulation}
+h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
+.pop-btn{transition:all .2s cubic-bezier(.175,.885,.32,1.275)}
+.pop-btn:active{transform:scale(.92)}
+.hero-dark-gradient{background-color:#0055a5 !important;background-image:linear-gradient(to right,#0ea5e9 0%,#0055a5 50%,#4338ca 100%) !important;color:#fff !important}
+.hero-dark-gradient h1{color:#fff !important}
+.hero-dark-gradient p{color:#e0f2fe !important}
+/* --- Puzzle --- */
+#board{position:relative;width:min(92vw,520px);aspect-ratio:1/1;margin:0 auto;background:#fff;border:4px solid #f59e0b;border-radius:1.25rem;overflow:hidden;box-shadow:0 10px 30px -10px rgba(0,85,165,.35);touch-action:none}
+#board .ghost{position:absolute;inset:0;background-size:100% 100%;opacity:.16;pointer-events:none}
+#board .slot{position:absolute;border:1px dashed rgba(2,132,199,.35);box-sizing:border-box}
+#board .slot.drop-hint{background:rgba(74,222,128,.45);border:2px solid #22c55e}
+#board .slot.shake{animation:shake .35s ease-in-out}
+#board .placed{position:absolute;box-sizing:border-box;border:1px solid rgba(255,255,255,.9);box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);animation:pop-in .25s ease}
+@keyframes pop-in{0%{transform:scale(.6);opacity:.4}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+#tray{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-content:flex-start;min-height:96px;padding:12px;background:#fff;border:2px dashed #cbd5e1;border-radius:1.25rem;touch-action:none}
+.piece{border-radius:.5rem;box-shadow:0 3px 8px rgba(0,0,0,.25);cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;border:2px solid #fff;box-sizing:border-box;flex:none}
+.piece.selected{outline:4px solid #f59e0b;outline-offset:2px;transform:scale(1.06)}
+.piece.dragging{opacity:.35}
+.hero-card{transition:transform .25s ease,box-shadow .25s ease;cursor:pointer}
+.hero-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 14px 28px -10px rgba(2,132,199,.35)}
+.level-card{transition:transform .2s ease,box-shadow .2s ease;cursor:pointer}
+.level-card:hover{transform:translateY(-3px);box-shadow:0 12px 24px -10px rgba(2,132,199,.3)}
+.star-off{color:#cbd5e1}
+.star-on{color:#f59e0b}
+#drag-el{position:fixed;z-index:9999;pointer-events:none;border-radius:.5rem;box-shadow:0 10px 24px rgba(0,0,0,.4);border:2px solid #fff;transform:translate(-50%,-50%) rotate(2deg)}
+</style>
+<!-- CHRISTMAS: thème de Noël — supprimer cette ligne pour revenir au thème normal -->
+<link rel="stylesheet" href="christmas.css">
+</head>
+<body class="text-slate-800 flex flex-col min-h-screen overflow-x-hidden">
+<header class="bg-white/95 backdrop-blur-md border-b-4 border-qcblue-600 sticky top-0 z-50 shadow-md">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
+    <a href="index.html" class="flex items-center gap-3">
+      <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-qcblue-700 to-sky-400 flex items-center justify-center text-white text-2xl shadow-lg shadow-qcblue-500/30 shrink-0">⚜️</div>
+      <div>
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="text-xl sm:text-2xl font-black text-qcblue-700 tracking-wide brand-font">LGM<span class="text-amber-500">Design35</span></span>
+          <span class="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-0.5 rounded-full border border-amber-300">Québec 🍁</span>
+        </div>
+        <span class="text-xs font-bold text-slate-500 block">Apprendre, Dessiner et Lire — Français québécois (1 à 6 ans)</span>
+      </div>
+    </a>
+    <div class="flex items-center gap-3">
+      <a href="panier.html" class="bg-amber-400 hover:bg-amber-500 text-slate-900 px-3 py-1.5 rounded-full font-black text-xs sm:text-sm shadow-md border-2 border-white">🛒 Panier (<span data-cart-count>0</span>)</a>
+    </div>
+  </div>
+  <nav class="bg-sky-50 border-t border-sky-100 py-1.5">
+    <div class="max-w-7xl mx-auto px-4 flex gap-1 overflow-x-auto no-scrollbar text-xs sm:text-sm"><a href="index.html" class="main-tab nav-btn px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap text-slate-700 hover:bg-sky-200"><span>🏠 Accueil</span></a><a href="livres.html" class="main-tab nav-btn px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap text-slate-700 hover:bg-sky-200"><span>📖 Livres</span></a><a href="histoires-gratuites.html" class="main-tab nav-btn px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap text-slate-700 hover:bg-sky-200"><span>🎁 Histoires gratuites</span></a><a href="videos.html" class="main-tab nav-btn px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap text-slate-700 hover:bg-sky-200"><span>🎬 Vidéos</span></a><a href="puzzles.html" class="main-tab nav-btn px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap active" style="background:#0055a5;color:#fff"><span>🧩 Puzzles</span></a><a href="blog-parler-francais-quebecois.html" class="main-tab nav-btn px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap text-slate-700 hover:bg-sky-200"><span>✏️ Blogue</span></a><a href="contact.html" class="main-tab nav-btn px-3.5 py-1.5 rounded-xl font-extrabold flex items-center gap-1.5 whitespace-nowrap text-slate-700 hover:bg-sky-200"><span>✉️ Contact</span></a></div>
+  </nav>
+</header>
+<main class="max-w-6xl mx-auto px-4 py-8 w-full space-y-8 flex-1">
+
+  <div class="hero-dark-gradient relative overflow-hidden rounded-3xl p-6 sm:p-10 text-white shadow-xl">
+    <div class="max-w-2xl relative z-10 space-y-4">
+      <h1 class="brand-font text-3xl sm:text-5xl font-black leading-tight" style="color:#ffffff">Puzzles des héros 🧩</h1>
+      <p class="text-sky-100 text-base sm:text-lg font-bold leading-relaxed" style="color:#e0f2fe">Adam en super-héros, en pompier et en policier ! Choisis ton héros, choisis ton niveau — de 4 à 50 pièces — et replace chaque morceau à sa place.</p>
+      <div class="flex flex-wrap gap-2 pt-2">
+        <span class="px-3 py-1.5 bg-white/15 border border-white/30 rounded-full text-xs font-bold text-white">✔ 5 héros</span>
+        <span class="px-3 py-1.5 bg-white/15 border border-white/30 rounded-full text-xs font-bold text-white">✔ 8 niveaux · 4 à 50 pièces</span>
+        <span class="px-3 py-1.5 bg-white/15 border border-white/30 rounded-full text-xs font-bold text-white">✔ Gratuit · Pour les 1 à 6 ans</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Écran 1 : choisir un héros -->
+  <section id="screen-heroes" class="space-y-5">
+    <div class="text-center space-y-1">
+      <h2 class="brand-font text-2xl sm:text-3xl font-black text-slate-800">1. Choisis ton héros ! 🦸</h2>
+      <p class="text-sm font-bold text-slate-500">Touche une image pour commencer.</p>
+    </div>
+    <div id="hero-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 max-w-4xl mx-auto"></div>
+    <p class="text-center text-xs font-bold text-slate-400">Astuce pour les parents : les étoiles gagnées sont gardées sur cet appareil. Aucun compte, aucune publicité.</p>
+  </section>
+
+  <!-- Écran 2 : choisir un niveau -->
+  <section id="screen-levels" class="space-y-5 hidden">
+    <div class="text-center space-y-1">
+      <button onclick="showHeroes()" class="text-sm font-black text-qcblue-600 hover:underline">← Choisir un autre héros</button>
+      <h2 class="brand-font text-2xl sm:text-3xl font-black text-slate-800">2. Choisis ton niveau ! 🎚️</h2>
+      <p class="text-sm font-bold text-slate-500">Du plus facile au plus difficile.</p>
+    </div>
+    <div class="max-w-md mx-auto bg-white rounded-3xl border-2 border-slate-200 shadow-lg overflow-hidden flex items-center gap-4 p-4">
+      <img id="level-hero-img" src="" alt="" class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border-2 border-amber-300 shrink-0">
+      <div>
+        <div id="level-hero-name" class="brand-font text-xl font-black text-slate-800"></div>
+        <div id="level-hero-desc" class="text-xs font-bold text-slate-500 mt-1"></div>
+        <div id="level-hero-stars" class="text-sm mt-1"></div>
+      </div>
+    </div>
+    <div id="level-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl mx-auto"></div>
+  </section>
+
+  <!-- Écran 3 : le puzzle -->
+  <section id="screen-game" class="space-y-4 hidden">
+    <div class="flex flex-wrap items-center justify-between gap-2 max-w-2xl mx-auto">
+      <button onclick="showLevels()" class="text-sm font-black text-qcblue-600 hover:underline">← Niveaux</button>
+      <h2 id="game-title" class="brand-font text-lg sm:text-2xl font-black text-slate-800 text-center"></h2>
+      <button id="sound-btn" onclick="toggleSound()" class="text-sm font-black bg-white border-2 border-slate-200 rounded-full px-3 py-1.5 shadow-sm pop-btn">🔊 Son</button>
+    </div>
+    <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm font-black">
+      <span class="bg-white border-2 border-amber-200 rounded-full px-3 py-1.5 shadow-sm">🧩 <span id="stat-placed">0</span>/<span id="stat-total">0</span></span>
+      <span class="bg-white border-2 border-sky-200 rounded-full px-3 py-1.5 shadow-sm">⏱️ <span id="stat-time">00:00</span></span>
+      <span class="bg-white border-2 border-emerald-200 rounded-full px-3 py-1.5 shadow-sm">👆 <span id="stat-moves">0</span> coups</span>
+    </div>
+    <div class="flex flex-wrap items-center justify-center gap-2">
+      <button onclick="togglePreview()" class="px-3 py-2 bg-white border-2 border-slate-200 rounded-2xl text-xs sm:text-sm font-black shadow-sm pop-btn">👀 Voir l'image</button>
+      <button onclick="toggleGhost()" id="ghost-btn" class="px-3 py-2 bg-emerald-100 border-2 border-emerald-300 rounded-2xl text-xs sm:text-sm font-black shadow-sm pop-btn">👻 Aide : oui</button>
+      <button onclick="shuffleTray()" class="px-3 py-2 bg-white border-2 border-slate-200 rounded-2xl text-xs sm:text-sm font-black shadow-sm pop-btn">🔀 Mélanger</button>
+      <button onclick="startLevel()" class="px-3 py-2 bg-white border-2 border-slate-200 rounded-2xl text-xs sm:text-sm font-black shadow-sm pop-btn">🔄 Recommencer</button>
+    </div>
+    <div class="text-center">
+      <img id="game-thumb" src="" alt="Aperçu du puzzle" class="w-20 h-20 rounded-2xl object-cover border-2 border-amber-300 shadow inline-block cursor-pointer" onclick="togglePreview()" title="Touche pour voir l'image en grand">
+      <p class="text-xs font-bold text-slate-400 mt-1">Touche l'image pour la voir en grand · Glisse chaque pièce à sa place, ou touche une pièce puis sa case.</p>
+    </div>
+    <div id="board"></div>
+    <div class="max-w-2xl mx-auto">
+      <p class="text-center text-xs font-black text-slate-500 mb-2">👇 Les pièces à placer</p>
+      <div id="tray"></div>
+    </div>
+  </section>
+
+  <!-- Gagné ! -->
+  <div id="win-overlay" class="hidden fixed inset-0 z-[100] bg-slate-900/70 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 text-center space-y-4">
+      <div class="text-6xl">🎉</div>
+      <h3 class="brand-font text-3xl font-black text-emerald-600">Bravo !</h3>
+      <p class="font-bold text-slate-600">Tu as terminé le puzzle !</p>
+      <div id="win-stars" class="text-4xl tracking-widest"></div>
+      <div class="flex justify-center gap-4 text-sm font-black text-slate-700">
+        <span>⏱️ <span id="win-time">00:00</span></span>
+        <span>👆 <span id="win-moves">0</span> coups</span>
+        <span>🧩 <span id="win-pieces">0</span> pièces</span>
+      </div>
+      <div class="flex flex-col gap-2">
+        <button id="win-next" onclick="nextLevel()" class="w-full py-3 bg-qcblue-600 hover:bg-qcblue-700 text-white font-black rounded-2xl shadow-lg pop-btn">Niveau suivant →</button>
+        <button onclick="startLevel()" class="w-full py-3 bg-amber-400 hover:bg-amber-500 text-slate-900 font-black rounded-2xl shadow pop-btn">🔄 Rejouer ce niveau</button>
+        <button onclick="showHeroes()" class="w-full py-3 bg-white border-2 border-slate-200 text-slate-700 font-black rounded-2xl shadow-sm pop-btn">🦸 Choisir un autre héros</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Aperçu de l'image -->
+  <div id="preview-overlay" class="hidden fixed inset-0 z-[100] bg-slate-900/80 flex items-center justify-center p-4" onclick="togglePreview()">
+    <div class="text-center space-y-3">
+      <img id="preview-img" src="" alt="Image du puzzle" class="max-w-[92vw] max-h-[75vh] rounded-3xl border-4 border-white shadow-2xl mx-auto">
+      <p id="preview-caption" class="text-white font-black text-lg"></p>
+      <p class="text-white/70 text-sm font-bold">Touche n'importe où pour fermer</p>
+    </div>
+  </div>
+
+</main>
+<footer class="bg-qcblue-900 text-white mt-8">
+  <div class="max-w-6xl mx-auto px-4 py-6 text-center space-y-2">
+    <p class="brand-font font-black text-lg">LGM<span class="text-amber-400">Design35</span> — Adam et ses amis</p>
+    <p class="text-sky-200 text-xs font-bold">Des histoires qui forment votre enfant à aimer le français du Québec · 1 à 6 ans</p>
+    <p class="text-xs"><a href="index.html" class="underline font-bold">Accueil</a> · <a href="livres.html" class="underline font-bold">Livres</a> · <a href="contact.html" class="underline font-bold">Contact</a> · <a href="https://lgmdesign35.com" class="underline font-bold">lgmdesign35.com</a></p>
+  </div>
+</footer>
+<script src="christmas.js"></script>
+<script>
+/* Puzzles des héros — LGMDesign35 */
+const HEROES = [
+  {id:'araignee', name:'Adam l\u2019Araignée', emoji:'🕷️', img:'images/puzzle-araignee.webp', color:'#e11d48', desc:'Adam se balance de toile en toile entre les immeubles de la ville !'},
+  {id:'chauve-souris', name:'Adam la Chauve-Souris', emoji:'🦇', img:'images/puzzle-chauve-souris.webp', color:'#334155', desc:'Adam vole dans la nuit sous la lune qui sourit !'},
+  {id:'super-adam', name:'Super Adam', emoji:'💪', img:'images/puzzle-super-adam.webp', color:'#2563eb', desc:'Super Adam vole très haut, au-dessus des nuages !'},
+  {id:'pompier', name:'Adam le Pompier', emoji:'🚒', img:'images/puzzle-pompier.webp', color:'#dc2626', desc:'Adam le pompier arrose avec son tuyau. À l\u2019aide !'},
+  {id:'policier', name:'Adam le Policier', emoji:'👮', img:'images/puzzle-policier.webp', color:'#1d4ed8', desc:'Adam le policier dit bonjour et protège la ville !'}
+];
+const LEVELS = [
+  {cols:2, rows:2, name:'Facile'},
+  {cols:2, rows:3, name:'Facile'},
+  {cols:3, rows:3, name:'Moyen'},
+  {cols:3, rows:4, name:'Moyen'},
+  {cols:4, rows:4, name:'Difficile'},
+  {cols:5, rows:5, name:'Difficile'},
+  {cols:6, rows:6, name:'Expert'},
+  {cols:5, rows:10, name:'Expert'}
+];
+LEVELS.forEach(function(l){ l.pieces = l.cols * l.rows; });
+
+let hero = null, levelIdx = 0, placed = 0, mistakes = 0, moves = 0, seconds = 0;
+let timerId = null, selected = null, soundOn = true, ghostOn = true, gameActive = false;
+let store = {};
+try { store = JSON.parse(localStorage.getItem('lgm-puzzle-stars') || '{}'); } catch(e){ store = {}; }
+function saveStore(){ try { localStorage.setItem('lgm-puzzle-stars', JSON.stringify(store)); } catch(e){} }
+function starsFor(h, l){ return (store[h] && store[h][l]) || 0; }
+function heroStars(h){ let s = 0; for (let i = 0; i < LEVELS.length; i++) s += starsFor(h, i); return s; }
+function starsHtml(n){ let s = ''; for (let i = 0; i < 3; i++) s += '<span class="' + (i < n ? 'star-on' : 'star-off') + '">★</span>'; return s; }
+function $(id){ return document.getElementById(id); }
+function show(id){ ['screen-heroes','screen-levels','screen-game'].forEach(function(s){ $(s).classList.toggle('hidden', s !== id); }); window.scrollTo({top:0, behavior:'smooth'}); }
+
+/* --- Sons (WebAudio, aucun fichier) --- */
+let AC = null;
+function beep(f, d, type, g){
+  if (!soundOn) return;
+  try {
+    AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+    if (AC.state === 'suspended') AC.resume();
+    const o = AC.createOscillator(), gn = AC.createGain();
+    o.type = type || 'sine'; o.frequency.value = f;
+    gn.gain.setValueAtTime(g || 0.12, AC.currentTime);
+    gn.gain.exponentialRampToValueAtTime(0.001, AC.currentTime + d);
+    o.connect(gn); gn.connect(AC.destination);
+    o.start(); o.stop(AC.currentTime + d);
+  } catch(e){}
+}
+function sndPlace(){ beep(660, .12); setTimeout(function(){ beep(880, .18); }, 90); }
+function sndError(){ beep(160, .22, 'sawtooth', 0.07); }
+function sndWin(){ [523, 659, 784, 1047].forEach(function(f, i){ setTimeout(function(){ beep(f, .28); }, i * 140); }); }
+function toggleSound(){ soundOn = !soundOn; $('sound-btn').textContent = soundOn ? '🔊 Son' : '🔇 Son'; if (soundOn) beep(660, .1); }
+
+/* --- Écran héros --- */
+function renderHeroes(){
+  const grid = $('hero-grid'); grid.innerHTML = '';
+  HEROES.forEach(function(h){
+    const card = document.createElement('div');
+    card.className = 'hero-card bg-white rounded-3xl border-2 border-slate-200 shadow-lg overflow-hidden';
+    card.innerHTML =
+      '<img src="' + h.img + '" alt="' + h.name + '" class="w-full aspect-square object-cover">' +
+      '<div class="p-3 text-center space-y-1">' +
+        '<div class="brand-font text-base sm:text-lg font-black text-slate-800">' + h.emoji + ' ' + h.name + '</div>' +
+        '<div class="text-xs font-bold text-slate-500">' + h.desc + '</div>' +
+        '<div class="text-sm">' + starsHtml(0) + ' <span class="text-xs font-black text-amber-500">' + heroStars(h.id) + '/24 ⭐</span></div>' +
+        '<div class="text-xs font-black text-qcblue-600">8 niveaux · 4 à 50 pièces →</div>' +
+      '</div>';
+    card.onclick = function(){ selectHero(h.id); };
+    grid.appendChild(card);
+  });
+}
+function showHeroes(){ stopTimer(); gameActive = false; $('win-overlay').classList.add('hidden'); $('preview-overlay').classList.add('hidden'); renderHeroes(); show('screen-heroes'); }
+function selectHero(id){ hero = HEROES.find(function(h){ return h.id === id; }); renderLevels(); show('screen-levels'); }
+
+/* --- Écran niveaux --- */
+function renderLevels(){
+  $('level-hero-img').src = hero.img; $('level-hero-img').alt = hero.name;
+  $('level-hero-name').textContent = hero.emoji + ' ' + hero.name;
+  $('level-hero-desc').textContent = hero.desc;
+  $('level-hero-stars').innerHTML = 'Étoiles : ' + starsHtml(0) + ' <b class="text-amber-500">' + heroStars(hero.id) + '/24</b>';
+  const grid = $('level-grid'); grid.innerHTML = '';
+  LEVELS.forEach(function(lv, i){
+    const st = starsFor(hero.id, i);
+    const card = document.createElement('div');
+    card.className = 'level-card bg-white rounded-3xl border-2 p-4 text-center shadow ' + (i === LEVELS.length - 1 ? 'border-red-300 bg-red-50' : 'border-slate-200');
+    card.innerHTML =
+      '<div class="text-3xl font-black brand-font" style="color:' + hero.color + '">' + lv.pieces + '</div>' +
+      '<div class="text-xs font-black text-slate-500">pièces</div>' +
+      '<div class="text-sm font-black mt-1" style="color:' + hero.color + '">' + lv.name + '</div>' +
+      '<div class="text-xs text-slate-400 font-bold">' + lv.cols + ' × ' + lv.rows + '</div>' +
+      '<div class="text-base mt-1">' + starsHtml(st) + '</div>';
+    card.onclick = function(){ levelIdx = i; startLevel(); };
+    grid.appendChild(card);
+  });
+}
+function showLevels(){ stopTimer(); gameActive = false; $('win-overlay').classList.add('hidden'); renderLevels(); show('screen-levels'); }
+
+/* --- Le puzzle --- */
+function bgPos(c, r, cols, rows){
+  const x = cols > 1 ? (c / (cols - 1)) * 100 : 50;
+  const y = rows > 1 ? (r / (rows - 1)) * 100 : 50;
+  return x + '% ' + y + '%';
+}
+function tileStyle(r, c, cols, rows){
+  return 'background-image:url(' + hero.img + ');background-size:' + (cols * 100) + '% ' + (rows * 100) + '%;background-position:' + bgPos(c, r, cols, rows) + ';';
+}
+function startLevel(){
+  const lv = LEVELS[levelIdx];
+  placed = 0; mistakes = 0; moves = 0; seconds = 0; selected = null; gameActive = true;
+  $('game-title').textContent = hero.emoji + ' ' + hero.name + ' — ' + lv.pieces + ' pièces · ' + lv.name;
+  $('game-thumb').src = hero.img;
+  $('stat-total').textContent = lv.pieces;
+  $('stat-placed').textContent = '0'; $('stat-moves').textContent = '0'; $('stat-time').textContent = '00:00';
+  $('win-overlay').classList.add('hidden'); $('preview-overlay').classList.add('hidden');
+  const board = $('board'); board.innerHTML = '';
+  const ghost = document.createElement('div');
+  ghost.className = 'ghost'; ghost.style.backgroundImage = 'url(' + hero.img + ')';
+  ghost.style.display = ghostOn ? 'block' : 'none';
+  board.appendChild(ghost);
+  for (let r = 0; r < lv.rows; r++) for (let c = 0; c < lv.cols; c++){
+    const s = document.createElement('div');
+    s.className = 'slot';
+    s.style.left = (c * 100 / lv.cols) + '%'; s.style.top = (r * 100 / lv.rows) + '%';
+    s.style.width = (100 / lv.cols) + '%'; s.style.height = (100 / lv.rows) + '%';
+    s.dataset.home = r + '-' + c; s.dataset.filled = '';
+    s.addEventListener('click', function(){ slotTap(s); });
+    board.appendChild(s);
+  }
+  const order = [];
+  for (let r = 0; r < lv.rows; r++) for (let c = 0; c < lv.cols; c++) order.push([r, c]);
+  for (let i = order.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); const t = order[i]; order[i] = order[j]; order[j] = t; }
+  const tray = $('tray'); tray.innerHTML = '';
+  order.forEach(function(rc){ tray.appendChild(makeTrayTile(rc[0], rc[1])); });
+  show('screen-game');
+  stopTimer();
+  timerId = setInterval(function(){ seconds++; $('stat-time').textContent = fmtTime(seconds); }, 1000);
+}
+function fmtTime(s){ return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
+function stopTimer(){ if (timerId){ clearInterval(timerId); timerId = null; } }
+function trayTileSize(){
+  const cols = LEVELS[levelIdx].cols;
+  const w = cols <= 2 ? 92 : cols === 3 ? 80 : cols === 4 ? 68 : cols === 5 ? 58 : 50;
+  return { w: w, h: Math.round(w * LEVELS[levelIdx].rows / cols) };
+}
+function makeTrayTile(r, c){
+  const lv = LEVELS[levelIdx], sz = trayTileSize();
+  const t = document.createElement('div');
+  t.className = 'piece';
+  t.style.cssText = tileStyle(r, c, lv.cols, lv.rows) + 'width:' + sz.w + 'px;height:' + sz.h + 'px;';
+  t.dataset.home = r + '-' + c;
+  t.addEventListener('pointerdown', function(e){ tilePointerDown(e, t); });
+  return t;
+}
+function slotTap(slot){
+  if (!gameActive || !selected) return;
+  attemptPlace(selected, slot);
+}
+function attemptPlace(tileEl, slotEl){
+  if (!gameActive || !slotEl || slotEl.dataset.filled) return;
+  const lv = LEVELS[levelIdx];
+  moves++; $('stat-moves').textContent = moves;
+  if (slotEl.dataset.home === tileEl.dataset.home){
+    const rc = tileEl.dataset.home.split('-'); const r = +rc[0], c = +rc[1];
+    const p = document.createElement('div');
+    p.className = 'placed';
+    p.style.cssText = tileStyle(r, c, lv.cols, lv.rows) +
+      'left:' + (c * 100 / lv.cols) + '%;top:' + (r * 100 / lv.rows) + '%;width:' + (100 / lv.cols) + '%;height:' + (100 / lv.rows) + '%;';
+    $('board').appendChild(p);
+    slotEl.dataset.filled = '1';
+    tileEl.remove();
+    if (selected === tileEl) selected = null;
+    placed++; $('stat-placed').textContent = placed;
+    sndPlace();
+    if (placed === lv.pieces) winGame();
+  } else {
+    mistakes++;
+    sndError();
+    slotEl.classList.add('shake');
+    setTimeout(function(){ slotEl.classList.remove('shake'); }, 400);
+  }
+}
+function shuffleTray(){
+  const tray = $('tray');
+  const kids = Array.prototype.slice.call(tray.children);
+  for (let i = kids.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); const t = kids[i]; kids[i] = kids[j]; kids[j] = t; }
+  kids.forEach(function(k){ tray.appendChild(k); });
+  beep(520, .08);
+}
+function toggleGhost(){
+  ghostOn = !ghostOn;
+  $('ghost-btn').textContent = ghostOn ? '👻 Aide : oui' : '👻 Aide : non';
+  const g = document.querySelector('#board .ghost');
+  if (g) g.style.display = ghostOn ? 'block' : 'none';
+}
+function togglePreview(){
+  const ov = $('preview-overlay');
+  if (ov.classList.contains('hidden')){
+    $('preview-img').src = hero.img;
+    $('preview-caption').textContent = hero.emoji + ' ' + hero.name;
+    ov.classList.remove('hidden');
+  } else ov.classList.add('hidden');
+}
+
+/* --- Glisser-déposer (souris + tactile) --- */
+let drag = null;
+function tilePointerDown(e, tileEl){
+  if (!gameActive) return;
+  e.preventDefault();
+  const startX = e.clientX, startY = e.clientY;
+  const sz = trayTileSize();
+  const el = document.createElement('div');
+  el.id = 'drag-el';
+  el.style.cssText = tileStyle(+tileEl.dataset.home.split('-')[0], +tileEl.dataset.home.split('-')[1], LEVELS[levelIdx].cols, LEVELS[levelIdx].rows) + 'width:' + sz.w + 'px;height:' + sz.h + 'px;left:' + startX + 'px;top:' + startY + 'px;';
+  document.body.appendChild(el);
+  tileEl.classList.add('dragging');
+  drag = { tile: tileEl, el: el, sx: startX, sy: startY, moved: false, hint: null };
+  const move = function(ev){
+    if (!drag) return;
+    const dx = ev.clientX - drag.sx, dy = ev.clientY - drag.sy;
+    if (Math.abs(dx) + Math.abs(dy) > 8) drag.moved = true;
+    el.style.left = ev.clientX + 'px'; el.style.top = ev.clientY + 'px';
+    if (drag.hint) drag.hint.classList.remove('drop-hint');
+    drag.hint = null;
+    const under = document.elementFromPoint(ev.clientX, ev.clientY);
+    const slot = under ? under.closest('.slot') : null;
+    if (slot && !slot.dataset.filled){ slot.classList.add('drop-hint'); drag.hint = slot; }
+  };
+  const up = function(ev){
+    document.removeEventListener('pointermove', move);
+    document.removeEventListener('pointerup', up);
+    document.removeEventListener('pointercancel', up);
+    if (drag.hint) drag.hint.classList.remove('drop-hint');
+    const d = drag; drag = null;
+    el.remove(); tileEl.classList.remove('dragging');
+    if (!d.moved){
+      if (selected === tileEl){ selected = null; tileEl.classList.remove('selected'); }
+      else {
+        if (selected) selected.classList.remove('selected');
+        selected = tileEl; tileEl.classList.add('selected');
+        beep(520, .07);
+      }
+      return;
+    }
+    const under = document.elementFromPoint(ev.clientX, ev.clientY);
+    const slot = under ? under.closest('.slot') : null;
+    if (slot) attemptPlace(tileEl, slot);
+  };
+  document.addEventListener('pointermove', move);
+  document.addEventListener('pointerup', up);
+  document.addEventListener('pointercancel', up);
+}
+
+/* --- Gagné ! --- */
+function winGame(){
+  gameActive = false; stopTimer();
+  const lv = LEVELS[levelIdx];
+  const stars = mistakes <= 2 ? 3 : (mistakes <= 6 ? 2 : 1);
+  if (!store[hero.id]) store[hero.id] = {};
+  if (stars > (store[hero.id][levelIdx] || 0)){ store[hero.id][levelIdx] = stars; saveStore(); }
+  $('win-stars').innerHTML = starsHtml(stars);
+  $('win-time').textContent = fmtTime(seconds);
+  $('win-moves').textContent = moves;
+  $('win-pieces').textContent = lv.pieces;
+  const nextBtn = $('win-next');
+  if (levelIdx < LEVELS.length - 1){
+    nextBtn.textContent = 'Niveau suivant →';
+    nextBtn.onclick = function(){ levelIdx++; startLevel(); };
+  } else {
+    nextBtn.textContent = '🦸 Choisir un autre héros';
+    nextBtn.onclick = function(){ showHeroes(); };
+  }
+  sndWin();
+  $('win-overlay').classList.remove('hidden');
+  if (window.confetti) window.confetti({ particleCount: 140, spread: 80, origin: { y: 0.6 } });
+}
+function nextLevel(){ /* défini dynamiquement dans winGame */ }
+
+/* --- Démarrage --- */
+renderHeroes();
+show('screen-heroes');
+</script>
+</body>
+</html>
