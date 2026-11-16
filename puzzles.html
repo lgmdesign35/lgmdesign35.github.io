@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="light">
 <link rel="icon" href="data:,">
 <title>Puzzles des héros — Adam et ses amis — LGMDesign35</title>
-<meta name="description" content="Puzzles gratuits pour les 1 à 6 ans : Adam en super-héros, en pompier et en policier. 5 héros, 8 niveaux, de 4 à 50 pièces. Jouez en français québécois sur lgmdesign35.com.">
+<meta name="description" content="Puzzles gratuits pour les 1 à 6 ans : 100 images des histoires d'Adam et ses amis — super-héros, pompier, policier, Halloween, Noël et plus. 8 niveaux, de 4 à 50 pièces. Jouez en français québécois sur lgmdesign35.com.">
 <link rel="canonical" href="https://lgmdesign35.com/puzzles.html">
 <link rel="alternate" hreflang="fr-CA" href="https://lgmdesign35.com/puzzles.html">
 <link rel="alternate" hreflang="x-default" href="https://lgmdesign35.com/puzzles.html">
@@ -14,12 +14,12 @@
 <meta property="og:site_name" content="LGMDesign35">
 <meta property="og:locale" content="fr_CA">
 <meta property="og:title" content="Puzzles des héros — Adam et ses amis — LGMDesign35">
-<meta property="og:description" content="Puzzles gratuits pour les 1 à 6 ans : Adam en super-héros, en pompier et en policier. 5 héros, 8 niveaux, de 4 à 50 pièces.">
+<meta property="og:description" content="Puzzles gratuits pour les 1 à 6 ans : 100 images des histoires d'Adam et ses amis — super-héros, pompier, policier, Halloween, Noël et plus. 8 niveaux, de 4 à 50 pièces.">
 <meta property="og:url" content="https://lgmdesign35.com/puzzles.html">
 <meta property="og:image" content="https://lgmdesign35.com/images/puzzle-super-adam.webp">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Puzzles des héros — Adam et ses amis — LGMDesign35">
-<meta name="twitter:description" content="Puzzles gratuits pour les 1 à 6 ans : Adam en super-héros, en pompier et en policier. 5 héros, 8 niveaux, de 4 à 50 pièces.">
+<meta name="twitter:description" content="Puzzles gratuits pour les 1 à 6 ans : 100 images des histoires d'Adam et ses amis — super-héros, pompier, policier, Halloween, Noël et plus. 8 niveaux, de 4 à 50 pièces.">
 <meta name="twitter:image" content="https://lgmdesign35.com/images/puzzle-super-adam.webp">
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -89,9 +89,9 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
   <div class="hero-dark-gradient relative overflow-hidden rounded-3xl p-6 sm:p-10 text-white shadow-xl">
     <div class="max-w-2xl relative z-10 space-y-4">
       <h1 class="brand-font text-3xl sm:text-5xl font-black leading-tight" style="color:#ffffff">Puzzles des héros 🧩</h1>
-      <p class="text-sky-100 text-base sm:text-lg font-bold leading-relaxed" style="color:#e0f2fe">Adam en super-héros, en pompier et en policier ! Choisis ton héros, choisis ton niveau — de 4 à 50 pièces — et replace chaque morceau à sa place.</p>
+      <p class="text-sky-100 text-base sm:text-lg font-bold leading-relaxed" style="color:#e0f2fe">100 images des histoires d'Adam et ses amis ! Choisis ton image, choisis ton niveau — de 4 à 50 pièces — et replace chaque morceau à sa place.</p>
       <div class="flex flex-wrap gap-2 pt-2">
-        <span class="px-3 py-1.5 bg-white/15 border border-white/30 rounded-full text-xs font-bold text-white">✔ 5 héros</span>
+        <span class="px-3 py-1.5 bg-white/15 border border-white/30 rounded-full text-xs font-bold text-white">✔ 100 images</span>
         <span class="px-3 py-1.5 bg-white/15 border border-white/30 rounded-full text-xs font-bold text-white">✔ 8 niveaux · 4 à 50 pièces</span>
         <span class="px-3 py-1.5 bg-white/15 border border-white/30 rounded-full text-xs font-bold text-white">✔ Gratuit · Pour les 1 à 6 ans</span>
       </div>
@@ -101,8 +101,9 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
   <!-- Écran 1 : choisir un héros -->
   <section id="screen-heroes" class="space-y-5">
     <div class="text-center space-y-1">
-      <h2 class="brand-font text-2xl sm:text-3xl font-black text-slate-800">1. Choisis ton héros ! 🦸</h2>
+      <h2 class="brand-font text-2xl sm:text-3xl font-black text-slate-800">1. Choisis ton image ! 🧩</h2>
       <p class="text-sm font-bold text-slate-500">Touche une image pour commencer.</p>
+    <div id="filter-pills" class="flex flex-wrap justify-center gap-2 max-w-3xl mx-auto"></div>
     </div>
     <div id="hero-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 max-w-4xl mx-auto"></div>
     <p class="text-center text-xs font-bold text-slate-400">Astuce pour les parents : les étoiles gagnées sont gardées sur cet appareil. Aucun compte, aucune publicité.</p>
@@ -111,7 +112,7 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
   <!-- Écran 2 : choisir un niveau -->
   <section id="screen-levels" class="space-y-5 hidden">
     <div class="text-center space-y-1">
-      <button onclick="showHeroes()" class="text-sm font-black text-qcblue-600 hover:underline">← Choisir un autre héros</button>
+      <button onclick="showHeroes()" class="text-sm font-black text-qcblue-600 hover:underline">← Choisir une autre image</button>
       <h2 class="brand-font text-2xl sm:text-3xl font-black text-slate-800">2. Choisis ton niveau ! 🎚️</h2>
       <p class="text-sm font-bold text-slate-500">Du plus facile au plus difficile.</p>
     </div>
@@ -170,7 +171,7 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
       <div class="flex flex-col gap-2">
         <button id="win-next" onclick="nextLevel()" class="w-full py-3 bg-qcblue-600 hover:bg-qcblue-700 text-white font-black rounded-2xl shadow-lg pop-btn">Niveau suivant →</button>
         <button onclick="startLevel()" class="w-full py-3 bg-amber-400 hover:bg-amber-500 text-slate-900 font-black rounded-2xl shadow pop-btn">🔄 Rejouer ce niveau</button>
-        <button onclick="showHeroes()" class="w-full py-3 bg-white border-2 border-slate-200 text-slate-700 font-black rounded-2xl shadow-sm pop-btn">🦸 Choisir un autre héros</button>
+        <button onclick="showHeroes()" class="w-full py-3 bg-white border-2 border-slate-200 text-slate-700 font-black rounded-2xl shadow-sm pop-btn">🧩 Choisir une autre image</button>
       </div>
     </div>
   </div>
@@ -196,11 +197,106 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
 <script>
 /* Puzzles des héros — LGMDesign35 */
 const HEROES = [
-  {id:'araignee', name:'Adam l\u2019Araignée', emoji:'🕷️', img:'images/puzzle-araignee.webp', color:'#e11d48', desc:'Adam se balance de toile en toile entre les immeubles de la ville !'},
-  {id:'chauve-souris', name:'Adam la Chauve-Souris', emoji:'🦇', img:'images/puzzle-chauve-souris.webp', color:'#334155', desc:'Adam vole dans la nuit sous la lune qui sourit !'},
-  {id:'super-adam', name:'Super Adam', emoji:'💪', img:'images/puzzle-super-adam.webp', color:'#2563eb', desc:'Super Adam vole très haut, au-dessus des nuages !'},
-  {id:'pompier', name:'Adam le Pompier', emoji:'🚒', img:'images/puzzle-pompier.webp', color:'#dc2626', desc:'Adam le pompier arrose avec son tuyau. À l\u2019aide !'},
-  {id:'policier', name:'Adam le Policier', emoji:'👮', img:'images/puzzle-policier.webp', color:'#1d4ed8', desc:'Adam le policier dit bonjour et protège la ville !'}
+  {id:'araignee', name:'Adam l\u2019Araignée', emoji:'🕷️', img:'images/puzzle-araignee.webp', color:'#e11d48', cat:'heros', desc:'Adam se balance de toile en toile entre les immeubles de la ville !'},
+  {id:'chauve-souris', name:'Adam la Chauve-Souris', emoji:'🦇', img:'images/puzzle-chauve-souris.webp', color:'#334155', cat:'heros', desc:'Adam vole dans la nuit sous la lune qui sourit !'},
+  {id:'super-adam', name:'Super Adam', emoji:'💪', img:'images/puzzle-super-adam.webp', color:'#2563eb', cat:'heros', desc:'Super Adam vole très haut, au-dessus des nuages !'},
+  {id:'pompier', name:'Adam le Pompier', emoji:'🚒', img:'images/puzzle-pompier.webp', color:'#dc2626', cat:'heros', desc:'Adam le pompier arrose avec son tuyau. À l\u2019aide !'},
+  {id:'policier', name:'Adam le Policier', emoji:'👮', img:'images/puzzle-policier.webp', color:'#1d4ed8', cat:'heros', desc:'Adam le policier dit bonjour et protège la ville !'},
+  {id:"av-01", name:"Les aventures d'Adam et ses amis", emoji:"🎈", img:"images/puzzle-av-01.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-02", name:"« C'est la fête du village ! »", emoji:"🎈", img:"images/puzzle-av-02.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-03", name:"Soudain... un grand coup de vent !", emoji:"🎈", img:"images/puzzle-av-03.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-04", name:"Adam tend les bras au chaton.", emoji:"🎈", img:"images/puzzle-av-04.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-05", name:"Le soir, la fête continue", emoji:"🎈", img:"images/puzzle-av-05.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-06", name:"Quel beau jour pour un pique-nique !", emoji:"🎈", img:"images/puzzle-av-06.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-07", name:"Adam sourit : « J'ai une idée !", emoji:"🎈", img:"images/puzzle-av-07.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-08", name:"À l'intérieur, tout le monde est au sec !", emoji:"🎈", img:"images/puzzle-av-08.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-09", name:"Avant de partir, Adam regarde l'abri.", emoji:"🎈", img:"images/puzzle-av-09.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-10", name:"Aujourd'hui, promenade en bateau !", emoji:"🎈", img:"images/puzzle-av-10.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-11", name:"Adam lui tend la main doucement.", emoji:"🎈", img:"images/puzzle-av-11.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-12", name:"Sur la petite île, pique-nique !", emoji:"🎈", img:"images/puzzle-av-12.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-13", name:"De retour au quai, tout le monde", emoji:"🎈", img:"images/puzzle-av-13.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-14", name:"Ce soir, on campe dans la clairière !", emoji:"🎈", img:"images/puzzle-av-14.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-15", name:"Adam prend sa main doucement.", emoji:"🎈", img:"images/puzzle-av-15.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-16", name:"« Oh ! Que c'est beau ! » dit le lapin.", emoji:"🎈", img:"images/puzzle-av-16.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-17", name:"Le matin, le soleil se lève en douceur.", emoji:"🎈", img:"images/puzzle-av-17.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-18", name:"En promenade près de la forêt,", emoji:"🎈", img:"images/puzzle-av-18.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-19", name:"Regardez les abeilles travailler :", emoji:"🎈", img:"images/puzzle-av-19.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-20", name:"Pour dire merci aux abeilles,", emoji:"🎈", img:"images/puzzle-av-20.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-21", name:"Au coucher du soleil, l'apiculteur", emoji:"🎈", img:"images/puzzle-av-21.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-22", name:"Ce matin, surprise : tout est blanc !", emoji:"🎈", img:"images/puzzle-av-22.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-23", name:"Adam s'approche avec un sourire.", emoji:"🎈", img:"images/puzzle-av-23.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-24", name:"Tous ensemble, ils finissent", emoji:"🎈", img:"images/puzzle-av-24.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"av-25", name:"Le hérisson regarde ses nouveaux amis", emoji:"🎈", img:"images/puzzle-av-25.jpg", color:"#0284c7", cat:"aventures", desc:"Les aventures d'Adam et ses amis"},
+  {id:"hw-01", name:"Adam et ses amis : Halloween — 6 histoires", emoji:"🎃", img:"images/puzzle-hw-01.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-02", name:"Le lapin est un petit fantôme,", emoji:"🎃", img:"images/puzzle-hw-02.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-03", name:"Soudain, la petite citrouille s'allume !", emoji:"🎃", img:"images/puzzle-hw-03.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-04", name:"Devant une maison silencieuse,", emoji:"🎃", img:"images/puzzle-hw-04.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-05", name:"Le petit fantôme gentil", emoji:"🎃", img:"images/puzzle-hw-05.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-06", name:"Le lapin a peur : « Un fantôme ! »", emoji:"🎃", img:"images/puzzle-hw-06.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-07", name:"« Regarde, » dit le renard,", emoji:"🎃", img:"images/puzzle-hw-07.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-08", name:"« Pardon, Boubou, » dit le lapin,", emoji:"🎃", img:"images/puzzle-hw-08.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-09", name:"La nuit des costumes", emoji:"🎃", img:"images/puzzle-hw-09.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-10", name:"« Règle numéro un, » dit Adam :", emoji:"🎃", img:"images/puzzle-hw-10.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-11", name:"« Que les maisons éclairées ! »", emoji:"🎃", img:"images/puzzle-hw-11.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-12", name:"Le lapin veut manger un bonbon.", emoji:"🎃", img:"images/puzzle-hw-12.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-13", name:"De retour à la maison, les paniers pleins,", emoji:"🎃", img:"images/puzzle-hw-13.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-14", name:"Le chat noir s'appelle Minuit.", emoji:"🎃", img:"images/puzzle-hw-14.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-15", name:"Le renard perd son chapeau pirate.", emoji:"🎃", img:"images/puzzle-hw-15.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-16", name:"« Tu vois ? » dit Adam.", emoji:"🎃", img:"images/puzzle-hw-16.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-17", name:"Sous la lune, Minuit ronronne.", emoji:"🎃", img:"images/puzzle-hw-17.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-18", name:"« N'aie pas peur, » dit Adam.", emoji:"🎃", img:"images/puzzle-hw-18.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-19", name:"Un autre bruit : TAC TAC TAC !", emoji:"🎃", img:"images/puzzle-hw-19.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-20", name:"Dans la maison, une citrouille,", emoji:"🎃", img:"images/puzzle-hw-20.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-21", name:"« La maison n'était pas hantée, »", emoji:"🎃", img:"images/puzzle-hw-21.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-22", name:"C'est le grand concours !", emoji:"🎃", img:"images/puzzle-hw-22.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-23", name:"Le canard décore la sienne", emoji:"🎃", img:"images/puzzle-hw-23.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-24", name:"« Attends ! » dit Adam.", emoji:"🎃", img:"images/puzzle-hw-24.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"hw-25", name:"Sous les étoiles, les amis", emoji:"🎃", img:"images/puzzle-hw-25.jpg", color:"#ea580c", cat:"halloween", desc:"Adam et ses amis : Halloween — 6 histoires"},
+  {id:"no-01", name:"Adam et ses amis : L'étoile de Noël", emoji:"🎄", img:"images/puzzle-no-01.jpg", color:"#dc2626", cat:"noel", desc:"Adam et ses amis : L'étoile de Noël"},
+  {id:"no-02", name:"Le sapin est presque prêt,", emoji:"🎄", img:"images/puzzle-no-02.jpg", color:"#dc2626", cat:"noel", desc:"Adam et ses amis : L'étoile de Noël"},
+  {id:"no-03", name:"Ils mettent leurs manteaux", emoji:"🎄", img:"images/puzzle-no-03.jpg", color:"#dc2626", cat:"noel", desc:"Adam et ses amis : L'étoile de Noël"},
+  {id:"no-04", name:"Soudain, on entend : « Hou, hou ! »", emoji:"🎄", img:"images/puzzle-no-04.jpg", color:"#dc2626", cat:"noel", desc:"Adam et ses amis : L'étoile de Noël"},
+  {id:"no-05", name:"Canard s'élance sur la glace.", emoji:"🎄", img:"images/puzzle-no-05.jpg", color:"#dc2626", cat:"noel", desc:"Adam et ses amis : L'étoile de Noël"},
+  {id:"no-06", name:"Dans un buisson, quelque chose", emoji:"🎄", img:"images/puzzle-no-06.jpg", color:"#dc2626", cat:"noel", desc:"Adam et ses amis : L'étoile de Noël"},
+  {id:"no-07", name:"Le chant les mène jusqu'au grand pin,", emoji:"🎄", img:"images/puzzle-no-07.jpg", color:"#dc2626", cat:"noel", desc:"Adam et ses amis : L'étoile de Noël"},
+  {id:"no-08", name:"Sur le chemin du retour,", emoji:"🎄", img:"images/puzzle-no-08.jpg", color:"#dc2626", cat:"noel", desc:"Adam et ses amis : L'étoile de Noël"},
+  {id:"no-09", name:"Tout le village sort de chez lui.", emoji:"🎄", img:"images/puzzle-no-09.jpg", color:"#dc2626", cat:"noel", desc:"Adam et ses amis : L'étoile de Noël"},
+  {id:"no-10", name:"Joyeux Noël !", emoji:"🎄", img:"images/puzzle-no-10.jpg", color:"#dc2626", cat:"noel", desc:"Adam et ses amis : L'étoile de Noël"},
+  {id:"bn-01", name:"Bonne nuit, Adam !", emoji:"🌙", img:"images/puzzle-bn-01.jpg", color:"#4338ca", cat:"bonne-nuit", desc:"Bonne nuit, Adam !"},
+  {id:"bn-02", name:"Adam se brosse les dents.", emoji:"🌙", img:"images/puzzle-bn-02.jpg", color:"#4338ca", cat:"bonne-nuit", desc:"Bonne nuit, Adam !"},
+  {id:"bn-03", name:"Canard bâille.", emoji:"🌙", img:"images/puzzle-bn-03.jpg", color:"#4338ca", cat:"bonne-nuit", desc:"Bonne nuit, Adam !"},
+  {id:"bn-04", name:"Adam dit bonne nuit à la lune.", emoji:"🌙", img:"images/puzzle-bn-04.jpg", color:"#4338ca", cat:"bonne-nuit", desc:"Bonne nuit, Adam !"},
+  {id:"bn-05", name:"Adam dit bonne nuit à Lapin.", emoji:"🌙", img:"images/puzzle-bn-05.jpg", color:"#4338ca", cat:"bonne-nuit", desc:"Bonne nuit, Adam !"},
+  {id:"bn-06", name:"Adam dit bonne nuit à Renard.", emoji:"🌙", img:"images/puzzle-bn-06.jpg", color:"#4338ca", cat:"bonne-nuit", desc:"Bonne nuit, Adam !"},
+  {id:"bn-07", name:"Adam ferme ses petits yeux.", emoji:"🌙", img:"images/puzzle-bn-07.jpg", color:"#4338ca", cat:"bonne-nuit", desc:"Bonne nuit, Adam !"},
+  {id:"bn-08", name:"Bonne nuit !", emoji:"🌙", img:"images/puzzle-bn-08.jpg", color:"#4338ca", cat:"bonne-nuit", desc:"Bonne nuit, Adam !"},
+  {id:"dg-01", name:"Adam dit adieu à son doigt", emoji:"📖", img:"images/puzzle-dg-01.jpg", color:"#059669", cat:"histoires", desc:"Adam dit adieu à son doigt"},
+  {id:"dg-02", name:"À l'école, quand il s'ennuie,", emoji:"📖", img:"images/puzzle-dg-02.jpg", color:"#059669", cat:"histoires", desc:"Adam dit adieu à son doigt"},
+  {id:"dg-03", name:"« Coin, coin, je chante", emoji:"📖", img:"images/puzzle-dg-03.jpg", color:"#059669", cat:"histoires", desc:"Adam dit adieu à son doigt"},
+  {id:"dg-04", name:"Un soir, Adam a un peu peur.", emoji:"📖", img:"images/puzzle-dg-04.jpg", color:"#059669", cat:"histoires", desc:"Adam dit adieu à son doigt"},
+  {id:"dg-05", name:"Un jour de pluie, Adam s'ennuie...", emoji:"📖", img:"images/puzzle-dg-05.jpg", color:"#059669", cat:"histoires", desc:"Adam dit adieu à son doigt"},
+  {id:"dg-06", name:"Jour 5 : Adam fait un puzzle", emoji:"📖", img:"images/puzzle-dg-06.jpg", color:"#059669", cat:"histoires", desc:"Adam dit adieu à son doigt"},
+  {id:"dg-07", name:"Un jour, Adam est inquiet...", emoji:"📖", img:"images/puzzle-dg-07.jpg", color:"#059669", cat:"histoires", desc:"Adam dit adieu à son doigt"},
+  {id:"dg-08", name:"Adam sourit : « Mon doigt est libre,", emoji:"📖", img:"images/puzzle-dg-08.jpg", color:"#059669", cat:"histoires", desc:"Adam dit adieu à son doigt"},
+  {id:"ec-01", name:"Adam apprend à écouter", emoji:"📖", img:"images/puzzle-ec-01.jpg", color:"#059669", cat:"histoires", desc:"Adam apprend à écouter"},
+  {id:"ec-02", name:"À l'école, la maîtresse", emoji:"📖", img:"images/puzzle-ec-02.jpg", color:"#059669", cat:"histoires", desc:"Adam apprend à écouter"},
+  {id:"ec-03", name:"Mamie dit doucement :", emoji:"📖", img:"images/puzzle-ec-03.jpg", color:"#059669", cat:"histoires", desc:"Adam apprend à écouter"},
+  {id:"ec-04", name:"« Tu m'as vraiment écouté ! »", emoji:"📖", img:"images/puzzle-ec-04.jpg", color:"#059669", cat:"histoires", desc:"Adam apprend à écouter"},
+  {id:"ec-05", name:"Le matin, Adam voit Mamie.", emoji:"📖", img:"images/puzzle-ec-05.jpg", color:"#059669", cat:"histoires", desc:"Adam apprend à écouter"},
+  {id:"ec-06", name:"Mamie raconte une histoire", emoji:"📖", img:"images/puzzle-ec-06.jpg", color:"#059669", cat:"histoires", desc:"Adam apprend à écouter"},
+  {id:"ec-07", name:"Mamie apporte un tableau :", emoji:"📖", img:"images/puzzle-ec-07.jpg", color:"#059669", cat:"histoires", desc:"Adam apprend à écouter"},
+  {id:"ec-08", name:"Adam sourit : « Écouter,", emoji:"📖", img:"images/puzzle-ec-08.jpg", color:"#059669", cat:"histoires", desc:"Adam apprend à écouter"},
+  {id:"ja-01", name:"Le jardin de la coopération", emoji:"📖", img:"images/puzzle-ja-01.jpg", color:"#059669", cat:"histoires", desc:"Le jardin de la coopération"},
+  {id:"ja-02", name:"Le canard courut à la mare", emoji:"📖", img:"images/puzzle-ja-02.jpg", color:"#059669", cat:"histoires", desc:"Le jardin de la coopération"},
+  {id:"ja-03", name:"« Ne sois pas triste ! » dirent ses amis.", emoji:"📖", img:"images/puzzle-ja-03.jpg", color:"#059669", cat:"histoires", desc:"Le jardin de la coopération"},
+  {id:"ja-04", name:"Un beau matin, ils se réveillèrent", emoji:"📖", img:"images/puzzle-ja-04.jpg", color:"#059669", cat:"histoires", desc:"Le jardin de la coopération"},
+  {id:"ci-01", name:"Adam et ses amis : La citrouille courageuse", emoji:"📖", img:"images/puzzle-ci-01.jpg", color:"#059669", cat:"histoires", desc:"Adam et ses amis : La citrouille courageuse"},
+  {id:"ci-02", name:"La nuit tombe, tout devient sombre.", emoji:"📖", img:"images/puzzle-ci-02.jpg", color:"#059669", cat:"histoires", desc:"Adam et ses amis : La citrouille courageuse"},
+  {id:"ci-03", name:"Adam sourit : « Ta lumière", emoji:"📖", img:"images/puzzle-ci-03.jpg", color:"#059669", cat:"histoires", desc:"Adam et ses amis : La citrouille courageuse"},
+  {id:"ci-04", name:"De retour, la citrouille brille", emoji:"📖", img:"images/puzzle-ci-04.jpg", color:"#059669", cat:"histoires", desc:"Adam et ses amis : La citrouille courageuse"},
+  {id:"dh-01", name:"Adam et ses amis : 2 histoires", emoji:"📖", img:"images/puzzle-dh-01.jpg", color:"#059669", cat:"histoires", desc:"Adam et ses amis : 2 histoires"},
+  {id:"dh-02", name:"Le lapin ramassa les papiers", emoji:"📖", img:"images/puzzle-dh-02.jpg", color:"#059669", cat:"histoires", desc:"Adam et ses amis : 2 histoires"},
+  {id:"dh-03", name:"Ils mangèrent tous ensemble", emoji:"📖", img:"images/puzzle-dh-03.jpg", color:"#059669", cat:"histoires", desc:"Adam et ses amis : 2 histoires"},
 ];
 const LEVELS = [
   {cols:2, rows:2, name:'Facile'},
@@ -246,13 +342,36 @@ function sndWin(){ [523, 659, 784, 1047].forEach(function(f, i){ setTimeout(func
 function toggleSound(){ soundOn = !soundOn; $('sound-btn').textContent = soundOn ? '🔊 Son' : '🔇 Son'; if (soundOn) beep(660, .1); }
 
 /* --- Écran héros --- */
+/* --- Filtres par catégorie --- */
+const CATS = [
+  {key:'all', label:'Toutes', emoji:'🧩'},
+  {key:'heros', label:'Héros', emoji:'🦸'},
+  {key:'aventures', label:'Aventures', emoji:'🎈'},
+  {key:'halloween', label:'Halloween', emoji:'🎃'},
+  {key:'noel', label:'Noël', emoji:'🎄'},
+  {key:'bonne-nuit', label:'Bonne nuit', emoji:'🌙'},
+  {key:'histoires', label:'Histoires', emoji:'📖'}
+];
+let currentFilter = 'all';
+function catCount(key){ return key === 'all' ? HEROES.length : HEROES.filter(function(h){ return h.cat === key; }).length; }
+function renderPills(){
+  const wrap = $('filter-pills'); wrap.innerHTML = '';
+  CATS.forEach(function(c){
+    const b = document.createElement('button');
+    const active = currentFilter === c.key;
+    b.className = 'px-3 py-2 rounded-full text-xs sm:text-sm font-black shadow-sm pop-btn border-2 ' + (active ? 'bg-qcblue-600 text-white border-qcblue-600' : 'bg-white text-slate-700 border-slate-200');
+    b.textContent = c.emoji + ' ' + c.label + ' (' + catCount(c.key) + ')';
+    b.onclick = function(){ currentFilter = c.key; renderPills(); renderHeroes(); };
+    wrap.appendChild(b);
+  });
+}
 function renderHeroes(){
   const grid = $('hero-grid'); grid.innerHTML = '';
-  HEROES.forEach(function(h){
+  HEROES.filter(function(h){ return currentFilter === 'all' || h.cat === currentFilter; }).forEach(function(h){
     const card = document.createElement('div');
     card.className = 'hero-card bg-white rounded-3xl border-2 border-slate-200 shadow-lg overflow-hidden';
     card.innerHTML =
-      '<img src="' + h.img + '" alt="' + h.name + '" class="w-full aspect-square object-cover">' +
+      '<img src="' + h.img + '" alt="' + h.name + '" loading="lazy" class="w-full aspect-square object-cover">' +
       '<div class="p-3 text-center space-y-1">' +
         '<div class="brand-font text-base sm:text-lg font-black text-slate-800">' + h.emoji + ' ' + h.name + '</div>' +
         '<div class="text-xs font-bold text-slate-500">' + h.desc + '</div>' +
@@ -263,7 +382,7 @@ function renderHeroes(){
     grid.appendChild(card);
   });
 }
-function showHeroes(){ stopTimer(); gameActive = false; $('win-overlay').classList.add('hidden'); $('preview-overlay').classList.add('hidden'); renderHeroes(); show('screen-heroes'); }
+function showHeroes(){ stopTimer(); gameActive = false; $('win-overlay').classList.add('hidden'); $('preview-overlay').classList.add('hidden'); renderPills(); renderHeroes(); show('screen-heroes'); }
 function selectHero(id){ hero = HEROES.find(function(h){ return h.id === id; }); renderLevels(); show('screen-levels'); }
 
 /* --- Écran niveaux --- */
@@ -460,7 +579,7 @@ function winGame(){
     nextBtn.textContent = 'Niveau suivant →';
     nextBtn.onclick = function(){ levelIdx++; startLevel(); };
   } else {
-    nextBtn.textContent = '🦸 Choisir un autre héros';
+    nextBtn.textContent = '🧩 Choisir une autre image';
     nextBtn.onclick = function(){ showHeroes(); };
   }
   sndWin();
@@ -470,6 +589,7 @@ function winGame(){
 function nextLevel(){ /* défini dynamiquement dans winGame */ }
 
 /* --- Démarrage --- */
+renderPills();
 renderHeroes();
 show('screen-heroes');
 </script>
