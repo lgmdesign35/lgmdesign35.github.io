@@ -6,7 +6,7 @@
 <title>Mon panier — LGMDesign35</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <!-- PayPal — REMPLACER le client-id ci-dessous par le VRAI client-id LIVE du compte PayPal Business (voir PAYPAL-SETUP.md, jamais publié). Sans ce remplacement, le bouton PayPal ne s'affiche pas. -->
-<script src="https://www.paypal.com/sdk/js?client-id=REPLACE_WITH_YOUR_PAYPAL_CLIENT_ID&amp;currency=USD"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=REPLACE_WITH_YOUR_PAYPAL_CLIENT_ID&amp;currency=CAD"></script>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 body{font-family:'Quicksand',sans-serif;background:linear-gradient(135deg,#f0f9ff 0%,#fef9c3 50%,#fce7f3 100%);min-height:100vh}
@@ -56,9 +56,9 @@ h1,h2,h3,.brand-font{font-family:'Fredoka',sans-serif}
   <div id="cart-list" class="space-y-4"></div>
 
   <div id="cart-summary" class="bg-white border border-slate-200 rounded-3xl p-6 space-y-3 hidden">
-    <div class="flex justify-between font-bold"><span>Sous-total (PDF)</span><span id="cart-subtotal">0,00 $ US</span></div>
-    <p class="text-xs text-slate-500">Prix en dollars américains, comme sur Etsy. Aucun frais de livraison : c'est un PDF envoyé par courriel.</p>
-    <div class="flex justify-between font-black text-lg border-t pt-3"><span>Total à payer</span><span id="cart-total">0,00 $ US</span></div>
+    <div class="flex justify-between font-bold"><span>Sous-total (PDF)</span><span id="cart-subtotal">0,00 $ CA</span></div>
+    <p class="text-xs text-slate-500">Prix en dollars canadiens, comme sur Etsy. Aucun frais de livraison : c'est un PDF envoyé par courriel.</p>
+    <div class="flex justify-between font-black text-lg border-t pt-3"><span>Total à payer</span><span id="cart-total">0,00 $ CA</span></div>
     <button onclick="lgmClear()" class="text-xs font-bold text-slate-500 underline">Vider le panier</button>
   </div>
 
@@ -78,7 +78,7 @@ h1,h2,h3,.brand-font{font-family:'Fredoka',sans-serif}
       <label class="flex gap-2 items-start border-2 border-slate-200 rounded-2xl p-3 text-sm cursor-pointer">
         <input type="radio" name="pay-method" value="paypal" checked class="mt-1">
         <span><strong>PayPal</strong> <span class="text-xs bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded-full">Recommandé</span><br>
-        <span class="text-slate-600">Paiement sécurisé par PayPal, en dollars américains. Frais publiés au Canada : 2,90 % + 0,30 $ CA par transaction nationale. <em>Après le paiement, vos PDF sont envoyés par courriel dans les 24 heures.</em></span></span>
+        <span class="text-slate-600">Paiement sécurisé par PayPal, en dollars canadiens. Frais publiés au Canada : 2,90 % + 0,30 $ CA par transaction nationale. <em>Après le paiement, vos PDF sont envoyés par courriel dans les 24 heures.</em></span></span>
       </label>
       <label class="flex gap-2 items-start border-2 border-slate-200 rounded-2xl p-3 text-sm cursor-pointer">
         <input type="radio" name="pay-method" value="etsy" class="mt-1">
@@ -95,7 +95,7 @@ h1,h2,h3,.brand-font{font-family:'Fredoka',sans-serif}
 
   <div class="bg-white border border-slate-200 rounded-3xl p-5">
     <h2 class="brand-font font-bold text-slate-800 mb-2">⏳ Bientôt en livre broché (Amazon)</h2>
-    <p class="text-sm text-slate-600"><strong>Adam apprend à écouter</strong> arrive en livre broché sur Amazon — en attendant, le PDF complet (30 pages, 5,00 $ US) est déjà dans le panier, avec l'aperçu gratuit de 5 pages sur <a href="histoires-gratuites.html" class="font-bold text-sky-600 underline">nos histoires gratuites</a>.</p>
+    <p class="text-sm text-slate-600"><strong>Adam apprend à écouter</strong> arrive en livre broché sur Amazon — en attendant, lisez l'aperçu gratuit de 5 pages sur <a href="histoires-gratuites.html" class="font-bold text-sky-600 underline">nos histoires gratuites</a>.</p>
   </div>
 </main>
 
@@ -108,7 +108,7 @@ h1,h2,h3,.brand-font{font-family:'Fredoka',sans-serif}
 
 <script src="panier.js"></script>
 <script>
-function fmt(n){ return n.toFixed(2).replace('.', ',') + ' $ US'; }
+function fmt(n){ return n.toFixed(2).replace('.', ',') + ' $ CA'; }
 function renderCart(){
   var cart = lgmLoadCart();
   var ids = Object.keys(cart).filter(function(id){ return LGM_PRODUCTS[id] && cart[id] > 0; });
@@ -128,13 +128,13 @@ function renderCart(){
       '<img src="' + p.img + '" alt="" class="w-20 h-20 object-cover rounded-2xl border border-slate-200">' +
       '<div class="flex-1 min-w-0"><h3 class="brand-font font-bold text-slate-800 leading-tight">' + p.title + '</h3>' +
       '<p class="text-xs text-slate-500">' + p.pages + ' pages • ' + p.age + ' • PDF</p>' +
-      '<p class="text-xs font-bold text-slate-600 mt-1">' + fmt(p.priceUSD) + ' / exemplaire</p>' +
+      '<p class="text-xs font-bold text-slate-600 mt-1">' + fmt(p.priceCAD) + ' / exemplaire</p>' +
       (p.etsy ? '<a href="' + p.etsy + '" target="_blank" rel="noopener" class="text-xs font-bold text-orange-600 underline">Aussi sur Etsy (PDF) ↗</a>' : '<span class="text-xs font-bold text-slate-400">Pas encore sur Etsy — paiement PayPal bientôt</span>') + '</div>' +
       '<div class="flex flex-col items-end gap-2">' +
       '<div class="flex items-center gap-2"><button onclick="lgmSetQty(\'' + id + '\',' + (q-1) + ')" class="w-8 h-8 rounded-full bg-slate-100 font-black">−</button>' +
       '<span class="font-black w-6 text-center">' + q + '</span>' +
       '<button onclick="lgmSetQty(\'' + id + '\',' + (q+1) + ')" class="w-8 h-8 rounded-full bg-slate-100 font-black">+</button></div>' +
-      '<span class="font-black">' + fmt(p.priceUSD * q) + '</span>' +
+      '<span class="font-black">' + fmt(p.priceCAD * q) + '</span>' +
       '<button onclick="lgmRemove(\'' + id + '\')" class="text-xs font-bold text-red-500 underline">Retirer</button>' +
       '</div></div>';
   }).join('');
@@ -150,7 +150,7 @@ function lgmPaypalItems(){
   Object.keys(cart).forEach(function(id){
     var p = LGM_PRODUCTS[id];
     if (p && cart[id] > 0) {
-      items.push({ name: p.title, unit_amount: { currency_code: 'USD', value: p.priceUSD.toFixed(2) }, quantity: String(cart[id]) });
+      items.push({ name: p.title, unit_amount: { currency_code: 'CAD', value: p.priceCAD.toFixed(2) }, quantity: String(cart[id]) });
     }
   });
   return items;
@@ -186,9 +186,9 @@ function renderPayPalButtons(){
       return actions.order.create({
         purchase_units: [{
           amount: {
-            currency_code: 'USD',
+            currency_code: 'CAD',
             value: total,
-            breakdown: { item_total: { currency_code: 'USD', value: total } }
+            breakdown: { item_total: { currency_code: 'CAD', value: total } }
           },
           items: lgmPaypalItems()
         }]
@@ -272,7 +272,7 @@ function lgmCheckout(){
     return;
   }
   box.className = 'text-sm font-bold rounded-2xl p-4 bg-amber-50 text-amber-800 border border-amber-200';
-  box.textContent = '⏳ Le paiement par Stripe n\u2019est pas encore branché sur ce site — aucun montant n\u2019a été prélevé. Votre panier (' + lgmCartTotal().toFixed(2).replace('.', ',') + ' $ US) et votre courriel (' + email + ') sont gardés sur cet appareil. En attendant, vous pouvez acheter les mêmes PDF sur Etsy, au même prix.';
+  box.textContent = '⏳ Le paiement par Stripe n\u2019est pas encore branché sur ce site — aucun montant n\u2019a été prélevé. Votre panier (' + lgmCartTotal().toFixed(2).replace('.', ',') + ' $ CA) et votre courriel (' + email + ') sont gardés sur cet appareil. En attendant, vous pouvez acheter les mêmes PDF sur Etsy, au même prix.';
 }
 document.addEventListener('DOMContentLoaded', renderCart);
 </script>
