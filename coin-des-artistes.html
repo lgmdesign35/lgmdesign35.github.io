@@ -237,7 +237,7 @@ function renderGallery(){
   $('gallery-count').textContent = list.length + (list.length > 1 ? ' œuvres exposées' : ' œuvre exposée');
   if (!list.length){
     $('artwork-grid').innerHTML = '';
-    $('empty-state').classList.remove('hidden')return;
+    $('empty-state').classList.remove('hidden'); return;
   }
   $('empty-state').classList.add('hidden');
   $('artwork-grid').innerHTML = list.map(a =>
