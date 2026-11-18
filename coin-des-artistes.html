@@ -138,7 +138,8 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
     <form id="artwork-form" action="https://formsubmit.co/lgmdesign35@gmail.com" method="POST" class="space-y-4" enctype="multipart/form-data">
       <input type="hidden" name="_subject" value="Nouvelle œuvre — Coin des artistes">
       <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_captcha" value="false"> 
+      <input type="hidden" name="_next" value="https://lgmdesign35.com/coin-des-artistes.html?envoye=1#formulaire-oeuvre">
       <input type="hidden" name="oeuvre_type" value="galerie">
       <div>
         <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2" for="af-firstname">Prénom de l'enfant *</label>
@@ -236,8 +237,7 @@ function renderGallery(){
   $('gallery-count').textContent = list.length + (list.length > 1 ? ' œuvres exposées' : ' œuvre exposée');
   if (!list.length){
     $('artwork-grid').innerHTML = '';
-    $('empty-state').classList.remove('hidden');
-    return;
+    $('empty-state').classList.remove('hidden')return;
   }
   $('empty-state').classList.add('hidden');
   $('artwork-grid').innerHTML = list.map(a =>
@@ -249,26 +249,15 @@ function renderGallery(){
   ).join('');
 }
 
-/* --- Formulaire d'envoi (FormSubmit — Formspree gratuit refuse les photos : HTTP 400 "File Uploads Not Permitted") --- */
-document.getElementById('artwork-form').addEventListener('submit', function(e){
-  e.preventDefault();
-  var f = e.target;
-  var ok = $('af-success'), err = $('af-error');
-  var btn = f.querySelector('button[type="submit"]');
-  [ok, err].forEach(function(el){ if (el) el.classList.add('hidden'); });
-  if (!f.checkValidity()){
-    f.reportValidity();
-    return;
-  }
-  var fd = new FormData(f);
-  if (btn){ btn.disabled = true; btn.textContent = 'Envoi en cours…'; }
-  fetch('https://formsubmit.co/ajax/lgmdesign35@gmail.com', {method:'POST', body:fd, headers:{'Accept':'application/json'}})
-    .then(function(r){ return r.json().then(function(d){ if (!r.ok || !d || (d.success !== true && d.success !== 'true')) throw new Error('submit failed'); }); })
-    .then(function(){ if (ok) ok.classList.remove('hidden'); f.reset(); })
-    .catch(function(){ if (err) err.classList.remove('hidden'); })
-    .finally(function(){ if (btn){ btn.disabled = false; btn.textContent = 'Envoyer mon œuvre 🎨'; } });
-});
-
+/* --- Formulaire d'envoi (FormSubmit, POST natif — l'endpoint AJAX ne transmettait pas la photo jointe) ---
+   Le formulaire part en envoi classique vers FormSubmit : la photo arrive en pièce jointe du courriel.
+   FormSubmit redirige ensuite ici avec ?envoye=1 : on affiche le message de merci. */  
+  (function(){
+if (new URLSearchParams(location.search).get('envoye') === '1'){
+    var ok = $('af-success');
+    if (ok) ok.classList.remove('hidden');
+}
+    })();
 /* --- Démarrage --- */
 renderPills();
 renderGallery();
