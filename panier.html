@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mon panier — LGMDesign35</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<!-- PayPal — REMPLACER le client-id ci-dessous par le VRAI client-id LIVE du compte PayPal Business (voir PAYPAL-SETUP.md, jamais publié). Sans ce remplacement, le bouton PayPal ne s'affiche pas. -->
-<script src="https://www.paypal.com/sdk/js?client-id=REPLACE_WITH_YOUR_PAYPAL_CLIENT_ID&amp;currency=CAD"></script>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 body{font-family:'Quicksand',sans-serif;background:linear-gradient(135deg,#f0f9ff 0%,#fef9c3 50%,#fce7f3 100%);min-height:100vh}
@@ -42,7 +40,7 @@ h1,h2,h3,.brand-font{font-family:'Fredoka',sans-serif}
 
   <div class="bg-sky-50 border-2 border-sky-200 rounded-3xl p-5 space-y-2">
     <h2 class="brand-font text-lg font-bold text-sky-700">📄 Comment ça marche ?</h2>
-    <p class="text-sm text-slate-700"><strong>Tous nos livres numériques sur ce site sont des PDF.</strong> Après le paiement, vous recevez le PDF par courriel — à lire sur tablette ou à imprimer à la maison.</p>
+    <p class="text-sm text-slate-700"><strong>Tous nos livres numériques sur ce site sont des PDF.</strong> Le paiement et la livraison se font sur Etsy : le fichier est disponible tout de suite après l'achat — à lire sur tablette ou à imprimer à la maison.</p>
     <p class="text-sm text-slate-700">📚 <strong>Vous préférez un livre broché ?</strong> Il se commande sur <strong>Amazon.ca</strong> (voir chaque fiche livre). Le livre broché ne passe pas par ce panier.</p>
     <p class="text-sm text-slate-700">🛍️ <strong>Le même livre existe aussi sur Etsy, toujours en PDF</strong> — vous pouvez aussi l'acheter directement là-bas, au même prix.</p>
   </div>
@@ -57,40 +55,18 @@ h1,h2,h3,.brand-font{font-family:'Fredoka',sans-serif}
 
   <div id="cart-summary" class="bg-white border border-slate-200 rounded-3xl p-6 space-y-3 hidden">
     <div class="flex justify-between font-bold"><span>Sous-total (PDF)</span><span id="cart-subtotal">0,00 $ CA</span></div>
-    <p class="text-xs text-slate-500">Prix en dollars canadiens, comme sur Etsy. Aucun frais de livraison : c'est un PDF envoyé par courriel.</p>
-    <div class="flex justify-between font-black text-lg border-t pt-3"><span>Total à payer</span><span id="cart-total">0,00 $ CA</span></div>
+    <p class="text-xs text-slate-500">Prix en dollars canadiens, comme sur Etsy. Aucun frais de livraison : le PDF est livré par Etsy après l'achat.</p>
+    <div class="flex justify-between font-black text-lg border-t pt-3"><span>Total — à régler sur Etsy</span><span id="cart-total">0,00 $ CA</span></div>
     <button onclick="lgmClear()" class="text-xs font-bold text-slate-500 underline">Vider le panier</button>
   </div>
 
-  <!-- Checkout — PayPal branché (bouton PayPal ci-dessous). Le client-id LIVE doit être remplacé dans l'en-tête (voir PAYPAL-SETUP.md). Stripe reste une option secondaire non branchée. -->
+  <!-- Achat : le paiement se fait sur Etsy (PDF) ou Amazon.ca (livre broché). Aucun paiement sur ce site. -->
   <div id="checkout" class="bg-white border-2 border-amber-300 rounded-3xl p-6 space-y-4 hidden">
-    <h2 class="brand-font text-xl font-bold text-slate-800">💳 Paiement et livraison du PDF</h2>
-    <label class="block text-sm font-bold">Votre courriel — pour recevoir les PDF après le paiement
-      <input id="buyer-email" type="email" placeholder="parent@exemple.ca" class="mt-1 w-full border-2 border-slate-200 rounded-xl px-3 py-2.5 text-sm font-semibold">
-    </label>
-    <fieldset class="space-y-2">
-      <legend class="text-sm font-bold">Choisissez le mode de paiement</legend>
-      <label class="flex gap-2 items-start border-2 border-slate-200 rounded-2xl p-3 text-sm cursor-pointer">
-        <input type="radio" name="pay-method" value="stripe" class="mt-1">
-        <span><strong>Carte bancaire — Stripe</strong><br>
-        <span class="text-slate-600">Frais publiés au Canada : 2,9 % + 0,30 $ CA par paiement réussi, sans frais mensuels. <em>Bientôt disponible — aucun paiement n'est prélevé pour l'instant.</em></span></span>
-      </label>
-      <label class="flex gap-2 items-start border-2 border-slate-200 rounded-2xl p-3 text-sm cursor-pointer">
-        <input type="radio" name="pay-method" value="paypal" checked class="mt-1">
-        <span><strong>PayPal</strong> <span class="text-xs bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded-full">Recommandé</span><br>
-        <span class="text-slate-600">Paiement sécurisé par PayPal, en dollars canadiens. Frais publiés au Canada : 2,90 % + 0,30 $ CA par transaction nationale. <em>Après le paiement, vos PDF sont envoyés par courriel dans les 24 heures.</em></span></span>
-      </label>
-      <label class="flex gap-2 items-start border-2 border-slate-200 rounded-2xl p-3 text-sm cursor-pointer">
-        <input type="radio" name="pay-method" value="etsy" class="mt-1">
-        <span><strong>Payer sur Etsy — disponible maintenant</strong><br>
-        <span class="text-slate-600">Le paiement se fait sur Etsy (même prix, même PDF). Choisissez cette option pour acheter dès aujourd'hui.</span></span>
-      </label>
-    </fieldset>
-    <p id="pay-note" class="text-xs text-slate-500"></p>
-    <div id="paypal-button-container"></div>
-    <p id="paypal-setup-note" class="hidden text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-2xl p-3">⏳ Le paiement PayPal sera activé dès que le compte PayPal sera branché au site. En attendant, les livres marqués « Aussi sur Etsy » peuvent être achetés là-bas, au même prix.</p>
-    <button id="pay-btn" onclick="lgmCheckout()" class="w-full py-3 bg-amber-400 hover:bg-amber-500 text-slate-900 font-black rounded-xl shadow">Payer maintenant</button>
-    <div id="pay-result" class="hidden text-sm font-bold rounded-2xl p-4"></div>
+    <h2 class="brand-font text-xl font-bold text-slate-800">🛍️ Comment acheter vos livres ?</h2>
+    <p class="text-sm text-slate-700">Le paiement ne se fait pas sur ce site : il se fait sur <strong>Etsy</strong> pour les livres en PDF et sur <strong>Amazon.ca</strong> pour les livres brochés.</p>
+    <p class="text-sm text-slate-700">📄 <strong>Version PDF :</strong> cliquez sur « Aussi sur Etsy (PDF) ↗ » sous chaque livre de votre panier ci-dessus — même prix qu'ici, et Etsy vous donne le fichier tout de suite après le paiement.</p>
+    <p class="text-sm text-slate-700">📚 <strong>Version papier (livre broché) :</strong> elle se commande sur Amazon.ca, depuis la fiche de chaque livre sur la page <a href="livres.html" class="font-bold text-sky-600 underline">Livres</a>.</p>
+    <a href="https://www.etsy.com/shop/LGMDesign35" target="_blank" rel="noopener" class="block w-full text-center py-3 bg-orange-500 hover:bg-orange-600 text-white font-black rounded-xl shadow">🛍️ Aller à la boutique Etsy</a>
   </div>
 
   <div class="bg-white border border-slate-200 rounded-3xl p-5">
@@ -129,7 +105,7 @@ function renderCart(){
       '<div class="flex-1 min-w-0"><h3 class="brand-font font-bold text-slate-800 leading-tight">' + p.title + '</h3>' +
       '<p class="text-xs text-slate-500">' + p.pages + ' pages • ' + p.age + ' • PDF</p>' +
       '<p class="text-xs font-bold text-slate-600 mt-1">' + fmt(p.priceCAD) + ' / exemplaire</p>' +
-      (p.etsy ? '<a href="' + p.etsy + '" target="_blank" rel="noopener" class="text-xs font-bold text-orange-600 underline">Aussi sur Etsy (PDF) ↗</a>' : '<span class="text-xs font-bold text-slate-400">Pas encore sur Etsy — paiement PayPal bientôt</span>') + '</div>' +
+      (p.etsy ? '<a href="' + p.etsy + '" target="_blank" rel="noopener" class="text-xs font-bold text-orange-600 underline">Aussi sur Etsy (PDF) ↗</a>' : '<span class="text-xs font-bold text-slate-400">Pas encore sur Etsy</span>') + '</div>' +
       '<div class="flex flex-col items-end gap-2">' +
       '<div class="flex items-center gap-2"><button onclick="lgmSetQty(\'' + id + '\',' + (q-1) + ')" class="w-8 h-8 rounded-full bg-slate-100 font-black">−</button>' +
       '<span class="font-black w-6 text-center">' + q + '</span>' +
@@ -141,138 +117,6 @@ function renderCart(){
   var total = lgmCartTotal(cart);
   document.getElementById('cart-subtotal').textContent = fmt(total);
   document.getElementById('cart-total').textContent = fmt(total);
-  lgmUpdatePayNote();
-}
-var paypalButtonsRendered = false;
-function lgmPaypalItems(){
-  var cart = lgmLoadCart();
-  var items = [];
-  Object.keys(cart).forEach(function(id){
-    var p = LGM_PRODUCTS[id];
-    if (p && cart[id] > 0) {
-      items.push({ name: p.title, unit_amount: { currency_code: 'CAD', value: p.priceCAD.toFixed(2) }, quantity: String(cart[id]) });
-    }
-  });
-  return items;
-}
-function renderPayPalButtons(){
-  var container = document.getElementById('paypal-button-container');
-  var setupNote = document.getElementById('paypal-setup-note');
-  if (!container || paypalButtonsRendered) return;
-  if (typeof paypal === 'undefined') {
-    // Le SDK PayPal n'a pas chargé (client-id pas encore remplacé) : on
-    // affiche l'avis d'attente au lieu d'un bouton cassé.
-    setupNote.classList.remove('hidden');
-    return;
-  }
-  setupNote.classList.add('hidden');
-  paypalButtonsRendered = true;
-  paypal.Buttons({
-    style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
-    onClick: function(data, actions){
-      var email = document.getElementById('buyer-email').value.trim();
-      var box = document.getElementById('pay-result');
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        box.classList.remove('hidden');
-        box.className = 'text-sm font-bold rounded-2xl p-4 bg-red-50 text-red-700 border border-red-200';
-        box.textContent = '⚠️ Entrez un courriel valide : c\u2019est là que les PDF seront envoyés après le paiement.';
-        return actions.reject();
-      }
-      box.classList.add('hidden');
-      return actions.resolve();
-    },
-    createOrder: function(data, actions){
-      var total = lgmCartTotal().toFixed(2);
-      return actions.order.create({
-        purchase_units: [{
-          amount: {
-            currency_code: 'CAD',
-            value: total,
-            breakdown: { item_total: { currency_code: 'CAD', value: total } }
-          },
-          items: lgmPaypalItems()
-        }]
-      });
-    },
-    onApprove: function(data, actions){
-      return actions.order.capture().then(function(details){
-        var email = (details.payer && details.payer.email_address) || document.getElementById('buyer-email').value.trim();
-        var order = {
-          orderID: details.id,
-          payerEmail: email,
-          total: lgmCartTotal(),
-          items: lgmPaypalItems().map(function(it){ return { title: it.name, qty: parseInt(it.quantity, 10), price: parseFloat(it.unit_amount.value) }; }),
-          date: new Date().toISOString()
-        };
-        try { sessionStorage.setItem('lgm-order', JSON.stringify(order)); } catch (e) {}
-        lgmClear();
-        window.location.href = 'merci.html';
-      });
-    },
-    onCancel: function(){
-      var box = document.getElementById('pay-result');
-      box.classList.remove('hidden');
-      box.className = 'text-sm font-bold rounded-2xl p-4 bg-sky-50 text-sky-800 border border-sky-200';
-      box.textContent = 'Le paiement PayPal a été annulé — aucun montant n\u2019a été prélevé. Votre panier est toujours là.';
-    },
-    onError: function(){
-      var box = document.getElementById('pay-result');
-      box.classList.remove('hidden');
-      box.className = 'text-sm font-bold rounded-2xl p-4 bg-red-50 text-red-700 border border-red-200';
-      box.textContent = '⚠️ Une erreur est survenue avec PayPal. Aucun montant n\u2019a été prélevé — réessayez, ou achetez les mêmes PDF sur Etsy.';
-    }
-  }).render('#paypal-button-container');
-}
-function lgmUpdatePayNote(){
-  var m = (document.querySelector('input[name="pay-method"]:checked') || {}).value || 'paypal';
-  var total = lgmCartTotal();
-  var note = document.getElementById('pay-note');
-  var pp = document.getElementById('paypal-button-container');
-  var setupNote = document.getElementById('paypal-setup-note');
-  var btn = document.getElementById('pay-btn');
-  if (m === 'paypal') {
-    pp.classList.remove('hidden'); btn.classList.add('hidden');
-    renderPayPalButtons();
-    note.textContent = 'Payez avec votre compte PayPal ou par carte bancaire, sans créer de compte. Vos PDF sont envoyés par courriel dans les 24 heures.';
-  } else {
-    pp.classList.add('hidden'); setupNote.classList.add('hidden'); btn.classList.remove('hidden');
-    if (m === 'etsy') {
-      note.textContent = 'Vous paierez chaque livre sur Etsy, au même prix, en PDF — via les liens « Aussi sur Etsy » de chaque livre ci-dessus.';
-    } else {
-      var fee = Math.round((total * 0.029 + 0.30) * 100) / 100;
-      note.textContent = 'Estimation des frais (Stripe, 2,9 % + 0,30 $) : environ ' + fee.toFixed(2).replace('.', ',') + ' $ sur ce total — le solde revient à LGMDesign35. Chiffre indicatif, à confirmer avant la première vente.';
-    }
-  }
-}
-document.querySelectorAll('input[name="pay-method"]').forEach(function(r){ r.addEventListener('change', lgmUpdatePayNote); });
-function lgmCheckout(){
-  var email = document.getElementById('buyer-email').value.trim();
-  var m = (document.querySelector('input[name="pay-method"]:checked') || {}).value || 'paypal';
-  var box = document.getElementById('pay-result');
-  box.classList.remove('hidden');
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    box.className = 'text-sm font-bold rounded-2xl p-4 bg-red-50 text-red-700 border border-red-200';
-    box.textContent = '⚠️ Entrez un courriel valide : c\u2019est là que les PDF seront envoyés après le paiement.';
-    return;
-  }
-  if (m === 'etsy') {
-    box.className = 'text-sm font-bold rounded-2xl p-4 bg-orange-50 text-orange-800 border border-orange-200';
-    var cartE = lgmLoadCart();
-    var missing = Object.keys(cartE).filter(function(id){ return LGM_PRODUCTS[id] && cartE[id] > 0 && !LGM_PRODUCTS[id].etsy; }).map(function(id){ return LGM_PRODUCTS[id].title; });
-    if (missing.length) {
-      box.innerHTML = '🛍️ Les livres suivants ne sont pas encore sur Etsy : ' + missing.join(' ; ') + '. Ils seront payables par PayPal dès son activation. Pour les autres livres de votre panier, utilisez leurs liens « Aussi sur Etsy » ci-dessus — même prix, même PDF.';
-    } else {
-      box.innerHTML = '🛍️ Pour payer dès aujourd\u2019hui, ouvrez chaque livre sur Etsy (liens « Aussi sur Etsy » ci-dessus) — même prix, même PDF. Vous pouvez aussi payer directement ici : choisissez l\u2019option « PayPal » ci-dessus.';
-    }
-    return;
-  }
-  if (m === 'paypal') {
-    box.className = 'text-sm font-bold rounded-2xl p-4 bg-amber-50 text-amber-800 border border-amber-200';
-    box.textContent = '💳 Utilisez le bouton PayPal ci-dessus pour payer — il apparaît quand « PayPal » est choisi.';
-    return;
-  }
-  box.className = 'text-sm font-bold rounded-2xl p-4 bg-amber-50 text-amber-800 border border-amber-200';
-  box.textContent = '⏳ Le paiement par Stripe n\u2019est pas encore branché sur ce site — aucun montant n\u2019a été prélevé. Votre panier (' + lgmCartTotal().toFixed(2).replace('.', ',') + ' $ CA) et votre courriel (' + email + ') sont gardés sur cet appareil. En attendant, vous pouvez acheter les mêmes PDF sur Etsy, au même prix.';
 }
 document.addEventListener('DOMContentLoaded', renderCart);
 </script>
