@@ -1,126 +1,14 @@
-<!doctype html>
-<html lang="fr-CA" dir="ltr">
+<!DOCTYPE html>
+<html lang="fr-CA">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Mon panier — LGMDesign35</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
-<style>
-body{font-family:'Quicksand',sans-serif;background:linear-gradient(135deg,#f0f9ff 0%,#fef9c3 50%,#fce7f3 100%);min-height:100vh}
-h1,h2,h3,.brand-font{font-family:'Fredoka',sans-serif}
-</style>
-<!-- CHRISTMAS: thème de Noël — supprimer cette ligne pour revenir au thème normal -->
-<link rel="stylesheet" href="christmas.css">
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<meta http-equiv="refresh" content="0; url=livres.html">
+<title>Nos livres — LGMDesign35</title>
+<script>window.location.replace('livres.html');</script>
 </head>
-<body class="text-slate-800 flex flex-col min-h-screen">
-<header class="bg-white/95 border-b-4 border-sky-600 sticky top-0 z-50 shadow-md">
-  <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
-    <a href="index.html" class="flex items-center gap-3">
-      <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-sky-700 to-sky-400 flex items-center justify-center text-white text-2xl">⚜️</div>
-      <div><span class="text-xl sm:text-2xl font-black text-sky-700 brand-font">LGM<span class="text-amber-500">Design35</span></span>
-      <span class="text-xs font-bold text-slate-500 block">Apprendre, Dessiner et Lire — Français québécois (0 à 6 ans)</span></div>
-    </a>
-    <a href="panier.html" class="bg-amber-400 hover:bg-amber-500 text-slate-900 px-4 py-2 rounded-full font-black text-sm shadow">🛒 Panier (<span data-cart-count>0</span>)</a>
-  </div>
-  <nav class="bg-sky-50 border-t border-sky-100 py-1.5">
-    <div class="max-w-6xl mx-auto px-4 flex gap-1 overflow-x-auto text-xs sm:text-sm">
-      <a href="index.html" class="px-3.5 py-1.5 rounded-xl font-extrabold text-slate-700 hover:bg-sky-200">🏠 Accueil</a>
-      <a href="livres.html" class="px-3.5 py-1.5 rounded-xl font-extrabold text-slate-700 hover:bg-sky-200">📖 Livres</a>
-      <a href="histoires-gratuites.html" class="px-3.5 py-1.5 rounded-xl font-extrabold text-slate-700 hover:bg-sky-200">🎁 Histoires gratuites</a>
-      <a href="videos.html" class="px-3.5 py-1.5 rounded-xl font-extrabold text-slate-700 hover:bg-sky-200">🎬 Vidéos</a>
-      <a href="blog-parler-francais-quebecois.html" class="px-3.5 py-1.5 rounded-xl font-extrabold text-slate-700 hover:bg-sky-200">✏️ Blogue</a>
-      <a href="contact.html" class="px-3.5 py-1.5 rounded-xl font-extrabold text-slate-700 hover:bg-sky-200">✉️ Contact</a>
-    </div>
-  </nav>
-</header>
-
-<main class="max-w-4xl mx-auto px-4 py-8 w-full space-y-6 flex-1">
-  <h1 class="brand-font text-3xl sm:text-4xl font-black text-sky-700">🛒 Mon panier</h1>
-
-  <div class="bg-sky-50 border-2 border-sky-200 rounded-3xl p-5 space-y-2">
-    <h2 class="brand-font text-lg font-bold text-sky-700">📄 Comment ça marche ?</h2>
-    <p class="text-sm text-slate-700"><strong>Tous nos livres numériques sur ce site sont des PDF.</strong> Le paiement et la livraison se font sur Etsy : le fichier est disponible tout de suite après l'achat — à lire sur tablette ou à imprimer à la maison.</p>
-    <p class="text-sm text-slate-700">📚 <strong>Vous préférez un livre broché ?</strong> Il se commande sur <strong>Amazon.ca</strong> (voir chaque fiche livre). Le livre broché ne passe pas par ce panier.</p>
-    <p class="text-sm text-slate-700">🛍️ <strong>Le même livre existe aussi sur Etsy, toujours en PDF</strong> — vous pouvez aussi l'acheter directement là-bas, au même prix.</p>
-  </div>
-
-  <div id="cart-empty" class="bg-white border border-slate-200 rounded-3xl p-8 text-center space-y-3 hidden">
-    <p class="text-4xl">🧺</p>
-    <p class="font-bold text-slate-700">Votre panier est vide.</p>
-    <a href="livres.html" class="inline-block px-5 py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-bold text-sm rounded-xl">📖 Découvrir nos livres</a>
-  </div>
-
-  <div id="cart-list" class="space-y-4"></div>
-
-  <div id="cart-summary" class="bg-white border border-slate-200 rounded-3xl p-6 space-y-3 hidden">
-    <div class="flex justify-between font-bold"><span>Sous-total (PDF)</span><span id="cart-subtotal">0,00 $ CA</span></div>
-    <p class="text-xs text-slate-500">Prix en dollars canadiens, comme sur Etsy. Aucun frais de livraison : le PDF est livré par Etsy après l'achat.</p>
-    <div class="flex justify-between font-black text-lg border-t pt-3"><span>Total — à régler sur Etsy</span><span id="cart-total">0,00 $ CA</span></div>
-    <button onclick="lgmClear()" class="text-xs font-bold text-slate-500 underline">Vider le panier</button>
-  </div>
-
-  <!-- Achat : le paiement se fait sur Etsy (PDF) ou Amazon.ca (livre broché). Aucun paiement sur ce site. -->
-  <div id="checkout" class="bg-white border-2 border-amber-300 rounded-3xl p-6 space-y-4 hidden">
-    <h2 class="brand-font text-xl font-bold text-slate-800">🛍️ Comment acheter vos livres ?</h2>
-    <p class="text-sm text-slate-700">Le paiement ne se fait pas sur ce site : il se fait sur <strong>Etsy</strong> pour les livres en PDF et sur <strong>Amazon.ca</strong> pour les livres brochés.</p>
-    <p class="text-sm text-slate-700">📄 <strong>Version PDF :</strong> cliquez sur « Aussi sur Etsy (PDF) ↗ » sous chaque livre de votre panier ci-dessus — même prix qu'ici, et Etsy vous donne le fichier tout de suite après le paiement.</p>
-    <p class="text-sm text-slate-700">📚 <strong>Version papier (livre broché) :</strong> elle se commande sur Amazon.ca, depuis la fiche de chaque livre sur la page <a href="livres.html" class="font-bold text-sky-600 underline">Livres</a>.</p>
-    <a href="https://www.etsy.com/shop/LGMDesign35" target="_blank" rel="noopener" class="block w-full text-center py-3 bg-orange-500 hover:bg-orange-600 text-white font-black rounded-xl shadow">🛍️ Aller à la boutique Etsy</a>
-  </div>
-
-  <div class="bg-white border border-slate-200 rounded-3xl p-5">
-    <h2 class="brand-font font-bold text-slate-800 mb-2">⏳ Bientôt en livre broché (Amazon)</h2>
-    <p class="text-sm text-slate-600"><strong>Adam apprend à écouter</strong> arrive en livre broché sur Amazon — en attendant, lisez l'aperçu gratuit de 5 pages sur <a href="histoires-gratuites.html" class="font-bold text-sky-600 underline">nos histoires gratuites</a>.</p>
-  </div>
-</main>
-
-<footer class="bg-slate-900 text-white pt-8 pb-6 mt-8">
-  <div class="max-w-6xl mx-auto px-4 text-center text-xs text-slate-400 space-y-1">
-    <p>© 2026 Éditions LGMDesign35. Tous droits réservés. | Conçu pour le Québec.</p>
-    <p><a href="https://lgmdesign35.com/" class="text-sky-400 font-bold">🌐 lgmdesign35.com</a></p>
-  </div>
-</footer>
-
-<script src="panier.js"></script>
-<script>
-function fmt(n){ return n.toFixed(2).replace('.', ',') + ' $ CA'; }
-function renderCart(){
-  var cart = lgmLoadCart();
-  var ids = Object.keys(cart).filter(function(id){ return LGM_PRODUCTS[id] && cart[id] > 0; });
-  var list = document.getElementById('cart-list');
-  var empty = document.getElementById('cart-empty');
-  var summary = document.getElementById('cart-summary');
-  var checkout = document.getElementById('checkout');
-  if (!ids.length) {
-    list.innerHTML = ''; empty.classList.remove('hidden');
-    summary.classList.add('hidden'); checkout.classList.add('hidden');
-    return;
-  }
-  empty.classList.add('hidden'); summary.classList.remove('hidden'); checkout.classList.remove('hidden');
-  list.innerHTML = ids.map(function(id){
-    var p = LGM_PRODUCTS[id], q = cart[id];
-    return '<div class="bg-white border border-slate-200 rounded-3xl p-4 flex gap-4 items-center">' +
-      '<img src="' + p.img + '" alt="" class="w-20 h-20 object-cover rounded-2xl border border-slate-200">' +
-      '<div class="flex-1 min-w-0"><h3 class="brand-font font-bold text-slate-800 leading-tight">' + p.title + '</h3>' +
-      '<p class="text-xs text-slate-500">' + p.pages + ' pages • ' + p.age + ' • PDF</p>' +
-      '<p class="text-xs font-bold text-slate-600 mt-1">' + fmt(p.priceCAD) + ' / exemplaire</p>' +
-      (p.etsy ? '<a href="' + p.etsy + '" target="_blank" rel="noopener" class="text-xs font-bold text-orange-600 underline">Aussi sur Etsy (PDF) ↗</a>' : '<span class="text-xs font-bold text-slate-400">Pas encore sur Etsy</span>') + '</div>' +
-      '<div class="flex flex-col items-end gap-2">' +
-      '<div class="flex items-center gap-2"><button onclick="lgmSetQty(\'' + id + '\',' + (q-1) + ')" class="w-8 h-8 rounded-full bg-slate-100 font-black">−</button>' +
-      '<span class="font-black w-6 text-center">' + q + '</span>' +
-      '<button onclick="lgmSetQty(\'' + id + '\',' + (q+1) + ')" class="w-8 h-8 rounded-full bg-slate-100 font-black">+</button></div>' +
-      '<span class="font-black">' + fmt(p.priceCAD * q) + '</span>' +
-      '<button onclick="lgmRemove(\'' + id + '\')" class="text-xs font-bold text-red-500 underline">Retirer</button>' +
-      '</div></div>';
-  }).join('');
-  var total = lgmCartTotal(cart);
-  document.getElementById('cart-subtotal').textContent = fmt(total);
-  document.getElementById('cart-total').textContent = fmt(total);
-}
-document.addEventListener('DOMContentLoaded', renderCart);
-</script>
-<!-- CHRISTMAS: neige de Noël — supprimer cette ligne pour revenir au thème normal -->
-<script src="christmas.js" defer></script>
+<body style="font-family:system-ui,sans-serif;text-align:center;padding:40px">
+<p>Nos livres s'achètent sur Etsy (PDF) et Amazon.ca (livres brochés).</p>
+<p><a href="livres.html">Voir nos livres →</a></p>
 </body>
 </html>

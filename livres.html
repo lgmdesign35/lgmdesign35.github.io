@@ -100,7 +100,7 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
       <div class="bg-gradient-to-r from-amber-400 to-yellow-500 text-slate-900 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md border-2 border-white">
         <span>⭐</span><span class="hidden sm:inline text-slate-800">Étoiles</span>
       </div>
-      <a href="panier.html" class="bg-amber-400 hover:bg-amber-500 text-slate-900 px-3 py-1.5 rounded-full font-black text-xs sm:text-sm shadow-md border-2 border-white">🛒 Panier (<span data-cart-count>0</span>)</a>
+      
     </div>
   </div>
   <nav class="bg-sky-50 border-t border-sky-100 py-1.5">
@@ -201,7 +201,7 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
       </div>
       <div class="mt-4 space-y-2">
         <a href="https://www.etsy.com/listing/4601808390" target="_blank" rel="noopener" class="block w-full text-center py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs rounded-xl shadow transition-all">📥 Version PDF — Etsy (3,00 $ CA) ↗</a>
-        <button data-add="aventures" onclick="addToCart('aventures')" class="block w-full text-center py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs rounded-xl shadow transition-all">🛒 Ajouter au panier — 3,00 $ CA (PDF)</button>
+        <a href="https://www.etsy.com/listing/4601808390" target="_blank" rel="noopener" class="block w-full text-center py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs rounded-xl shadow transition-all">📥 Acheter sur Etsy — 3,00 $ CA (PDF)</a>
       </div>
     </div>
 <div class="bg-white border border-slate-200 rounded-3xl p-5 flex flex-col justify-between shadow-sm book-card">
@@ -213,7 +213,7 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
       </div>
       <div class="mt-4 space-y-2">
         <a href="https://www.etsy.com/listing/4603634496" target="_blank" rel="noopener" class="block w-full text-center py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs rounded-xl shadow transition-all">📥 Version PDF — Etsy (3,00 $ CA) ↗</a>
-        <button data-add="halloween" onclick="addToCart('halloween')" class="block w-full text-center py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs rounded-xl shadow transition-all">🛒 Ajouter au panier — 3,00 $ CA (PDF)</button>
+        <a href="https://www.etsy.com/listing/4603634496" target="_blank" rel="noopener" class="block w-full text-center py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs rounded-xl shadow transition-all">📥 Acheter sur Etsy — 3,00 $ CA (PDF)</a>
       </div>
     </div>
 <div class="bg-white border border-slate-200 rounded-3xl p-5 flex flex-col justify-between shadow-sm book-card">
@@ -225,7 +225,7 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
       </div>
       <div class="mt-4 space-y-2">
         <a href="https://www.etsy.com/listing/4601160031" target="_blank" rel="noopener" class="block w-full text-center py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs rounded-xl shadow transition-all">📥 Version PDF — Etsy (1,12 $ CA) ↗</a>
-        <button data-add="jardin" onclick="addToCart('jardin')" class="block w-full text-center py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs rounded-xl shadow transition-all">🛒 Ajouter au panier — 1,12 $ CA (PDF)</button>
+        <a href="https://www.etsy.com/listing/4601160031" target="_blank" rel="noopener" class="block w-full text-center py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs rounded-xl shadow transition-all">📥 Acheter sur Etsy — 1,12 $ CA (PDF)</a>
         
       </div>
     </div>
@@ -401,8 +401,6 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
 <script>
 (function(){if(!window.matchMedia||!window.matchMedia('(pointer:fine)').matches)return;var f=document.getElementById('helper-follower');if(!f)return;var x=window.innerWidth/2,y=window.innerHeight/2,tx=x,ty=y,shown=false;function loop(){x+=(tx-x)*0.2;y+=(ty-y)*0.2;f.style.transform='translate('+(x-24)+'px,'+(y-24)+'px)';requestAnimationFrame(loop);}document.addEventListener('mousemove',function(e){tx=e.clientX;ty=e.clientY;if(!shown){shown=true;f.style.opacity='1';}});document.addEventListener('mouseleave',function(){f.style.opacity='0';shown=false;});document.addEventListener('mouseover',function(e){if(e.target.closest('a,button,[onclick],input,select,textarea,label'))f.classList.add('helper-hi');});document.addEventListener('mouseout',function(e){if(e.target.closest('a,button,[onclick],input,select,textarea,label'))f.classList.remove('helper-hi');});requestAnimationFrame(loop);})();
 </script>
-
-<script src="panier.js"></script>
 <!-- CHRISTMAS: neige de Noël — supprimer cette ligne pour revenir au thème normal -->
 <script src="christmas.js" defer></script>
 </body>
