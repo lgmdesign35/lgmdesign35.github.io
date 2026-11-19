@@ -1,7 +1,7 @@
 // Panier LGMDesign35 — prix en dollars canadiens, alignés sur la boutique
 // Etsy : Etsy est la référence des prix (décision du 2026-11-18).
 // Seuls les titres vendus sur Etsy sont vendables ici, au même prix.
-// Les autres titres (lettres, 2 histoires, écoute, étoile de Noël,
+// Les autres titres (écoute, étoile de Noël,
 // Bonne nuit) ne sont PAS vendus tant qu'ils n'ont pas de fiche Etsy :
 // ils sont offerts en aperçu gratuit seulement.
 var LGM_PRODUCTS = {
