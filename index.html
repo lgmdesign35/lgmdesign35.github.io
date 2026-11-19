@@ -55,7 +55,8 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
 .flip-card-back{transform:rotateY(180deg)}
 .book-card{transition:transform .25s ease,box-shadow .25s ease}
 .book-card:hover{transform:translateY(-4px);box-shadow:0 12px 24px -8px rgba(2,132,199,.15)}
-.main-tab.active{background:#0055a5;color:#fff;box-shadow:0 4px 10px rgba(0,85,165,.3)}
+.main-tab.active{background:#dc2626;color:#fff;box-shadow:0 4px 10px rgba(220,38,38,.35)}
+.mm-item.mm-active{color:#dc2626 !important;background:#fef2f2;}
 .hero-dark-gradient{background-color:#0055a5 !important;background-image:linear-gradient(to right,#0ea5e9 0%,#0055a5 50%,#4338ca 100%) !important;color:#fff !important}
 .hero-dark-gradient h1{color:#fff !important}
 .hero-dark-gradient p{color:#e0f2fe !important}
@@ -128,12 +129,12 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
   </nav>
   <!-- Menu mobile -->
   <div id="mobile-menu" class="hidden md:hidden border-t border-slate-100 bg-white px-4 pt-2 pb-4 space-y-1 text-sm font-bold">
-    <button onclick="switchSiteTab('accueil'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 text-slate-700 hover:bg-sky-50 rounded-lg">🏠 Accueil</button>
-    <button onclick="switchSiteTab('apprendre'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 text-slate-700 hover:bg-sky-50 rounded-lg">📚 Apprendre</button>
-    <button onclick="switchSiteTab('atelier'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 text-pink-600 hover:bg-pink-50 rounded-lg">🎨 Atelier</button>
-    <button onclick="switchSiteTab('livres'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 text-slate-700 hover:bg-sky-50 rounded-lg">📖 Nos Livres</button>
-    <button onclick="switchSiteTab('histoire'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 text-slate-700 hover:bg-sky-50 rounded-lg">💛 Notre Histoire</button>
-    <button onclick="switchSiteTab('contact'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 text-slate-700 hover:bg-sky-50 rounded-lg">✉️ Contact</button>
+    <button onclick="switchSiteTab('accueil'); toggleMobileMenu();" data-tab="accueil" class="block w-full text-left px-3 py-2 text-slate-700 hover:bg-sky-50 rounded-lg mm-item mm-active">🏠 Accueil</button>
+    <button onclick="switchSiteTab('apprendre'); toggleMobileMenu();" data-tab="apprendre" class="block w-full text-left px-3 py-2 text-slate-700 hover:bg-sky-50 rounded-lg mm-item">📚 Apprendre</button>
+    <button onclick="switchSiteTab('atelier'); toggleMobileMenu();" data-tab="atelier" class="block w-full text-left px-3 py-2 text-pink-600 hover:bg-pink-50 rounded-lg mm-item">🎨 Atelier</button>
+    <button onclick="switchSiteTab('livres'); toggleMobileMenu();" data-tab="livres" class="block w-full text-left px-3 py-2 text-slate-700 hover:bg-sky-50 rounded-lg mm-item">📖 Nos Livres</button>
+    <button onclick="switchSiteTab('histoire'); toggleMobileMenu();" data-tab="histoire" class="block w-full text-left px-3 py-2 text-slate-700 hover:bg-sky-50 rounded-lg mm-item">💛 Notre Histoire</button>
+    <button onclick="switchSiteTab('contact'); toggleMobileMenu();" data-tab="contact" class="block w-full text-left px-3 py-2 text-slate-700 hover:bg-sky-50 rounded-lg mm-item">✉️ Contact</button>
     <a href="blog-parler-francais-quebecois.html" class="block w-full text-left px-3 py-2 text-slate-700 hover:bg-sky-50 rounded-lg">✏️ Blogue</a>
   </div>
 </header>
@@ -1224,7 +1225,7 @@ function switchSiteTab(tabId){
   document.querySelectorAll('.site-page').forEach(function(s){s.classList.add('hidden');});
   var target=document.getElementById('page-'+tabId);if(target)target.classList.remove('hidden');
   document.querySelectorAll('.main-tab').forEach(function(b){b.classList.remove('active');});
-  var btn=document.getElementById('main-'+tabId);if(btn)btn.classList.add('active');
+  var btn=document.getElementById('main-'+tabId);if(btn)btn.classList.add('active');document.querySelectorAll('.mm-item').forEach(function(b){b.classList.toggle('mm-active',b.getAttribute('data-tab')===tabId);});
   window.scrollTo({top:0,behavior:'smooth'});
   playSound('pop');
 }
