@@ -1,8 +1,8 @@
 // Panier LGMDesign35 — prix en dollars canadiens, alignés sur la boutique
 // Etsy : Etsy est la référence des prix (décision du 2026-11-18).
 // Seuls les titres vendus sur Etsy sont vendables ici, au même prix.
-// Les autres titres (écoute, étoile de Noël,
-// Bonne nuit) ne sont PAS vendus tant qu'ils n'ont pas de fiche Etsy :
+// Les autres titres (écoute, étoile de Noël)
+// ne sont PAS vendus tant qu'ils n'ont pas de fiche Etsy :
 // ils sont offerts en aperçu gratuit seulement.
 var LGM_PRODUCTS = {
   aventures: { id: 'aventures', title: 'Les aventures d\u2019Adam et ses amis', pages: 71, age: '4 \u00e0 6 ans', priceCAD: 3.00, format: 'PDF', etsy: 'https://www.etsy.com/listing/4601808390', img: 'images/couverture-aventures.jpg' },
