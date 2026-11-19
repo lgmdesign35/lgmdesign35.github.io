@@ -255,40 +255,31 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
       -->
     </div>
   </div>
-  <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-4">
-    <h2 class="brand-font text-2xl font-bold text-qcblue-700">✏️ Blogue éducatif — pour les parents du Québec</h2>
-    <p class="text-sm text-slate-600">Des réponses simples aux questions des parents : comment aider votre enfant à parler le français québécois, quelles activités avant la maternelle, comment installer une routine du soir, et comment apprendre l'alphabet en chantant…</p>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <a href="blog-parler-francais-quebecois.html" class="block bg-sky-50 border border-sky-200 rounded-2xl p-4 hover:shadow-md transition">
-        <h3 class="brand-font font-bold text-slate-800">Comment aider votre enfant à parler le français québécois ?</h3>
-        <p class="text-xs text-slate-500 mt-1">Parler, lire, chanter et jouer ensemble, dès la naissance — 5 astuces simples.</p>
-        <span class="text-xs font-bold text-sky-600">Lire l'article →</span>
-      </a>
-      <a href="blog-activites-prescolaire.html" class="block bg-sky-50 border border-sky-200 rounded-2xl p-4 hover:shadow-md transition">
-        <h3 class="brand-font font-bold text-slate-800">5 activités préscolaires pour préparer votre enfant à la maternelle au Québec</h3>
-        <p class="text-xs text-slate-500 mt-1">Des activités simples à faire à la maison, sans matériel spécial.</p>
-        <span class="text-xs font-bold text-sky-600">Lire l'article →</span>
-      </a>
-      <a href="blog-routine-du-soir.html" class="block bg-sky-50 border border-sky-200 rounded-2xl p-4 hover:shadow-md transition">
-        <h3 class="brand-font font-bold text-slate-800">La routine du soir : une histoire avant le dodo pour aider votre enfant à mieux dormir</h3>
-        <p class="text-xs text-slate-500 mt-1">Pyjama, dents, histoire, dodo — les étapes d'une routine du soir qui rassure.</p>
-        <span class="text-xs font-bold text-sky-600">Lire l'article →</span>
-      </a>
-      <a href="blog-phase-du-non.html" class="block bg-sky-50 border border-sky-200 rounded-2xl p-4 hover:shadow-md transition">
-        <h3 class="brand-font font-bold text-slate-800">Le mercredi des parents nº 1 — La phase du « non ! » : pourquoi votre tout-petit dit non à tout</h3>
-        <p class="text-xs text-slate-500 mt-1">Dire non, c'est grandir : 5 façons douces de réagir, pour les 18 mois à 3 ans.</p>
-        <span class="text-xs font-bold text-sky-600">Lire l'article →</span>
-      </a>
-      <a href="blog-alphabet-en-chantant.html" class="block bg-sky-50 border border-sky-200 rounded-2xl p-4 hover:shadow-md transition">
-        <h3 class="brand-font font-bold text-slate-800">Apprendre l'alphabet en chantant : des comptines pour retenir les lettres de 3 à 5 ans</h3>
-        <p class="text-xs text-slate-500 mt-1">Une lettre à la fois, en chanson — sans cahier et sans pression.</p>
-        <span class="text-xs font-bold text-sky-600">Lire l'article →</span>
-      </a>
+    <div class="bg-gradient-to-r from-sky-600 via-qcblue-600 to-indigo-700 rounded-3xl p-6 sm:p-8 text-white shadow-xl">
+    <div class="flex flex-col sm:flex-row gap-5 items-center">
+      <!-- SPOTLIGHT-LUNDI:BEGIN — le livre gratuit de la semaine, mis à jour chaque lundi -->
+      <a href="bebe-adam-animaux.html" class="flex-none"><img src="images/bebe-animaux/page-01.jpg" alt="Couverture du livre Les animaux et leurs sons" class="w-36 sm:w-44 rounded-2xl border-4 border-amber-300 shadow-lg" loading="lazy"></a>
+      <div class="flex-1 space-y-3 text-center sm:text-left">
+        <h2 class="brand-font text-2xl font-bold">📖 Le livre gratuit de la semaine</h2>
+        <p class="text-base font-black text-amber-300">« Les animaux et leurs sons » 🐶🐱 — le nouveau livre Bébé Adam !</p>
+        <p class="text-sm text-sky-100 leading-relaxed">Chaque lundi, un nouveau livre Bébé Adam gratuit arrive sur le site, à lire et à écouter avec votre enfant — avec les vrais sons des animaux. Aucune inscription : cliquez et lisez !</p>
+        <div class="flex flex-wrap gap-3 justify-center sm:justify-start">
+          <a href="bebe-adam-animaux.html" class="px-6 py-3 bg-amber-400 hover:bg-amber-500 text-slate-900 font-black text-sm rounded-2xl shadow pop-btn">▶ Lire et écouter</a>
+          <button onclick="switchSiteTab('livres')" class="px-6 py-3 bg-white/15 border border-white/40 text-white font-black text-sm rounded-2xl shadow pop-btn">Tous les livres gratuits 📚</button>
+        </div>
+      </div>
+      <!-- SPOTLIGHT-LUNDI:END -->
     </div>
-  </div>  <div class="bg-gradient-to-r from-sky-600 via-qcblue-600 to-indigo-700 rounded-3xl p-6 sm:p-8 text-white shadow-xl space-y-4">
-    <h2 class="brand-font text-2xl font-bold">📖 Une nouvelle histoire gratuite chaque lundi !</h2>
-    <p class="text-sm text-sky-100 max-w-2xl">Chaque lundi, un nouveau livre Bébé Adam gratuit arrive sur le site, à lire et à écouter avec votre enfant. Aucune inscription, aucun courriel demandé : revenez simplement nous voir !</p>
-    <button onclick="switchSiteTab('livres')" class="px-6 py-3 bg-amber-400 hover:bg-amber-500 text-slate-900 font-black text-sm rounded-2xl shadow pop-btn">Voir les livres gratuits 📚</button>
+  </div>
+  <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-4 text-center">
+    <h2 class="brand-font text-2xl font-bold text-qcblue-700">📱 Suivez Adam et ses amis !</h2>
+    <p class="text-sm text-slate-600 max-w-2xl mx-auto">Des vidéos, des histoires et les nouveaux livres chaque semaine — rejoignez la famille LGMDesign35 :</p>
+    <div class="flex flex-wrap gap-3 justify-center">
+      <a href="https://www.tiktok.com/@lgm.design" target="_blank" rel="noopener" class="px-5 py-2.5 bg-slate-900 text-white font-black text-sm rounded-2xl shadow pop-btn">🎵 TikTok</a>
+      <a href="https://www.instagram.com/lgmdesign35/" target="_blank" rel="noopener" class="px-5 py-2.5 bg-gradient-to-r from-pink-500 to-amber-500 text-white font-black text-sm rounded-2xl shadow pop-btn">📸 Instagram</a>
+      <a href="https://www.youtube.com/@LGMDesign35" target="_blank" rel="noopener" class="px-5 py-2.5 bg-red-600 text-white font-black text-sm rounded-2xl shadow pop-btn">▶️ YouTube</a>
+      <a href="https://www.facebook.com/profile.php?id=61596073183903" target="_blank" rel="noopener" class="px-5 py-2.5 bg-blue-600 text-white font-black text-sm rounded-2xl shadow pop-btn">👍 Facebook</a>
+    </div>
   </div>
 </section>
 
@@ -661,7 +652,39 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
         <p class="text-xs text-slate-600 leading-relaxed">L'exposition aux rimes et aux histoires traditionnelles facilite l'apprentissage de la lecture au primaire.</p>
       </div>
     </div>
+  
+<div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-4">
+    <h2 class="brand-font text-2xl font-bold text-qcblue-700">✏️ Blogue éducatif — pour les parents du Québec</h2>
+    <p class="text-sm text-slate-600">Des réponses simples aux questions des parents : comment aider votre enfant à parler le français québécois, quelles activités avant la maternelle, comment installer une routine du soir, et comment apprendre l'alphabet en chantant…</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <a href="blog-parler-francais-quebecois.html" class="block bg-sky-50 border border-sky-200 rounded-2xl p-4 hover:shadow-md transition">
+        <h3 class="brand-font font-bold text-slate-800">Comment aider votre enfant à parler le français québécois ?</h3>
+        <p class="text-xs text-slate-500 mt-1">Parler, lire, chanter et jouer ensemble, dès la naissance — 5 astuces simples.</p>
+        <span class="text-xs font-bold text-sky-600">Lire l'article →</span>
+      </a>
+      <a href="blog-activites-prescolaire.html" class="block bg-sky-50 border border-sky-200 rounded-2xl p-4 hover:shadow-md transition">
+        <h3 class="brand-font font-bold text-slate-800">5 activités préscolaires pour préparer votre enfant à la maternelle au Québec</h3>
+        <p class="text-xs text-slate-500 mt-1">Des activités simples à faire à la maison, sans matériel spécial.</p>
+        <span class="text-xs font-bold text-sky-600">Lire l'article →</span>
+      </a>
+      <a href="blog-routine-du-soir.html" class="block bg-sky-50 border border-sky-200 rounded-2xl p-4 hover:shadow-md transition">
+        <h3 class="brand-font font-bold text-slate-800">La routine du soir : une histoire avant le dodo pour aider votre enfant à mieux dormir</h3>
+        <p class="text-xs text-slate-500 mt-1">Pyjama, dents, histoire, dodo — les étapes d'une routine du soir qui rassure.</p>
+        <span class="text-xs font-bold text-sky-600">Lire l'article →</span>
+      </a>
+      <a href="blog-phase-du-non.html" class="block bg-sky-50 border border-sky-200 rounded-2xl p-4 hover:shadow-md transition">
+        <h3 class="brand-font font-bold text-slate-800">Le mercredi des parents nº 1 — La phase du « non ! » : pourquoi votre tout-petit dit non à tout</h3>
+        <p class="text-xs text-slate-500 mt-1">Dire non, c'est grandir : 5 façons douces de réagir, pour les 18 mois à 3 ans.</p>
+        <span class="text-xs font-bold text-sky-600">Lire l'article →</span>
+      </a>
+      <a href="blog-alphabet-en-chantant.html" class="block bg-sky-50 border border-sky-200 rounded-2xl p-4 hover:shadow-md transition">
+        <h3 class="brand-font font-bold text-slate-800">Apprendre l'alphabet en chantant : des comptines pour retenir les lettres de 3 à 5 ans</h3>
+        <p class="text-xs text-slate-500 mt-1">Une lettre à la fois, en chanson — sans cahier et sans pression.</p>
+        <span class="text-xs font-bold text-sky-600">Lire l'article →</span>
+      </a>
+    </div>
   </div>
+</div>
 <div class="max-w-2xl mx-auto w-full bg-amber-50 border border-amber-200 rounded-3xl p-5 text-center space-y-3">
     <h3 class="brand-font text-lg font-extrabold text-slate-800">📚 Après le jeu, une histoire !</h3>
     <p class="text-xs text-slate-600">Tu as aimé jouer et apprendre ? Continue l'aventure avec un livre gratuit à lire et à écouter :</p>
