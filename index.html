@@ -437,12 +437,9 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
   <div id="section-scenes" class="learn-section hidden space-y-6">
     <div class="bg-gradient-to-br from-emerald-500 to-teal-500 rounded-[2rem] p-6 sm:p-8 text-white shadow-xl">
       <h3 class="brand-font text-2xl sm:text-3xl font-black">👆 Touche et écoute</h3>
-      <p class="text-emerald-50 font-semibold text-sm sm:text-base">Pour les tout-petits : touche un animal ou un objet dans l’image et écoute son nom — et son vrai son à la ferme ! Aucune lecture, juste le plaisir de découvrir. 🔊</p>
+      <p class="text-emerald-50 font-semibold text-sm sm:text-base">22 scènes à explorer : touche un animal ou un objet dans l’image et écoute son nom — et de vrais sons d’animaux ! Aucune lecture, juste le plaisir de découvrir. 🔊</p>
     </div>
-    <div class="flex flex-wrap gap-2 justify-center">
-      <button id="sc-btn-ferme" onclick="scShow('ferme')" class="font-black text-sm sm:text-base px-5 py-2.5 rounded-full shadow transition bg-emerald-600 text-white">🚜 La ferme</button>
-      <button id="sc-btn-jardin" onclick="scShow('jardin')" class="font-black text-sm sm:text-base px-5 py-2.5 rounded-full shadow transition bg-white text-emerald-700 hover:bg-emerald-50">🌷 Le jardin</button>
-    </div>
+    <div id="sc-list" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2"></div>
     <div class="bg-white rounded-[2rem] shadow-xl border border-emerald-100 p-3 sm:p-4">
       <div class="relative w-full rounded-[1.5rem] overflow-hidden shadow-inner" style="aspect-ratio:3/2">
         <img id="sc-bg" src="images/scenes/ferme.jpg" alt="Scène interactive" class="absolute inset-0 w-full h-full object-cover">
@@ -2341,7 +2338,7 @@ if(cpA){
  cpBuild();
 /* ===== SCÈNES TOUCHE ET ÉCOUTE ===== */
 var SC_DATA={
- ferme:{bg:'images/scenes/ferme.jpg',hint:'👆 Touche un animal !',items:[
+ ferme:{icon:'🚜',label:'La ferme',bg:'images/scenes/ferme.jpg',hint:'👆 Touche un animal !',items:[
   {e:'🦆',x:38,y:80,t:'C’est le canard !',a:'audio/bebe-animaux/page-02.mp3'},
   {e:'🐱',x:12,y:64,t:'C’est le chat !',a:'audio/bebe-animaux/page-03.mp3'},
   {e:'🐶',x:48,y:72,t:'C’est le chien !',a:'audio/bebe-animaux/page-04.mp3'},
@@ -2352,7 +2349,7 @@ var SC_DATA={
   {e:'🐑',x:64,y:62,t:'C’est le mouton !',a:'audio/bebe-animaux/page-09.mp3'},
   {e:'🐸',x:69,y:82,t:'C’est la grenouille !',a:'audio/bebe-animaux/page-10.mp3'},
   {e:'🦉',x:80,y:28,t:'C’est le hibou !',a:'audio/bebe-animaux/page-11.mp3'}]},
- jardin:{bg:'images/scenes/jardin.jpg',hint:'👆 Touche une image !',items:[
+ jardin:{icon:'🌷',label:'Le jardin',bg:'images/scenes/jardin.jpg',hint:'👆 Touche une image !',items:[
   {e:'☀️',x:10,y:11,t:'Le soleil !',a:'audio/scenes/soleil.mp3'},
   {e:'☁️',x:84,y:9,t:'Le nuage !',a:'audio/scenes/nuage.mp3'},
   {e:'🌳',x:13,y:50,t:'L’arbre !',a:'audio/scenes/arbre.mp3'},
@@ -2360,14 +2357,195 @@ var SC_DATA={
   {e:'🌻',x:85,y:68,t:'La fleur !',a:'audio/scenes/fleur.mp3'},
   {e:'🦋',x:56,y:40,t:'Le papillon !',a:'audio/scenes/papillon.mp3'},
   {e:'🐰',x:45,y:70,t:'C’est Lapin !',a:'audio/scenes/lapin.mp3'},
-  {e:'🧑🏽‍🦱',x:31,y:83,t:'C’est Bébé Adam !',a:'audio/scenes/adam.mp3'}]}
+  {e:'🧑🏽‍🦱',x:31,y:83,t:'C’est Bébé Adam !',a:'audio/scenes/adam.mp3'}]},
+ cuisine:{icon:'🍳',label:'La cuisine',bg:'images/scenes/cuisine.jpg',hint:'👆 Touche un aliment !',items:[
+  {e:'🍎',x:15,y:62,t:'La pomme !',a:'audio/scenes/pomme.mp3'},
+  {e:'🍌',x:28,y:66,t:'La banane !',a:'audio/scenes/banane.mp3'},
+  {e:'🥛',x:42,y:58,t:'Le lait !',a:'audio/scenes/lait.mp3'},
+  {e:'🍞',x:55,y:63,t:'Le pain !',a:'audio/scenes/pain.mp3'},
+  {e:'🧀',x:68,y:60,t:'Le fromage !',a:'audio/scenes/fromage.mp3'},
+  {e:'🥚',x:80,y:65,t:'L’œuf !',a:'audio/scenes/oeuf.mp3'},
+  {e:'🍰',x:90,y:58,t:'Le gâteau !',a:'audio/scenes/gateau.mp3'},
+  {e:'🍓',x:50,y:78,t:'La fraise !',a:'audio/scenes/fraise.mp3'}]},
+ chambre:{icon:'🛏️',label:'La chambre',bg:'images/scenes/chambre.jpg',hint:'👆 Touche une image !',items:[
+  {e:'🛏️',x:20,y:68,t:'Le lit !',a:'audio/scenes/lit.mp3'},
+  {e:'🧸',x:35,y:72,t:'Le doudou !',a:'audio/scenes/doudou.mp3'},
+  {e:'💡',x:85,y:45,t:'La lampe !',a:'audio/scenes/lampe.mp3'},
+  {e:'📖',x:60,y:75,t:'Le livre !',a:'audio/scenes/livre.mp3'},
+  {e:'🌙',x:88,y:15,t:'La lune !',a:'audio/scenes/lune.mp3'},
+  {e:'⭐',x:70,y:12,t:'L’étoile !',a:'audio/scenes/etoile.mp3'},
+  {e:'👕',x:48,y:55,t:'Le pyjama !',a:'audio/scenes/pyjama.mp3'},
+  {e:'⏰',x:12,y:40,t:'Le réveil !',a:'audio/scenes/reveil.mp3'}]},
+ bain:{icon:'🛁',label:'La salle de bain',bg:'images/scenes/bain.jpg',hint:'👆 Touche une image !',items:[
+  {e:'🛁',x:30,y:70,t:'Le bain !',a:'audio/scenes/bain.mp3'},
+  {e:'🧼',x:55,y:55,t:'Le savon !',a:'audio/scenes/savon.mp3'},
+  {e:'🫧',x:45,y:35,t:'Les bulles !',a:'audio/scenes/bulles.mp3'},
+  {e:'🪥',x:70,y:60,t:'La brosse à dents !',a:'audio/scenes/brosse.mp3'},
+  {e:'🦆',x:38,y:62,t:'Le canard de bain !',a:'audio/scenes/canardbain.mp3'},
+  {e:'🪞',x:85,y:30,t:'Le miroir !',a:'audio/scenes/miroir.mp3'},
+  {e:'💧',x:60,y:80,t:'L’eau !',a:'audio/scenes/eau.mp3'},
+  {e:'🧽',x:78,y:75,t:'L’éponge !',a:'audio/scenes/eponge.mp3'}]},
+ jouets:{icon:'🧸',label:'Les jouets',bg:'images/scenes/jouets.jpg',hint:'👆 Touche un jouet !',items:[
+  {e:'🚂',x:15,y:75,t:'Le train !',a:'audio/scenes/train.mp3'},
+  {e:'🚗',x:32,y:80,t:'La voiture !',a:'audio/scenes/voiture.mp3'},
+  {e:'🧱',x:50,y:70,t:'Les blocs !',a:'audio/scenes/blocs.mp3'},
+  {e:'🪆',x:65,y:60,t:'La poupée !',a:'audio/scenes/poupee.mp3'},
+  {e:'⚽',x:82,y:72,t:'Le ballon !',a:'audio/scenes/ballon.mp3'},
+  {e:'✈️',x:75,y:25,t:'L’avion !',a:'audio/scenes/avion.mp3'},
+  {e:'🧩',x:45,y:85,t:'Le casse-tête !',a:'audio/scenes/cassetete.mp3'},
+  {e:'🎨',x:88,y:45,t:'La peinture !',a:'audio/scenes/peinture.mp3'}]},
+ hiver:{icon:'❄️',label:'L’hiver',bg:'images/scenes/hiver.jpg',hint:'👆 Touche une image !',items:[
+  {e:'❄️',x:10,y:12,t:'La neige !',a:'audio/scenes/neige.mp3'},
+  {e:'⛄',x:25,y:60,t:'Le bonhomme de neige !',a:'audio/scenes/bonhomme.mp3'},
+  {e:'🛷',x:45,y:75,t:'Le traîneau !',a:'audio/scenes/traineau.mp3'},
+  {e:'⛸️',x:62,y:82,t:'Les patins !',a:'audio/scenes/patins.mp3'},
+  {e:'🧤',x:70,y:45,t:'Les mitaines !',a:'audio/scenes/mitaines.mp3'},
+  {e:'🧣',x:82,y:55,t:'Le foulard !',a:'audio/scenes/foulard.mp3'},
+  {e:'☕',x:88,y:78,t:'Le chocolat chaud !',a:'audio/scenes/chocolat.mp3'},
+  {e:'🌲',x:12,y:45,t:'Le sapin !',a:'audio/scenes/sapin.mp3'},
+  {e:'🧊',x:55,y:88,t:'La glace !',a:'audio/scenes/glace.mp3'}]},
+ automne:{icon:'🍁',label:'L’automne',bg:'images/scenes/automne.jpg',hint:'👆 Touche une image !',items:[
+  {e:'🍁',x:15,y:20,t:'La feuille !',a:'audio/scenes/feuille.mp3'},
+  {e:'🍎',x:30,y:55,t:'La pomme !',a:'audio/scenes/pomme.mp3'},
+  {e:'🎃',x:48,y:75,t:'La citrouille !',a:'audio/scenes/citrouille.mp3'},
+  {e:'🐿️',x:65,y:50,t:'L’écureuil !',a:'audio/scenes/ecureuil.mp3'},
+  {e:'🍄',x:78,y:72,t:'Le champignon !',a:'audio/scenes/champignon.mp3'},
+  {e:'🌰',x:85,y:60,t:'Le gland !',a:'audio/scenes/gland.mp3'},
+  {e:'🥾',x:38,y:85,t:'Les bottes !',a:'audio/scenes/bottes.mp3'},
+  {e:'🍃',x:88,y:15,t:'Le vent !',a:'audio/scenes/vent.mp3'}]},
+ nuit:{icon:'🌙',label:'La nuit',bg:'images/scenes/nuit.jpg',hint:'👆 Touche une image !',items:[
+  {e:'🌙',x:15,y:15,t:'La lune !',a:'audio/scenes/lune.mp3'},
+  {e:'⭐',x:35,y:10,t:'L’étoile !',a:'audio/scenes/etoile.mp3'},
+  {e:'🦉',x:80,y:35,t:'C’est le hibou !',a:'audio/bebe-animaux/page-11.mp3'},
+  {e:'☁️',x:55,y:18,t:'Le nuage !',a:'audio/scenes/nuage.mp3'},
+  {e:'🚀',x:68,y:55,t:'La fusée !',a:'audio/scenes/fusee.mp3'},
+  {e:'🪐',x:88,y:12,t:'La planète !',a:'audio/scenes/planete.mp3'},
+  {e:'🦇',x:45,y:30,t:'La chauve-souris !',a:'audio/scenes/chauvesouris.mp3'},
+  {e:'☄️',x:25,y:40,t:'La comète !',a:'audio/scenes/comete.mp3'}]},
+ foret:{icon:'🌳',label:'La forêt',bg:'images/scenes/foret.jpg',hint:'👆 Touche une image !',items:[
+  {e:'🌳',x:15,y:45,t:'L’arbre !',a:'audio/scenes/arbre.mp3'},
+  {e:'🍄',x:30,y:78,t:'Le champignon !',a:'audio/scenes/champignon.mp3'},
+  {e:'🐿️',x:45,y:35,t:'L’écureuil !',a:'audio/scenes/ecureuil.mp3'},
+  {e:'🦉',x:62,y:25,t:'C’est le hibou !',a:'audio/bebe-animaux/page-11.mp3'},
+  {e:'🌻',x:55,y:80,t:'La fleur !',a:'audio/scenes/fleur.mp3'},
+  {e:'🪨',x:75,y:75,t:'Le rocher !',a:'audio/scenes/rocher.mp3'},
+  {e:'🦌',x:85,y:55,t:'Le cerf !',a:'audio/scenes/cerf.mp3'},
+  {e:'🐦',x:35,y:15,t:'L’oiseau !',a:'audio/scenes/oiseau.mp3'}]},
+ compagnons:{icon:'🐶',label:'Mes animaux',bg:'images/scenes/compagnons.jpg',hint:'👆 Touche un animal !',items:[
+  {e:'🐶',x:20,y:70,t:'C’est le chien !',a:'audio/bebe-animaux/page-04.mp3'},
+  {e:'🐱',x:38,y:62,t:'C’est le chat !',a:'audio/bebe-animaux/page-03.mp3'},
+  {e:'🐠',x:58,y:40,t:'Le poisson rouge !',a:'audio/scenes/poissonrouge.mp3'},
+  {e:'🐦',x:75,y:25,t:'L’oiseau !',a:'audio/scenes/oiseau.mp3'},
+  {e:'🐰',x:50,y:78,t:'C’est Lapin !',a:'audio/scenes/lapin.mp3'},
+  {e:'🐹',x:68,y:68,t:'Le hamster !',a:'audio/scenes/hamster.mp3'},
+  {e:'🐢',x:85,y:80,t:'La tortue !',a:'audio/scenes/tortue.mp3'},
+  {e:'🦜',x:88,y:30,t:'Le perroquet !',a:'audio/scenes/perroquet.mp3'}]},
+ zoo:{icon:'🦁',label:'Le zoo',bg:'images/scenes/zoo.jpg',hint:'👆 Touche un animal !',items:[
+  {e:'🦁',x:15,y:65,t:'Le lion !',a:'audio/scenes/lion.mp3'},
+  {e:'🐘',x:35,y:55,t:'L’éléphant !',a:'audio/scenes/elephant.mp3'},
+  {e:'🦒',x:55,y:40,t:'La girafe !',a:'audio/scenes/girafe.mp3'},
+  {e:'🐵',x:72,y:30,t:'Le singe !',a:'audio/scenes/singe.mp3'},
+  {e:'🦓',x:85,y:60,t:'Le zèbre !',a:'audio/scenes/zebre.mp3'},
+  {e:'🐼',x:30,y:80,t:'Le panda !',a:'audio/scenes/panda.mp3'},
+  {e:'🦘',x:60,y:75,t:'Le kangourou !',a:'audio/scenes/kangourou.mp3'},
+  {e:'🦛',x:88,y:82,t:'L’hippopotame !',a:'audio/scenes/hippopotame.mp3'}]},
+ mer:{icon:'🌊',label:'La mer',bg:'images/scenes/mer.jpg',hint:'👆 Touche un animal !',items:[
+  {e:'🐠',x:20,y:40,t:'Le poisson !',a:'audio/scenes/poisson.mp3'},
+  {e:'🐢',x:40,y:30,t:'La tortue !',a:'audio/scenes/tortue.mp3'},
+  {e:'🦀',x:60,y:80,t:'Le crabe !',a:'audio/scenes/crabe.mp3'},
+  {e:'⭐',x:80,y:85,t:'L’étoile de mer !',a:'audio/scenes/etoilemer.mp3'},
+  {e:'🐋',x:70,y:20,t:'La baleine !',a:'audio/scenes/baleine.mp3'},
+  {e:'🐬',x:45,y:55,t:'Le dauphin !',a:'audio/scenes/dauphin.mp3'},
+  {e:'🐙',x:85,y:55,t:'La pieuvre !',a:'audio/scenes/pieuvre.mp3'},
+  {e:'🦈',x:15,y:70,t:'Le requin !',a:'audio/scenes/requin.mp3'}]},
+ insectes:{icon:'🦋',label:'Les insectes',bg:'images/scenes/insectes.jpg',hint:'👆 Touche une image !',items:[
+  {e:'🦋',x:20,y:25,t:'Le papillon !',a:'audio/scenes/papillon.mp3'},
+  {e:'🐝',x:40,y:35,t:'L’abeille !',a:'audio/scenes/abeille.mp3'},
+  {e:'🐞',x:55,y:60,t:'La coccinelle !',a:'audio/scenes/coccinelle.mp3'},
+  {e:'🐜',x:70,y:82,t:'La fourmi !',a:'audio/scenes/fourmi.mp3'},
+  {e:'🐌',x:85,y:75,t:'L’escargot !',a:'audio/scenes/escargot.mp3'},
+  {e:'🕷️',x:88,y:20,t:'L’araignée !',a:'audio/scenes/araignee.mp3'},
+  {e:'🦗',x:35,y:70,t:'La sauterelle !',a:'audio/scenes/sauterelle.mp3'},
+  {e:'🪱',x:60,y:88,t:'Le ver de terre !',a:'audio/scenes/ver.mp3'}]},
+ vehicules:{icon:'🚗',label:'Les véhicules',bg:'images/scenes/vehicules.jpg',hint:'👆 Touche un véhicule !',items:[
+  {e:'🚗',x:15,y:70,t:'La voiture !',a:'audio/scenes/voiture.mp3'},
+  {e:'🚚',x:35,y:62,t:'Le camion !',a:'audio/scenes/camion.mp3'},
+  {e:'🚌',x:55,y:58,t:'L’autobus !',a:'audio/scenes/autobus.mp3'},
+  {e:'🚂',x:75,y:70,t:'Le train !',a:'audio/scenes/train.mp3'},
+  {e:'✈️',x:80,y:15,t:'L’avion !',a:'audio/scenes/avion.mp3'},
+  {e:'⛵',x:88,y:45,t:'Le bateau !',a:'audio/scenes/bateau.mp3'},
+  {e:'🚲',x:30,y:85,t:'Le vélo !',a:'audio/scenes/velo.mp3'},
+  {e:'🚜',x:60,y:85,t:'Le tracteur !',a:'audio/scenes/tracteur.mp3'}]},
+ classe:{icon:'🏫',label:'La garderie',bg:'images/scenes/classe.jpg',hint:'👆 Touche une image !',items:[
+  {e:'✏️',x:15,y:60,t:'Le crayon !',a:'audio/scenes/crayon.mp3'},
+  {e:'📚',x:32,y:55,t:'Le livre !',a:'audio/scenes/livre.mp3'},
+  {e:'🪑',x:48,y:70,t:'La chaise !',a:'audio/scenes/chaise.mp3'},
+  {e:'🎨',x:62,y:50,t:'La peinture !',a:'audio/scenes/peinture.mp3'},
+  {e:'✂️',x:75,y:62,t:'Les ciseaux !',a:'audio/scenes/ciseaux.mp3'},
+  {e:'🎒',x:88,y:75,t:'Le sac à dos !',a:'audio/scenes/sac.mp3'},
+  {e:'⚽',x:85,y:30,t:'Le ballon !',a:'audio/scenes/ballon.mp3'},
+  {e:'🧩',x:40,y:82,t:'Le casse-tête !',a:'audio/scenes/cassetete.mp3'}]},
+ fete:{icon:'🎂',label:'La fête',bg:'images/scenes/fete.jpg',hint:'👆 Touche une image !',items:[
+  {e:'🎂',x:30,y:65,t:'Le gâteau !',a:'audio/scenes/gateau.mp3'},
+  {e:'🕯️',x:30,y:45,t:'Les bougies !',a:'audio/scenes/bougies.mp3'},
+  {e:'🎈',x:12,y:25,t:'Le ballon !',a:'audio/scenes/ballon.mp3'},
+  {e:'🎁',x:55,y:75,t:'Le cadeau !',a:'audio/scenes/cadeau.mp3'},
+  {e:'🎩',x:70,y:40,t:'Le chapeau !',a:'audio/scenes/chapeau.mp3'},
+  {e:'🧃',x:82,y:65,t:'Le jus !',a:'audio/scenes/jus.mp3'},
+  {e:'🎵',x:88,y:20,t:'La musique !',a:'audio/scenes/musique.mp3'},
+  {e:'🎉',x:50,y:20,t:'Les confettis !',a:'audio/scenes/confettis.mp3'}]},
+ noel:{icon:'🎄',label:'Noël',bg:'images/scenes/noel.jpg',hint:'👆 Touche une image !',items:[
+  {e:'🎄',x:20,y:50,t:'Le sapin !',a:'audio/scenes/sapin.mp3'},
+  {e:'🎁',x:35,y:78,t:'Le cadeau !',a:'audio/scenes/cadeau.mp3'},
+  {e:'🔔',x:50,y:30,t:'La cloche !',a:'audio/scenes/cloche.mp3'},
+  {e:'⭐',x:20,y:15,t:'L’étoile !',a:'audio/scenes/etoile.mp3'},
+  {e:'⛄',x:65,y:65,t:'Le bonhomme de neige !',a:'audio/scenes/bonhomme.mp3'},
+  {e:'🛷',x:82,y:55,t:'Le traîneau !',a:'audio/scenes/traineau.mp3'},
+  {e:'🦌',x:88,y:35,t:'Le renne !',a:'audio/scenes/renne.mp3'},
+  {e:'🍪',x:55,y:80,t:'Le biscuit !',a:'audio/scenes/biscuit.mp3'}]},
+ halloween:{icon:'🎃',label:'Halloween',bg:'images/scenes/halloween.jpg',hint:'👆 Touche une image !',items:[
+  {e:'🎃',x:20,y:72,t:'La citrouille !',a:'audio/scenes/citrouille.mp3'},
+  {e:'👻',x:40,y:35,t:'Le fantôme !',a:'audio/scenes/fantome.mp3'},
+  {e:'🍬',x:58,y:68,t:'Les bonbons !',a:'audio/scenes/bonbons.mp3'},
+  {e:'🦉',x:80,y:25,t:'C’est le hibou !',a:'audio/bebe-animaux/page-11.mp3'},
+  {e:'🌙',x:12,y:12,t:'La lune !',a:'audio/scenes/lune.mp3'},
+  {e:'🕷️',x:88,y:45,t:'L’araignée !',a:'audio/scenes/araignee.mp3'},
+  {e:'🐈',x:68,y:78,t:'C’est le chat !',a:'audio/bebe-animaux/page-03.mp3'},
+  {e:'🦇',x:50,y:15,t:'La chauve-souris !',a:'audio/scenes/chauvesouris.mp3'}]},
+ plage:{icon:'🏖️',label:'La plage',bg:'images/scenes/plage.jpg',hint:'👆 Touche une image !',items:[
+  {e:'🏖️',x:15,y:80,t:'Le sable !',a:'audio/scenes/sable.mp3'},
+  {e:'🐚',x:32,y:85,t:'Le coquillage !',a:'audio/scenes/coquillage.mp3'},
+  {e:'🪣',x:48,y:72,t:'Le seau !',a:'audio/scenes/seau.mp3'},
+  {e:'🏰',x:65,y:68,t:'Le château de sable !',a:'audio/scenes/chateau.mp3'},
+  {e:'⛵',x:85,y:30,t:'Le bateau !',a:'audio/scenes/bateau.mp3'},
+  {e:'🦀',x:78,y:82,t:'Le crabe !',a:'audio/scenes/crabe.mp3'},
+  {e:'☀️',x:10,y:12,t:'Le soleil !',a:'audio/scenes/soleil.mp3'},
+  {e:'🍦',x:88,y:60,t:'La crème glacée !',a:'audio/scenes/cremeglace.mp3'}]},
+ fruits:{icon:'🍓',label:'Les fruits',bg:'images/scenes/fruits.jpg',hint:'👆 Touche un fruit !',items:[
+  {e:'🍎',x:15,y:55,t:'La pomme !',a:'audio/scenes/pomme.mp3'},
+  {e:'🍌',x:28,y:45,t:'La banane !',a:'audio/scenes/banane.mp3'},
+  {e:'🍓',x:40,y:65,t:'La fraise !',a:'audio/scenes/fraise.mp3'},
+  {e:'🍊',x:52,y:50,t:'L’orange !',a:'audio/scenes/orange.mp3'},
+  {e:'🍇',x:64,y:42,t:'Le raisin !',a:'audio/scenes/raisin.mp3'},
+  {e:'🍐',x:75,y:58,t:'La poire !',a:'audio/scenes/poire.mp3'},
+  {e:'🍒',x:86,y:48,t:'Les cerises !',a:'audio/scenes/cerises.mp3'},
+  {e:'🍉',x:50,y:80,t:'Le melon d’eau !',a:'audio/scenes/melon.mp3'}]},
+ legumes:{icon:'🥕',label:'Les légumes',bg:'images/scenes/legumes.jpg',hint:'👆 Touche un légume !',items:[
+  {e:'🥕',x:15,y:60,t:'La carotte !',a:'audio/scenes/carotte.mp3'},
+  {e:'🥦',x:30,y:50,t:'Le brocoli !',a:'audio/scenes/brocoli.mp3'},
+  {e:'🍅',x:45,y:62,t:'La tomate !',a:'audio/scenes/tomate.mp3'},
+  {e:'🌽',x:58,y:45,t:'Le maïs !',a:'audio/scenes/mais.mp3'},
+  {e:'🥔',x:70,y:65,t:'La pomme de terre !',a:'audio/scenes/pommeterre.mp3'},
+  {e:'🥒',x:82,y:55,t:'Le concombre !',a:'audio/scenes/concombre.mp3'},
+  {e:'🥬',x:38,y:80,t:'La laitue !',a:'audio/scenes/laitue.mp3'},
+  {e:'🫛',x:88,y:75,t:'Les petits pois !',a:'audio/scenes/pois.mp3'}]}
 };
-var scCur='ferme', scFound={ferme:{},jardin:{}}, scA=new Audio();
+var scCur='ferme', scFound={}, scA=new Audio();
 function scCount(){var sc=SC_DATA[scCur],n=0;for(var k in scFound[scCur])n++;document.getElementById('sc-count').innerText='⭐ Découverts : '+n+' / '+sc.items.length;}
 function scShow(name){scCur=name;var sc=SC_DATA[name];document.getElementById('sc-bg').src=sc.bg;document.getElementById('sc-bubble').innerText=sc.hint;
- var bf=document.getElementById('sc-btn-ferme'),bj=document.getElementById('sc-btn-jardin');
- bf.className='font-black text-sm sm:text-base px-5 py-2.5 rounded-full shadow transition '+(name==='ferme'?'bg-emerald-600 text-white':'bg-white text-emerald-700 hover:bg-emerald-50');
- bj.className='font-black text-sm sm:text-base px-5 py-2.5 rounded-full shadow transition '+(name==='jardin'?'bg-emerald-600 text-white':'bg-white text-emerald-700 hover:bg-emerald-50');
+ if(!scFound[name])scFound[name]={};
+ var kids=document.getElementById('sc-list').children;
+ for(var j=0;j<kids.length;j++){var on=kids[j].dataset.scene===name;kids[j].className='font-black text-sm px-2 py-2.5 rounded-2xl shadow transition w-full '+(on?'bg-emerald-600 text-white':'bg-white text-emerald-700 border border-emerald-100 hover:bg-emerald-50');}
  var box=document.getElementById('sc-spots');box.innerHTML='';
  sc.items.forEach(function(it,i){var b=document.createElement('button');b.className='sc-spot'+(scFound[name][i]?' found':'');b.style.left=it.x+'%';b.style.top=it.y+'%';b.innerText=it.e;b.setAttribute('aria-label',it.t);b.onclick=function(){scTap(i,b);};box.appendChild(b);});
  scCount();}
@@ -2378,6 +2556,8 @@ function scTap(i,btn){var it=SC_DATA[scCur].items[i];scA.src=it.a;scA.play();var
  else{bub.innerText=it.e+' '+it.t;}
  scCount();}
 function scReset(){scFound[scCur]={};scShow(scCur);}
+function scBuildChooser(){var box=document.getElementById('sc-list');box.innerHTML='';Object.keys(SC_DATA).forEach(function(k){var sc=SC_DATA[k];var b=document.createElement('button');b.dataset.scene=k;b.innerText=sc.icon+' '+sc.label;b.onclick=function(){scShow(k);};box.appendChild(b);});}
+scBuildChooser();
 scShow('ferme');
 
 /* ===== HISTOIRE PERSONNALISÉE ===== */
