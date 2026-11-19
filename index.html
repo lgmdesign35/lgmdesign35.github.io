@@ -339,6 +339,7 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
       <button onclick="switchLearnTab('games')" id="ltab-games" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-slate-600 hover:bg-sky-100 shadow-sm"><span>🎮</span> <span>Jeux</span></button>
       <button onclick="switchLearnTab('certificat')" id="ltab-certificat" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-amber-700 hover:bg-amber-100 shadow-sm"><span>📜</span> <span>Certificat</span></button>
       <button onclick="switchLearnTab('parents')" id="ltab-parents" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-indigo-700 hover:bg-indigo-100 shadow-sm"><span>👨‍👩‍👧</span> <span>Parents</span></button>
+      <button onclick="switchLearnTab('comptines')" id="ltab-comptines" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-rose-600 hover:bg-rose-100 shadow-sm"><span>🎵</span> <span>Comptines</span></button>
     </div>
   </nav>
 
@@ -673,6 +674,33 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
       </div>
       <p class="text-xs font-bold text-slate-500">💡 Astuce : fais une capture d'écran du diplôme pour le garder et le montrer à ta famille!</p>
     </div>
+  </div>
+
+  <!-- Comptines -->
+  <div id="section-comptines" class="learn-section hidden space-y-6">
+    <div class="bg-gradient-to-r from-rose-500 via-pink-500 to-fuchsia-500 rounded-3xl p-6 sm:p-8 text-white shadow-xl space-y-2">
+      <h3 class="brand-font text-2xl sm:text-3xl font-black">🎵 Comptines en musique</h3>
+      <p class="text-rose-50 font-semibold text-sm sm:text-base">Les grandes comptines traditionnelles en version boîte à musique — douces pour les petites oreilles, parfaites pour danser, jouer ou s’endormir. 🎶</p>
+    </div>
+    <div class="bg-white rounded-3xl shadow-lg border border-rose-100 p-5 space-y-3">
+      <div class="text-center">
+        <div id="cp-title" class="brand-font font-black text-lg sm:text-xl text-slate-700">Choisis une comptine 🎵</div>
+        <div class="text-xs font-bold text-slate-400">Boîte à musique · mélodies traditionnelles</div>
+      </div>
+      <div class="flex items-center justify-center gap-4">
+        <button onclick="cpStep(-1)" class="w-11 h-11 rounded-full bg-rose-100 hover:bg-rose-200 text-rose-600 text-lg font-black shadow-sm" aria-label="Précédente">⏮️</button>
+        <button onclick="cpToggle()" class="w-16 h-16 rounded-full bg-rose-500 hover:bg-rose-600 text-white text-3xl shadow-lg" aria-label="Lecture ou pause"><span id="cp-play-ico">▶️</span></button>
+        <button onclick="cpStep(1)" class="w-11 h-11 rounded-full bg-rose-100 hover:bg-rose-200 text-rose-600 text-lg font-black shadow-sm" aria-label="Suivante">⏭️</button>
+      </div>
+      <div class="flex items-center gap-2 text-xs font-black text-slate-400">
+        <span id="cp-cur">0:00</span>
+        <input id="cp-range" type="range" min="0" max="100" value="0" class="flex-1 accent-rose-500">
+        <span id="cp-dur">0:00</span>
+      </div>
+    </div>
+    <div id="cp-list" class="space-y-2.5"></div>
+    <p class="text-xs text-slate-400 font-semibold text-center">🎵 Mélodies traditionnelles du domaine public, interprétées à la boîte à musique pour Adam et ses amis.</p>
+    <audio id="cp-audio" preload="metadata"></audio>
   </div>
 
   <!-- Parents -->
@@ -2145,6 +2173,7 @@ function lapinGo(dest){
   else if(dest==='jouer'){switchSiteTab('apprendre');if(typeof switchLearnTab==='function')switchLearnTab('games');}
   else if(dest==='parents'){switchSiteTab('apprendre');if(typeof switchLearnTab==='function')switchLearnTab('parents');}
   else if(dest==='atelier'){switchSiteTab('atelier');}
+  else if(dest==='comptines'){switchSiteTab('apprendre');if(typeof switchLearnTab==='function')switchLearnTab('comptines');}
   else if(dest==='catalogue'){switchSiteTab('livres');}
   else if(dest==='semaine'){switchSiteTab('accueil');setTimeout(function(){var el=document.getElementById('spotlight-lundi');if(el)el.scrollIntoView({behavior:'smooth',block:'center'});},80);}
 }
@@ -2155,6 +2184,7 @@ var LM_QA=[
  {k:['dessin','galerie','artiste','envoyer','publier le dessin','oeuvre'],a:'🎨 Pour voir le dessin de ton enfant dans le Coin des artistes : remplis le formulaire avec la photo de son dessin — il est publié automatiquement sur le site !<br><a href="coin-des-artistes.html" style="color:#0284c7;font-weight:900">Ouvrir le Coin des artistes →</a>'},
  {k:['gratuit','gratuite','gratuits','lire','lecture','histoire'],a:'📚 Nos livres gratuits, à lire ET à écouter : « Les couleurs de Bébé Adam », « Les animaux et leurs sons », « Bonne nuit, Bébé Adam », « Le premier Noël de Bébé Adam », « L’étoile de Noël » et « La citrouille courageuse ».<br><button onclick="lapinGo(\'histoire\')">Voir les livres gratuits</button>'},
  {k:['acheter','achat','prix','combien','coute','etsy','amazon','commander','payer','broche','papier','boutique'],a:'🛒 Nos livres payants sont en PDF sur Etsy (de 1,12 $ à 3,00 $ CA) : les aventures d’Adam, Halloween, Le jardin de la coopération et les coloriages. « Adam apprend à écouter » existe aussi en livre broché sur Amazon.ca.<br><button onclick="lapinGo(\'catalogue\')">Voir le catalogue</button>'},
+ {k:['chanson','comptine','musique','berceuse','chanter'],a:'🎵 Nos comptines traditionnelles en boîte à musique : Frère Jacques, Au clair de la lune, Petit escargot… douces pour danser ou s’endormir !<br><button onclick="lapinGo(\'comptines\')">Écouter les comptines</button>'},
  {k:['jeu','jeux','jouer','en ligne','online','multijoueur','code','xo','adam-man','adam man','navale','tirs au but','soccer','football'],a:'🎮 Nos jeux en ligne se jouent avec un code à 4 chiffres à partager avec un ami : X O, Cherche Adam !, Bataille navale, Adam-Man et les Tirs au but ! Il y a aussi 10 petits jeux pour apprendre les mots et les nombres.<br><button onclick="lapinGo(\'jouer\')">Aller aux jeux</button>'},
  {k:['semaine','lundi','nouveau','nouveaute','prochain','dernier livre','sortie'],a:function(){var t=lmSpotTitle();return '⭐ Chaque lundi, un nouveau livre Bébé Adam gratuit arrive sur le site !'+(t?' En ce moment : '+t+'.':'')+'<br><button onclick="lapinGo(\'semaine\')">Découvrir le livre de la semaine</button>';}},
  {k:['age','ans','bebe','petit','convient','maternelle','prescolaire','garderie','cpe','pour quel'],a:'👶 Pour les 0 à 3 ans : la série Bébé Adam (couleurs, animaux, bonne nuit…). 🧒 Pour les 4 à 6 ans : les grandes aventures d’Adam et ses amis. Sur la page d’accueil, le bloc « Par où commencer ? » aide à choisir selon l’âge !'},
@@ -2203,7 +2233,7 @@ function lmMic(){
 if(!(window.SpeechRecognition||window.webkitSpeechRecognition)){var mb=document.getElementById('lm-mic');if(mb)mb.style.display='none';}
 var lmGreet=document.querySelector('#lm-log .lm-bot');if(lmGreet)lmAttachSpk(lmGreet);
 (function(){
-  var msgs=["Salut ! Moi, c’est Lapin 🐰",'📖 Un livre gratuit chaque lundi !','🎮 Essaie le jeu Adam-Man !','🎄 Deux livres de Noël gratuits !','🥅 Nouveau : les tirs au but !','💬 Touche-moi et pose-moi une question !'];
+  var msgs=["Salut ! Moi, c’est Lapin 🐰",'📖 Un livre gratuit chaque lundi !','🎮 Essaie le jeu Adam-Man !','🎄 Deux livres de Noël gratuits !','🥅 Nouveau : les tirs au but !','🎵 Nouveau : les comptines en musique !','💬 Touche-moi et pose-moi une question !'];
   var i=0;var b=document.getElementById('helper-bubble');if(!b)return;
   function cycle(){b.style.opacity='1';setTimeout(function(){b.style.opacity='0';},4200);i=(i+1)%msgs.length;b.innerText=msgs[i];}
   b.innerText=msgs[0];setInterval(cycle,6000);setTimeout(function(){b.style.opacity='1';},1200);setTimeout(function(){b.style.opacity='0';},5400);
@@ -2212,6 +2242,32 @@ var lmGreet=document.querySelector('#lm-log .lm-bot');if(lmGreet)lmAttachSpk(lmG
 <div id="helper-follower" aria-hidden="true"><div id="helper-bubble">Salut ! Moi, c'est Lapin 🐰</div><img src="images/mascotte-lapin.png" alt="" onerror="this.parentNode.style.display='none'"></div>
 <script>
 (function(){if(!window.matchMedia||!window.matchMedia('(pointer:fine)').matches)return;var f=document.getElementById('helper-follower');if(!f)return;var x=window.innerWidth/2,y=window.innerHeight/2,tx=x,ty=y,shown=false;function loop(){x+=(tx-x)*0.2;y+=(ty-y)*0.2;f.style.transform='translate('+(x+16)+'px,'+(y+16)+'px)';requestAnimationFrame(loop);}document.addEventListener('mousemove',function(e){tx=e.clientX;ty=e.clientY;if(!shown){shown=true;f.style.opacity='1';}});document.addEventListener('mouseleave',function(){f.style.opacity='0';shown=false;});document.addEventListener('mouseover',function(e){if(e.target.closest('a,button,[onclick],input,select,textarea,label'))f.classList.add('helper-hi');});document.addEventListener('mouseout',function(e){if(e.target.closest('a,button,[onclick],input,select,textarea,label'))f.classList.remove('helper-hi');});requestAnimationFrame(loop);})();
+</script>
+<script>
+var CP_SONGS=[
+ {t:'Frère Jacques',e:'🔔',f:'audio/comptines/frere-jacques.mp3',d:'0:33'},
+ {t:'Au clair de la lune',e:'🌙',f:'audio/comptines/au-clair-de-la-lune.mp3',d:'1:16'},
+ {t:'Ah ! vous dirai-je, maman',e:'⭐',f:'audio/comptines/ah-vous-dirai-je-maman.mp3',d:'0:52'},
+ {t:'Petit escargot',e:'🐌',f:'audio/comptines/petit-escargot.mp3',d:'0:38'},
+ {t:'Frère Jacques en canon',e:'🎶',f:'audio/comptines/frere-jacques-canon.mp3',d:'0:35'}
+];
+var cpI=-1;
+var cpA=document.getElementById('cp-audio');
+function cpFmt(x){x=Math.max(0,Math.floor(x||0));return Math.floor(x/60)+':'+('0'+(x%60)).slice(-2);}
+function cpBuild(){var w=document.getElementById('cp-list');if(!w)return;var h='';CP_SONGS.forEach(function(sg,i){h+='<button onclick="cpPlay('+i+')" id="cp-row-'+i+'" class="w-full flex items-center gap-3 bg-white hover:bg-rose-50 border border-rose-100 rounded-2xl px-4 py-3 shadow-sm text-left transition"><span class="text-2xl">'+sg.e+'</span><span class="flex-1"><span class="block font-black text-slate-700 text-sm sm:text-base">'+sg.t+'</span><span class="block text-xs text-slate-400 font-bold">Boîte à musique · traditionnel</span></span><span class="text-xs font-black text-rose-400">'+sg.d+'</span><span class="cp-eq text-rose-500 font-black"></span></button>';});w.innerHTML=h;}
+function cpMark(){CP_SONGS.forEach(function(_,i){var r=document.getElementById('cp-row-'+i);if(r){r.classList.toggle('ring-2',i===cpI);r.classList.toggle('ring-rose-400',i===cpI);var eq=r.querySelector('.cp-eq');if(eq)eq.innerText=(i===cpI&&cpA&&!cpA.paused)?'🎵':'';}});var ico=document.getElementById('cp-play-ico');if(ico)ico.innerText=(cpA&&!cpA.paused)?'⏸️':'▶️';}
+function cpPlay(i){cpI=i;cpA.src=CP_SONGS[i].f;cpA.play();document.getElementById('cp-title').innerText=CP_SONGS[i].e+' '+CP_SONGS[i].t;cpMark();}
+function cpToggle(){if(cpI<0){cpPlay(0);return;}if(cpA.paused)cpA.play();else cpA.pause();cpMark();}
+function cpStep(d){if(cpI<0){cpPlay(0);return;}var n=cpI+d;if(n<0)n=0;if(n>=CP_SONGS.length)n=CP_SONGS.length-1;cpPlay(n);}
+if(cpA){
+ cpA.addEventListener('timeupdate',function(){var r=document.getElementById('cp-range');if(r&&cpA.duration)r.value=Math.floor(cpA.currentTime/cpA.duration*100);var c=document.getElementById('cp-cur');if(c)c.innerText=cpFmt(cpA.currentTime);});
+ cpA.addEventListener('loadedmetadata',function(){var dEl=document.getElementById('cp-dur');if(dEl)dEl.innerText=cpFmt(cpA.duration);});
+ cpA.addEventListener('play',cpMark);cpA.addEventListener('pause',cpMark);
+ cpA.addEventListener('ended',function(){if(cpI<CP_SONGS.length-1)cpPlay(cpI+1);else cpMark();});
+ var cpRange=document.getElementById('cp-range');
+ if(cpRange)cpRange.addEventListener('input',function(){if(cpA.duration)cpA.currentTime=this.value/100*cpA.duration;});
+ cpBuild();
+}
 </script>
 <!-- CHRISTMAS: neige de Noël — supprimer cette ligne pour revenir au thème normal -->
 <script src="christmas.js" defer></script>
