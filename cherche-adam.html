@@ -1,0 +1,928 @@
+<!doctype html>
+<html lang="fr-CA">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>Cherche Adam ! — jeu de cherche-et-trouve | Adam et ses amis</title>
+<script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<style>
+  :root{
+    --bg:#fff7ea;
+    --surface:#ffffff;
+    --surface-2:#fff1d6;
+    --ink:#3d2c1e;
+    --ink-soft:#7a5c40;
+    --accent:#e2571e;        /* orange vif, chaleureux */
+    --accent-ink:#ffffff;
+    --accent-2:#2e8b57;      /* vert feuille */
+    --accent-3:#f2b21b;      /* jaune soleil */
+    --danger:#c0392b;
+    --line:#f0d9b5;
+    --shadow:0 6px 0 rgba(61,44,30,.14);
+    --radius:22px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#221812;
+      --surface:#33241a;
+      --surface-2:#3d2a1e;
+      --ink:#f7e8d5;
+      --ink-soft:#cfa87f;
+      --line:#553d28;
+      --shadow:0 6px 0 rgba(0,0,0,.35);
+    }
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    font-family:"Baloo 2","Comic Sans MS","Chalkboard SE",ui-rounded,system-ui,-apple-system,"Segoe UI",sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    min-height:100vh;
+    display:flex; flex-direction:column;
+    -webkit-tap-highlight-color:transparent;
+  }
+  button{ font-family:inherit; cursor:pointer; }
+  button, input{ min-height:3rem; }
+
+  /* ---------- En-tête ---------- */
+  header{
+    position:relative;
+    text-align:center;
+    padding:1.1rem 3.6rem .4rem;
+  }
+  header h1{
+    margin:0;
+    font-size:clamp(1.7rem,6vw,2.6rem);
+    font-weight:800;
+    letter-spacing:.01em;
+  }
+  header .subtitle{
+    margin:.25rem 0 0;
+    font-size:clamp(1rem,3.6vw,1.2rem);
+    color:var(--ink-soft);
+    font-weight:600;
+  }
+  #muteBtn{
+    position:absolute; top:.8rem; right:.8rem;
+    width:3rem; height:3rem; min-height:3rem;
+    border-radius:50%;
+    border:3px solid var(--line);
+    background:var(--surface);
+    font-size:1.35rem; line-height:1;
+    box-shadow:var(--shadow);
+  }
+  #muteBtn:active{ transform:translateY(3px); box-shadow:none; }
+
+  main{
+    flex:1; width:100%; max-width:880px; margin:0 auto;
+    padding:.6rem .9rem 1.2rem;
+    display:flex; flex-direction:column;
+  }
+
+  /* ---------- Boutons généraux ---------- */
+  .big-btn{
+    display:block; width:100%;
+    border:none; border-radius:var(--radius);
+    padding:1rem 1.2rem;
+    font-size:clamp(1.25rem,5vw,1.6rem); font-weight:800;
+    background:var(--accent); color:var(--accent-ink);
+    box-shadow:var(--shadow);
+    margin:.55rem 0;
+  }
+  .big-btn:active{ transform:translateY(4px); box-shadow:none; }
+  .big-btn.green{ background:var(--accent-2); }
+  .big-btn.yellow{ background:var(--accent-3); color:#4a3200; }
+  .ghost-btn{
+    border:3px solid var(--line); background:var(--surface); color:var(--ink);
+    border-radius:999px; padding:.55rem 1.2rem;
+    font-size:1.05rem; font-weight:700;
+    box-shadow:var(--shadow);
+  }
+  .ghost-btn:active{ transform:translateY(3px); box-shadow:none; }
+
+  /* ---------- Accueil ---------- */
+  #screen-home{ text-align:center; padding-top:1.2rem; }
+  #screen-home .hero{ font-size:clamp(3.4rem,14vw,5.2rem); line-height:1.15; }
+  #screen-home p.intro{
+    font-size:clamp(1.05rem,4vw,1.25rem); font-weight:600; color:var(--ink-soft);
+    max-width:34rem; margin:.6rem auto 1.4rem;
+  }
+  #screen-home .choices{ max-width:26rem; margin:0 auto; }
+
+  /* ---------- Salon en ligne ---------- */
+  #screen-lobby{ max-width:30rem; margin:0 auto; width:100%; padding-top:.6rem; }
+  #screen-lobby h2{ text-align:center; font-size:1.5rem; margin:.4rem 0 .8rem; }
+  .lobby-card{
+    background:var(--surface); border:3px solid var(--line);
+    border-radius:var(--radius); padding:1rem 1.1rem; margin:.8rem 0;
+  }
+  .lobby-card h3{ margin:.1rem 0 .6rem; font-size:1.2rem; }
+  .code-display{
+    font-size:2.6rem; font-weight:800; letter-spacing:.35em; text-align:center;
+    background:var(--surface-2); border-radius:16px; padding:.5rem .5rem .5rem .85rem;
+    margin:.4rem 0 .7rem;
+  }
+  .join-row{ display:flex; gap:.6rem; }
+  .join-row input{
+    flex:1; min-width:0;
+    font-family:inherit; font-size:1.7rem; font-weight:800; text-align:center;
+    letter-spacing:.3em;
+    border:3px solid var(--line); border-radius:16px;
+    background:var(--surface-2); color:var(--ink);
+    padding:.4rem;
+  }
+  .join-row button{
+    border:none; border-radius:16px; padding:.4rem 1.1rem;
+    background:var(--accent-2); color:#fff; font-size:1.15rem; font-weight:800;
+    box-shadow:var(--shadow);
+  }
+  .join-row button:active{ transform:translateY(3px); box-shadow:none; }
+  #lobbyStatus{
+    text-align:center; font-weight:700; font-size:1.08rem; min-height:1.5em;
+    margin:.8rem 0; color:var(--ink-soft);
+  }
+  #lobbyStatus.error{ color:var(--danger); }
+  .waiting{ text-align:center; font-weight:700; color:var(--ink-soft); }
+  .waiting .dots::after{ content:""; animation:dots 1.2s steps(4) infinite; }
+  @keyframes dots{ 0%{content:""} 25%{content:"."} 50%{content:".."} 75%{content:"..."} }
+  .lobby-back{ text-align:center; margin-top:.6rem; }
+
+  /* ---------- Jeu ---------- */
+  #banner{
+    display:flex; align-items:center; justify-content:center; gap:.6rem; flex-wrap:wrap;
+    background:var(--surface); border:3px solid var(--line);
+    border-radius:var(--radius);
+    padding:.55rem 1rem;
+    font-size:clamp(1.35rem,5.4vw,1.9rem); font-weight:800;
+    box-shadow:var(--shadow);
+    text-align:center;
+  }
+  #banner .target-emoji{
+    font-size:clamp(2.4rem,9vw,3.2rem); line-height:1;
+    background:var(--surface-2); border-radius:16px; padding:.15rem .45rem;
+  }
+  #banner .theme-name{ font-size:.95rem; font-weight:700; color:var(--ink-soft); width:100%; }
+  #scorebar{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.3rem .8rem;
+    padding:.55rem .3rem .2rem;
+    font-size:clamp(1.02rem,4vw,1.2rem); font-weight:800;
+  }
+  #scorebar .vs{ color:var(--ink-soft); font-weight:700; }
+  #scene{
+    position:relative;
+    width:100%;
+    height:clamp(330px,56vh,560px);
+    border-radius:26px;
+    border:4px solid rgba(61,44,30,.16);
+    overflow:hidden;
+    touch-action:manipulation;
+    user-select:none; -webkit-user-select:none;
+  }
+  .item{
+    position:absolute;
+    border:none; background:transparent;
+    padding:0; margin:0;
+    display:flex; align-items:center; justify-content:center;
+    line-height:1;
+    transform:translate(-50%,-50%);
+    min-width:56px; min-height:56px;
+    border-radius:50%;
+  }
+  .item .glyph{ display:block; pointer-events:none; }
+  .item.wrong{ animation:wiggle .45s ease; }
+  @keyframes wiggle{
+    0%,100%{ margin-left:0; } 20%{ margin-left:-7px; } 40%{ margin-left:7px; }
+    60%{ margin-left:-5px; } 80%{ margin-left:5px; }
+  }
+  .item.found .glyph{ animation:pop-big .6s ease; }
+  @keyframes pop-big{ 0%{ transform:scale(1);} 45%{ transform:scale(1.7);} 100%{ transform:scale(1.25);} }
+  .item.hinting{ animation:hintpulse 1s ease-in-out infinite; z-index:5; }
+  @keyframes hintpulse{
+    0%,100%{ filter:drop-shadow(0 0 0 rgba(242,178,27,0)); }
+    50%{ filter:drop-shadow(0 0 14px rgba(242,178,27,.95)) drop-shadow(0 0 4px rgba(242,178,27,.9)); }
+  }
+  .item.hinting .glyph{ animation:hintgrow 1s ease-in-out infinite; }
+  @keyframes hintgrow{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.22);} }
+  #msg{
+    min-height:2.6rem;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center;
+    font-size:clamp(1.1rem,4.4vw,1.35rem); font-weight:800;
+    padding:.35rem .4rem 0;
+  }
+  #msg.kind{ color:var(--accent-2); }
+  .game-actions{
+    display:flex; gap:.7rem; justify-content:center; flex-wrap:wrap;
+    padding-top:.35rem;
+  }
+  .game-actions button{
+    border-radius:999px; padding:.6rem 1.3rem;
+    font-size:1.12rem; font-weight:800;
+    border:3px solid var(--line); background:var(--surface); color:var(--ink);
+    box-shadow:var(--shadow); min-height:3.2rem;
+  }
+  .game-actions button:active{ transform:translateY(3px); box-shadow:none; }
+  #btnHint{ background:var(--accent-3); border-color:#d99a06; color:#4a3200; }
+
+  /* ---------- Superpositions ---------- */
+  .overlay{
+    position:fixed; inset:0; z-index:40;
+    background:rgba(40,24,12,.5);
+    display:flex; align-items:center; justify-content:center;
+    padding:1rem;
+  }
+  .overlay[hidden]{ display:none; }
+  .overlay .card{
+    background:var(--surface); color:var(--ink);
+    border-radius:28px; border:4px solid var(--line);
+    max-width:26rem; width:100%;
+    text-align:center; padding:1.6rem 1.3rem 1.3rem;
+    box-shadow:0 14px 40px rgba(0,0,0,.3);
+  }
+  .overlay .card .big-emoji{ font-size:4rem; line-height:1.1; }
+  .overlay .card p.main-msg{
+    font-size:clamp(1.3rem,5.4vw,1.65rem); font-weight:800; margin:.5rem 0 .3rem;
+  }
+  .overlay .card p.sub-msg{ font-size:1.08rem; font-weight:600; color:var(--ink-soft); margin:.2rem 0 .8rem; }
+  #confettiCanvas{
+    position:fixed; inset:0; z-index:60; pointer-events:none;
+  }
+
+  footer{
+    text-align:center; padding:.9rem 1rem 1.3rem;
+    color:var(--ink-soft); font-weight:600; font-size:.98rem;
+  }
+  [hidden]{ display:none !important; }
+
+  @media (prefers-reduced-motion: reduce){
+    .item.wrong, .item.hinting, .item.hinting .glyph, .item.found .glyph{ animation:none; }
+    .item.hinting{ outline:5px solid var(--accent-3); outline-offset:2px; }
+  }
+</style>
+</head>
+<body>
+<div style="position:sticky;top:0;z-index:50;background:#FFF9F0;border-bottom:1px solid #FDE68A;padding:10px 16px;font-family:sans-serif"><a href="index.html" style="color:#047857;font-weight:700;font-size:14px;text-decoration:none">← Retour aux jeux — Adam et ses amis (lgmdesign35.com)</a></div>
+
+<header>
+  <h1>🔍 Cherche Adam !</h1>
+  <p class="subtitle">Trouve Adam et ses amis cachés dans l'image !</p>
+  <button id="muteBtn" type="button" aria-label="Activer ou couper le son">🔊</button>
+</header>
+
+<main>
+  <!-- ======== ACCUEIL ======== -->
+  <section id="screen-home">
+    <div class="hero" aria-hidden="true">🧑🏽‍🦱 🐰 🦆</div>
+    <p class="intro">Adam et ses amis se sont cachés ! Regarde bien l'image et touche celui qu'on cherche.</p>
+    <div class="choices">
+      <button class="big-btn" id="btnSolo" type="button">👤 Jouer seul</button>
+      <button class="big-btn green" id="btnOnline" type="button">👥 Jouer avec un ami</button>
+    </div>
+  </section>
+
+  <!-- ======== SALON EN LIGNE ======== -->
+  <section id="screen-lobby" hidden>
+    <h2>👥 Jouer avec un ami</h2>
+
+    <div class="lobby-card">
+      <h3>Crée une partie et donne le code à ton ami</h3>
+      <button class="big-btn" id="btnCreate" type="button" style="margin:0;">Créer une partie</button>
+      <div id="createBox" hidden>
+        <div class="code-display" id="codeDisplay">····</div>
+        <button class="big-btn yellow" id="btnCopy" type="button" style="margin:0;">Copier le code</button>
+        <p class="waiting">En attente de ton ami<span class="dots"></span></p>
+      </div>
+    </div>
+
+    <div class="lobby-card">
+      <h3>Ou écris le code de ton ami</h3>
+      <div class="join-row">
+        <input id="joinCode" type="text" inputmode="numeric" autocomplete="off"
+               maxlength="4" placeholder="0000" aria-label="Code de la partie à rejoindre" />
+        <button id="btnJoin" type="button">Rejoindre</button>
+      </div>
+    </div>
+
+    <p id="lobbyStatus" role="status"></p>
+    <div class="lobby-back">
+      <button class="ghost-btn" id="btnLobbyBack" type="button">← Retour à l'accueil</button>
+    </div>
+  </section>
+
+  <!-- ======== JEU ======== -->
+  <section id="screen-game" hidden>
+    <div id="banner">
+      <span>Trouve <span id="targetName">Adam</span> !</span>
+      <span class="target-emoji" id="targetEmoji" aria-hidden="true">🧑🏽‍🦱</span>
+      <span class="theme-name" id="themeName"></span>
+    </div>
+    <div id="scorebar">
+      <span id="scoreSolo">⭐ Étoiles : <span id="stars">0</span></span>
+      <span id="scoreOnline" hidden>
+        Toi ⭐ <span id="myStars">0</span>
+        <span class="vs">— Ton ami ⭐ <span id="friendStars">0</span></span>
+      </span>
+      <span>Manche <span id="roundNum">1</span></span>
+    </div>
+    <div id="scene" aria-label="Image où chercher"></div>
+    <div id="msg" role="status"></div>
+    <div class="game-actions">
+      <button id="btnHint" type="button">💡 Indice</button>
+      <button id="btnQuit" type="button">🏠 Accueil</button>
+    </div>
+  </section>
+</main>
+
+<footer>Cherche Adam ! — un jeu d'Adam et ses amis</footer>
+
+<!-- ======== FIN DE MANCHE ======== -->
+<div class="overlay" id="overlay" hidden>
+  <div class="card">
+    <div class="big-emoji" id="ovEmoji" aria-hidden="true">🎉</div>
+    <p class="main-msg" id="ovText"></p>
+    <p class="sub-msg" id="ovSub"></p>
+    <button class="big-btn" id="btnNext" type="button">Cherche encore !</button>
+  </div>
+</div>
+
+<!-- ======== DÉCONNEXION ======== -->
+<div class="overlay" id="disconnectBox" hidden>
+  <div class="card">
+    <div class="big-emoji" aria-hidden="true">👋</div>
+    <p class="main-msg">Ton ami a quitté la partie</p>
+    <p class="sub-msg">La connexion est terminée. Tu peux retourner à l'accueil pour rejouer.</p>
+    <button class="big-btn" id="btnDisconnectHome" type="button">Retour à l'accueil</button>
+  </div>
+</div>
+
+<canvas id="confettiCanvas" hidden></canvas>
+
+<script>
+"use strict";
+
+/* ============================================================
+   Cherche Adam ! — jeu de cherche-et-trouve pour les 2 à 6 ans
+   Mode solo (hors ligne) + mode en ligne (PeerJS, course amicale)
+   ============================================================ */
+
+/* ---------- Données ---------- */
+var TARGETS = [
+  { name: "Adam",       emoji: "🧑🏽‍🦱", decoys: ["🧒🏽", "👦🏽", "👧🏽", "🧑🏽", "👶🏽", "🧒🏻"] },
+  { name: "Lapin",      emoji: "🐰", decoys: ["🐇", "🐇", "🐭", "🐹", "🐁"] },
+  { name: "Canard",     emoji: "🦆", decoys: ["🐤", "🐦", "🦢", "🐥", "🐣"] },
+  { name: "Renard",     emoji: "🦊", decoys: ["🐺", "🐱", "🐶", "🦝", "🐯"] },
+  { name: "Hibou",      emoji: "🦉", decoys: ["🦅", "🐦", "🦇", "🦜", "🦤"] },
+  { name: "Grenouille", emoji: "🐸", decoys: ["🐢", "🦎", "🐊", "🐍", "🐲"] }
+];
+
+var THEMES = [
+  { key: "jardin", label: "🌻 Le jardin",
+    bg: "linear-gradient(180deg,#bfe8ff 0%,#d8f3c5 55%,#a8dd8e 100%)",
+    pool: ["🌻","🌷","🌼","🌸","🌺","🦋","🐝","🐞","🌿","🍀","🌱","🐌","🍄","🌳","🍎","🍓","🐛","🌹"] },
+  { key: "foret", label: "🌲 La forêt",
+    bg: "linear-gradient(180deg,#cfeeff 0%,#cdeac0 50%,#8fce7e 100%)",
+    pool: ["🌲","🌳","🍄","🦌","🐿️","🦔","🍂","🍁","🌿","🐻","🪵","🍃","🪨","🐜","🌰","🍇"] },
+  { key: "ferme", label: "🐄 La ferme",
+    bg: "linear-gradient(180deg,#bfe8ff 0%,#fdf3b8 55%,#b5e48c 100%)",
+    pool: ["🐄","🐖","🐑","🐓","🐔","🐴","🌾","🚜","🐕","🐈","🥕","🌽","🍎","🐐","🐂","🌻","🥚","🐾"] },
+  { key: "plage", label: "🏖️ La plage",
+    bg: "linear-gradient(180deg,#aee6ff 0%,#d9f6ff 45%,#ffe9a8 100%)",
+    pool: ["🐚","🦀","⭐","🐙","🐠","🐡","🦐","⛱️","🌴","🥥","🍍","🦑","🐳","🐬","🦞","🍉","🪸","🐋"] },
+  { key: "hiver", label: "❄️ L'hiver au Québec",
+    bg: "linear-gradient(180deg,#dceeff 0%,#f4faff 55%,#ffffff 100%)",
+    pool: ["⛄","🎄","❄️","🌲","🦌","🐧","🧣","🧤","⛷️","🏒","🍁","🦫","🐻‍❄️","🛷","☃️","🦉","🐺"] }
+];
+
+/* ---------- État ---------- */
+var mode = "solo";            // "solo" | "online"
+var role = null;              // "host" | "guest"
+var round = 1;
+var stars = 0;                // solo
+var scores = { host: 0, guest: 0 };
+var roundActive = false;
+var currentScene = null;      // {theme, target, items, targetIndex}
+var targetEl = null;
+var hintTimer = null;
+var lastThemeKey = null, lastTargetName = null;
+var claimedLocally = false;   // invité : déjà envoyé "found"
+
+/* Réseau */
+var peer = null, conn = null, roomCode = null, connectedOnce = false;
+
+/* ---------- Éléments ---------- */
+function $(id){ return document.getElementById(id); }
+var sceneEl = $("scene"), msgEl = $("msg");
+
+/* ---------- Son (WebAudio, aucun fichier) ---------- */
+var audioCtx = null, soundOn = true;
+function ac(){
+  if (!audioCtx){
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (AC) audioCtx = new AC();
+  }
+  if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+  return audioCtx;
+}
+function tone(freq, t0, dur, type, vol){
+  var ctx = ac(); if (!ctx || !soundOn) return;
+  var o = ctx.createOscillator(), g = ctx.createGain();
+  o.type = type || "sine"; o.frequency.value = freq;
+  var start = ctx.currentTime + t0;
+  g.gain.setValueAtTime(0.0001, start);
+  g.gain.exponentialRampToValueAtTime(vol || 0.18, start + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, start + dur);
+  o.connect(g); g.connect(ctx.destination);
+  o.start(start); o.stop(start + dur + 0.05);
+}
+function popSound(){ tone(520, 0, 0.12, "triangle", 0.15); }
+function wrongSound(){ tone(210, 0, 0.16, "sine", 0.10); }
+function jingle(){
+  var notes = [523.25, 659.25, 783.99, 1046.50];
+  for (var i = 0; i < notes.length; i++) tone(notes[i], i * 0.13, 0.28, "triangle", 0.2);
+  tone(1318.51, 0.55, 0.4, "triangle", 0.16);
+}
+$("muteBtn").addEventListener("click", function(){
+  soundOn = !soundOn;
+  this.textContent = soundOn ? "🔊" : "🔇";
+  if (soundOn) popSound();
+});
+
+/* ---------- Confettis ---------- */
+var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function confetti(){
+  if (reduceMotion) return;
+  var cv = $("confettiCanvas"), ctx = cv.getContext("2d");
+  cv.width = window.innerWidth; cv.height = window.innerHeight;
+  cv.hidden = false;
+  var colors = ["#e2571e","#2e8b57","#f2b21b","#3a9ad9","#e5639a","#7ac74f"];
+  var parts = [];
+  for (var i = 0; i < 90; i++){
+    parts.push({
+      x: Math.random() * cv.width, y: -20 - Math.random() * cv.height * 0.3,
+      w: 7 + Math.random() * 7, h: 10 + Math.random() * 8,
+      vy: 2.2 + Math.random() * 3, vx: -1.4 + Math.random() * 2.8,
+      rot: Math.random() * Math.PI, vr: -0.12 + Math.random() * 0.24,
+      color: colors[i % colors.length]
+    });
+  }
+  var t0 = performance.now();
+  (function frame(now){
+    var el = now - t0;
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    parts.forEach(function(p){
+      p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.fillStyle = p.color; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    });
+    if (el < 2600) requestAnimationFrame(frame);
+    else { ctx.clearRect(0, 0, cv.width, cv.height); cv.hidden = true; }
+  })(t0);
+}
+
+/* ---------- Génération d'une scène ---------- */
+function randInt(a, b){ return a + Math.floor(Math.random() * (b - a + 1)); }
+function pick(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
+function shuffle(arr){
+  for (var i = arr.length - 1; i > 0; i--){
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+  }
+  return arr;
+}
+
+function genScene(rnd){
+  /* Thème et cible : jamais la même paire deux fois de suite */
+  var theme, target, guard = 0;
+  do {
+    theme = pick(THEMES); target = pick(TARGETS); guard++;
+  } while (guard < 30 && theme.key === lastThemeKey && target.name === lastTargetName);
+  lastThemeKey = theme.key; lastTargetName = target.name;
+
+  var count = Math.min(15 + (rnd - 1) * 3, 40);
+
+  /* Leurres semblables à la cible (~30 %) + décor du thème */
+  var glyphs = [];
+  var nDecoys = Math.max(3, Math.round(count * 0.3));
+  for (var i = 0; i < nDecoys; i++) glyphs.push(pick(target.decoys));
+  while (glyphs.length < count - 1){
+    var g = pick(theme.pool);
+    if (g === target.emoji) continue;
+    glyphs.push(g);
+  }
+  shuffle(glyphs);
+  var targetIndex = randInt(0, count - 1);
+  glyphs.splice(targetIndex, 0, target.emoji);
+
+  /* Positions : grille lâche avec tremblement, en % (identique sur tous les écrans) */
+  var cols = Math.ceil(Math.sqrt(count * 1.35));
+  var rows = Math.ceil(count / cols);
+  var cells = [];
+  for (var c = 0; c < cols * rows; c++) cells.push(c);
+  shuffle(cells);
+  var items = glyphs.map(function(glyph, idx){
+    var cell = cells[idx];
+    var cx = cell % cols, cy = Math.floor(cell / cols);
+    var cw = 100 / cols, ch = 100 / rows;
+    var x = (cx + 0.5) * cw + (Math.random() * 0.56 - 0.28) * cw;
+    var y = (cy + 0.5) * ch + (Math.random() * 0.56 - 0.28) * ch;
+    x = Math.max(4, Math.min(96, x));
+    y = Math.max(6, Math.min(94, y));
+    return { e: glyph, x: Math.round(x * 10) / 10, y: Math.round(y * 10) / 10,
+             s: Math.round((0.82 + Math.random() * 0.5) * 100) / 100,
+             r: randInt(-18, 18) };
+  });
+
+  return { themeKey: theme.key, themeLabel: theme.label, bg: theme.bg,
+           targetName: target.name, targetEmoji: target.emoji,
+           items: items, targetIndex: targetIndex, round: rnd };
+}
+
+/* ---------- Affichage d'une scène ---------- */
+function showScreen(id){
+  ["screen-home", "screen-lobby", "screen-game"].forEach(function(s){
+    $(s).hidden = (s !== id);
+  });
+  window.scrollTo(0, 0);
+}
+
+function renderScene(sc){
+  currentScene = sc;
+  round = sc.round;
+  roundActive = true;
+  claimedLocally = false;
+  targetEl = null;
+
+  $("targetName").textContent = sc.targetName;
+  $("targetEmoji").textContent = sc.targetEmoji;
+  $("themeName").textContent = sc.themeLabel;
+  $("roundNum").textContent = sc.round;
+  msgEl.textContent = "";
+  msgEl.className = "";
+  $("overlay").hidden = true;
+
+  sceneEl.style.background = sc.bg;
+  sceneEl.innerHTML = "";
+
+  var w = sceneEl.clientWidth || 600;
+  var cols = Math.ceil(Math.sqrt(sc.items.length * 1.35));
+  var base = Math.max(40, (w / cols) * 0.68);
+
+  sc.items.forEach(function(it, idx){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "item";
+    b.style.left = it.x + "%";
+    b.style.top = it.y + "%";
+    var size = Math.max(56, base * it.s * 1.18);
+    b.style.width = size + "px";
+    b.style.height = size + "px";
+    b.setAttribute("aria-label", "Élément de l'image");
+    var sp = document.createElement("span");
+    sp.className = "glyph";
+    sp.textContent = it.e;
+    sp.style.fontSize = Math.max(38, base * it.s) + "px";
+    sp.style.transform = "rotate(" + it.r + "deg)";
+    b.appendChild(sp);
+    b.addEventListener("click", function(){ onItemTap(idx, b); });
+    sceneEl.appendChild(b);
+    if (idx === sc.targetIndex) targetEl = b;
+  });
+
+  updateScores();
+  startHintTimer();
+}
+
+function updateScores(){
+  if (mode === "solo"){
+    $("scoreSolo").hidden = false;
+    $("scoreOnline").hidden = true;
+    $("stars").textContent = stars;
+  } else {
+    $("scoreSolo").hidden = true;
+    $("scoreOnline").hidden = false;
+    var mine = (role === "host") ? scores.host : scores.guest;
+    var his  = (role === "host") ? scores.guest : scores.host;
+    $("myStars").textContent = mine;
+    $("friendStars").textContent = his;
+  }
+}
+
+/* ---------- Indice ---------- */
+function clearHintTimer(){ if (hintTimer){ clearTimeout(hintTimer); hintTimer = null; } }
+function startHintTimer(){
+  clearHintTimer();
+  hintTimer = setTimeout(activateHint, 20000);
+}
+function activateHint(){
+  if (targetEl && roundActive) targetEl.classList.add("hinting");
+}
+$("btnHint").addEventListener("click", function(){ popSound(); activateHint(); });
+
+/* ---------- Toucher un élément ---------- */
+function onItemTap(idx, el){
+  if (!roundActive) return;
+  if (idx === currentScene.targetIndex){
+    onFound(el);
+  } else {
+    wrongSound();
+    el.classList.remove("wrong");
+    void el.offsetWidth; /* relance l'animation */
+    el.classList.add("wrong");
+    msgEl.textContent = "Ce n'est pas lui… essaie encore !";
+    msgEl.className = "";
+  }
+}
+
+function onFound(el){
+  popSound();
+  if (mode === "solo"){
+    roundActive = false;
+    clearHintTimer();
+    stars++;
+    updateScores();
+    finishRoundVisual(el);
+    jingle(); confetti();
+    $("ovEmoji").textContent = currentScene.targetEmoji;
+    $("ovText").textContent = "Bravo ! Tu as trouvé " + currentScene.targetName + " ! 🎉";
+    $("ovSub").textContent = "Tu as maintenant " + stars + (stars > 1 ? " étoiles" : " étoile") + " ⭐";
+    $("btnNext").textContent = "Cherche encore !";
+    $("overlay").hidden = false;
+  } else if (role === "host"){
+    if (!roundActive) return;
+    endOnlineRound("host");
+  } else {
+    /* Invité : on réclame la victoire, l'hôte tranche */
+    if (claimedLocally) return;
+    claimedLocally = true;
+    msgEl.textContent = "Tu l'as trouvé ! On vérifie…";
+    msgEl.className = "kind";
+    send({ type: "found" });
+  }
+}
+
+function finishRoundVisual(el){
+  if (el){
+    el.classList.remove("hinting");
+    el.classList.add("found");
+  }
+  if (targetEl) targetEl.classList.remove("hinting");
+}
+
+/* ---------- Fin de manche en ligne ---------- */
+function endOnlineRound(winner){
+  /* Appelé par l'hôte seulement (il tranche et diffuse) */
+  if (!roundActive) return;
+  roundActive = false;
+  clearHintTimer();
+  scores[winner]++;
+  send({ type: "roundEnd", winner: winner, scores: scores });
+  showRoundEnd(winner);
+}
+
+function showRoundEnd(winner){
+  finishRoundVisual(targetEl);
+  jingle(); confetti();
+  var iWon = (winner === role);
+  $("ovEmoji").textContent = iWon ? "🏆" : currentScene.targetEmoji;
+  if (iWon){
+    $("ovText").textContent = "Bravo ! Tu as été le plus rapide ! 🎉";
+  } else {
+    $("ovText").textContent = "Ton ami a trouvé " + currentScene.targetName + " en premier !";
+  }
+  $("ovSub").textContent = iWon
+    ? "La prochaine manche commence quand tu veux."
+    : "La prochaine manche est pour toi !";
+  $("btnNext").textContent = "Manche suivante";
+  $("overlay").hidden = false;
+  updateScores();
+}
+
+/* ---------- Bouton suivant ---------- */
+$("btnNext").addEventListener("click", function(){
+  popSound();
+  $("overlay").hidden = true;
+  if (mode === "solo"){
+    renderScene(genScene(round + 1));
+  } else if (role === "host"){
+    hostNewScene();
+  } else {
+    msgEl.textContent = "On demande la manche suivante à ton ami…";
+    send({ type: "next" });
+  }
+});
+
+function hostNewScene(){
+  var sc = genScene(round + 1);
+  send({ type: "scene", scene: sc });
+  renderScene(sc);
+}
+
+/* ---------- Navigation ---------- */
+$("btnSolo").addEventListener("click", function(){
+  popSound();
+  mode = "solo"; role = null;
+  stars = 0; round = 1;
+  lastThemeKey = null; lastTargetName = null;
+  showScreen("screen-game");
+  renderScene(genScene(1));
+});
+
+$("btnQuit").addEventListener("click", function(){
+  popSound();
+  leaveOnline();
+  roundActive = false;
+  clearHintTimer();
+  $("overlay").hidden = true;
+  $("disconnectBox").hidden = true;
+  showScreen("screen-home");
+});
+
+/* ============================================================
+   MODE EN LIGNE — PeerJS (même système que le jeu X O)
+   ============================================================ */
+function peerAvailable(){ return typeof window.Peer !== "undefined"; }
+
+function lobbyStatus(text, isError){
+  var el = $("lobbyStatus");
+  el.textContent = text || "";
+  el.className = isError ? "error" : "";
+}
+
+$("btnOnline").addEventListener("click", function(){
+  popSound();
+  if (!peerAvailable()){
+    showScreen("screen-lobby");
+    lobbyStatus("La connexion en ligne n'est pas disponible pour le moment. Réessaie dans quelques instants.", true);
+    return;
+  }
+  mode = "online";
+  showScreen("screen-lobby");
+  lobbyStatus("");
+});
+
+$("btnLobbyBack").addEventListener("click", function(){
+  popSound();
+  leaveOnline();
+  showScreen("screen-home");
+});
+
+function send(obj){
+  if (conn && conn.open){ try { conn.send(obj); } catch (e) {} }
+}
+
+function wireConnection(c){
+  conn = c;
+  c.on("open", function(){
+    connectedOnce = true;
+    if (role === "guest"){
+      lobbyStatus("Connecté ! La partie va commencer…");
+    }
+    if (role === "host"){
+      lobbyStatus("Connecté !");
+      scores = { host: 0, guest: 0 };
+      round = 1;
+      showScreen("screen-game");
+      hostNewScene();
+    }
+  });
+  c.on("data", function(data){
+    if (!data || !data.type) return;
+    if (data.type === "scene" && role === "guest"){
+      showScreen("screen-game");
+      renderScene(data.scene);
+    }
+    if (data.type === "found" && role === "host"){
+      endOnlineRound("guest");
+    }
+    if (data.type === "roundEnd" && role === "guest"){
+      if (!roundActive && !claimedLocally) return;
+      roundActive = false;
+      clearHintTimer();
+      scores = data.scores;
+      showRoundEnd(data.winner);
+    }
+    if (data.type === "next" && role === "host"){
+      if (!roundActive) hostNewScene();
+    }
+  });
+  c.on("close", function(){ onDisconnected(); });
+  c.on("error", function(){ onDisconnected(); });
+}
+
+function onDisconnected(){
+  if (mode !== "online" || !connectedOnce) return;
+  connectedOnce = false;
+  roundActive = false;
+  clearHintTimer();
+  $("overlay").hidden = true;
+  $("disconnectBox").hidden = false;
+}
+
+$("btnDisconnectHome").addEventListener("click", function(){
+  popSound();
+  leaveOnline();
+  $("disconnectBox").hidden = true;
+  showScreen("screen-home");
+});
+
+function leaveOnline(){
+  connectedOnce = false;
+  try { if (conn) conn.close(); } catch (e) {}
+  try { if (peer) peer.destroy(); } catch (e) {}
+  conn = null; peer = null; role = null; roomCode = null;
+  $("createBox").hidden = true;
+  $("btnCreate").hidden = false;
+  lobbyStatus("");
+}
+
+/* --- Hôte : créer une partie --- */
+$("btnCreate").addEventListener("click", function(){
+  popSound();
+  if (!peerAvailable()){
+    lobbyStatus("La connexion en ligne n'est pas disponible pour le moment.", true);
+    return;
+  }
+  leaveOnlineSoft();
+  role = "host";
+  roomCode = String(randInt(1000, 9999));
+  lobbyStatus("Création de la partie…");
+  peer = new Peer("lgm-cherche-" + roomCode);
+  peer.on("open", function(){
+    $("btnCreate").hidden = true;
+    $("createBox").hidden = false;
+    $("codeDisplay").textContent = roomCode;
+    lobbyStatus("");
+  });
+  peer.on("connection", function(c){ wireConnection(c); });
+  peer.on("error", function(err){
+    if (err && err.type === "unavailable-id"){
+      /* Code déjà pris : on réessaie avec un autre */
+      $("btnCreate").click();
+    } else {
+      lobbyStatus("Petit souci de connexion… réessaie.", true);
+    }
+  });
+  peer.on("disconnected", function(){ onDisconnected(); });
+});
+
+function leaveOnlineSoft(){
+  try { if (conn) conn.close(); } catch (e) {}
+  try { if (peer) peer.destroy(); } catch (e) {}
+  conn = null; peer = null; connectedOnce = false;
+}
+
+$("btnCopy").addEventListener("click", function(){
+  var btn = this;
+  function done(){
+    btn.textContent = "Copié ! ✅";
+    setTimeout(function(){ btn.textContent = "Copier le code"; }, 1800);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(roomCode).then(done, done);
+  } else { done(); }
+});
+
+/* --- Invité : rejoindre --- */
+$("btnJoin").addEventListener("click", function(){
+  popSound();
+  if (!peerAvailable()){
+    lobbyStatus("La connexion en ligne n'est pas disponible pour le moment.", true);
+    return;
+  }
+  var code = $("joinCode").value.replace(/\D/g, "");
+  if (code.length !== 4){
+    lobbyStatus("Écris le code à 4 chiffres de ton ami.", true);
+    return;
+  }
+  leaveOnlineSoft();
+  role = "guest";
+  roomCode = code;
+  lobbyStatus("Connexion en cours…");
+  peer = new Peer();
+  peer.on("open", function(){
+    var c = peer.connect("lgm-cherche-" + code, { reliable: true });
+    wireConnection(c);
+  });
+  peer.on("error", function(err){
+    if (err && err.type === "peer-unavailable"){
+      lobbyStatus("Ce code n'existe pas — vérifie-le et réessaie.", true);
+    } else {
+      lobbyStatus("Petit souci de connexion… réessaie.", true);
+    }
+  });
+  peer.on("disconnected", function(){ onDisconnected(); });
+});
+
+$("joinCode").addEventListener("keydown", function(e){
+  if (e.key === "Enter") $("btnJoin").click();
+});
+$("joinCode").addEventListener("input", function(){
+  this.value = this.value.replace(/\D/g, "").slice(0, 4);
+});
+</script>
+</body>
+</html>
