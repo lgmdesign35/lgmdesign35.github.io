@@ -39,17 +39,17 @@ h1,h2,h3,.brand-font{font-family:'Fredoka',sans-serif}
   <h1 class="brand-font text-3xl sm:text-4xl font-black text-sky-700">🎉 Merci pour votre commande !</h1>
 
   <div class="bg-emerald-50 border-2 border-emerald-300 rounded-3xl p-6 space-y-3">
-    <h2 class="brand-font text-xl font-bold text-emerald-700">✅ Paiement confirmé — merci !</h2>
-    <p class="text-sm text-slate-700">Votre paiement PayPal a bien été reçu. Vos livres PDF sont en préparation.</p>
+    <h2 class="brand-font text-xl font-bold text-emerald-700">✅ Merci de votre confiance !</h2>
+    <p class="text-sm text-slate-700">Nos livres s'achètent sur notre boutique Etsy (livres PDF) ou sur Amazon.ca (livres papier) — merci de soutenir nos histoires !</p>
     <div id="order-summary" class="text-sm space-y-1"></div>
     <p id="order-email" class="text-sm text-slate-700"></p>
   </div>
 
   <div class="bg-white border border-slate-200 rounded-3xl p-6 space-y-3">
     <h2 class="brand-font text-lg font-bold text-slate-800">📬 Comment recevrez-vous vos livres ?</h2>
-    <p class="text-sm text-slate-700">Vos livres PDF seront <strong>envoyés par courriel dans les 24 heures</strong>, à l'adresse courriel de votre compte PayPal indiquée ci-dessus. Pensez à vérifier votre dossier de <strong>courriels indésirables</strong> si vous ne voyez rien arriver.</p>
-    <p class="text-sm text-slate-700">Pour protéger vos livres, les PDF ne sont pas téléchargeables directement depuis cette page : ils vous sont envoyés personnellement par courriel, à lire sur tablette ou à imprimer à la maison.</p>
-    <p class="text-sm text-slate-700">Une question sur votre commande ? Écrivez-nous via le <a href="contact.html" class="font-bold text-sky-600 underline">formulaire de contact</a> — indiquez votre numéro de commande.</p>
+    <p class="text-sm text-slate-700">📥 <strong>Livres PDF (Etsy)</strong> : votre lien de téléchargement est disponible immédiatement après l'achat, dans votre compte Etsy (section « Achats et avis ») et dans le courriel de confirmation d'Etsy.</p>
+    <p class="text-sm text-slate-700">📦 <strong>Livres papier (Amazon.ca)</strong> : le livre est imprimé et expédié par Amazon, directement chez vous.</p>
+    <p class="text-sm text-slate-700">Une question sur votre commande ? Écrivez-nous via le <a href="contact.html" class="font-bold text-sky-600 underline">formulaire de contact</a> — indiquez votre numéro de commande Etsy ou Amazon.</p>
   </div>
 
   <div class="flex flex-wrap gap-3">
@@ -80,9 +80,9 @@ document.addEventListener('DOMContentLoaded', function(){
       '<p><strong>Vos livres :</strong></p><ul class="list-disc pl-5">' +
       order.items.map(function(it){ return '<li>' + esc(it.title) + ' — ' + it.qty + ' × ' + fmt(it.price) + '</li>'; }).join('') +
       '</ul><p><strong>Total payé :</strong> ' + fmt(order.total) + '</p>';
-    emailEl.innerHTML = '📧 Vos PDF seront envoyés à <strong>' + esc(order.payerEmail || '') + '</strong> dans les 24 heures.';
+    emailEl.innerHTML = '📧 Merci ! Retrouvez vos liens de téléchargement dans votre compte Etsy, section « Achats et avis ».';
   } else {
-    summary.innerHTML = '<p>Si vous venez de terminer un paiement PayPal, votre commande est bien reçue. Vous recevrez vos PDF par courriel dans les 24 heures.</p>';
+    summary.innerHTML = '<p>Si vous venez d'acheter un livre, merci ! Les PDF se téléchargent depuis votre compte Etsy (section « Achats et avis ») ; les livres papier commandés sur Amazon.ca arrivent par la poste.</p>';
     emailEl.innerHTML = 'Si vous ne recevez rien après 24 heures, écrivez-nous via le <a href="contact.html" class="font-bold text-sky-600 underline">formulaire de contact</a>.';
   }
 });
