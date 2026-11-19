@@ -59,6 +59,35 @@
         color: var(--ink-soft); max-width: 560px; margin: 6px auto 26px; line-height: 1.45;
       }
       .menu-buttons{ display:flex; flex-direction:column; gap:14px; align-items:center; }
+
+      /* ---------- Choix du niveau ---------- */
+      .level-pick{ max-width: 580px; margin: 0 auto 24px; }
+      .level-title{ font-weight: 800; font-size: 1.08rem; color: var(--ink-soft); margin: 0 0 10px; }
+      .level-cards{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+      .level-card{
+        font-family: inherit; cursor: pointer; flex: 1 1 150px; max-width: 184px;
+        background: #fff; border: 3px solid #bfe3ff; border-radius: 18px;
+        padding: 12px 10px 11px; text-align: center; color: var(--ink);
+        box-shadow: 0 4px 10px rgba(11,59,94,.10);
+        transition: border-color .15s ease, background .15s ease, box-shadow .15s ease, transform .06s ease;
+        touch-action: manipulation;
+      }
+      .level-card:active{ transform: translateY(2px); }
+      .level-card:focus-visible{ outline: 4px solid var(--sun); outline-offset: 2px; }
+      .level-card .lvl-emoji{ font-size: 32px; line-height: 1.15; display:block; }
+      .level-card .lvl-name{ font-weight: 900; font-size: 1.02rem; display:block; margin-top: 3px; }
+      .level-card .lvl-desc{ font-size: .82rem; font-weight: 700; color: var(--ink-soft); display:block; margin-top: 2px; line-height: 1.3; }
+      .level-card.selected{
+        border-color: var(--red); background: #fff4f4;
+        box-shadow: 0 6px 16px rgba(198,40,40,.20);
+      }
+      .level-card.selected .lvl-name{ color: var(--red-dark); }
+      .hud-level{
+        font-size: .92rem; font-weight: 800; color: var(--ink);
+        background: #eaf6ff; border-radius: 999px; padding: 4px 12px; white-space: nowrap;
+      }
+      .level-line{ text-align:center; font-weight:800; color: var(--ink-soft); font-size:.95rem; margin-bottom: 4px; }
+      .lobby-level{ font-weight:800; color: var(--ink-soft); margin: 0 0 14px; font-size: 1.02rem; }
       .howto{
         margin: 26px auto 0; max-width: 520px; font-size: 1.02rem; color: var(--ink-soft);
         background: rgba(255,255,255,.65); border-radius: 18px; padding: 12px 16px; line-height:1.45;
@@ -158,6 +187,26 @@
         <div class="hero-emoji" aria-hidden="true">🦸🏽‍♂️</div>
         <h1>Adam-Man : <span class="man">La chasse aux étoiles !</span></h1>
         <p class="story">Le vent a emporté les étoiles et les ballons des amis ! Aide Adam-Man à les rattraper !</p>
+        <div class="level-pick">
+          <p class="level-title">Choisis ton niveau :</p>
+          <div class="level-cards" role="group" aria-label="Choix du niveau de difficulté">
+            <button class="level-card" type="button" data-level="1" aria-pressed="false">
+              <span class="lvl-emoji" aria-hidden="true">🌱</span>
+              <span class="lvl-name">Niveau 1 · Ciel doux</span>
+              <span class="lvl-desc">Vol lent, peu de nuages, plein de trésors</span>
+            </button>
+            <button class="level-card selected" type="button" data-level="2" aria-pressed="true">
+              <span class="lvl-emoji" aria-hidden="true">🌤️</span>
+              <span class="lvl-name">Niveau 2 · Ciel animé</span>
+              <span class="lvl-desc">Le vol classique d'Adam-Man</span>
+            </button>
+            <button class="level-card" type="button" data-level="3" aria-pressed="false">
+              <span class="lvl-emoji" aria-hidden="true">🚀</span>
+              <span class="lvl-name">Niveau 3 · Super vol</span>
+              <span class="lvl-desc">Vol rapide, beaucoup de nuages, but : 15 points</span>
+            </button>
+          </div>
+        </div>
         <div class="menu-buttons">
           <button id="btn-solo" class="btn btn-red big" type="button">🎮 Jouer tout seul</button>
           <button id="btn-online" class="btn btn-blue big" type="button">👥 Jouer avec un ami</button>
@@ -168,6 +217,7 @@
       <!-- ============ SALON EN LIGNE ============ -->
       <section id="screen-lobby" class="screen hidden">
         <h2>👥 Jouer avec un ami</h2>
+        <p id="lobby-level" class="lobby-level">Niveau de la partie : 🌤️ Ciel animé</p>
 
         <div class="lobby-card">
           <button id="btn-create" class="btn btn-red big" type="button">Créer une partie</button>
@@ -198,9 +248,11 @@
           <div id="hud-solo">
             <span>⭐ <span id="solo-score">0</span></span>
             <span>🎈 <span id="solo-balloons">0</span></span>
+            <span id="hud-level-solo" class="hud-level">🌤️ Ciel animé</span>
             <span class="goal">Attrape le plus d'étoiles et de ballons possible !</span>
           </div>
           <div id="hud-online" class="hidden">
+            <div class="level-line" id="hud-level-online">🌤️ Ciel animé</div>
             <div class="bar-row">
               <span class="bar-label">Toi</span>
               <div class="bar"><div id="bar-me" class="bar-fill me"></div></div>
@@ -211,7 +263,7 @@
               <div class="bar"><div id="bar-friend" class="bar-fill friend"></div></div>
               <span class="bar-num" id="bar-friend-txt">0/12</span>
             </div>
-            <div class="gold-line">⭐ Premier à 12 points gagne l'étoile d'or !</div>
+            <div class="gold-line" id="gold-line">⭐ Premier à 12 points gagne l'étoile d'or !</div>
           </div>
         </div>
 
@@ -250,7 +302,17 @@
        Adam-Man : La chasse aux étoiles !
        Jeu de vol doux pour les 4-6 ans. Aucun échec possible.
        ================================================================ */
-    var TARGET = 12;
+    /* ---------- Niveaux de difficulté ---------- */
+    var LEVELS = {
+      1: { name: 'Ciel doux',  emoji: '🌱',  speed: 0.75, cloud: 0.5, item: 1.35, target: 12 },
+      2: { name: 'Ciel animé', emoji: '🌤️', speed: 1.0,  cloud: 1.0, item: 1.0,  target: 12 },
+      3: { name: 'Super vol',  emoji: '🚀',  speed: 1.35, cloud: 1.6, item: 0.8,  target: 15 }
+    };
+    var currentLevel = 2;
+    function lvl(){ return LEVELS[currentLevel] || LEVELS[2]; }
+    function target(){ return lvl().target; }
+    function levelLabel(){ var L = lvl(); return L.emoji + ' ' + L.name; }
+
     var PREFIX = 'lgm-adamman-';
     var GROUND_H = 54;
 
@@ -384,12 +446,12 @@
         var isBalloon = rng() < 0.36;
         items.push({ wx: x, frac: 0.08 + rng() * 0.8, type: isBalloon ? 'balloon' : 'star', got: false });
         total += isBalloon ? 2 : 1;
-        x += 235 + rng() * 120;
+        x += (235 + rng() * 120) / lvl().item;
       }
       var cx = 820;
       while(cx < x + 200){
         clouds.push({ wx: cx, frac: 0.12 + rng() * 0.68, hit: false });
-        cx += 430 + rng() * 190;
+        cx += (430 + rng() * 190) / lvl().cloud;
       }
       return { items: items, clouds: clouds, length: x + 420 };
     }
@@ -406,11 +468,11 @@
       while(G.nextItemX < horizon){
         var isBalloon = G.rng() < 0.36;
         G.items.push({ wx: G.nextItemX, frac: 0.08 + G.rng() * 0.8, type: isBalloon ? 'balloon' : 'star', got: false });
-        G.nextItemX += 235 + G.rng() * 120;
+        G.nextItemX += (235 + G.rng() * 120) / lvl().item;
       }
       while(G.nextCloudX < horizon){
         G.cloudsObs.push({ wx: G.nextCloudX, frac: 0.12 + G.rng() * 0.68, hit: false });
-        G.nextCloudX += 430 + G.rng() * 200;
+        G.nextCloudX += (430 + G.rng() * 200) / lvl().cloud;
       }
     }
 
@@ -444,13 +506,44 @@
     function updateHUD(){
       $('solo-score').textContent = G.score;
       $('solo-balloons').textContent = G.balloons;
-      var mp = Math.min(100, G.score / TARGET * 100);
-      var fp = Math.min(100, G.friendScore / TARGET * 100);
+      var T = target();
+      var mp = Math.min(100, G.score / T * 100);
+      var fp = Math.min(100, G.friendScore / T * 100);
       $('bar-me').style.width = mp + '%';
       $('bar-friend').style.width = fp + '%';
-      $('bar-me-txt').textContent = G.score + '/' + TARGET;
-      $('bar-friend-txt').textContent = G.friendScore + '/' + TARGET;
+      $('bar-me-txt').textContent = G.score + '/' + T;
+      $('bar-friend-txt').textContent = G.friendScore + '/' + T;
+      $('gold-line').textContent = '⭐ Premier à ' + T + ' points gagne l\'étoile d\'or !';
+      $('hud-level-solo').textContent = levelLabel();
+      $('hud-level-online').textContent = levelLabel();
     }
+
+    /* ---------- Choix du niveau (accueil) ---------- */
+    function refreshLevelUI(){
+      var cards = document.querySelectorAll('.level-card');
+      for(var i = 0; i < cards.length; i++){
+        var sel = parseInt(cards[i].getAttribute('data-level'), 10) === currentLevel;
+        cards[i].classList.toggle('selected', sel);
+        cards[i].setAttribute('aria-pressed', sel ? 'true' : 'false');
+      }
+      $('lobby-level').textContent = 'Niveau de la partie : ' + levelLabel();
+      updateHUD();
+    }
+    function setLevel(n){
+      currentLevel = LEVELS[n] ? n : 2;
+      refreshLevelUI();
+    }
+    (function(){
+      var cards = document.querySelectorAll('.level-card');
+      for(var i = 0; i < cards.length; i++){
+        (function(card){
+          card.addEventListener('click', function(){
+            this.blur();
+            setLevel(parseInt(card.getAttribute('data-level'), 10));
+          });
+        })(cards[i]);
+      }
+    })();
 
     /* ---------- Démarrage des modes ---------- */
     function startSolo(){
@@ -466,7 +559,9 @@
       resetWorldSolo();
     }
 
-    function startOnlineRound(seed){
+    function startOnlineRound(seed, level){
+      /* L'hôte garde son niveau ; l'invité adopte celui de l'hôte (défaut : niveau 2) */
+      if(level !== undefined && level !== null){ setLevel(level); }
       ac();
       G.mode = 'online';
       $('hud-solo').classList.add('hidden');
@@ -532,7 +627,7 @@
         }
       }
       updateHUD();
-      if(G.mode === 'online' && G.phase === 'playing' && G.score >= TARGET){
+      if(G.mode === 'online' && G.phase === 'playing' && G.score >= target()){
         sendMsg({ type: 'win' });
         winRound('me');
       }
@@ -593,8 +688,8 @@
       if(G.y > b){ G.y = b; G.vy = -Math.abs(G.vy) * 0.22; if(Math.abs(G.vy) < 12) G.vy = 0; }
 
       if(G.slowTimer > 0) G.slowTimer -= dt;
-      var speed = G.slowTimer > 0 ? 46 : 112;
-      G.scrollX += speed * dt;
+      var baseSpeed = G.slowTimer > 0 ? 46 : 112;
+      G.scrollX += baseSpeed * lvl().speed * dt;
 
       if(G.mode === 'solo'){
         if(G.scrollX - G.segStart > 6000){
@@ -886,7 +981,8 @@
     function onData(d){
       if(!d || !d.type) return;
       if(d.type === 'start'){
-        if(!isHost){ startOnlineRound(d.seed); }
+        /* Ancien message sans niveau : on retombe sur le niveau 2 */
+        if(!isHost){ startOnlineRound(d.seed, (d.level === undefined || d.level === null) ? 2 : d.level); }
       }else if(d.type === 'state'){
         if(typeof d.y === 'number') G.friendYFrac = d.y;
         if(typeof d.score === 'number'){ G.friendScore = d.score; updateHUD(); }
@@ -932,7 +1028,7 @@
           $('host-status').textContent = 'Ton ami est là ! La partie commence…';
           var seed = (Math.random() * 1e9) | 0;
           startOnlineRound(seed);
-          setTimeout(function(){ sendMsg({ type: 'start', seed: seed }); }, 200);
+          setTimeout(function(){ sendMsg({ type: 'start', seed: seed, level: currentLevel }); }, 200);
         });
       });
       peer.on('error', function(err){
@@ -1002,9 +1098,10 @@
       if(!isHost) return;
       var seed = (Math.random() * 1e9) | 0;
       startOnlineRound(seed);
-      setTimeout(function(){ sendMsg({ type: 'start', seed: seed }); }, 200);
+      setTimeout(function(){ sendMsg({ type: 'start', seed: seed, level: currentLevel }); }, 200);
     });
 
+    refreshLevelUI();
     resize();
     </script>
   </body>
