@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="fr-CA" dir="ltr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -272,45 +272,45 @@
     <div class="wrap">
       <header>
         <div class="logo"><span class="lx">X</span> <span class="lo">O</span></div>
-        <div class="logo-sub">لعبة إكس أو — العب مع صاحبك من أي مكان</div>
+        <div class="logo-sub">Jeu de X O — joue avec un ami, où que tu sois !</div>
       </header>
 
       <!-- ===== Home ===== -->
       <section id="screen-home" class="screen active">
         <div class="card stack">
-          <button class="big-btn btn-create" id="btn-create" type="button">إنشاء غرفة جديدة</button>
-          <p class="hint" style="margin:0">هنعملك كود من 4 أرقام، ابعته لصاحبك ويلعب معاك من تليفونه أو كمبيوتره.</p>
-          <div class="or-line">أو</div>
+          <button class="big-btn btn-create" id="btn-create" type="button">Créer une partie</button>
+          <p class="hint" style="margin:0">On te donne un code à 4 chiffres : envoie-le à ton ami, et il joue avec toi depuis son téléphone ou son ordinateur.</p>
+          <div class="or-line">ou</div>
           <div class="join-row">
             <input class="code-input" id="join-code" type="text" inputmode="numeric" autocomplete="off"
-                   maxlength="4" placeholder="كود الغرفة" aria-label="كود الغرفة" />
-            <button class="big-btn btn-join" id="btn-join" type="button">انضمام</button>
+                   maxlength="4" placeholder="Code de la partie" aria-label="Code de la partie" />
+            <button class="big-btn btn-join" id="btn-join" type="button">Rejoindre</button>
           </div>
           <div class="error-msg" id="home-error"></div>
-          <div class="or-line">أو</div>
-          <button class="big-btn btn-local" id="btn-local" type="button">لاعبان على نفس الجهاز</button>
+          <div class="or-line">ou</div>
+          <button class="big-btn btn-local" id="btn-local" type="button">2 joueurs, même appareil</button>
         </div>
       </section>
 
       <!-- ===== Waiting (host) ===== -->
       <section id="screen-wait" class="screen">
         <div class="card stack">
-          <p class="wait-title">كود الغرفة بتاعتك</p>
+          <p class="wait-title">Le code de ta partie</p>
           <div class="room-code" id="room-code">----</div>
-          <button class="big-btn btn-join" id="btn-copy" type="button">نسخ الكود</button>
-          <p class="waiting-dots"><span class="pulse-dot"></span>في انتظار انضمام صديقك<span class="dots"></span></p>
-          <p class="hint" style="margin:0">ابعت الكود ده لصاحبك، يفتح اللعبة ويختار «انضمام» ويكتب الكود. إنت هتلعب بـ <b style="color:var(--x-color)">X</b> وهو بـ <b style="color:var(--o-color)">O</b>.</p>
+          <button class="big-btn btn-join" id="btn-copy" type="button">Copier le code</button>
+          <p class="waiting-dots"><span class="pulse-dot"></span>En attente de ton ami…<span class="dots"></span></p>
+          <p class="hint" style="margin:0">Envoie ce code à ton ami : il ouvre le jeu, choisit « Rejoindre » et tape le code. Tu joues les <b style="color:var(--x-color)">X</b> et lui, les <b style="color:var(--o-color)">O</b>.</p>
           <div class="error-msg" id="wait-error"></div>
-          <button class="big-btn btn-ghost" id="btn-wait-back" type="button">إلغاء والعودة</button>
+          <button class="big-btn btn-ghost" id="btn-wait-back" type="button">Annuler et retour</button>
         </div>
       </section>
 
       <!-- ===== Game ===== -->
       <section id="screen-game" class="screen">
         <div class="status-bar">
-          <span class="chip" id="chip-conn"><span class="dot yellow" id="conn-dot"></span><span id="conn-text">في الانتظار</span></span>
-          <span class="chip" id="chip-me">أنت <b id="me-sym" class="sym-x">X</b></span>
-          <span class="chip" id="chip-room" style="display:none">غرفة <span id="room-chip-code"></span></span>
+          <span class="chip" id="chip-conn"><span class="dot yellow" id="conn-dot"></span><span id="conn-text">En attente</span></span>
+          <span class="chip" id="chip-me">Toi <b id="me-sym" class="sym-x">X</b></span>
+          <span class="chip" id="chip-room" style="display:none">Partie <span id="room-chip-code"></span></span>
         </div>
 
         <div class="scoreboard">
@@ -319,7 +319,7 @@
             <div class="s-num" id="score-x">0</div>
           </div>
           <div class="score-box sd">
-            <div class="s-label">تعادل</div>
+            <div class="s-label">Nuls</div>
             <div class="s-num" id="score-d">0</div>
           </div>
           <div class="score-box so">
@@ -330,26 +330,26 @@
 
         <div class="turn-banner" id="turn-banner">…</div>
 
-        <div class="board" id="board" role="grid" aria-label="لوحة اللعب"></div>
+        <div class="board" id="board" role="grid" aria-label="Plateau de jeu"></div>
 
         <div class="game-actions">
-          <button class="big-btn" id="btn-new-round" type="button">جولة جديدة</button>
-          <button class="big-btn btn-ghost" id="btn-home" type="button">العودة للبداية</button>
+          <button class="big-btn" id="btn-new-round" type="button">Nouvelle manche</button>
+          <button class="big-btn btn-ghost" id="btn-home" type="button">Retour à l'accueil</button>
         </div>
 
         <div id="disconnect-box">
           <div class="card">
-            <h3>صاحبك خرج من اللعبة</h3>
-            <p>الاتصال اتقطع. ممكن ترجع للبداية وتعمل غرفة جديدة، أو تستنى صاحبك يرجع يدخل بنفس الكود.</p>
+            <h3>Ton ami a quitté la partie</h3>
+            <p>La connexion est coupée. Tu peux revenir à l'accueil et créer une nouvelle partie, ou attendre que ton ami revienne avec le même code.</p>
             <div class="stack">
-              <button class="big-btn btn-join" id="btn-wait-again" type="button" style="display:none">استنى صاحبك في الغرفة</button>
-              <button class="big-btn btn-create" id="btn-disc-home" type="button">العودة للبداية</button>
+              <button class="big-btn btn-join" id="btn-wait-again" type="button" style="display:none">Attends ton ami dans la partie</button>
+              <button class="big-btn btn-create" id="btn-disc-home" type="button">Retour à l'accueil</button>
             </div>
           </div>
         </div>
       </section>
 
-      <footer>لعبة X O — العب مع صاحبك من أي جهاز</footer>
+      <footer>Jeu de X O — joue avec un ami, depuis n'importe quel appareil</footer>
     </div>
 
     <canvas id="confetti-canvas"></canvas>
@@ -377,7 +377,7 @@
           cell.type = "button";
           cell.className = "cell";
           cell.setAttribute("role", "gridcell");
-          cell.setAttribute("aria-label", "خانة " + (i + 1));
+          cell.setAttribute("aria-label", "Case " + (i + 1));
           (function (idx) {
             cell.addEventListener("click", function () { onCellClick(idx); });
           })(i);
@@ -484,21 +484,21 @@
           var banner = $("turn-banner");
           var html = "";
           if (state.winner === "draw") {
-            html = "تعادل! محدش كسب الجولة دي";
+            html = "Partie nulle ! Personne n'a gagné cette manche.";
           } else if (state.winner) {
             if (mode === "local") {
-              html = "كسب <span class=\"sym-" + state.winner.toLowerCase() + "\">" + state.winner + "</span>! مبروك";
+              html = "Le <span class=\"sym-" + state.winner.toLowerCase() + "\">" + state.winner + "</span> gagne la manche ! Bravo !";
             } else if (state.winner === mySymbol) {
-              html = "كسبت! مبروك عليك";
+              html = "Tu as gagné ! Bravo, champion !";
             } else {
-              html = "صاحبك كسب الجولة دي، الجاية ليك!";
+              html = "Ton ami a gagné cette manche — la prochaine est pour toi !";
             }
           } else if (mode === "local") {
-            html = "دور <span class=\"sym-" + state.turn.toLowerCase() + "\">" + state.turn + "</span>";
+            html = "Au tour de <span class=\"sym-" + state.turn.toLowerCase() + "\">" + state.turn + "</span>";
           } else if (state.turn === mySymbol) {
-            html = "دورك! حط <span class=\"sym-" + mySymbol.toLowerCase() + "\">" + mySymbol + "</span>";
+            html = "À toi de jouer ! Place ton <span class=\"sym-" + mySymbol.toLowerCase() + "\">" + mySymbol + "</span>";
           } else {
-            html = "دور صاحبك، استنى شوية…";
+            html = "Au tour de ton ami, attends un peu…";
           }
           banner.innerHTML = html;
           banner.classList.toggle("celebrate", !!state.winner && state.winner !== "draw");
@@ -515,9 +515,9 @@
           if (mode === "local") {
             $("chip-me").style.display = "none";
             $("chip-room").style.display = "none";
-            setConnStatus("green", "لاعبان هنا");
-            $("label-x").textContent = "لاعب X";
-            $("label-o").textContent = "لاعب O";
+            setConnStatus("green", "2 joueurs sur place");
+            $("label-x").textContent = "Joueur X";
+            $("label-o").textContent = "Joueur O";
           } else {
             $("chip-me").style.display = "";
             var ms = $("me-sym");
@@ -525,8 +525,8 @@
             ms.className = "sym-" + mySymbol.toLowerCase();
             $("chip-room").style.display = "";
             $("room-chip-code").textContent = roomCode;
-            $("label-x").textContent = mode === "host" ? "X (أنت)" : "X (صاحبك)";
-            $("label-o").textContent = mode === "guest" ? "O (أنت)" : "O (صاحبك)";
+            $("label-x").textContent = mode === "host" ? "X (toi)" : "X (ton ami)";
+            $("label-o").textContent = mode === "guest" ? "O (toi)" : "O (ton ami)";
           }
           $("disconnect-box").classList.remove("show");
           showScreen("game");
@@ -609,7 +609,7 @@
           if (mode !== "host" && mode !== "guest") return;
           if (!screens.game.classList.contains("active")) return;
           connAlive = false;
-          setConnStatus("red", "انقطع الاتصال");
+          setConnStatus("red", "Connexion perdue");
           $("btn-wait-again").style.display = mode === "host" ? "" : "none";
           $("disconnect-box").classList.add("show");
         }
@@ -618,7 +618,7 @@
           c.on("open", function () {
             connAlive = true;
             if (joinTimer) { clearTimeout(joinTimer); joinTimer = null; }
-            setConnStatus("green", "متصل");
+            setConnStatus("green", "Connecté");
             if (isHost) {
               hideError($("wait-error"));
               setupGameScreen();
@@ -674,7 +674,7 @@
           peer = new Peer(PREFIX + roomCode);
           peer.on("open", function () {
             $("room-code").textContent = roomCode;
-            setConnStatus("yellow", "في الانتظار");
+            setConnStatus("yellow", "En attente");
             showScreen("wait");
           });
           peer.on("connection", function (c) {
@@ -695,7 +695,7 @@
               try { peer.destroy(); } catch (e) {}
               createHostPeer();
             } else if (err.type === "network" || err.type === "server-error") {
-              showError($("wait-error"), "في مشكلة في الاتصال بالنت، جرب تاني.");
+              showError($("wait-error"), "Problème de connexion Internet, réessaie.");
             }
           });
         }
@@ -710,14 +710,14 @@
           lastWinner = null;
           var btn = $("btn-join");
           btn.disabled = true;
-          btn.textContent = "بيتصل…";
+          btn.textContent = "Connexion en cours…";
           peer = new Peer();
           peer.on("open", function () {
             conn = peer.connect(PREFIX + code, { reliable: true });
             wireConnection(conn, false);
             joinTimer = setTimeout(function () {
               if (!connAlive) {
-                showError($("home-error"), "الكود ده مش موجود، اتأكد منه وجرب تاني.");
+                showError($("home-error"), "Ce code n'existe pas — vérifie-le et réessaie.");
                 resetJoinBtn();
                 cleanupPeer();
                 mode = "home";
@@ -727,7 +727,7 @@
           peer.on("error", function (err) {
             if (err.type === "peer-unavailable") {
               if (joinTimer) { clearTimeout(joinTimer); joinTimer = null; }
-              showError($("home-error"), "الكود ده مش موجود، اتأكد منه وجرب تاني.");
+              showError($("home-error"), "Ce code n'existe pas — vérifie-le et réessaie.");
               resetJoinBtn();
               cleanupPeer();
               mode = "home";
@@ -738,7 +738,7 @@
         function resetJoinBtn() {
           var btn = $("btn-join");
           btn.disabled = false;
-          btn.textContent = "انضمام";
+          btn.textContent = "Rejoindre";
         }
 
         // ---------- Local mode ----------
@@ -748,7 +748,7 @@
           mySymbol = null;
           state = freshState();
           lastWinner = null;
-          setConnStatus("green", "لاعبان هنا");
+          setConnStatus("green", "2 joueurs sur place");
           setupGameScreen();
         }
 
@@ -759,10 +759,10 @@
           if (mode === "local") {
             if (applyMove(idx)) render();
           } else if (mode === "host") {
-            if (state.turn !== "X") { toast("استنى دورك"); return; }
+            if (state.turn !== "X") { toast("Attends ton tour !"); return; }
             if (applyMove(idx)) { render(); sendState(); }
           } else if (mode === "guest") {
-            if (state.turn !== "O") { toast("استنى دورك"); return; }
+            if (state.turn !== "O") { toast("Attends ton tour !"); return; }
             if (conn && conn.open) conn.send({ type: "move", i: idx });
           }
         }
@@ -793,7 +793,7 @@
         $("btn-create").addEventListener("click", function () {
           hideError($("home-error"));
           if (typeof Peer === "undefined") {
-            showError($("home-error"), "مكتبة الاتصال لسه بتحمل أو النت فاصل، جرب تاني بعد ثواني.");
+            showError($("home-error"), "La connexion se prépare ou Internet est coupé — réessaie dans quelques secondes.");
             return;
           }
           startHost();
@@ -803,11 +803,11 @@
           hideError($("home-error"));
           var code = $("join-code").value.replace(/\D/g, "");
           if (code.length !== 4) {
-            showError($("home-error"), "اكتب كود الغرفة: 4 أرقام بالظبط.");
+            showError($("home-error"), "Tape le code de la partie : exactement 4 chiffres.");
             return;
           }
           if (typeof Peer === "undefined") {
-            showError($("home-error"), "مكتبة الاتصال لسه بتحمل أو النت فاصل، جرب تاني بعد ثواني.");
+            showError($("home-error"), "La connexion se prépare ou Internet est coupé — réessaie dans quelques secondes.");
             return;
           }
           startGuest(code);
@@ -829,14 +829,14 @@
         $("btn-wait-again").addEventListener("click", function () {
           // Host keeps the same room code and waits for the guest to rejoin.
           $("disconnect-box").classList.remove("show");
-          setConnStatus("yellow", "في الانتظار");
+          setConnStatus("yellow", "En attente");
           $("room-code").textContent = roomCode;
           showScreen("wait");
         });
 
         $("btn-copy").addEventListener("click", function () {
           var code = roomCode;
-          function done() { toast("اتنسخ الكود: " + code); }
+          function done() { toast("Code copié : " + code); }
           if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(code).then(done, function () { fallbackCopy(code); done(); });
           } else {
