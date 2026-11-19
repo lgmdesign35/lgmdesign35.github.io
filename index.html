@@ -2111,7 +2111,7 @@ function lapinGo(dest){
   else if(dest==='semaine'){switchSiteTab('accueil');setTimeout(function(){var el=document.getElementById('spotlight-lundi');if(el)el.scrollIntoView({behavior:'smooth',block:'center'});},80);}
 }
 (function(){
-  var msgs=['Salut ! Moi, c'est Lapin 🐰','📖 Un livre gratuit chaque lundi !','🎮 Essaie le jeu Adam-Man !','🎄 Deux livres de Noël gratuits !','🥅 Nouveau : les tirs au but !'];
+  var msgs=["Salut ! Moi, c'est Lapin 🐰",'📖 Un livre gratuit chaque lundi !','🎮 Essaie le jeu Adam-Man !','🎄 Deux livres de Noël gratuits !','🥅 Nouveau : les tirs au but !'];
   var i=0;var b=document.getElementById('helper-bubble');if(!b)return;
   function cycle(){b.style.opacity='1';setTimeout(function(){b.style.opacity='0';},4200);i=(i+1)%msgs.length;b.innerText=msgs[i];}
   b.innerText=msgs[0];setInterval(cycle,6000);setTimeout(function(){b.style.opacity='1';},1200);setTimeout(function(){b.style.opacity='0';},5400);
