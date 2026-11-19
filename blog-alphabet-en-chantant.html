@@ -65,7 +65,7 @@ h2.ap-on{background:#eef6ff;border-radius:10px;box-shadow:0 0 0 6px #eef6ff}
 </style>
 <div id="ap-card" style="background:linear-gradient(135deg,#eef6ff,#f0fdfa);border:2px solid #bfdbfe;border-radius:18px;padding:16px;margin:20px 0;">
   <p style="font-weight:900;color:#1e3a5f;margin:0 0 2px;font-size:17px;">🎧 Écouter l'article</p>
-  <p style="color:#64748b;font-weight:700;font-size:13px;margin:0 0 12px;">Touchez un chapitre pour commencer exactement là. Durée totale : 3 min 29 s</p>
+  <p style="color:#64748b;font-weight:700;font-size:13px;margin:0 0 12px;">Touchez un chapitre pour commencer exactement là. Durée totale : 3 min 40 s</p>
   <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
     <button id="ap-prev" onclick="apPrev()" aria-label="Chapitre précédent" style="background:#fff;border:2px solid #bfdbfe;border-radius:9999px;width:42px;height:42px;font-size:16px;cursor:pointer;">⏮</button>
     <button id="ap-main" onclick="apToggle()" aria-label="Lecture ou pause" style="background:#0055a5;color:#fff;border:none;border-radius:9999px;width:56px;height:56px;font-size:24px;cursor:pointer;box-shadow:0 6px 16px rgba(0,85,165,.35);">▶</button>
@@ -79,7 +79,7 @@ h2.ap-on{background:#eef6ff;border-radius:10px;box-shadow:0 0 0 6px #eef6ff}
   <audio id="ap-audio" preload="none"></audio>
 </div>
 <script>
-var AP_SECTIONS=[{"t": "Introduction", "src": "audio/blog/alphabet-en-chantant/01.mp3", "d": 28.6}, {"t": "1. Une lettre à la fois, en chanson", "src": "audio/blog/alphabet-en-chantant/02.mp3", "d": 31.6}, {"t": "2. Associer la lettre, le son et l'image", "src": "audio/blog/alphabet-en-chantant/03.mp3", "d": 17.3}, {"t": "3. Les lettres du prénom d'abord", "src": "audio/blog/alphabet-en-chantant/04.mp3", "d": 19.0}, {"t": "4. Chanter partout, pas seulement à la maison", "src": "audio/blog/alphabet-en-chantant/05.mp3", "d": 21.0}, {"t": "5. Jouer à la chasse aux lettres", "src": "audio/blog/alphabet-en-chantant/06.mp3", "d": 32.4}, {"t": "6. Quand il mélange les lettres", "src": "audio/blog/alphabet-en-chantant/07.mp3", "d": 59.9}];
+var AP_SECTIONS=[{"t": "Introduction", "src": "audio/blog/alphabet-en-chantant/01.mp3", "d": 31.4}, {"t": "1. Une lettre à la fois, en chanson", "src": "audio/blog/alphabet-en-chantant/02.mp3", "d": 31.3}, {"t": "2. Associer la lettre, le son et l'image", "src": "audio/blog/alphabet-en-chantant/03.mp3", "d": 17.4}, {"t": "3. Les lettres du prénom d'abord", "src": "audio/blog/alphabet-en-chantant/04.mp3", "d": 19.4}, {"t": "4. Chanter partout, pas seulement à la maison", "src": "audio/blog/alphabet-en-chantant/05.mp3", "d": 22.1}, {"t": "5. Jouer à la chasse aux lettres", "src": "audio/blog/alphabet-en-chantant/06.mp3", "d": 33.5}, {"t": "6. Quand il mélange les lettres", "src": "audio/blog/alphabet-en-chantant/07.mp3", "d": 65.6}];
 var apIdx=-1,apSpeeds=[0.75,1,1.25],apSpd=1;
 var apA=document.getElementById('ap-audio');
 function apFmt(s){s=Math.max(0,Math.round(s||0));return Math.floor(s/60)+':'+('0'+(s%60)).slice(-2);}

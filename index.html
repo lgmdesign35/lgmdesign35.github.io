@@ -203,6 +203,54 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
     </a>
   </div>
 
+<!-- ===== Lecteur audio enregistré (voix Aria) ===== -->
+<style>
+#a-card{scroll-margin-top:90px}
+.a-chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:2px solid #dbeafe;color:#1e3a5f;font-weight:800;font-size:12.5px;border-radius:9999px;padding:6px 11px;cursor:pointer;font-family:inherit}
+.a-chip.on{background:#0055a5;border-color:#0055a5;color:#fff}
+.a-h2-btn{margin-left:8px;background:#e0f2fe;border:none;border-radius:9999px;padding:3px 10px;font-size:13px;cursor:pointer;vertical-align:middle;font-family:inherit}
+h2.a-on{background:#eef6ff;border-radius:10px;box-shadow:0 0 0 6px #eef6ff}
+</style>
+<div id="a-card" style="background:linear-gradient(135deg,#eef6ff,#f0fdfa);border:2px solid #bfdbfe;border-radius:18px;padding:16px;margin:20px 0;">
+  <p style="font-weight:900;color:#1e3a5f;margin:0 0 2px;font-size:17px;">🎧 Écouter la présentation</p>
+  <p style="color:#64748b;font-weight:700;font-size:13px;margin:0 0 12px;">Durée : 1 min 24 s</p>
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+    <button onclick="aPrev()" aria-label="Chapitre précédent" style="background:#fff;border:2px solid #bfdbfe;border-radius:9999px;width:42px;height:42px;font-size:16px;cursor:pointer;">⏮</button>
+    <button id="a-main" onclick="aToggle()" aria-label="Lecture ou pause" style="background:#0055a5;color:#fff;border:none;border-radius:9999px;width:56px;height:56px;font-size:24px;cursor:pointer;box-shadow:0 6px 16px rgba(0,85,165,.35);">▶</button>
+    <button onclick="aNext()" aria-label="Chapitre suivant" style="background:#fff;border:2px solid #bfdbfe;border-radius:9999px;width:42px;height:42px;font-size:16px;cursor:pointer;">⏭</button>
+    <span id="a-time" style="font-weight:800;color:#1e3a5f;font-size:13.5px;">0:00 / 0:00</span>
+    <button id="a-speed" onclick="aSpeed()" aria-label="Vitesse de lecture" style="background:#fff;border:2px solid #bfdbfe;color:#1e3a5f;font-weight:900;border-radius:9999px;padding:8px 12px;font-size:13px;cursor:pointer;font-family:inherit;">Vitesse 1×</button>
+  </div>
+  <div id="a-track" onclick="aSeek(event)" style="background:#dbeafe;height:10px;border-radius:9999px;margin:12px 0 8px;cursor:pointer;"><div id="a-fill" style="background:#0055a5;height:10px;border-radius:9999px;width:0%;"></div></div>
+  <p id="a-now" style="font-weight:800;color:#1e3a5f;font-size:13.5px;margin:0 0 10px;">Prêt à écouter</p>
+  <div id="a-chips" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
+  <audio id="a-audio" preload="none"></audio>
+</div>
+<script>
+var a_SECTIONS=[{"t": "Bienvenue", "src": "audio/blog/accueil/01.mp3", "d": 84.2}];
+var a_H2MODE=false,a_OFFSET=1,a_ROOT='';
+var aIdx=-1,aSpeeds=[0.75,1,1.25],aSpd=1;
+var aA=document.getElementById('a-audio');
+function aFmt(s){s=Math.max(0,Math.round(s||0));return Math.floor(s/60)+':'+('0'+(s%60)).slice(-2);}
+function aH2s(){var r=a_ROOT?document.querySelector(a_ROOT):document;return r?r.querySelectorAll('h2'):[];}
+function aBuild(){var c=document.getElementById('a-chips');a_SECTIONS.forEach(function(sec,i){var b=document.createElement('button');b.className='a-chip';b.id='a-chip-'+i;b.textContent=(i===0?'🎧 ':'🔊 ')+sec.t+' · '+aFmt(sec.d);b.onclick=function(){aPlay(i);};c.appendChild(b);});
+ if(a_H2MODE){aH2s().forEach(function(h,i){var ci=i+a_OFFSET;if(ci>=a_SECTIONS.length)return;var b=document.createElement('button');b.className='a-h2-btn';b.textContent='🔊 Écouter';b.setAttribute('aria-label','Écouter à partir de cette section');b.onclick=function(){aPlay(ci);document.getElementById('a-card').scrollIntoView({behavior:'smooth',block:'center'});};h.appendChild(b);});}}
+function aMark(){a_SECTIONS.forEach(function(sec,i){var ch=document.getElementById('a-chip-'+i);if(ch)ch.className='a-chip'+(i===aIdx?' on':'');});
+ if(a_H2MODE){aH2s().forEach(function(h,i){h.classList.toggle('a-on',i===aIdx-a_OFFSET);});}
+ var now=document.getElementById('a-now');if(aIdx>=0)now.textContent='Chapitre '+(aIdx+1)+' / '+a_SECTIONS.length+' — '+a_SECTIONS[aIdx].t;}
+function aPlay(i){aIdx=i;aA.src=a_SECTIONS[i].src;aA.playbackRate=aSpd;aA.play();document.getElementById('a-main').textContent='⏸';aMark();}
+function aToggle(){if(aIdx<0){aPlay(0);return;}if(aA.paused){aA.play();document.getElementById('a-main').textContent='⏸';}else{aA.pause();document.getElementById('a-main').textContent='▶';}}
+function aNext(){if(aIdx<a_SECTIONS.length-1)aPlay(aIdx+1);}
+function aPrev(){if(aIdx>0)aPlay(aIdx-1);else if(aIdx===0){aA.currentTime=0;}}
+function aSpeed(){var i=aSpeeds.indexOf(aSpd);aSpd=aSpeeds[(i+1)%aSpeeds.length];aA.playbackRate=aSpd;document.getElementById('a-speed').textContent='Vitesse '+String(aSpd).replace('.',',')+'×';}
+function aSeek(e){if(aIdx<0||!aA.duration)return;var r=document.getElementById('a-track').getBoundingClientRect();var p=(e.clientX-r.left)/r.width;aA.currentTime=p*aA.duration;}
+window.aStop=function(){try{aA.pause();}catch(e){}var m=document.getElementById('a-main');if(m)m.textContent='▶';};
+aA.addEventListener('timeupdate',function(){if(aA.duration){document.getElementById('a-fill').style.width=(aA.currentTime/aA.duration*100)+'%';document.getElementById('a-time').textContent=aFmt(aA.currentTime)+' / '+aFmt(aA.duration);}});
+aA.addEventListener('ended',function(){if(aIdx<a_SECTIONS.length-1){aPlay(aIdx+1);}else{document.getElementById('a-main').textContent='▶';document.getElementById('a-now').textContent='Lecture terminée — touchez un chapitre pour réécouter';}});
+aA.addEventListener('pause',function(){if(!aA.ended)document.getElementById('a-main').textContent='▶';});
+aBuild();
+</script>
+
 <div class="bg-white border-2 border-sky-100 rounded-3xl p-5 sm:p-6 shadow-sm space-y-4">
     <h2 class="brand-font text-xl sm:text-2xl font-black text-slate-800 text-center">👶🧒 Par où commencer ? Choisis l'âge de ton enfant</h2>
     <div class="grid sm:grid-cols-2 gap-4">
@@ -1164,6 +1212,54 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
     <span class="px-4 py-1.5 bg-qcblue-700 text-sky-200 rounded-full text-xs font-bold uppercase tracking-wider">Auprès des enfants depuis 2003 — maison d'édition depuis 2026</span>
     <h2 class="brand-font text-3xl sm:text-5xl font-extrabold text-sky-100">NOTRE HISTOIRE, NOTRE PASSION</h2>
     <p class="text-sky-200 text-base sm:text-lg italic max-w-3xl mx-auto leading-relaxed">« Notre voyage auprès des enfants a commencé en 2003. Depuis lors, nous explorons les secrets du monde des enfants pour les traduire à travers nos histoires — et en 2026, cette passion est devenue une maison d'édition. »</p>
+<!-- ===== Lecteur audio enregistré (voix Aria) ===== -->
+<style>
+#b-card{scroll-margin-top:90px}
+.b-chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:2px solid #dbeafe;color:#1e3a5f;font-weight:800;font-size:12.5px;border-radius:9999px;padding:6px 11px;cursor:pointer;font-family:inherit}
+.b-chip.on{background:#0055a5;border-color:#0055a5;color:#fff}
+.b-h2-btn{margin-left:8px;background:#e0f2fe;border:none;border-radius:9999px;padding:3px 10px;font-size:13px;cursor:pointer;vertical-align:middle;font-family:inherit}
+h2.b-on{background:#eef6ff;border-radius:10px;box-shadow:0 0 0 6px #eef6ff}
+</style>
+<div id="b-card" style="background:linear-gradient(135deg,#eef6ff,#f0fdfa);border:2px solid #bfdbfe;border-radius:18px;padding:16px;margin:20px 0;">
+  <p style="font-weight:900;color:#1e3a5f;margin:0 0 2px;font-size:17px;">🎧 Écouter notre histoire</p>
+  <p style="color:#64748b;font-weight:700;font-size:13px;margin:0 0 12px;">Touchez un chapitre pour commencer exactement là. Durée totale : 1 min 57 s</p>
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+    <button onclick="bPrev()" aria-label="Chapitre précédent" style="background:#fff;border:2px solid #bfdbfe;border-radius:9999px;width:42px;height:42px;font-size:16px;cursor:pointer;">⏮</button>
+    <button id="b-main" onclick="bToggle()" aria-label="Lecture ou pause" style="background:#0055a5;color:#fff;border:none;border-radius:9999px;width:56px;height:56px;font-size:24px;cursor:pointer;box-shadow:0 6px 16px rgba(0,85,165,.35);">▶</button>
+    <button onclick="bNext()" aria-label="Chapitre suivant" style="background:#fff;border:2px solid #bfdbfe;border-radius:9999px;width:42px;height:42px;font-size:16px;cursor:pointer;">⏭</button>
+    <span id="b-time" style="font-weight:800;color:#1e3a5f;font-size:13.5px;">0:00 / 0:00</span>
+    <button id="b-speed" onclick="bSpeed()" aria-label="Vitesse de lecture" style="background:#fff;border:2px solid #bfdbfe;color:#1e3a5f;font-weight:900;border-radius:9999px;padding:8px 12px;font-size:13px;cursor:pointer;font-family:inherit;">Vitesse 1×</button>
+  </div>
+  <div id="b-track" onclick="bSeek(event)" style="background:#dbeafe;height:10px;border-radius:9999px;margin:12px 0 8px;cursor:pointer;"><div id="b-fill" style="background:#0055a5;height:10px;border-radius:9999px;width:0%;"></div></div>
+  <p id="b-now" style="font-weight:800;color:#1e3a5f;font-size:13.5px;margin:0 0 10px;">Prêt à écouter</p>
+  <div id="b-chips" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
+  <audio id="b-audio" preload="none"></audio>
+</div>
+<script>
+var b_SECTIONS=[{"t": "Notre histoire, notre passion", "src": "audio/blog/histoire/01.mp3", "d": 17.3}, {"t": "Qui sommes-nous ?", "src": "audio/blog/histoire/02.mp3", "d": 33.7}, {"t": "Notre Vision au Québec", "src": "audio/blog/histoire/03.mp3", "d": 25.5}, {"t": "Nos Héros Récurrents : Adam et ses amis", "src": "audio/blog/histoire/04.mp3", "d": 19.3}, {"t": "Nos Engagements Qualité", "src": "audio/blog/histoire/05.mp3", "d": 21.7}];
+var b_H2MODE=true,b_OFFSET=0,b_ROOT='#page-histoire';
+var bIdx=-1,bSpeeds=[0.75,1,1.25],bSpd=1;
+var bA=document.getElementById('b-audio');
+function bFmt(s){s=Math.max(0,Math.round(s||0));return Math.floor(s/60)+':'+('0'+(s%60)).slice(-2);}
+function bH2s(){var r=b_ROOT?document.querySelector(b_ROOT):document;return r?r.querySelectorAll('h2'):[];}
+function bBuild(){var c=document.getElementById('b-chips');b_SECTIONS.forEach(function(sec,i){var b=document.createElement('button');b.className='b-chip';b.id='b-chip-'+i;b.textContent=(i===0?'🎧 ':'🔊 ')+sec.t+' · '+bFmt(sec.d);b.onclick=function(){bPlay(i);};c.appendChild(b);});
+ if(b_H2MODE){bH2s().forEach(function(h,i){var ci=i+b_OFFSET;if(ci>=b_SECTIONS.length)return;var b=document.createElement('button');b.className='b-h2-btn';b.textContent='🔊 Écouter';b.setAttribute('aria-label','Écouter à partir de cette section');b.onclick=function(){bPlay(ci);document.getElementById('b-card').scrollIntoView({behavior:'smooth',block:'center'});};h.appendChild(b);});}}
+function bMark(){b_SECTIONS.forEach(function(sec,i){var ch=document.getElementById('b-chip-'+i);if(ch)ch.className='b-chip'+(i===bIdx?' on':'');});
+ if(b_H2MODE){bH2s().forEach(function(h,i){h.classList.toggle('b-on',i===bIdx-b_OFFSET);});}
+ var now=document.getElementById('b-now');if(bIdx>=0)now.textContent='Chapitre '+(bIdx+1)+' / '+b_SECTIONS.length+' — '+b_SECTIONS[bIdx].t;}
+function bPlay(i){bIdx=i;bA.src=b_SECTIONS[i].src;bA.playbackRate=bSpd;bA.play();document.getElementById('b-main').textContent='⏸';bMark();}
+function bToggle(){if(bIdx<0){bPlay(0);return;}if(bA.paused){bA.play();document.getElementById('b-main').textContent='⏸';}else{bA.pause();document.getElementById('b-main').textContent='▶';}}
+function bNext(){if(bIdx<b_SECTIONS.length-1)bPlay(bIdx+1);}
+function bPrev(){if(bIdx>0)bPlay(bIdx-1);else if(bIdx===0){bA.currentTime=0;}}
+function bSpeed(){var i=bSpeeds.indexOf(bSpd);bSpd=bSpeeds[(i+1)%bSpeeds.length];bA.playbackRate=bSpd;document.getElementById('b-speed').textContent='Vitesse '+String(bSpd).replace('.',',')+'×';}
+function bSeek(e){if(bIdx<0||!bA.duration)return;var r=document.getElementById('b-track').getBoundingClientRect();var p=(e.clientX-r.left)/r.width;bA.currentTime=p*bA.duration;}
+window.bStop=function(){try{bA.pause();}catch(e){}var m=document.getElementById('b-main');if(m)m.textContent='▶';};
+bA.addEventListener('timeupdate',function(){if(bA.duration){document.getElementById('b-fill').style.width=(bA.currentTime/bA.duration*100)+'%';document.getElementById('b-time').textContent=bFmt(bA.currentTime)+' / '+bFmt(bA.duration);}});
+bA.addEventListener('ended',function(){if(bIdx<b_SECTIONS.length-1){bPlay(bIdx+1);}else{document.getElementById('b-main').textContent='▶';document.getElementById('b-now').textContent='Lecture terminée — touchez un chapitre pour réécouter';}});
+bA.addEventListener('pause',function(){if(!bA.ended)document.getElementById('b-main').textContent='▶';});
+bBuild();
+</script>
+
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
     <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 space-y-4 shadow-sm">
@@ -1337,7 +1433,7 @@ function speakQuebec(text){showToast(text);playSpeech(text);}
 
 /* ============ NAVIGATION PRINCIPALE (site) ============ */
 function toggleMobileMenu(){var m=document.getElementById('mobile-menu');if(m)m.classList.toggle('hidden');}
-function switchSiteTab(tabId){if(window.ttsStopAll)ttsStopAll();
+function switchSiteTab(tabId){if(window.aStop)aStop();if(window.bStop)bStop();
   if(tabId!=='apprendre'&&typeof stopCourseTimer==='function')stopCourseTimer();
   var mm=document.getElementById('mobile-menu');if(mm)mm.classList.add('hidden');
   document.querySelectorAll('.site-page').forEach(function(s){s.classList.add('hidden');});
@@ -1448,7 +1544,7 @@ var NUMBERS_RAW=[[1,"un",1],[2,"deux",1],[3,"trois",1],[4,"quatre",1],[5,"cinq",
 var NUMBERS_DATA=NUMBERS_RAW.map(function(a){return {n:a[0],fr:a[1],level:a[2]};});
 
 /* ============ APPRENDRE : NAVIGATION ============ */
-function switchLearnTab(tabId){if(window.ttsStopAll)ttsStopAll();
+function switchLearnTab(tabId){if(window.aStop)aStop();if(window.bStop)bStop();
   if(tabId!=='games')stopCourseTimer();
   document.querySelectorAll('.learn-tab').forEach(function(b){b.classList.remove('bg-qcblue-600','text-white','shadow-md');if(!b.classList.contains('bg-white'))b.classList.add('bg-white');b.classList.add('text-slate-600');});
   var btn=document.getElementById('ltab-'+tabId);
@@ -2428,42 +2524,5 @@ function promoRender(){var bar=document.getElementById('promo-bar');if(!bar||bar
  document.getElementById('promo-btns').innerHTML=hb;}
 document.addEventListener('DOMContentLoaded',function(){promoRender();setInterval(promoRender,30000);});
 </script>
-<!-- ===== Écouter la page : lecture à voix haute lente et claire (fr-CA, vitesse 0.85) ===== -->
-<div id="tts-widget" style="position:fixed;right:14px;bottom:14px;z-index:9000;display:flex;gap:6px;align-items:center;">
-  <button id="tts-main" onclick="ttsToggle()" aria-label="Écouter la page à voix haute" style="background:#0055a5;color:#fff;font-weight:900;font-size:14px;border:none;border-radius:9999px;padding:11px 18px;box-shadow:0 6px 18px rgba(0,0,0,.28);cursor:pointer;font-family:inherit;">🔊 Écouter la page</button>
-  <button id="tts-stop" onclick="ttsStopAll()" aria-label="Arrêter la lecture" style="display:none;background:#fff;color:#b91c1c;font-weight:900;font-size:14px;border:2px solid #fecaca;border-radius:9999px;padding:9px 13px;box-shadow:0 6px 18px rgba(0,0,0,.22);cursor:pointer;font-family:inherit;">⏹</button>
-</div>
-<script>
-(function(){
- var synth=window.speechSynthesis;
- if(!synth){var w=document.getElementById('tts-widget');if(w)w.style.display='none';return;}
- var chunks=[],idx=0,state='idle',resumeTimer=null;
- function voice(){var vs=synth.getVoices();for(var i=0;i<vs.length;i++){if(vs[i].lang&&vs[i].lang.toLowerCase().indexOf('fr-ca')===0)return vs[i];}for(var j=0;j<vs.length;j++){if(vs[j].lang&&vs[j].lang.toLowerCase().indexOf('fr')===0)return vs[j];}return null;}
- function root(){var vis=document.querySelector('.site-page:not(.hidden)');if(vis)return vis;var m=document.querySelector('main');return m||document.body;}
- function collect(){var r=root();var els=r.querySelectorAll('h1,h2,h3,h4,p,li,blockquote,figcaption');var texts=[];
-  els.forEach(function(el){if(el.closest('button,nav,script,style,#tts-widget'))return;if(el.querySelector('p,h1,h2,h3,h4,li,blockquote'))return;var t=(el.innerText||'').replace(/\s+/g,' ').trim();if(t.length>1)texts.push(t);});
-  var parts=[];texts.forEach(function(t){var ms=t.match(/[^.!?…]+[.!?…]+["»]?\s*|[^.!?…]+$/g);if(ms)ms.forEach(function(x){parts.push(x);});else parts.push(t);});
-  chunks=[];var cur='';parts.forEach(function(p){p=p.trim();if(!p)return;if((cur+' '+p).length>190){if(cur)chunks.push(cur);cur=p;}else{cur=cur?cur+' '+p:p;}});if(cur)chunks.push(cur);}
- function ui(){var b=document.getElementById('tts-main'),s=document.getElementById('tts-stop');if(!b||!s)return;
-  if(state==='idle'){b.innerHTML='🔊 Écouter la page';s.style.display='none';}
-  else if(state==='playing'){b.innerHTML='⏸ Pause';s.style.display='block';}
-  else{b.innerHTML='▶ Reprendre';s.style.display='block';}}
- function noVoice(){stopAll();var b=document.getElementById('tts-main');if(b)b.innerHTML='🔇 Voix indisponible ici';setTimeout(function(){if(state==='idle')ui();},4000);}
- function speak(){if(idx>=chunks.length){stopAll();return;}
-  var t0=Date.now();var u=new SpeechSynthesisUtterance(chunks[idx]);u.lang='fr-CA';var v=voice();if(v)u.voice=v;u.rate=0.85;u.pitch=1.0;
-  u.onend=function(){if(state!=='playing')return;if(idx===0&&Date.now()-t0<300&&synth.getVoices().length===0){noVoice();return;}idx++;speak();};
-  u.onerror=function(e){if(state!=='playing')return;if(idx===0&&e&&e.error==='synthesis-failed'&&Date.now()-t0<600){noVoice();return;}idx++;speak();};
-  synth.speak(u);}
- function keepAlive(){clearInterval(resumeTimer);resumeTimer=setInterval(function(){if(state==='playing'&&synth.speaking&&!synth.paused){synth.resume();}},10000);}
- window.ttsToggle=function(){
-  if(state==='idle'){collect();if(!chunks.length)return;idx=0;state='playing';synth.cancel();speak();keepAlive();ui();}
-  else if(state==='playing'){state='paused';synth.pause();ui();}
-  else{state='playing';synth.resume();ui();}};
- function stopAll(){state='idle';idx=0;clearInterval(resumeTimer);try{synth.cancel();}catch(e){}ui();}
- window.ttsStopAll=stopAll;
- window.addEventListener('beforeunload',function(){try{synth.cancel();}catch(e){}});
-})();
-</script>
-
 </body>
 </html>
