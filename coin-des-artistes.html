@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="light">
 <link rel="icon" href="data:,">
 <title>Le coin des petits artistes — expose ton œuvre ! — LGMDesign35</title>
-<meta name="description" content="Le coin des petits artistes de LGMDesign35 : les enfants de 1 à 6 ans exposent leurs dessins, peintures, bricolages et constructions en blocs. Les parents envoient la photo, l'équipe vérifie et publie. En français québécois sur lgmdesign35.com.">
+<meta name="description" content="Le coin des petits artistes de LGMDesign35 : les enfants de 1 à 6 ans exposent leurs dessins, peintures, bricolages et constructions en blocs. Les parents envoient la photo, elle paraît automatiquement dans la galerie. En français québécois sur lgmdesign35.com.">
 <link rel="canonical" href="https://lgmdesign35.com/coin-des-artistes.html">
 <link rel="alternate" hreflang="fr-CA" href="https://lgmdesign35.com/coin-des-artistes.html">
 <link rel="alternate" hreflang="x-default" href="https://lgmdesign35.com/coin-des-artistes.html">
@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="LGMDesign35">
 <meta property="og:locale" content="fr_CA">
 <meta property="og:title" content="Le coin des petits artistes — LGMDesign35">
-<meta property="og:description" content="Les enfants exposent leurs dessins, peintures, bricolages et constructions en blocs. Les parents envoient la photo, l'équipe vérifie et publie.">
+<meta property="og:description" content="Les enfants exposent leurs dessins, peintures, bricolages et constructions en blocs. Les parents envoient la photo, elle paraît automatiquement dans la galerie.">
 <meta property="og:url" content="https://lgmdesign35.com/coin-des-artistes.html">
 <meta property="og:image" content="https://lgmdesign35.com/images/logo.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -105,7 +105,7 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
         </div>
         <div class="flex items-start gap-3">
           <span class="w-9 h-9 shrink-0 rounded-full bg-qcblue-600 text-white font-black flex items-center justify-center">2</span>
-          <p class="text-sm text-slate-600 font-semibold leading-relaxed"><strong class="text-slate-800">L'équipe LGMDesign35 vérifie et approuve</strong> chaque œuvre avant de la publier.</p>
+          <p class="text-sm text-slate-600 font-semibold leading-relaxed"><strong class="text-slate-800">L'œuvre est publiée automatiquement</strong> dans la galerie, telle qu'elle a été envoyée.</p>
         </div>
         <div class="flex items-start gap-3">
           <span class="w-9 h-9 shrink-0 rounded-full bg-qcblue-600 text-white font-black flex items-center justify-center">3</span>
@@ -126,7 +126,7 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
       <li>Seule l'œuvre est montrée : <strong>aucun visage</strong> sur les photos, s'il vous plaît. Photographiez l'œuvre seulement, pas l'enfant.</li>
       <li>Seuls le <strong>prénom et l'âge</strong> de l'enfant sont publiés — jamais le nom de famille, ni l'adresse, ni l'école.</li>
       <li>L'envoi se fait uniquement par un <strong>parent ou un tuteur</strong>.</li>
-      <li>Chaque œuvre est <strong>vérifiée avant d'être publiée</strong> — rien ne paraît ici sans approbation.</li>
+      <li>Les œuvres sont <strong>publiées automatiquement</strong>, sans vérification préalable. Signalez tout contenu inapproprié via la <a href="contact.html" class="underline font-black">page Contact</a> : il sera retiré rapidement.</li>
       <li>Retrait possible à tout moment : écrivez-nous depuis la <a href="contact.html" class="underline font-black">page Contact</a> et l'œuvre sera retirée.</li>
     </ul>
   </section>
@@ -134,7 +134,7 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
   <!-- Formulaire d'envoi -->
   <section id="formulaire-oeuvre" class="max-w-2xl mx-auto bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-4">
     <h2 class="brand-font text-2xl font-bold text-qcblue-700 text-center">📮 Envoyer une œuvre</h2>
-    <p class="text-sm text-slate-600 leading-relaxed text-center">Remplissez ce formulaire, <strong>parent ou tuteur seulement</strong>. Nous vous répondrons par courriel quand l'œuvre sera publiée.</p>
+    <p class="text-sm text-slate-600 leading-relaxed text-center">Remplissez ce formulaire, <strong>parent ou tuteur seulement</strong>. L'œuvre apparaîtra automatiquement dans la galerie peu après l'envoi.</p>
     <form id="artwork-form" action="https://formsubmit.co/lgmdesign35@gmail.com" method="POST" class="space-y-4" enctype="multipart/form-data">
       <input type="hidden" name="_subject" value="Nouvelle œuvre — Coin des artistes">
       <input type="hidden" name="_template" value="table">
@@ -170,6 +170,7 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
         <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2" for="af-photo">Photo de l'œuvre *</label>
         <input id="af-photo" name="photo_oeuvre" type="file" accept="image/*" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm bg-white">
         <p class="text-xs text-slate-400 font-semibold mt-1">Photographiez l'œuvre seulement — aucun visage, s'il vous plaît.</p>
+        <p id="af-fileinfo" class="text-xs text-slate-500 font-semibold mt-1"></p>
       </div>
       <div>
         <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2" for="af-email">Courriel du parent *</label>
@@ -182,7 +183,7 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
       <button type="submit" class="pop-btn block w-full text-center py-3 bg-amber-400 hover:bg-amber-500 text-slate-900 font-black text-sm sm:text-base rounded-xl shadow border-2 border-white">Envoyer mon œuvre 🎨</button>
     </form>
-    <div id="af-success" class="hidden mt-3 p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-sm font-semibold text-center">Merci ! 🎉 Votre œuvre a bien été envoyée. L'équipe LGMDesign35 va la vérifier et vous écrira quand elle sera publiée. Bravo, petit artiste !</div>
+    <div id="af-success" class="hidden mt-3 p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-sm font-semibold text-center">Merci ! 🎉 Votre œuvre a bien été envoyée. Elle apparaîtra automatiquement dans la galerie ci-dessus d'ici peu. Bravo, petit artiste !</div>
     <div id="af-error" class="hidden mt-3 p-4 bg-red-50 border border-red-200 rounded-xl text-red-800 text-sm font-semibold text-center">Oups — l'œuvre n'a pas pu être envoyée. Veuillez réessayer dans un moment.</div>
   </section>
 
@@ -196,16 +197,13 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
 </footer>
 <script src="christmas.js"></script>
 <script>
-/* Le coin des petits artistes — LGMDesign35 : galerie modérée, aucune œuvre inventée.
-   Pour publier une œuvre approuvée, ajouter une entrée ici :
+/* Le coin des petits artistes — LGMDesign35 : galerie à publication automatique.
+   Les œuvres sont chargées depuis artworks.json (même format) :
    {id:'marie-01', title:"Mon dinosaure rouge", firstName:'Marie', age:5, category:'dessins',
     img:'images/artistes/marie-01.jpg', date:'2026-11-16'}
    Catégories : 'dessins' | 'peintures' | 'bricolages' | 'constructions'.
-   Les images des œuvres approuvées vont dans images/artistes/. */
-const ARTWORKS = [
-  {id:'claire-01', title:"Les princesses et les cœurs", firstName:'Claire', age:5, category:'dessins',
-   img:'images/artistes/claire-01.jpg', date:'2026-11-16'}
-];
+   Les images vont dans images/artistes/. */
+let ARTWORKS = [];
 
 const CATEGORIES = [
   {key:'dessins', label:'Dessins', emoji:'🖍️'},
@@ -251,16 +249,52 @@ function renderGallery(){
 
 /* --- Formulaire d'envoi (FormSubmit, POST natif — l'endpoint AJAX ne transmettait pas la photo jointe) ---
    Le formulaire part en envoi classique vers FormSubmit : la photo arrive en pièce jointe du courriel.
-   FormSubmit redirige ensuite ici avec ?envoye=1 : on affiche le message de merci. */  
-  (function(){
-if (new URLSearchParams(location.search).get('envoye') === '1'){
-    var ok = $('af-success');
-    if (ok) ok.classList.remove('hidden');
-}
-    })();
+   FormSubmit redirige ensuite ici avec ?envoye=1 : on affiche le message de merci.
+   Limite FormSubmit : 10 Mo par envoi — une photo trop lourde est bloquée ici, avant l'envoi. */
+(function(){
+  var ok = $('af-success'), err = $('af-error');
+  var info = $('af-fileinfo'), photo = $('af-photo');
+  if (new URLSearchParams(location.search).get('envoye') === '1' && ok){
+    ok.classList.remove('hidden');
+    ok.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+  if (photo && info){
+    photo.addEventListener('change', function(){
+      var file = photo.files && photo.files[0];
+      if (!file){ info.textContent = ''; return; }
+      var mb = (file.size / 1048576).toFixed(1);
+      info.textContent = 'Photo choisie : ' + file.name + ' (' + mb + ' Mo)';
+      if (file.size > 10 * 1048576){
+        info.textContent += ' — trop lourde : FormSubmit refuse au-delà de 10 Mo. Choisissez une photo plus petite.';
+      }
+    });
+  }
+  var f = document.getElementById('artwork-form');
+  if (f){
+    f.addEventListener('submit', function(e){
+      var file = photo && photo.files && photo.files[0];
+      if (file && file.size > 10 * 1048576){
+        e.preventDefault();
+        if (err){
+          err.textContent = 'La photo dépasse 10 Mo — prenez une photo plus petite (ou réduisez-la) puis réessayez.';
+          err.classList.remove('hidden');
+          err.scrollIntoView({behavior:'smooth', block:'center'});
+        }
+      }
+    });
+  }
+})();
 /* --- Démarrage --- */
 renderPills();
 renderGallery();
+fetch('artworks.json', {cache:'no-store'})
+  .then(function(r){ return r.ok ? r.json() : []; })
+  .catch(function(){ return []; })
+  .then(function(list){
+    if (Array.isArray(list)) ARTWORKS = list;
+    renderPills();
+    renderGallery();
+  });
 </script>
 </body>
 </html>
