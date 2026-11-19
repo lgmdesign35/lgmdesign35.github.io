@@ -698,7 +698,16 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
       </div>
     </div>
   </div>
-</section>
+<div class="max-w-2xl mx-auto w-full bg-amber-50 border border-amber-200 rounded-3xl p-5 text-center space-y-3">
+    <h3 class="brand-font text-lg font-extrabold text-slate-800">📚 Après le jeu, une histoire !</h3>
+    <p class="text-xs text-slate-600">Tu as aimé jouer et apprendre ? Continue l'aventure avec un livre gratuit à lire et à écouter :</p>
+    <div class="flex flex-wrap justify-center gap-2">
+      <a href="bebe-adam-couleurs.html" class="px-4 py-2 bg-white border border-amber-300 text-amber-800 font-bold text-xs rounded-full shadow-sm hover:shadow transition-all">🎨 Les couleurs de Bébé Adam</a>
+      <a href="bebe-adam-bonne-nuit.html" class="px-4 py-2 bg-white border border-amber-300 text-amber-800 font-bold text-xs rounded-full shadow-sm hover:shadow transition-all">🌙 Bonne nuit, Bébé Adam</a>
+      <a href="etoile-de-noel.html" class="px-4 py-2 bg-white border border-amber-300 text-amber-800 font-bold text-xs rounded-full shadow-sm hover:shadow transition-all">⭐ L'étoile de Noël</a>
+    </div>
+  </div>
+  </section>
 
 <!-- ================= PAGE : ATELIER (dessin, coloriage, jeux de couleurs) ================= -->
 <section id="page-atelier" class="site-page hidden">
@@ -998,7 +1007,7 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
       <button onclick="openBookModal('coloanimaux')" class="mt-4 w-full py-2.5 bg-sky-50 hover:bg-sky-100 text-sky-700 font-bold text-xs rounded-xl transition-all border border-sky-200">CONSULTER LA FICHE</button>
     </div>
 </div>
-  <p id="books-empty-msg" class="hidden text-center text-sm font-bold text-slate-500 bg-white border border-slate-200 rounded-2xl p-6">Aucun titre du catalogue pour ce groupe d'âge pour le moment.</p>
+  <p id="books-empty-msg" class="hidden text-center text-sm font-bold text-slate-500 bg-white border border-slate-200 rounded-2xl p-6">De nouveaux livres pour cet âge arrivent bientôt ! En attendant, découvre nos histoires gratuites à lire et écouter, et nos jeux d'éveil.</p>
   </section>
 
 <!-- ================= PAGE : NOTRE HISTOIRE ================= -->
@@ -1044,6 +1053,10 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
     <h2 class="brand-font text-3xl font-extrabold text-sky-900">CONTACTEZ-NOUS</h2>
     <p class="text-slate-600 text-sm">Des questions sur nos livres ou nos ressources numériques ? L'équipe des <strong>Éditions LGMDesign35</strong> est à votre écoute ! Remplissez le formulaire ci-dessous — votre message nous arrive directement.</p>
     <p class="text-slate-600 text-sm">📖 <strong>Vous avez lu un de nos livres ?</strong> Écrivez-nous votre avis : quel livre votre enfant a aimé, son âge, et ce que vous en avez pensé. Avec votre permission, nous le publierons sur notre site.</p>
+  </div>
+  <div class="max-w-2xl mx-auto bg-white border border-slate-200 rounded-2xl px-4 py-3 flex items-center justify-center gap-3 flex-wrap shadow-sm">
+    <span class="text-sm font-bold text-slate-700">✉️ Ou écrivez-nous directement : <a href="mailto:lgmdesign35@gmail.com" class="text-sky-700">lgmdesign35@gmail.com</a></span>
+    <button type="button" onclick="copySiteEmail(this)" class="px-3 py-1.5 bg-sky-50 hover:bg-sky-100 text-sky-700 font-bold text-xs rounded-xl border border-sky-200 transition-all">📋 Copier l'adresse</button>
   </div>
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     <div class="lg:col-span-2 bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm">
@@ -1237,6 +1250,7 @@ function openBookModal(key){var d=booksData[key];if(!d)return;
   var m=document.getElementById('book-modal');m.classList.remove('hidden');m.classList.add('flex');
 }
 function closeBookModal(){var m=document.getElementById('book-modal');m.classList.add('hidden');m.classList.remove('flex');}
+function copySiteEmail(btn){var email='lgmdesign35@gmail.com';function done(){var old=btn.textContent;btn.textContent='✅ Copié !';setTimeout(function(){btn.textContent=old;},2000);}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(email).then(done).catch(function(){fallback();});}else{fallback();}function fallback(){var ta=document.createElement('textarea');ta.value=email;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){}document.body.removeChild(ta);}}
 function handleContactSubmit(e){e.preventDefault();
   var form=e.target;
   var ok=document.getElementById('contact-success');
