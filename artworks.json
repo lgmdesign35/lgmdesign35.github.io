@@ -1,5 +1,14 @@
 [
   {
+    "id": "nicolas-01",
+    "title": "Coeur",
+    "firstName": "Nicolas",
+    "age": 3,
+    "category": "dessins",
+    "img": "images/artistes/nicolas-01.jpg",
+    "date": "2026-11-18"
+  },
+  {
     "id": "claire-01",
     "title": "Les princesses et les cœurs",
     "firstName": "Claire",
