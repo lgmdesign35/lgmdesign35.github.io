@@ -459,7 +459,7 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
   <div id="section-perso" class="learn-section hidden space-y-6">
     <div class="bg-gradient-to-br from-violet-500 to-purple-500 rounded-[2rem] p-6 sm:p-8 text-white shadow-xl">
       <h3 class="brand-font text-2xl sm:text-3xl font-black">✨ Une histoire avec ton prénom !</h3>
-      <p class="text-violet-50 font-semibold text-sm sm:text-base">Écris le prénom de ton enfant : en quelques secondes, l’histoire se crée avec son prénom — et elle se raconte à voix haute ! 20 histoires du quotidien : le matin, la garderie, la neige, l’anniversaire... Le prénom reste sur votre appareil ; rien n’est envoyé. 🔒</p>
+      <p class="text-violet-50 font-semibold text-sm sm:text-base">Écris le prénom de ton enfant : en quelques secondes, l’histoire se crée avec son prénom — et elle se raconte à voix haute ! 40 histoires : le quotidien, les saisons, les émotions et les premières fois... Le prénom reste sur votre appareil ; rien n’est envoyé. 🔒</p>
     </div>
     <div class="bg-white rounded-[2rem] shadow-xl border border-violet-100 p-5 sm:p-6 space-y-4">
       <label class="block font-black text-slate-700" for="pn-name">Le prénom de ton enfant :</label>
@@ -2521,7 +2521,147 @@ var PN_STORIES={
   {e:'🦊',t:'Renard arrive : « Je peux jouer avec vous ? » — « Bien sûr ! » répond {N}.'},
   {e:'🌈',t:'Un arc-en-ciel ! {N} compte les couleurs : rouge, orange, jaune, vert, bleu...'},
   {e:'🧺',t:'C’est l’heure du pique-nique : des pommes, du fromage et du jus pour tout le monde.'},
-  {e:'🏠',t:'Le soir, {N} rentre à la maison, {content} et le sourire aux lèvres. Quelle belle aventure !'}]}
+  {e:'🏠',t:'Le soir, {N} rentre à la maison, {content} et le sourire aux lèvres. Quelle belle aventure !'}]},
+ halloween:{icon:'🎃',label:'Halloween',title:'L’Halloween de {N}',pages:[
+  {e:'🎃',t:'Aujourd’hui, c’est l’Halloween ! {N} met son déguisement de citrouille.'},
+  {e:'🕸️',t:'Avec maman, {N} décore la porte : des citrouilles qui sourient.'},
+  {e:'🍬',t:'Les voisins donnent des bonbons : « Merci ! » dit {N} à chaque maison.'},
+  {e:'🦉',t:'Un hibou regarde {N} du haut de l’arbre : hou, hou !'},
+  {e:'🌙',t:'La lune brille. Les petits monstres sont tous gentils ce soir.'},
+  {e:'🏠',t:'De retour à la maison, {N} compte ses bonbons : un, deux, trois... miam !'}]},
+ noel:{icon:'🎄',label:'Noël',title:'Le Noël de {N}',pages:[
+  {e:'🎄',t:'{N} aide à décorer le sapin : des boules rouges, dorées et brillantes.'},
+  {e:'🍪',t:'Dans la cuisine, {N} prépare des biscuits pour le Père Noël.'},
+  {e:'🎵',t:'Toute la famille chante des chansons de Noël près du sapin.'},
+  {e:'🎁',t:'{N} dépose ses souliers près de la cheminée, tout doucement.'},
+  {e:'🌙',t:'Avant de dormir, {N} écoute les clochettes au loin : ding, ding, ding...'},
+  {e:'🎅',t:'Au matin, un cadeau attend {N} sous le sapin. Joyeux Noël, {N} !'}]},
+ paques:{icon:'🐣',label:'Pâques',title:'La chasse aux œufs de {N}',pages:[
+  {e:'🐣',t:'Ce matin de Pâques, des œufs colorés sont cachés dans le jardin !'},
+  {e:'🧺',t:'{N} prend son petit panier et part à la chasse.'},
+  {e:'🌷',t:'Un œuf rose derrière les fleurs ! {N} le trouve : hourra !'},
+  {e:'🌳',t:'Un œuf bleu sous le grand arbre. Bien vu, {N} !'},
+  {e:'🐰',t:'Lapin regarde {N} et remue le nez : encore un œuf caché...'},
+  {e:'🍫',t:'Le dernier œuf est en chocolat. {N} le partage avec toute la famille.'}]},
+ feux:{icon:'🎇',label:'Feux d’artifice',title:'{N} et les feux d’artifice',pages:[
+  {e:'🌇',t:'Ce soir d’été, c’est une soirée spéciale pour {N}.'},
+  {e:'🧺',t:'La famille s’assoit sur une grande couverture dans l’herbe.'},
+  {e:'🎆',t:'Le ciel s’illumine : BOUM ! Des étoiles rouges et dorées partout !'},
+  {e:'😮',t:'{N} regarde le ciel, les yeux grands ouverts : « Oh ! Ah ! »'},
+  {e:'🎇',t:'Une fusée verte, une bleue, puis une pluie d’étoiles argentées.'},
+  {e:'💛',t:'« C’était magique ! » dit {N}, la tête pleine de couleurs.'}]},
+ automne:{icon:'🍁',label:'L’automne',title:'L’automne de {N}',pages:[
+  {e:'🍁',t:'L’automne est arrivé : les feuilles deviennent rouges, orange et dorées.'},
+  {e:'🍎',t:'{N} cueille une grosse pomme rouge dans le verger.'},
+  {e:'🍂',t:'{N} saute dans un gros tas de feuilles : FROUFROU !'},
+  {e:'🐿️',t:'Un écureuil cache des noisettes pour l’hiver. {N} le regarde travailler.'},
+  {e:'🎃',t:'Au marché, {N} choisit une belle citrouille ronde.'},
+  {e:'☕',t:'Le soir, une soupe chaude à la citrouille attend {N}. Miam !'}]},
+ chat:{icon:'🐱',label:'Le petit chat',title:'{N} et le petit chat',pages:[
+  {e:'🐱',t:'Dans le jardin, {N} entend un petit « miaou » tout triste.'},
+  {e:'🌿',t:'Sous le buisson, un petit chat regarde {N} avec de grands yeux.'},
+  {e:'🥛',t:'{N} lui donne un peu de lait et lui parle doucement.'},
+  {e:'🏠',t:'« Tu as une maison, petit chat ? » demande {N}.'},
+  {e:'👋',t:'La voisine arrive : « Mon chat ! Je le cherchais partout ! »'},
+  {e:'💛',t:'Le petit chat frotte sa tête contre la main de {N} : merci, {N} !'}]},
+ oiseau:{icon:'🐦',label:'L’oiseau en hiver',title:'{N} aide les oiseaux',pages:[
+  {e:'❄️',t:'En hiver, la neige recouvre tout. Les oiseaux cherchent à manger.'},
+  {e:'🌻',t:'{N} remplit la mangeoire de graines de tournesol.'},
+  {e:'🪟',t:'Derrière la fenêtre, {N} attend en silence...'},
+  {e:'🐦',t:'Un premier oiseau arrive ! Puis deux, puis trois !'},
+  {e:'🔴',t:'Un cardinal tout rouge ! « Bonjour, bel oiseau ! » dit {N}.'},
+  {e:'💛',t:'Chaque jour, {N} pense à ses amis les oiseaux.'}]},
+ plage:{icon:'🌊',label:'La plage',title:'{N} à la plage',pages:[
+  {e:'🌊',t:'Aujourd’hui, {N} va à la plage au bord du lac !'},
+  {e:'🏖️',t:'Les pieds dans le sable chaud, {N} rit : ça chatouille !'},
+  {e:'🏰',t:'{N} construit un grand château de sable avec des tours.'},
+  {e:'🐚',t:'Près de l’eau, {N} trouve un coquillage tout rose.'},
+  {e:'💦',t:'{N} trempe ses pieds dans l’eau fraîche : brrr, elle est froide !'},
+  {e:'🌅',t:'Le soleil descend sur le lac. « À bientôt, la plage ! » dit {N}.'}]},
+ camping:{icon:'⛺',label:'Le camping',title:'{N} fait du camping',pages:[
+  {e:'⛺',t:'Ce soir, {N} dort dans une tente au bord de la forêt !'},
+  {e:'🔥',t:'Papa prépare un petit feu. Les flammes dansent : cric, crac !'},
+  {e:'🍢',t:'{N} grille une guimauve toute dorée. Miam !'},
+  {e:'⭐',t:'Dans le ciel, mille étoiles brillent au-dessus de la tente.'},
+  {e:'🦉',t:'Un hibou chante dans la nuit : hou, hou... {N} écoute, bien au chaud.'},
+  {e:'🌅',t:'Au matin, les oiseaux réveillent {N} : cui, cui ! Quelle aventure !'}]},
+ papillon:{icon:'🦋',label:'Le papillon',title:'{N} et le papillon',pages:[
+  {e:'🦋',t:'Dans le jardin, un papillon orange vole de fleur en fleur.'},
+  {e:'🌸',t:'{N} le suit doucement, à pas de souris.'},
+  {e:'🌼',t:'Le papillon se pose sur une marguerite. {N} le regarde sans bouger.'},
+  {e:'💨',t:'Un petit vent... le papillon s’envole plus loin !'},
+  {e:'🌈',t:'Il traverse tout le jardin, jusqu’au grand tournesol.'},
+  {e:'👋',t:'« Au revoir, papillon ! » dit {N}. « Reviens me voir demain ! »'}]},
+ tristesse:{icon:'😢',label:'La tristesse',title:'{N} est triste',pages:[
+  {e:'😢',t:'Aujourd’hui, {N} a le cœur gros. Une larme coule sur sa joue.'},
+  {e:'🐰',t:'Lapin s’assoit près de {N} sans rien dire. Il est là, tout simplement.'},
+  {e:'💬',t:'« Tu peux pleurer, {N}. Moi aussi, parfois, je suis triste. »'},
+  {e:'🤗',t:'Maman prend {N} dans ses bras pour un gros câlin.'},
+  {e:'🌤️',t:'Petit à petit, le nuage gris s’en va. Le soleil revient dans le cœur de {N}.'},
+  {e:'💛',t:'{N} sourit de nouveau. Les jours gris passent toujours.'}]},
+ noir:{icon:'💡',label:'La peur du noir',title:'{N} et le noir',pages:[
+  {e:'🌙',t:'Ce soir, la chambre de {N} semble très sombre...'},
+  {e:'😨',t:'« J’ai un peu peur du noir », murmure {N}.'},
+  {e:'💡',t:'Maman allume une petite veilleuse en forme d’étoile.'},
+  {e:'⭐',t:'La veilleuse brille doucement. Les ombres deviennent toutes petites.'},
+  {e:'🐰',t:'Avec sa doudou et sa veilleuse, {N} se sent en sécurité.'},
+  {e:'💤',t:'{N} est {courageux} : le noir est devenu son ami. Bonne nuit, {N} !'}]},
+ ami:{icon:'🤝',label:'Un nouvel ami',title:'{N} se fait un ami',pages:[
+  {e:'🛝',t:'Au parc, {N} voit un enfant qui joue tout seul.'},
+  {e:'😳',t:'{N} hésite un peu... puis {il} s’approche doucement.'},
+  {e:'💬',t:'« Bonjour ! Je m’appelle {N}. Tu veux jouer avec moi ? »'},
+  {e:'⚽',t:'« Oui ! » L’enfant sourit. Ensemble, ils courent après le ballon.'},
+  {e:'😄',t:'Ils rient, ils glissent, ils jouent jusqu’au soir.'},
+  {e:'💛',t:'{N} a un nouvel ami. Dire bonjour, c’est magique !'}]},
+ colere:{icon:'😡',label:'La colère',title:'{N} est en colère',pages:[
+  {e:'😡',t:'La tour de blocs de {N} vient de tomber. {N} est {fache} !'},
+  {e:'🧱',t:'{N} tape du pied : « C’est pas juste ! »'},
+  {e:'🌬️',t:'Lapin dit : « Souffle doucement, {N}. Un... deux... trois... »'},
+  {e:'🔢',t:'{N} respire et compte jusqu’à dix. La colère devient plus petite.'},
+  {e:'🧱',t:'{N} reconstruit sa tour, encore plus haute qu’avant !'},
+  {e:'💛',t:'« Pardon, les blocs », dit {N} en souriant. Tout va mieux.'}]},
+ coiffeur:{icon:'✂️',label:'Le coiffeur',title:'{N} chez le coiffeur',pages:[
+  {e:'✂️',t:'Aujourd’hui, {N} va chez le coiffeur pour la première fois.'},
+  {e:'💺',t:'{N} s’assoit sur le grand fauteuil qui monte, qui monte !'},
+  {e:'🎽',t:'La coiffeuse met une grande cape : « On commence ! »'},
+  {e:'✂️',t:'Snip, snip, snip ! Les cheveux tombent comme de petits flocons.'},
+  {e:'🪞',t:'Dans le miroir, {N} se regarde : quelle belle coupe !'},
+  {e:'✨',t:'{N} est {fier} : la première coupe, c’est fait !'}]},
+ dent:{icon:'🦷',label:'La première dent',title:'{N} perd une dent',pages:[
+  {e:'🦷',t:'La dent de {N} bouge : elle gigote, elle gigote !'},
+  {e:'😮',t:'Un matin, en croquant sa pomme... la dent tombe !'},
+  {e:'✨',t:'{N} met sa dent sous l’oreiller, bien à l’abri.'},
+  {e:'🧚',t:'La fée des dents passera pendant la nuit, sans faire de bruit...'},
+  {e:'🌅',t:'Au matin, une belle pièce brillante attend {N} sous l’oreiller !'},
+  {e:'😁',t:'{N} sourit : il y a un trou rigolo dans son sourire. {N} grandit !'}]},
+ velo:{icon:'🚲',label:'Le vélo',title:'{N} apprend à faire du vélo',pages:[
+  {e:'🚲',t:'{N} reçoit un beau vélo rouge avec un casque brillant.'},
+  {e:'🪖',t:'D’abord, le casque : clic ! {N} est en sécurité.'},
+  {e:'😬',t:'{N} pédale... et tombe doucement dans l’herbe. Aïe, un petit bobo !'},
+  {e:'💪',t:'{N} se relève et réessaie. Encore, encore !'},
+  {e:'🎉',t:'Et voilà : {N} roule tout {seul}, sans les petites roues !'},
+  {e:'🏁',t:'« Je sais faire du vélo ! » crie {N}, {fier} comme tout.'}]},
+ natation:{icon:'🏊',label:'La natation',title:'{N} apprend à nager',pages:[
+  {e:'🏊',t:'À la piscine, l’eau brille comme un grand miroir bleu.'},
+  {e:'🛟',t:'{N} met ses flotteurs et tient la main de papa.'},
+  {e:'💦',t:'Les pieds d’abord : plouf ! L’eau est fraîche et rigolote.'},
+  {e:'🐸',t:'{N} saute comme une grenouille : un, deux, trois, plouf !'},
+  {e:'⭐',t:'Sur le dos, {N} flotte et regarde le ciel : comme une étoile de mer !'},
+  {e:'💛',t:'« J’ai nagé ! » dit {N}. L’eau est devenue son amie.'}]},
+ fraises:{icon:'🍓',label:'Les fraises',title:'{N} cueille des fraises',pages:[
+  {e:'🍓',t:'C’est l’été ! {N} va cueillir des fraises dans un grand champ.'},
+  {e:'🧺',t:'Avec son petit panier, {N} cherche les fraises bien rouges.'},
+  {e:'🌿',t:'Sous une feuille : une fraise ! Et là, une autre !'},
+  {e:'😋',t:'{N} en goûte une : sucrée comme un bonbon de soleil.'},
+  {e:'⚖️',t:'Le panier de {N} est presque plein : quel beau travail !'},
+  {e:'🏠',t:'À la maison, tout le monde goûte les fraises de {N}. Miam !'}]},
+ bebe:{icon:'👶',label:'Un bébé arrive',title:'{N} devient {grandfrere}',pages:[
+  {e:'👶',t:'Bientôt, un bébé va arriver dans la famille de {N} !'},
+  {e:'🤰',t:'Le ventre de maman grandit. {N} pose sa main : le bébé bouge !'},
+  {e:'🧸',t:'{N} choisit un de ses jouets pour l’offrir au bébé.'},
+  {e:'🏥',t:'Un matin, maman revient de l’hôpital avec le bébé dans ses bras.'},
+  {e:'👀',t:'{N} regarde le bébé : des petits doigts, un petit nez...'},
+  {e:'💛',t:'« Bienvenue, bébé ! » dit {N}, le cœur tout chaud.'}]}
 };
 var pnGender='g', pnStory='nuit', pnPages=[], pnI=0, pnChain=false;
 var PN_PILL='font-black text-sm sm:text-base px-4 py-2.5 rounded-full shadow transition border border-violet-200 ';
@@ -2534,7 +2674,7 @@ function pnBuildChooser(){var box=document.getElementById('pn-stories');if(!box)
 function pnSetGender(g){pnGender=g;pnPaint();}
 function pnSetStory(k){pnStory=k;pnPaint();}
 function pnCleanName(v){v=(v||'').replace(/[^A-Za-zÀ-ÿ' -]/g,'').trim().slice(0,20);return v?v.charAt(0).toUpperCase()+v.slice(1):'';}
-function pnFill(t,name){var f=pnGender==='f';return t.split('{N}').join(name).split('{lui}').join(f?'elle':'lui').split('{content}').join(f?'contente':'content').split('{pret}').join(f?'prête':'prêt').split('{fier}').join(f?'fière':'fier').split('{courageux}').join(f?'courageuse':'courageux').split('{seul}').join(f?'seule':'seul').split('{il}').join(f?'elle':'il');}
+function pnFill(t,name){var f=pnGender==='f';return t.split('{N}').join(name).split('{lui}').join(f?'elle':'lui').split('{content}').join(f?'contente':'content').split('{pret}').join(f?'prête':'prêt').split('{fier}').join(f?'fière':'fier').split('{courageux}').join(f?'courageuse':'courageux').split('{seul}').join(f?'seule':'seul').split('{il}').join(f?'elle':'il').split('{fache}').join(f?'fâchée':'fâché').split('{grandfrere}').join(f?'grande sœur':'grand frère');}
 function pnCreate(){var name=pnCleanName(document.getElementById('pn-name').value);var hint=document.getElementById('pn-hint');
  if(!name){hint.classList.remove('hidden');return;} hint.classList.add('hidden');
  var st=PN_STORIES[pnStory];pnPages=st.pages.map(function(p){return {e:p.e,t:pnFill(p.t,name)};});
