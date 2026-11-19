@@ -78,6 +78,19 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
 #lapin-menu.open{display:block;}
 #lapin-menu .lm-btn{display:block;width:100%;text-align:left;margin-top:8px;padding:11px 13px;border-radius:14px;font-weight:800;font-size:14px;color:#0c4a6e;background:#f0f9ff;border:1px solid #bae6fd;cursor:pointer;}
 #lapin-menu .lm-btn:hover{background:#e0f2fe;}
+#lapin-menu{width:324px;}
+.lm-log{margin-top:10px;height:190px;overflow-y:auto;background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:9px;display:flex;flex-direction:column;gap:7px;}
+.lm-msg{max-width:88%;padding:7px 10px;border-radius:13px;font-size:12.5px;line-height:1.45;font-weight:600;}
+.lm-bot{background:#fff;border:1px solid #e2e8f0;color:#334155;align-self:flex-start;border-bottom-left-radius:4px;}
+.lm-user{background:#0284c7;color:#fff;align-self:flex-end;border-bottom-right-radius:4px;}
+.lm-msg button{display:inline-block;margin-top:6px;padding:5px 10px;border-radius:9999px;background:#f59e0b;color:#1e293b;font-weight:900;font-size:11.5px;border:none;cursor:pointer;}
+.lm-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;}
+.lm-chip{padding:5px 9px;border-radius:9999px;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;font-size:11px;font-weight:800;cursor:pointer;}
+.lm-chip:hover{background:#ffedd5;}
+.lm-row{display:flex;gap:6px;margin-top:9px;}
+.lm-row input{flex:1;padding:9px 11px;border:2px solid #e2e8f0;border-radius:12px;font-size:13px;font-weight:600;min-width:0;}
+.lm-row input:focus{outline:none;border-color:#38bdf8;}
+.lm-row button{padding:9px 13px;border-radius:12px;background:#0284c7;color:#fff;font-weight:900;font-size:13px;border:none;cursor:pointer;}
 #helper-follower img{width:48px;height:48px;border-radius:9999px;border:3px solid #fff;box-shadow:0 4px 14px rgba(0,0,0,.28);display:block;}
 #helper-follower.helper-hi img{animation:helper-wave .6s ease;}
 @keyframes helper-wave{0%{transform:scale(1) rotate(0deg)}30%{transform:scale(1.18) rotate(-8deg)}60%{transform:scale(1.18) rotate(8deg)}100%{transform:scale(1.12) rotate(0deg)}}
@@ -2096,11 +2109,26 @@ document.getElementById('book-modal').addEventListener('click',function(e){if(e.
 <!-- Lapin guide : compagnon qui suit la souris (ordinateurs seulement) -->
 <button id="lapin-guide-btn" onclick="toggleLapinMenu()" aria-label="Guide Lapin"><img src="images/mascotte-lapin.png" alt="Lapin, ton guide"></button>
 <div id="lapin-menu">
-  <div style="font-weight:900;color:#92400e;font-size:15px">Salut ! Moi, c'est Lapin 🐰</div>
-  <div style="font-size:12px;color:#64748b;font-weight:700">Que veux-tu faire ?</div>
+  <div style="font-weight:900;color:#92400e;font-size:15px">Salut ! Moi, c’est Lapin 🐰</div>
+  <div style="font-size:12px;color:#64748b;font-weight:700">Que veux-tu faire ? Ou pose-moi une question !</div>
   <button class="lm-btn" onclick="lapinGo('histoire')">📖 Lire une histoire gratuite</button>
   <button class="lm-btn" onclick="lapinGo('jouer')">🎮 Jouer et apprendre</button>
   <button class="lm-btn" onclick="lapinGo('semaine')">⭐ Le livre gratuit de la semaine</button>
+  <div class="lm-log" id="lm-log">
+    <div class="lm-msg lm-bot">Salut ! 👋 Je connais tout le site d’Adam et ses amis : les livres, les jeux, les prix… Pose-moi une question, ou touche une question ci-dessous !</div>
+  </div>
+  <div class="lm-chips">
+    <button class="lm-chip" onclick="lapinChip(this)">📚 Les livres gratuits ?</button>
+    <button class="lm-chip" onclick="lapinChip(this)">🛒 Comment acheter ?</button>
+    <button class="lm-chip" onclick="lapinChip(this)">🎮 Les jeux en ligne ?</button>
+    <button class="lm-chip" onclick="lapinChip(this)">🎨 Envoyer un dessin ?</button>
+    <button class="lm-chip" onclick="lapinChip(this)">👶 Pour quel âge ?</button>
+    <button class="lm-chip" onclick="lapinChip(this)">✉️ Nous contacter ?</button>
+  </div>
+  <div class="lm-row">
+    <input id="lm-input" type="text" placeholder="Écris ta question…" onkeydown="if(event.key==='Enter')lapinSend()">
+    <button onclick="lapinSend()">Envoyer</button>
+  </div>
 </div>
 <script>
 function toggleLapinMenu(){document.getElementById('lapin-menu').classList.toggle('open');}
@@ -2108,10 +2136,45 @@ function lapinGo(dest){
   document.getElementById('lapin-menu').classList.remove('open');
   if(dest==='histoire'){switchSiteTab('livres');if(typeof filterBooks==='function')filterBooks('2-3');}
   else if(dest==='jouer'){switchSiteTab('apprendre');if(typeof switchLearnTab==='function')switchLearnTab('games');}
+  else if(dest==='parents'){switchSiteTab('apprendre');if(typeof switchLearnTab==='function')switchLearnTab('parents');}
+  else if(dest==='atelier'){switchSiteTab('atelier');}
+  else if(dest==='catalogue'){switchSiteTab('livres');}
   else if(dest==='semaine'){switchSiteTab('accueil');setTimeout(function(){var el=document.getElementById('spotlight-lundi');if(el)el.scrollIntoView({behavior:'smooth',block:'center'});},80);}
 }
+function lmNorm(t){return (t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+function lmSpotTitle(){var el=document.querySelector('#spotlight-lundi p');return el?el.innerText.replace(/[«»]/g,'').trim():'';}
+var LM_QA=[
+ {k:['coloriage','colorier','dessiner','atelier','crayon'],a:'🖍️ Deux livres de coloriage sont sur Etsy : « Coloriage de Noël » et « Coloriage des animaux ». Et dans l’Atelier du site, ton enfant peut dessiner et colorier en ligne !<br><button onclick="lapinGo(\'atelier\')">Ouvrir l’Atelier</button>'},
+ {k:['dessin','galerie','artiste','envoyer','publier le dessin','oeuvre'],a:'🎨 Pour voir le dessin de ton enfant dans le Coin des artistes : remplis le formulaire avec la photo de son dessin — il est publié automatiquement sur le site !<br><a href="coin-des-artistes.html" style="color:#0284c7;font-weight:900">Ouvrir le Coin des artistes →</a>'},
+ {k:['gratuit','gratuite','gratuits','lire','lecture','histoire'],a:'📚 Nos livres gratuits, à lire ET à écouter : « Les couleurs de Bébé Adam », « Les animaux et leurs sons », « Bonne nuit, Bébé Adam », « Le premier Noël de Bébé Adam », « L’étoile de Noël » et « La citrouille courageuse ».<br><button onclick="lapinGo(\'histoire\')">Voir les livres gratuits</button>'},
+ {k:['acheter','achat','prix','combien','coute','etsy','amazon','commander','payer','broche','papier','boutique'],a:'🛒 Nos livres payants sont en PDF sur Etsy (de 1,12 $ à 3,00 $ CA) : les aventures d’Adam, Halloween, Le jardin de la coopération et les coloriages. « Adam apprend à écouter » existe aussi en livre broché sur Amazon.ca.<br><button onclick="lapinGo(\'catalogue\')">Voir le catalogue</button>'},
+ {k:['jeu','jeux','jouer','en ligne','online','multijoueur','code','xo','adam-man','adam man','navale','tirs au but','soccer','football'],a:'🎮 Nos jeux en ligne se jouent avec un code à 4 chiffres à partager avec un ami : X O, Cherche Adam !, Bataille navale, Adam-Man et les Tirs au but ! Il y a aussi 10 petits jeux pour apprendre les mots et les nombres.<br><button onclick="lapinGo(\'jouer\')">Aller aux jeux</button>'},
+ {k:['semaine','lundi','nouveau','nouveaute','prochain','dernier livre','sortie'],a:function(){var t=lmSpotTitle();return '⭐ Chaque lundi, un nouveau livre Bébé Adam gratuit arrive sur le site !'+(t?' En ce moment : '+t+'.':'')+'<br><button onclick="lapinGo(\'semaine\')">Découvrir le livre de la semaine</button>';}},
+ {k:['age','ans','bebe','petit','convient','maternelle','prescolaire','garderie','cpe','pour quel'],a:'👶 Pour les 0 à 3 ans : la série Bébé Adam (couleurs, animaux, bonne nuit…). 🧒 Pour les 4 à 6 ans : les grandes aventures d’Adam et ses amis. Sur la page d’accueil, le bloc « Par où commencer ? » aide à choisir selon l’âge !'},
+ {k:['audio','ecouter','son','narration','voix','entendre'],a:'🔊 Oui ! Nos livres gratuits se lisent ET s’écoutent : ouvre un livre et appuie sur « Écoute l’histoire ». La narration est lente et claire, avec de vrais sons d’animaux.'},
+ {k:['pdf','telecharger','imprimer','telechargement','download'],a:'📄 Les livres gratuits ont un bouton « Télécharger le PDF » sur leur page — parfait pour imprimer ! Les PDF des livres payants arrivent avec l’achat sur Etsy.'},
+ {k:['blogue','blog','parents','article','conseils','mercredi','infolettre','education'],a:'✏️ « Le mercredi des parents » : chaque mercredi, un article de conseils pour les parents (crises de colère, écrans, langage…). Tu les trouves dans la section Parents !<br><button onclick="lapinGo(\'parents\')">Voir la section Parents</button>'},
+ {k:['contact','courriel','email','mail','ecrire','joindre','telephone'],a:'✉️ Écris-nous à <b>lgmdesign35@gmail.com</b> — ou passe par l’onglet Contact du site. On répond avec plaisir !'},
+ {k:['livraison','recevoir','poste','envoi','delai'],a:'📬 Les PDF sont des téléchargements instantanés sur Etsy, juste après l’achat. Le livre broché, lui, est livré par Amazon.ca.'},
+ {k:['merci'],a:'Avec plaisir ! 🐰💛 Autre chose ?'},
+ {k:['bonjour','salut','bonsoir','allo','coucou','qui es','ton nom','appelles','adam','site'],a:'Salut ! 👋 Moi, c’est Lapin, l’ami d’Adam. Ici, on lit des histoires en français québécois, on joue et on apprend — pour les enfants de 0 à 6 ans. Demande-moi les livres gratuits, les jeux ou les prix !'}
+];
+function lmAnswer(q){
+  var n=lmNorm(q),best=null,score=0;
+  for(var i=0;i<LM_QA.length;i++){var sc=0;for(var j=0;j<LM_QA[i].k.length;j++){if(n.indexOf(LM_QA[i].k[j])>=0)sc+=LM_QA[i].k[j].length;}
+    if(sc>score){score=sc;best=LM_QA[i];}}
+  if(!best)return 'Bonne question ! 🤔 Je ne sais pas encore y répondre. Écris-nous à <b>lgmdesign35@gmail.com</b> ou visite l’onglet Contact — on te répond avec plaisir ! En attendant, essaie une des questions ci-dessous.';
+  return (typeof best.a==='function')?best.a():best.a;
+}
+function lmAdd(html,who){var log=document.getElementById('lm-log');var d=document.createElement('div');d.className='lm-msg '+(who==='user'?'lm-user':'lm-bot');d.innerHTML=html;log.appendChild(d);log.scrollTop=log.scrollHeight;return d;}
+function lapinReply(q){
+  var typing=lmAdd('Lapin écrit…','bot');
+  setTimeout(function(){typing.innerHTML=lmAnswer(q);var log=document.getElementById('lm-log');log.scrollTop=log.scrollHeight;},650);
+}
+function lapinSend(){var inp=document.getElementById('lm-input');var q=inp.value.trim();if(!q)return;lmAdd(q.replace(/</g,'&lt;'),'user');inp.value='';lapinReply(q);}
+function lapinChip(btn){var q=btn.innerText;lmAdd(q,'user');lapinReply(q);}
 (function(){
-  var msgs=["Salut ! Moi, c'est Lapin 🐰",'📖 Un livre gratuit chaque lundi !','🎮 Essaie le jeu Adam-Man !','🎄 Deux livres de Noël gratuits !','🥅 Nouveau : les tirs au but !'];
+  var msgs=["Salut ! Moi, c’est Lapin 🐰",'📖 Un livre gratuit chaque lundi !','🎮 Essaie le jeu Adam-Man !','🎄 Deux livres de Noël gratuits !','🥅 Nouveau : les tirs au but !','💬 Touche-moi et pose-moi une question !'];
   var i=0;var b=document.getElementById('helper-bubble');if(!b)return;
   function cycle(){b.style.opacity='1';setTimeout(function(){b.style.opacity='0';},4200);i=(i+1)%msgs.length;b.innerText=msgs[i];}
   b.innerText=msgs[0];setInterval(cycle,6000);setTimeout(function(){b.style.opacity='1';},1200);setTimeout(function(){b.style.opacity='0';},5400);
