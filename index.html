@@ -677,6 +677,8 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
   </div>
 
   <!-- Comptines -->
+  <style>/* COMPTINES-TEMP-HIDDEN: section masquee temporairement — retirer ce bloc pour la retablir */
+  #ltab-comptines,#section-comptines{display:none!important}</style>
   <div id="section-comptines" class="learn-section hidden space-y-6">
     <div class="bg-gradient-to-r from-rose-500 via-pink-500 to-fuchsia-500 rounded-3xl p-6 sm:p-8 text-white shadow-xl space-y-2">
       <h3 class="brand-font text-2xl sm:text-3xl font-black">🎵 Comptines en musique</h3>
@@ -2185,7 +2187,7 @@ var LM_QA=[
  {k:['dessin','galerie','artiste','envoyer','publier le dessin','oeuvre'],a:'🎨 Pour voir le dessin de ton enfant dans le Coin des artistes : remplis le formulaire avec la photo de son dessin — il est publié automatiquement sur le site !<br><a href="coin-des-artistes.html" style="color:#0284c7;font-weight:900">Ouvrir le Coin des artistes →</a>'},
  {k:['gratuit','gratuite','gratuits','lire','lecture','histoire'],a:'📚 Nos livres gratuits, à lire ET à écouter : « Les couleurs de Bébé Adam », « Les animaux et leurs sons », « Bonne nuit, Bébé Adam », « Le premier Noël de Bébé Adam », « L’étoile de Noël » et « La citrouille courageuse ».<br><button onclick="lapinGo(\'histoire\')">Voir les livres gratuits</button>'},
  {k:['acheter','achat','prix','combien','coute','etsy','amazon','commander','payer','broche','papier','boutique'],a:'🛒 Nos livres payants sont en PDF sur Etsy (de 1,12 $ à 3,00 $ CA) : les aventures d’Adam, Halloween, Le jardin de la coopération et les coloriages. « Adam apprend à écouter » existe aussi en livre broché sur Amazon.ca.<br><button onclick="lapinGo(\'catalogue\')">Voir le catalogue</button>'},
- {k:['chanson','comptine','musique','berceuse','chanter'],a:'🎵 Nos comptines traditionnelles en boîte à musique : Frère Jacques, Au clair de la lune, Petit escargot… douces pour danser ou s’endormir !<br><button onclick="lapinGo(\'comptines\')">Écouter les comptines</button>'},
+ {k:['chanson','comptine','musique','berceuse','chanter'],a:'🎵 Nos comptines font une petite pause… elles reviennent bientôt, encore plus belles ! En attendant, écoute une belle histoire 📖'},
  {k:['jeu','jeux','jouer','en ligne','online','multijoueur','code','xo','adam-man','adam man','navale','tirs au but','soccer','football'],a:'🎮 Nos jeux en ligne se jouent avec un code à 4 chiffres à partager avec un ami : X O, Cherche Adam !, Bataille navale, Adam-Man et les Tirs au but ! Il y a aussi 10 petits jeux pour apprendre les mots et les nombres.<br><button onclick="lapinGo(\'jouer\')">Aller aux jeux</button>'},
  {k:['semaine','lundi','nouveau','nouveaute','prochain','dernier livre','sortie'],a:function(){var t=lmSpotTitle();return '⭐ Chaque lundi, un nouveau livre Bébé Adam gratuit arrive sur le site !'+(t?' En ce moment : '+t+'.':'')+'<br><button onclick="lapinGo(\'semaine\')">Découvrir le livre de la semaine</button>';}},
  {k:['age','ans','bebe','petit','convient','maternelle','prescolaire','garderie','cpe','pour quel'],a:'👶 Pour les 0 à 3 ans : la série Bébé Adam (couleurs, animaux, bonne nuit…). 🧒 Pour les 4 à 6 ans : les grandes aventures d’Adam et ses amis. Sur la page d’accueil, le bloc « Par où commencer ? » aide à choisir selon l’âge !'},
@@ -2234,7 +2236,7 @@ function lmMic(){
 if(!(window.SpeechRecognition||window.webkitSpeechRecognition)){var mb=document.getElementById('lm-mic');if(mb)mb.style.display='none';}
 var lmGreet=document.querySelector('#lm-log .lm-bot');if(lmGreet)lmAttachSpk(lmGreet);
 (function(){
-  var msgs=["Salut ! Moi, c’est Lapin 🐰",'📖 Un livre gratuit chaque lundi !','🎮 Essaie le jeu Adam-Man !','🎄 Deux livres de Noël gratuits !','🥅 Nouveau : les tirs au but !','🎵 Nouveau : les comptines en musique !','💬 Touche-moi et pose-moi une question !'];
+  var msgs=["Salut ! Moi, c’est Lapin 🐰",'📖 Un livre gratuit chaque lundi !','🎮 Essaie le jeu Adam-Man !','🎄 Deux livres de Noël gratuits !','🥅 Nouveau : les tirs au but !','💬 Touche-moi et pose-moi une question !'];
   var i=0;var b=document.getElementById('helper-bubble');if(!b)return;
   function cycle(){b.style.opacity='1';setTimeout(function(){b.style.opacity='0';},4200);i=(i+1)%msgs.length;b.innerText=msgs[i];}
   b.innerText=msgs[0];setInterval(cycle,6000);setTimeout(function(){b.style.opacity='1';},1200);setTimeout(function(){b.style.opacity='0';},5400);
