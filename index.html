@@ -349,7 +349,7 @@ aBuild();
   </div>
     <div class="bg-white border-2 border-amber-200 rounded-3xl p-5 sm:p-6 shadow-sm space-y-3">
   <h3 class="brand-font text-xl sm:text-2xl font-bold text-slate-800">🗞️ Nouveau : Le Petit Journal d'Adam !</h3>
-  <p class="text-slate-600 font-semibold">Chaque vendredi, un journal gratuit pour les enfants : une histoire à suivre, des jeux, un coloriage à imprimer et un concours de dessin. Le numéro 1 est arrivé !</p>
+  <p class="text-slate-600 font-semibold">Un journal gratuit pour les enfants : une histoire à suivre, des jeux, un coloriage à imprimer et un concours de dessin. Le numéro 1 est arrivé !</p>
   <div class="flex flex-wrap gap-2">
     <a href="journal-no-1.html" class="pop-btn inline-block bg-amber-400 text-slate-900 font-extrabold px-4 py-2 rounded-xl shadow">Lire le numéro 1</a>
     <a href="journal.html" class="pop-btn inline-block bg-sky-100 text-qcblue-700 font-extrabold px-4 py-2 rounded-xl">Découvrir le journal</a>
@@ -360,7 +360,7 @@ aBuild();
       <!-- SPOTLIGHT-LUNDI:BEGIN — le livre gratuit de la semaine, mis à jour chaque lundi -->
       <a href="bebe-adam-animaux.html" class="flex-none"><img src="images/bebe-animaux/page-01.jpg" alt="Couverture du livre Les animaux et leurs sons" class="w-36 sm:w-44 rounded-2xl border-4 border-amber-300 shadow-lg" loading="lazy"></a>
       <div class="flex-1 space-y-3 text-center sm:text-left">
-        <h2 class="brand-font text-2xl font-bold">📖 Le livre gratuit de la semaine</h2>
+        <h2 class="brand-font text-2xl font-bold">📖 Le livre gratuit à découvrir</h2>
         <p class="text-base font-black text-amber-300">« Les animaux et leurs sons » 🐶🐱 — le nouveau livre Bébé Adam !</p>
         <p class="text-sm text-sky-100 leading-relaxed">Chaque lundi, un nouveau livre Bébé Adam gratuit arrive sur le site, à lire et à écouter avec votre enfant — avec les vrais sons des animaux. Aucune inscription : cliquez et lisez !</p>
         <div class="flex flex-wrap gap-3 justify-center sm:justify-start">
@@ -373,7 +373,7 @@ aBuild();
   </div>
   <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-4 text-center">
     <h2 class="brand-font text-2xl font-bold text-qcblue-700">📱 Suivez Adam et ses amis !</h2>
-    <p class="text-sm text-slate-600 max-w-2xl mx-auto">Des vidéos, des histoires et les nouveaux livres chaque semaine — rejoignez la famille LGMDesign35 :</p>
+    <p class="text-sm text-slate-600 max-w-2xl mx-auto">Des vidéos, des histoires et les nouveaux livres — rejoignez la famille LGMDesign35 :</p>
     <div class="flex flex-wrap gap-3 justify-center">
       <a href="https://www.tiktok.com/@lgm.design" target="_blank" rel="noopener" class="px-5 py-2.5 bg-slate-900 text-white font-black text-sm rounded-2xl shadow pop-btn">🎵 TikTok</a>
       <a href="https://www.instagram.com/lgmdesign35/" target="_blank" rel="noopener" class="px-5 py-2.5 bg-gradient-to-r from-pink-500 to-amber-500 text-white font-black text-sm rounded-2xl shadow pop-btn">📸 Instagram</a>
@@ -1211,7 +1211,7 @@ aBuild();
       <button onclick="openBookModal('coloanimaux')" class="mt-4 w-full py-2.5 bg-sky-50 hover:bg-sky-100 text-sky-700 font-bold text-xs rounded-xl transition-all border border-sky-200">CONSULTER LA FICHE</button>
     </div>
 </div>
-  <p id="books-empty-msg" class="hidden text-center text-sm font-bold text-slate-500 bg-white border border-slate-200 rounded-2xl p-6">De nouveaux livres pour cet âge arrivent bientôt ! En attendant, découvre nos histoires gratuites à lire et écouter, et nos jeux d'éveil.</p>
+  <p id="books-empty-msg" class="hidden text-center text-sm font-bold text-slate-500 bg-white border border-slate-200 rounded-2xl p-6">Découvre nos histoires gratuites à lire et écouter, et nos jeux d'éveil.</p>
   </section>
 
 <!-- ================= PAGE : NOTRE HISTOIRE ================= -->
@@ -2329,7 +2329,7 @@ document.getElementById('book-modal').addEventListener('click',function(e){if(e.
   <button id="lm-voice-btn" onclick="lmToggleVoice()">🔊 Voix : activée</button>
   <button class="lm-btn" onclick="lapinGo('histoire')">📖 Lire une histoire gratuite</button>
   <button class="lm-btn" onclick="lapinGo('jouer')">🎮 Jouer et apprendre</button>
-  <button class="lm-btn" onclick="lapinGo('semaine')">⭐ Le livre gratuit de la semaine</button>
+  <button class="lm-btn" onclick="lapinGo('semaine')">⭐ Le livre gratuit à découvrir</button>
   <div class="lm-log" id="lm-log">
     <div class="lm-msg lm-bot">Salut ! 👋 Je connais tout le site d’Adam et ses amis : les livres, les jeux, les prix… Pose-moi une question, ou touche une question ci-dessous !</div>
   </div>
@@ -2370,13 +2370,13 @@ var LM_QA=[
  {k:['touche','scene','scène','ferme','toucher'],a:'👆 « Touche et écoute » : ton enfant touche les animaux de la ferme et entend leur nom et leur vrai son — parfait pour les tout-petits qui ne lisent pas encore !<br><button onclick="lapinGo(\'scenes\')">Ouvrir les scènes</button>'},
  {k:['gratuit','gratuite','gratuits','lire','lecture','histoire'],a:'📚 Nos livres gratuits, à lire ET à écouter : « Les couleurs de Bébé Adam », « Les animaux et leurs sons », « Bonne nuit, Bébé Adam », « Le premier Noël de Bébé Adam », « L’étoile de Noël » et « La citrouille courageuse ».<br><button onclick="lapinGo(\'histoire\')">Voir les livres gratuits</button>'},
  {k:['acheter','achat','prix','combien','coute','etsy','amazon','commander','payer','broche','papier','boutique'],a:'🛒 Nos livres payants sont en PDF sur Etsy (de 1,12 $ à 3,00 $ CA) : les aventures d’Adam, Halloween, Le jardin de la coopération et les coloriages. « Adam apprend à écouter » existe aussi en livre broché sur Amazon.ca.<br><button onclick="lapinGo(\'catalogue\')">Voir le catalogue</button>'},
- {k:['chanson','comptine','musique','berceuse','chanter'],a:'🎵 Nos comptines font une petite pause… elles reviennent bientôt, encore plus belles ! En attendant, écoute une belle histoire 📖'},
+ {k:['chanson','comptine','musique','berceuse','chanter'],a:'🎵 Nos comptines font une petite pause… En attendant, écoute une belle histoire 📖'},
  {k:['jeu','jeux','jouer','en ligne','online','multijoueur','code','xo','adam-man','adam man','navale','tirs au but','soccer','football'],a:'🎮 Nos jeux en ligne se jouent avec un code à 4 chiffres à partager avec un ami : X O, Cherche Adam !, Bataille navale, Adam-Man et les Tirs au but ! Il y a aussi 10 petits jeux pour apprendre les mots et les nombres.<br><button onclick="lapinGo(\'jouer\')">Aller aux jeux</button>'},
- {k:['semaine','lundi','nouveau','nouveaute','prochain','dernier livre','sortie'],a:function(){var t=lmSpotTitle();return '⭐ Chaque lundi, un nouveau livre Bébé Adam gratuit arrive sur le site !'+(t?' En ce moment : '+t+'.':'')+'<br><button onclick="lapinGo(\'semaine\')">Découvrir le livre de la semaine</button>';}},
+ {k:['semaine','lundi','nouveau','nouveaute','prochain','dernier livre','sortie'],a:function(){var t=lmSpotTitle();return '⭐ Chaque lundi, un nouveau livre Bébé Adam gratuit arrive sur le site !'+(t?' En ce moment : '+t+'.':'')+'<br><button onclick="lapinGo(\'semaine\')">Découvrir le livre gratuit</button>';}},
  {k:['age','ans','bebe','petit','convient','maternelle','prescolaire','garderie','cpe','pour quel'],a:'👶 Pour les 0 à 3 ans : la série Bébé Adam (couleurs, animaux, bonne nuit…). 🧒 Pour les 4 à 6 ans : les grandes aventures d’Adam et ses amis. Sur la page d’accueil, le bloc « Par où commencer ? » aide à choisir selon l’âge !'},
  {k:['audio','ecouter','son','narration','voix','entendre'],a:'🔊 Oui ! Nos livres gratuits se lisent ET s’écoutent : ouvre un livre et appuie sur « Écoute l’histoire ». La narration est lente et claire, avec de vrais sons d’animaux.'},
  {k:['pdf','telecharger','imprimer','telechargement','download'],a:'📄 Les livres gratuits ont un bouton « Télécharger le PDF » sur leur page — parfait pour imprimer ! Les PDF des livres payants arrivent avec l’achat sur Etsy.'},
- {k:['blogue','blog','parents','article','conseils','mercredi','infolettre','education'],a:'✏️ « Le mercredi des parents » : chaque mercredi, un article de conseils pour les parents (crises de colère, écrans, langage…). Tu les trouves dans la section Parents !<br><button onclick="lapinGo(\'parents\')">Voir la section Parents</button>'},
+ {k:['blogue','blog','parents','article','conseils','mercredi','infolettre','education'],a:'✏️ « Le mercredi des parents » : des articles de conseils pour les parents (crises de colère, écrans, langage…). Tu les trouves dans la section Parents !<br><button onclick="lapinGo(\'parents\')">Voir la section Parents</button>'},
  {k:['contact','courriel','email','mail','ecrire','joindre','telephone'],a:'✉️ Écris-nous à <b>lgmdesign35@gmail.com</b> — ou passe par l’onglet Contact du site. On répond avec plaisir !'},
  {k:['livraison','recevoir','poste','envoi','delai'],a:'📬 Les PDF sont des téléchargements instantanés sur Etsy, juste après l’achat. Le livre broché, lui, est livré par Amazon.ca.'},
  {k:['merci'],a:'Avec plaisir ! 🐰💛 Autre chose ?'},
@@ -2419,7 +2419,7 @@ function lmMic(){
 if(!(window.SpeechRecognition||window.webkitSpeechRecognition)){var mb=document.getElementById('lm-mic');if(mb)mb.style.display='none';}
 var lmGreet=document.querySelector('#lm-log .lm-bot');if(lmGreet)lmAttachSpk(lmGreet);
 (function(){
-  var msgs=["Salut ! Moi, c’est Lapin 🐰",'📖 Un livre gratuit chaque lundi !','🎮 Essaie le jeu Adam-Man !','🎄 Deux livres de Noël gratuits !','👆 Nouveau : touche et écoute les animaux !','✨ Nouveau : une histoire avec ton prénom !','🥅 Nouveau : les tirs au but !','💬 Touche-moi et pose-moi une question !'];
+  var msgs=["Salut ! Moi, c’est Lapin 🐰",'📖 Des livres gratuits à découvrir !','🎮 Essaie le jeu Adam-Man !','🎄 Deux livres de Noël gratuits !','👆 Nouveau : touche et écoute les animaux !','✨ Nouveau : une histoire avec ton prénom !','🥅 Nouveau : les tirs au but !','💬 Touche-moi et pose-moi une question !'];
   var i=0;var b=document.getElementById('helper-bubble');if(!b)return;
   function cycle(){b.style.opacity='1';setTimeout(function(){b.style.opacity='0';},4200);i=(i+1)%msgs.length;b.innerText=msgs[i];}
   b.innerText=msgs[0];setInterval(cycle,6000);setTimeout(function(){b.style.opacity='1';},1200);setTimeout(function(){b.style.opacity='0';},5400);
@@ -2515,7 +2515,7 @@ if(!('speechSynthesis' in window)){var l1=document.getElementById('pn-listen'),l
 /* ===== PROMO BAR : un message différent toutes les 30 minutes ===== */
 var PROMO_MSGS=[
  {g:'bg-gradient-to-r from-red-700 via-red-600 to-green-700',t:'🎄 Noël approche ! Nos deux livres de Noël sont <span class="text-amber-300 font-black">GRATUITS</span> à lire et à écouter 🎁',b:[{t:'⭐ L’étoile de Noël (4-6 ans)',h:'etoile-de-noel.html',c:'px-3 py-1 bg-white text-red-700 text-xs font-black rounded-full shadow pop-btn whitespace-nowrap'},{t:'👶 Le premier Noël de Bébé Adam (0-3 ans)',h:'bebe-adam-noel.html',c:'px-3 py-1 bg-white/20 border border-white/60 text-white text-xs font-black rounded-full pop-btn whitespace-nowrap'}]},
- {g:'bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500',t:'📖 Le livre gratuit de la semaine t’attend !',spot:1,b:[{t:'⭐ Découvrir le livre',go:'semaine',c:'px-3 py-1 bg-white text-orange-700 text-xs font-black rounded-full shadow pop-btn whitespace-nowrap'}]},
+ {g:'bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500',t:'📖 Le livre gratuit à découvrir t’attend !',spot:1,b:[{t:'⭐ Découvrir le livre',go:'semaine',c:'px-3 py-1 bg-white text-orange-700 text-xs font-black rounded-full shadow pop-btn whitespace-nowrap'}]},
  {g:'bg-gradient-to-r from-violet-600 via-purple-500 to-fuchsia-500',t:'✨ Une histoire avec le prénom de ton enfant : 40 histoires gratuites à écouter !',b:[{t:'✨ Créer mon histoire',go:'perso',c:'px-3 py-1 bg-white text-violet-700 text-xs font-black rounded-full shadow pop-btn whitespace-nowrap'}]},
  {g:'bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-500',t:'👆 22 scènes interactives pour les tout-petits : touche, écoute, découvre !',b:[{t:'👆 Explorer les scènes',go:'scenes',c:'px-3 py-1 bg-white text-emerald-700 text-xs font-black rounded-full shadow pop-btn whitespace-nowrap'}]},
  {g:'bg-gradient-to-r from-blue-600 via-indigo-500 to-violet-500',t:'🎮 5 jeux gratuits, en ligne avec un ami ou en solo !',b:[{t:'🎮 Jouer',go:'jeux',c:'px-3 py-1 bg-white text-indigo-700 text-xs font-black rounded-full shadow pop-btn whitespace-nowrap'}]},
@@ -2526,7 +2526,7 @@ function promoRender(){var bar=document.getElementById('promo-bar');if(!bar||bar
  var idx=Math.floor(Date.now()/1800000)%PROMO_MSGS.length;if(idx===promoCur)return;promoCur=idx;var m=PROMO_MSGS[idx];
  bar.className=m.g+' text-white';
  var txt=m.t;
- if(m.spot){var el=document.querySelector('#spotlight-lundi p');var st=el?el.innerText.replace(/[«»]/g,'').trim():'';if(st)txt='📖 Le livre gratuit de la semaine : <span class="text-yellow-200 font-black">'+st+'</span>';}
+ if(m.spot){var el=document.querySelector('#spotlight-lundi p');var st=el?el.innerText.replace(/[«»]/g,'').trim():'';if(st)txt='📖 Le livre gratuit à découvrir : <span class="text-yellow-200 font-black">'+st+'</span>';}
  document.getElementById('promo-text').innerHTML=txt;
  var hb='';m.b.forEach(function(x){if(x.h)hb+='<a href="'+x.h+'" class="'+x.c+'">'+x.t+'</a>';else hb+='<button onclick="lapinGo(\''+x.go+'\')" class="'+x.c+'">'+x.t+'</button>';});
  document.getElementById('promo-btns').innerHTML=hb;}
