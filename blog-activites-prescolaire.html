@@ -55,6 +55,51 @@ h1,h2,h3,.brand-font{font-family:'Fredoka',sans-serif}
   <p class="mt-6 text-xs font-bold uppercase tracking-wider text-amber-700">Blogue des parents • Français québécois • 0 à 6 ans</p>
   <h1 class="brand-font text-3xl font-bold text-slate-800 mt-2">5 activités préscolaires pour préparer votre enfant à la maternelle au Québec</h1>
   <p class="text-sm text-slate-500 mt-2">Par LGMDesign35 • 15 novembre 2026 • 5 minutes de lecture</p>
+<!-- ===== Lecteur audio de l'article : voix naturelle enregistrée (Aria) ===== -->
+<style>
+#ap-card{scroll-margin-top:90px}
+.ap-chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:2px solid #dbeafe;color:#1e3a5f;font-weight:800;font-size:12.5px;border-radius:9999px;padding:6px 11px;cursor:pointer;font-family:inherit}
+.ap-chip.on{background:#0055a5;border-color:#0055a5;color:#fff}
+.ap-h2-btn{margin-left:8px;background:#e0f2fe;border:none;border-radius:9999px;padding:3px 10px;font-size:13px;cursor:pointer;vertical-align:middle}
+h2.ap-on{background:#eef6ff;border-radius:10px;box-shadow:0 0 0 6px #eef6ff}
+</style>
+<div id="ap-card" style="background:linear-gradient(135deg,#eef6ff,#f0fdfa);border:2px solid #bfdbfe;border-radius:18px;padding:16px;margin:20px 0;">
+  <p style="font-weight:900;color:#1e3a5f;margin:0 0 2px;font-size:17px;">🎧 Écouter l'article</p>
+  <p style="color:#64748b;font-weight:700;font-size:13px;margin:0 0 12px;">Voix naturelle enregistrée, pleine d'énergie — touchez un chapitre pour commencer exactement là. Durée totale : 3 min 38 s</p>
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+    <button id="ap-prev" onclick="apPrev()" aria-label="Chapitre précédent" style="background:#fff;border:2px solid #bfdbfe;border-radius:9999px;width:42px;height:42px;font-size:16px;cursor:pointer;">⏮</button>
+    <button id="ap-main" onclick="apToggle()" aria-label="Lecture ou pause" style="background:#0055a5;color:#fff;border:none;border-radius:9999px;width:56px;height:56px;font-size:24px;cursor:pointer;box-shadow:0 6px 16px rgba(0,85,165,.35);">▶</button>
+    <button id="ap-next" onclick="apNext()" aria-label="Chapitre suivant" style="background:#fff;border:2px solid #bfdbfe;border-radius:9999px;width:42px;height:42px;font-size:16px;cursor:pointer;">⏭</button>
+    <span id="ap-time" style="font-weight:800;color:#1e3a5f;font-size:13.5px;">0:00 / 0:00</span>
+    <button id="ap-speed" onclick="apSpeed()" aria-label="Vitesse de lecture" style="background:#fff;border:2px solid #bfdbfe;color:#1e3a5f;font-weight:900;border-radius:9999px;padding:8px 12px;font-size:13px;cursor:pointer;font-family:inherit;">Vitesse 1×</button>
+  </div>
+  <div id="ap-track" onclick="apSeek(event)" style="background:#dbeafe;height:10px;border-radius:9999px;margin:12px 0 8px;cursor:pointer;"><div id="ap-fill" style="background:#0055a5;height:10px;border-radius:9999px;width:0%;"></div></div>
+  <p id="ap-now" style="font-weight:800;color:#1e3a5f;font-size:13.5px;margin:0 0 10px;">Prêt à écouter</p>
+  <div id="ap-chips" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
+  <audio id="ap-audio" preload="none"></audio>
+</div>
+<script>
+var AP_SECTIONS=[{"t": "Introduction", "src": "audio/blog/activites-prescolaire/01.mp3", "d": 28.8}, {"t": "1. Trier et classer, comme au CPE", "src": "audio/blog/activites-prescolaire/02.mp3", "d": 26.9}, {"t": "2. Raconter sa journée en 3 images", "src": "audio/blog/activites-prescolaire/03.mp3", "d": 28.8}, {"t": "3. Compter partout, sans compter pour compter", "src": "audio/blog/activites-prescolaire/04.mp3", "d": 33.3}, {"t": "4. Découper, coller, enfiler", "src": "audio/blog/activites-prescolaire/05.mp3", "d": 36.8}, {"t": "5. Jouer à faire semblant", "src": "audio/blog/activites-prescolaire/06.mp3", "d": 64.0}];
+var apIdx=-1,apSpeeds=[0.75,1,1.25],apSpd=1;
+var apA=document.getElementById('ap-audio');
+function apFmt(s){s=Math.max(0,Math.round(s||0));return Math.floor(s/60)+':'+('0'+(s%60)).slice(-2);}
+function apBuild(){var c=document.getElementById('ap-chips');AP_SECTIONS.forEach(function(sec,i){var b=document.createElement('button');b.className='ap-chip';b.id='ap-chip-'+i;b.textContent=(i===0?'🎧 ':'🔊 ')+sec.t+' · '+apFmt(sec.d);b.onclick=function(){apPlay(i);};c.appendChild(b);});
+ document.querySelectorAll('h2').forEach(function(h,i){if(i>=AP_SECTIONS.length-1)return;var b=document.createElement('button');b.className='ap-h2-btn';b.textContent='🔊 Écouter';b.setAttribute('aria-label','Écouter à partir de cette section');b.onclick=function(){apPlay(i+1);document.getElementById('ap-card').scrollIntoView({behavior:'smooth',block:'center'});};h.appendChild(b);});}
+function apMark(){AP_SECTIONS.forEach(function(sec,i){var ch=document.getElementById('ap-chip-'+i);if(ch)ch.className='ap-chip'+(i===apIdx?' on':'');});
+ document.querySelectorAll('h2').forEach(function(h,i){h.classList.toggle('ap-on',i===apIdx-1);});
+ var now=document.getElementById('ap-now');if(apIdx>=0)now.textContent='Chapitre '+(apIdx+1)+' / '+AP_SECTIONS.length+' — '+AP_SECTIONS[apIdx].t;}
+function apPlay(i){apIdx=i;apA.src=AP_SECTIONS[i].src;apA.playbackRate=apSpd;apA.play();document.getElementById('ap-main').textContent='⏸';apMark();}
+function apToggle(){if(apIdx<0){apPlay(0);return;}if(apA.paused){apA.play();document.getElementById('ap-main').textContent='⏸';}else{apA.pause();document.getElementById('ap-main').textContent='▶';}}
+function apNext(){if(apIdx<AP_SECTIONS.length-1)apPlay(apIdx+1);}
+function apPrev(){if(apIdx>0)apPlay(apIdx-1);else if(apIdx===0){apA.currentTime=0;}}
+function apSpeed(){var i=apSpeeds.indexOf(apSpd);apSpd=apSpeeds[(i+1)%apSpeeds.length];apA.playbackRate=apSpd;document.getElementById('ap-speed').textContent='Vitesse '+String(apSpd).replace('.',',')+'×';}
+function apSeek(e){if(apIdx<0||!apA.duration)return;var r=document.getElementById('ap-track').getBoundingClientRect();var p=(e.clientX-r.left)/r.width;apA.currentTime=p*apA.duration;}
+apA.addEventListener('timeupdate',function(){if(apA.duration){document.getElementById('ap-fill').style.width=(apA.currentTime/apA.duration*100)+'%';document.getElementById('ap-time').textContent=apFmt(apA.currentTime)+' / '+apFmt(apA.duration);}});
+apA.addEventListener('ended',function(){if(apIdx<AP_SECTIONS.length-1){apPlay(apIdx+1);}else{document.getElementById('ap-main').textContent='▶';document.getElementById('ap-now').textContent='Lecture terminée — touchez un chapitre pour réécouter';}});
+apA.addEventListener('pause',function(){if(!apA.ended)document.getElementById('ap-main').textContent='▶';});
+apBuild();
+</script>
+
 
   <p class="mt-6 text-slate-700 leading-relaxed">La maternelle approche, et beaucoup de parents se demandent : est-ce que mon enfant est prêt ? Au Québec, la maternelle mise d'abord sur le jeu, le langage et l'autonomie — pas sur les cahiers d'exercices ni les écrans. Bonne nouvelle : les meilleures préparations se font à la maison, avec ce que vous avez déjà. Voici 5 activités simples, testées en famille et en CPE.</p>
 
@@ -101,42 +146,5 @@ h1,h2,h3,.brand-font{font-family:'Fredoka',sans-serif}
 </div>
 <!-- CHRISTMAS: neige de Noël — supprimer cette ligne pour revenir au thème normal -->
 <script src="christmas.js" defer></script>
-<!-- ===== Écouter la page : lecture à voix haute lente et claire (fr-CA, vitesse 0.85) ===== -->
-<div id="tts-widget" style="position:fixed;right:14px;bottom:14px;z-index:9000;display:flex;gap:6px;align-items:center;">
-  <button id="tts-main" onclick="ttsToggle()" aria-label="Écouter la page à voix haute" style="background:#0055a5;color:#fff;font-weight:900;font-size:14px;border:none;border-radius:9999px;padding:11px 18px;box-shadow:0 6px 18px rgba(0,0,0,.28);cursor:pointer;font-family:inherit;">🔊 Écouter la page</button>
-  <button id="tts-stop" onclick="ttsStopAll()" aria-label="Arrêter la lecture" style="display:none;background:#fff;color:#b91c1c;font-weight:900;font-size:14px;border:2px solid #fecaca;border-radius:9999px;padding:9px 13px;box-shadow:0 6px 18px rgba(0,0,0,.22);cursor:pointer;font-family:inherit;">⏹</button>
-</div>
-<script>
-(function(){
- var synth=window.speechSynthesis;
- if(!synth){var w=document.getElementById('tts-widget');if(w)w.style.display='none';return;}
- var chunks=[],idx=0,state='idle',resumeTimer=null;
- function voice(){var vs=synth.getVoices();for(var i=0;i<vs.length;i++){if(vs[i].lang&&vs[i].lang.toLowerCase().indexOf('fr-ca')===0)return vs[i];}for(var j=0;j<vs.length;j++){if(vs[j].lang&&vs[j].lang.toLowerCase().indexOf('fr')===0)return vs[j];}return null;}
- function root(){var vis=document.querySelector('.site-page:not(.hidden)');if(vis)return vis;var m=document.querySelector('main');return m||document.body;}
- function collect(){var r=root();var els=r.querySelectorAll('h1,h2,h3,h4,p,li,blockquote,figcaption');var texts=[];
-  els.forEach(function(el){if(el.closest('button,nav,script,style,#tts-widget'))return;if(el.querySelector('p,h1,h2,h3,h4,li,blockquote'))return;var t=(el.innerText||'').replace(/\s+/g,' ').trim();if(t.length>1)texts.push(t);});
-  var parts=[];texts.forEach(function(t){var ms=t.match(/[^.!?…]+[.!?…]+["»]?\s*|[^.!?…]+$/g);if(ms)ms.forEach(function(x){parts.push(x);});else parts.push(t);});
-  chunks=[];var cur='';parts.forEach(function(p){p=p.trim();if(!p)return;if((cur+' '+p).length>190){if(cur)chunks.push(cur);cur=p;}else{cur=cur?cur+' '+p:p;}});if(cur)chunks.push(cur);}
- function ui(){var b=document.getElementById('tts-main'),s=document.getElementById('tts-stop');if(!b||!s)return;
-  if(state==='idle'){b.innerHTML='🔊 Écouter la page';s.style.display='none';}
-  else if(state==='playing'){b.innerHTML='⏸ Pause';s.style.display='block';}
-  else{b.innerHTML='▶ Reprendre';s.style.display='block';}}
- function noVoice(){stopAll();var b=document.getElementById('tts-main');if(b)b.innerHTML='🔇 Voix indisponible ici';setTimeout(function(){if(state==='idle')ui();},4000);}
- function speak(){if(idx>=chunks.length){stopAll();return;}
-  var t0=Date.now();var u=new SpeechSynthesisUtterance(chunks[idx]);u.lang='fr-CA';var v=voice();if(v)u.voice=v;u.rate=0.85;u.pitch=1.0;
-  u.onend=function(){if(state!=='playing')return;if(idx===0&&Date.now()-t0<300&&synth.getVoices().length===0){noVoice();return;}idx++;speak();};
-  u.onerror=function(e){if(state!=='playing')return;if(idx===0&&e&&e.error==='synthesis-failed'&&Date.now()-t0<600){noVoice();return;}idx++;speak();};
-  synth.speak(u);}
- function keepAlive(){clearInterval(resumeTimer);resumeTimer=setInterval(function(){if(state==='playing'&&synth.speaking&&!synth.paused){synth.resume();}},10000);}
- window.ttsToggle=function(){
-  if(state==='idle'){collect();if(!chunks.length)return;idx=0;state='playing';synth.cancel();speak();keepAlive();ui();}
-  else if(state==='playing'){state='paused';synth.pause();ui();}
-  else{state='playing';synth.resume();ui();}};
- function stopAll(){state='idle';idx=0;clearInterval(resumeTimer);try{synth.cancel();}catch(e){}ui();}
- window.ttsStopAll=stopAll;
- window.addEventListener('beforeunload',function(){try{synth.cancel();}catch(e){}});
-})();
-</script>
-
 </body>
 </html>
