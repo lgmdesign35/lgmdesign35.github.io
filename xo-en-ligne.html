@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>X O en ligne — joue avec un ami | Adam et ses amis</title>
+    <script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
+    <style>
+      :root {
+        --bg: #e8f4fc;
+        --bg-dot: #cfe7f7;
+        --card: #ffffff;
+        --ink: #22304a;
+        --ink-soft: #5b6b8c;
+        --line: #d7e6f2;
+        --x-color: #ff6b5b;
+        --x-soft: #ffe3df;
+        --o-color: #0ea79b;
+        --o-soft: #d7f3ef;
+        --accent: #ffb020;
+        --accent-ink: #4a3200;
+        --btn-main: #ff8a3d;
+        --btn-main-ink: #ffffff;
+        --cell-bg: #ffffff;
+        --cell-border: #c9ddef;
+        --shadow: 0 10px 24px rgba(34, 48, 74, 0.12);
+        --win-bg: #fff3bf;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #101c2e;
+          --bg-dot: #16283f;
+          --card: #1b2c44;
+          --ink: #eef4fb;
+          --ink-soft: #a9bcd4;
+          --line: #2c425f;
+          --x-soft: #4a2a26;
+          --o-soft: #173f3b;
+          --cell-bg: #22354f;
+          --cell-border: #33517a;
+          --shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+          --win-bg: #57481a;
+        }
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        font-family: "Segoe UI", system-ui, -apple-system, Tahoma, Arial, sans-serif;
+        background-color: var(--bg);
+        background-image: radial-gradient(var(--bg-dot) 2.2px, transparent 2.3px);
+        background-size: 26px 26px;
+        color: var(--ink);
+        min-height: 100vh;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .wrap {
+        max-width: 520px;
+        margin: 0 auto;
+        padding: 20px 16px 28px;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      header { text-align: center; margin: 6px 0 14px; }
+      .logo {
+        font-size: 44px;
+        font-weight: 900;
+        letter-spacing: 1px;
+        line-height: 1.1;
+      }
+      .logo .lx { color: var(--x-color); }
+      .logo .lo { color: var(--o-color); }
+      .logo-sub { color: var(--ink-soft); font-size: 17px; font-weight: 600; margin-top: 2px; }
+
+      .card {
+        background: var(--card);
+        border: 2px solid var(--line);
+        border-radius: 22px;
+        box-shadow: var(--shadow);
+        padding: 20px 18px;
+      }
+      .screen { display: none; }
+      .screen.active { display: block; animation: pop-in 0.25s ease; }
+      @keyframes pop-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+      .big-btn {
+        display: flex; align-items: center; justify-content: center; gap: 10px;
+        width: 100%;
+        min-height: 58px;
+        border: none;
+        border-radius: 16px;
+        font-family: inherit;
+        font-size: 20px;
+        font-weight: 800;
+        cursor: pointer;
+        padding: 12px 16px;
+        transition: transform 0.08s ease, filter 0.15s ease;
+      }
+      .big-btn:active { transform: scale(0.97); }
+      .big-btn:disabled { opacity: 0.55; cursor: default; }
+      .btn-create { background: var(--x-color); color: #fff; }
+      .btn-join { background: var(--o-color); color: #fff; }
+      .btn-local { background: var(--accent); color: var(--accent-ink); }
+      .btn-ghost {
+        background: transparent; color: var(--ink-soft);
+        border: 2px solid var(--line);
+        font-size: 17px; min-height: 50px;
+      }
+      .stack { display: flex; flex-direction: column; gap: 12px; }
+      .or-line {
+        display: flex; align-items: center; gap: 10px;
+        color: var(--ink-soft); font-weight: 700; font-size: 15px; margin: 4px 0;
+      }
+      .or-line::before, .or-line::after { content: ""; flex: 1; height: 2px; background: var(--line); border-radius: 2px; }
+
+      .join-row { display: flex; gap: 10px; }
+      .code-input {
+        flex: 1; min-width: 0;
+        min-height: 58px;
+        border: 3px solid var(--cell-border);
+        border-radius: 16px;
+        background: var(--cell-bg);
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 30px; font-weight: 900;
+        text-align: center;
+        letter-spacing: 10px;
+        padding: 6px 6px 6px 16px;
+      }
+      .code-input:focus { outline: none; border-color: var(--o-color); }
+      .code-input::placeholder { letter-spacing: 2px; font-size: 17px; font-weight: 700; color: var(--ink-soft); }
+      .join-row .big-btn { width: auto; flex-shrink: 0; padding: 12px 22px; }
+
+      .hint { color: var(--ink-soft); font-size: 15px; font-weight: 600; text-align: center; line-height: 1.7; }
+      .error-msg {
+        display: none;
+        background: var(--x-soft); color: var(--x-color);
+        border-radius: 12px; padding: 10px 14px;
+        font-weight: 800; font-size: 16px; text-align: center;
+      }
+      .error-msg.show { display: block; }
+
+      /* Waiting screen */
+      .wait-title { text-align: center; font-size: 21px; font-weight: 800; margin: 0 0 4px; }
+      .room-code {
+        text-align: center;
+        font-size: 76px; font-weight: 900;
+        letter-spacing: 14px;
+        padding: 10px 0 10px 14px;
+        color: var(--ink);
+        line-height: 1.15;
+      }
+      .waiting-dots { text-align: center; font-size: 18px; font-weight: 700; color: var(--ink-soft); }
+      .waiting-dots .dots::after { content: ""; animation: dots 1.4s steps(4) infinite; }
+      @keyframes dots { 0% { content: ""; } 25% { content: "."; } 50% { content: ".."; } 75% { content: "..."; } }
+      .pulse-dot {
+        display: inline-block; width: 13px; height: 13px; border-radius: 50%;
+        background: var(--accent); margin-inline-end: 8px; vertical-align: middle;
+        animation: pulse 1.2s ease-in-out infinite;
+      }
+      @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.45); opacity: 0.55; } }
+
+      /* Status bar */
+      .status-bar {
+        display: flex; flex-wrap: wrap; gap: 8px;
+        align-items: center; justify-content: center;
+        margin-bottom: 12px;
+      }
+      .chip {
+        display: inline-flex; align-items: center; gap: 7px;
+        background: var(--card); border: 2px solid var(--line);
+        border-radius: 999px; padding: 7px 14px;
+        font-size: 15px; font-weight: 800; min-height: 38px;
+      }
+      .dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+      .dot.green { background: #2fbf4f; }
+      .dot.yellow { background: #ffb020; }
+      .dot.red { background: #f4433c; }
+      .chip .sym-x { color: var(--x-color); }
+      .chip .sym-o { color: var(--o-color); }
+
+      /* Scoreboard */
+      .scoreboard { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+      .score-box {
+        border-radius: 16px; padding: 10px 6px; text-align: center;
+        border: 2px solid var(--line); background: var(--card);
+      }
+      .score-box .s-label { font-size: 15px; font-weight: 800; }
+      .score-box .s-num { font-size: 32px; font-weight: 900; line-height: 1.1; }
+      .score-box.sx { background: var(--x-soft); border-color: transparent; }
+      .score-box.sx .s-label, .score-box.sx .s-num { color: var(--x-color); }
+      .score-box.so { background: var(--o-soft); border-color: transparent; }
+      .score-box.so .s-label, .score-box.so .s-num { color: var(--o-color); }
+      .score-box.sd .s-label { color: var(--ink-soft); }
+
+      .turn-banner {
+        text-align: center; font-size: 23px; font-weight: 900;
+        min-height: 36px; margin-bottom: 12px; line-height: 1.4;
+      }
+      .turn-banner .sym-x { color: var(--x-color); }
+      .turn-banner .sym-o { color: var(--o-color); }
+      .turn-banner.celebrate { animation: bounce-soft 0.6s ease; }
+      @keyframes bounce-soft { 0% { transform: scale(1); } 35% { transform: scale(1.14); } 100% { transform: scale(1); } }
+
+      /* Board */
+      .board {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+        margin-bottom: 16px;
+      }
+      .cell {
+        aspect-ratio: 1 / 1;
+        border: 3px solid var(--cell-border);
+        border-radius: 20px;
+        background: var(--cell-bg);
+        font-family: inherit;
+        font-size: clamp(44px, 15vw, 68px);
+        font-weight: 900;
+        line-height: 1;
+        cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        padding: 0;
+        transition: background 0.15s ease, transform 0.08s ease;
+        user-select: none; -webkit-user-select: none;
+      }
+      .cell:active { transform: scale(0.95); }
+      .cell.filled { cursor: default; }
+      .cell.filled:active { transform: none; }
+      .cell.mark-x { color: var(--x-color); animation: mark-in 0.22s ease; }
+      .cell.mark-o { color: var(--o-color); animation: mark-in 0.22s ease; }
+      @keyframes mark-in { from { transform: scale(0.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+      .cell.win { background: var(--win-bg); border-color: var(--accent); animation: win-pulse 0.7s ease-in-out infinite alternate; }
+      @keyframes win-pulse { from { transform: scale(1); } to { transform: scale(1.06); } }
+
+      .game-actions { display: flex; flex-direction: column; gap: 10px; }
+      #btn-new-round { display: none; background: var(--btn-main); color: var(--btn-main-ink); }
+      #btn-new-round.show { display: flex; }
+
+      /* Disconnect box */
+      #disconnect-box { display: none; margin-top: 14px; }
+      #disconnect-box.show { display: block; }
+      #disconnect-box .card { border-color: var(--x-color); text-align: center; }
+      #disconnect-box h3 { margin: 0 0 6px; font-size: 21px; }
+      #disconnect-box p { margin: 0 0 14px; color: var(--ink-soft); font-weight: 600; line-height: 1.7; }
+
+      footer {
+        margin-top: auto; padding-top: 22px;
+        text-align: center; color: var(--ink-soft);
+        font-size: 15px; font-weight: 700;
+      }
+      #confetti-canvas {
+        position: fixed; inset: 0; width: 100%; height: 100%;
+        pointer-events: none; z-index: 50; display: none;
+      }
+      .toast {
+        position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px);
+        background: var(--ink); color: var(--bg);
+        padding: 10px 20px; border-radius: 999px;
+        font-weight: 800; font-size: 16px;
+        opacity: 0; pointer-events: none; transition: all 0.25s ease; z-index: 60;
+      }
+      .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+      @media (prefers-reduced-motion: reduce) {
+        .cell.win, .pulse-dot, .turn-banner.celebrate { animation: none; }
+        .screen.active { animation: none; }
+      }
+    </style>
+  </head>
+  <body>
+<div style="position:sticky;top:0;z-index:50;background:#FFF9F0;border-bottom:1px solid #FDE68A;padding:10px 16px;font-family:sans-serif"><a href="index.html" style="color:#047857;font-weight:700;font-size:14px;text-decoration:none">← Retour aux jeux — Adam et ses amis (lgmdesign35.com)</a></div>
+    <div class="wrap">
+      <header>
+        <div class="logo"><span class="lx">X</span> <span class="lo">O</span></div>
+        <div class="logo-sub">لعبة إكس أو — العب مع صاحبك من أي مكان</div>
+      </header>
+
+      <!-- ===== Home ===== -->
+      <section id="screen-home" class="screen active">
+        <div class="card stack">
+          <button class="big-btn btn-create" id="btn-create" type="button">إنشاء غرفة جديدة</button>
+          <p class="hint" style="margin:0">هنعملك كود من 4 أرقام، ابعته لصاحبك ويلعب معاك من تليفونه أو كمبيوتره.</p>
+          <div class="or-line">أو</div>
+          <div class="join-row">
+            <input class="code-input" id="join-code" type="text" inputmode="numeric" autocomplete="off"
+                   maxlength="4" placeholder="كود الغرفة" aria-label="كود الغرفة" />
+            <button class="big-btn btn-join" id="btn-join" type="button">انضمام</button>
+          </div>
+          <div class="error-msg" id="home-error"></div>
+          <div class="or-line">أو</div>
+          <button class="big-btn btn-local" id="btn-local" type="button">لاعبان على نفس الجهاز</button>
+        </div>
+      </section>
+
+      <!-- ===== Waiting (host) ===== -->
+      <section id="screen-wait" class="screen">
+        <div class="card stack">
+          <p class="wait-title">كود الغرفة بتاعتك</p>
+          <div class="room-code" id="room-code">----</div>
+          <button class="big-btn btn-join" id="btn-copy" type="button">نسخ الكود</button>
+          <p class="waiting-dots"><span class="pulse-dot"></span>في انتظار انضمام صديقك<span class="dots"></span></p>
+          <p class="hint" style="margin:0">ابعت الكود ده لصاحبك، يفتح اللعبة ويختار «انضمام» ويكتب الكود. إنت هتلعب بـ <b style="color:var(--x-color)">X</b> وهو بـ <b style="color:var(--o-color)">O</b>.</p>
+          <div class="error-msg" id="wait-error"></div>
+          <button class="big-btn btn-ghost" id="btn-wait-back" type="button">إلغاء والعودة</button>
+        </div>
+      </section>
+
+      <!-- ===== Game ===== -->
+      <section id="screen-game" class="screen">
+        <div class="status-bar">
+          <span class="chip" id="chip-conn"><span class="dot yellow" id="conn-dot"></span><span id="conn-text">في الانتظار</span></span>
+          <span class="chip" id="chip-me">أنت <b id="me-sym" class="sym-x">X</b></span>
+          <span class="chip" id="chip-room" style="display:none">غرفة <span id="room-chip-code"></span></span>
+        </div>
+
+        <div class="scoreboard">
+          <div class="score-box sx">
+            <div class="s-label" id="label-x">X</div>
+            <div class="s-num" id="score-x">0</div>
+          </div>
+          <div class="score-box sd">
+            <div class="s-label">تعادل</div>
+            <div class="s-num" id="score-d">0</div>
+          </div>
+          <div class="score-box so">
+            <div class="s-label" id="label-o">O</div>
+            <div class="s-num" id="score-o">0</div>
+          </div>
+        </div>
+
+        <div class="turn-banner" id="turn-banner">…</div>
+
+        <div class="board" id="board" role="grid" aria-label="لوحة اللعب"></div>
+
+        <div class="game-actions">
+          <button class="big-btn" id="btn-new-round" type="button">جولة جديدة</button>
+          <button class="big-btn btn-ghost" id="btn-home" type="button">العودة للبداية</button>
+        </div>
+
+        <div id="disconnect-box">
+          <div class="card">
+            <h3>صاحبك خرج من اللعبة</h3>
+            <p>الاتصال اتقطع. ممكن ترجع للبداية وتعمل غرفة جديدة، أو تستنى صاحبك يرجع يدخل بنفس الكود.</p>
+            <div class="stack">
+              <button class="big-btn btn-join" id="btn-wait-again" type="button" style="display:none">استنى صاحبك في الغرفة</button>
+              <button class="big-btn btn-create" id="btn-disc-home" type="button">العودة للبداية</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer>لعبة X O — العب مع صاحبك من أي جهاز</footer>
+    </div>
+
+    <canvas id="confetti-canvas"></canvas>
+    <div class="toast" id="toast"></div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        var PREFIX = "lgm-xo-game-";
+        var WIN_LINES = [
+          [0, 1, 2], [3, 4, 5], [6, 7, 8],
+          [0, 3, 6], [1, 4, 7], [2, 5, 8],
+          [0, 4, 8], [2, 4, 6]
+        ];
+
+        // ---------- DOM ----------
+        function $(id) { return document.getElementById(id); }
+        var screens = { home: $("screen-home"), wait: $("screen-wait"), game: $("screen-game") };
+        var boardEl = $("board");
+        var cells = [];
+        var i, cell;
+        for (i = 0; i < 9; i++) {
+          cell = document.createElement("button");
+          cell.type = "button";
+          cell.className = "cell";
+          cell.setAttribute("role", "gridcell");
+          cell.setAttribute("aria-label", "خانة " + (i + 1));
+          (function (idx) {
+            cell.addEventListener("click", function () { onCellClick(idx); });
+          })(i);
+          boardEl.appendChild(cell);
+          cells.push(cell);
+        }
+
+        function showScreen(name) {
+          for (var k in screens) screens[k].classList.toggle("active", k === name);
+        }
+
+        var toastTimer = null;
+        function toast(msg) {
+          var t = $("toast");
+          t.textContent = msg;
+          t.classList.add("show");
+          if (toastTimer) clearTimeout(toastTimer);
+          toastTimer = setTimeout(function () { t.classList.remove("show"); }, 2200);
+        }
+
+        function showError(el, msg) {
+          el.textContent = msg;
+          el.classList.add("show");
+        }
+        function hideError(el) { el.classList.remove("show"); el.textContent = ""; }
+
+        // ---------- Game state ----------
+        function freshState() {
+          return {
+            board: ["", "", "", "", "", "", "", "", ""],
+            turn: "X",
+            winner: null,      // null | "X" | "O" | "draw"
+            winLine: null,
+            scores: { X: 0, O: 0, D: 0 }
+          };
+        }
+        var state = freshState();
+        var lastWinner = null;
+
+        var mode = "home";        // "host" | "guest" | "local"
+        var mySymbol = null;      // "X" for host, "O" for guest, null for local
+        var peer = null;
+        var conn = null;
+        var roomCode = "";
+        var joinTimer = null;
+        var hostAttempts = 0;
+        var connAlive = false;
+
+        function checkWinner(b) {
+          for (var k = 0; k < WIN_LINES.length; k++) {
+            var L = WIN_LINES[k];
+            if (b[L[0]] && b[L[0]] === b[L[1]] && b[L[1]] === b[L[2]]) {
+              return { winner: b[L[0]], line: L };
+            }
+          }
+          var full = true;
+          for (var j = 0; j < 9; j++) if (!b[j]) full = false;
+          if (full) return { winner: "draw", line: null };
+          return null;
+        }
+
+        // Authoritative move application (host + local mode use this).
+        function applyMove(idx) {
+          if (state.winner) return false;
+          if (state.board[idx]) return false;
+          state.board[idx] = state.turn;
+          var res = checkWinner(state.board);
+          if (res) {
+            state.winner = res.winner;
+            state.winLine = res.line;
+            if (res.winner === "X") state.scores.X++;
+            else if (res.winner === "O") state.scores.O++;
+            else state.scores.D++;
+          } else {
+            state.turn = state.turn === "X" ? "O" : "X";
+          }
+          return true;
+        }
+
+        function resetRound() {
+          var scores = state.scores;
+          state = freshState();
+          state.scores = scores;
+        }
+
+        // ---------- Rendering ----------
+        function setConnStatus(kind, text) {
+          var dot = $("conn-dot");
+          dot.className = "dot " + kind;
+          $("conn-text").textContent = text;
+        }
+
+        function render() {
+          for (var j = 0; j < 9; j++) {
+            var c = cells[j], v = state.board[j];
+            c.textContent = v;
+            c.className = "cell" + (v ? " filled mark-" + v.toLowerCase() : "");
+            if (state.winLine && state.winLine.indexOf(j) !== -1) c.classList.add("win");
+          }
+          $("score-x").textContent = state.scores.X;
+          $("score-o").textContent = state.scores.O;
+          $("score-d").textContent = state.scores.D;
+
+          var banner = $("turn-banner");
+          var html = "";
+          if (state.winner === "draw") {
+            html = "تعادل! محدش كسب الجولة دي";
+          } else if (state.winner) {
+            if (mode === "local") {
+              html = "كسب <span class=\"sym-" + state.winner.toLowerCase() + "\">" + state.winner + "</span>! مبروك";
+            } else if (state.winner === mySymbol) {
+              html = "كسبت! مبروك عليك";
+            } else {
+              html = "صاحبك كسب الجولة دي، الجاية ليك!";
+            }
+          } else if (mode === "local") {
+            html = "دور <span class=\"sym-" + state.turn.toLowerCase() + "\">" + state.turn + "</span>";
+          } else if (state.turn === mySymbol) {
+            html = "دورك! حط <span class=\"sym-" + mySymbol.toLowerCase() + "\">" + mySymbol + "</span>";
+          } else {
+            html = "دور صاحبك، استنى شوية…";
+          }
+          banner.innerHTML = html;
+          banner.classList.toggle("celebrate", !!state.winner && state.winner !== "draw");
+
+          $("btn-new-round").classList.toggle("show", !!state.winner);
+
+          if (state.winner && state.winner !== lastWinner) {
+            if (state.winner !== "draw") launchConfetti();
+          }
+          lastWinner = state.winner;
+        }
+
+        function setupGameScreen() {
+          if (mode === "local") {
+            $("chip-me").style.display = "none";
+            $("chip-room").style.display = "none";
+            setConnStatus("green", "لاعبان هنا");
+            $("label-x").textContent = "لاعب X";
+            $("label-o").textContent = "لاعب O";
+          } else {
+            $("chip-me").style.display = "";
+            var ms = $("me-sym");
+            ms.textContent = mySymbol;
+            ms.className = "sym-" + mySymbol.toLowerCase();
+            $("chip-room").style.display = "";
+            $("room-chip-code").textContent = roomCode;
+            $("label-x").textContent = mode === "host" ? "X (أنت)" : "X (صاحبك)";
+            $("label-o").textContent = mode === "guest" ? "O (أنت)" : "O (صاحبك)";
+          }
+          $("disconnect-box").classList.remove("show");
+          showScreen("game");
+          render();
+        }
+
+        // ---------- Confetti ----------
+        var confettiRunning = false;
+        function launchConfetti() {
+          if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+          if (confettiRunning) return;
+          var canvas = $("confetti-canvas");
+          var ctx = canvas.getContext("2d");
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+          canvas.style.display = "block";
+          confettiRunning = true;
+          var colors = ["#ff6b5b", "#0ea79b", "#ffb020", "#ff8a3d", "#4dabf7"];
+          var pieces = [];
+          for (var k = 0; k < 130; k++) {
+            pieces.push({
+              x: Math.random() * canvas.width,
+              y: -20 - Math.random() * canvas.height * 0.4,
+              w: 7 + Math.random() * 7,
+              h: 10 + Math.random() * 8,
+              vy: 2 + Math.random() * 3.2,
+              vx: -1.4 + Math.random() * 2.8,
+              rot: Math.random() * Math.PI,
+              vr: -0.12 + Math.random() * 0.24,
+              color: colors[k % colors.length]
+            });
+          }
+          var start = null;
+          function frame(ts) {
+            if (!start) start = ts;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (var p = 0; p < pieces.length; p++) {
+              var pc = pieces[p];
+              pc.x += pc.vx; pc.y += pc.vy; pc.rot += pc.vr;
+              ctx.save();
+              ctx.translate(pc.x, pc.y);
+              ctx.rotate(pc.rot);
+              ctx.fillStyle = pc.color;
+              ctx.fillRect(-pc.w / 2, -pc.h / 2, pc.w, pc.h);
+              ctx.restore();
+            }
+            if (ts - start < 2600) {
+              requestAnimationFrame(frame);
+            } else {
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              canvas.style.display = "none";
+              confettiRunning = false;
+            }
+          }
+          requestAnimationFrame(frame);
+        }
+
+        // ---------- Networking helpers ----------
+        function cleanupPeer() {
+          if (joinTimer) { clearTimeout(joinTimer); joinTimer = null; }
+          try { if (conn) conn.close(); } catch (e) {}
+          try { if (peer) peer.destroy(); } catch (e) {}
+          conn = null; peer = null; connAlive = false;
+        }
+
+        function sendState() {
+          if (conn && conn.open) {
+            conn.send({
+              type: "state",
+              board: state.board,
+              turn: state.turn,
+              winner: state.winner,
+              winLine: state.winLine,
+              scores: state.scores
+            });
+          }
+        }
+
+        function onDisconnected() {
+          if (mode !== "host" && mode !== "guest") return;
+          if (!screens.game.classList.contains("active")) return;
+          connAlive = false;
+          setConnStatus("red", "انقطع الاتصال");
+          $("btn-wait-again").style.display = mode === "host" ? "" : "none";
+          $("disconnect-box").classList.add("show");
+        }
+
+        function wireConnection(c, isHost) {
+          c.on("open", function () {
+            connAlive = true;
+            if (joinTimer) { clearTimeout(joinTimer); joinTimer = null; }
+            setConnStatus("green", "متصل");
+            if (isHost) {
+              hideError($("wait-error"));
+              setupGameScreen();
+              sendState();
+            } else {
+              hideError($("home-error"));
+              setupGameScreen();
+            }
+          });
+          c.on("data", function (data) {
+            if (!data || !data.type) return;
+            if (isHost) {
+              if (data.type === "move") {
+                // Guest is O; host validates turn + empty cell.
+                if (state.turn === "O" && typeof data.i === "number" && data.i >= 0 && data.i < 9) {
+                  if (applyMove(data.i)) { render(); sendState(); }
+                }
+              } else if (data.type === "reset") {
+                if (state.winner) { resetRound(); render(); sendState(); }
+              }
+            } else {
+              if (data.type === "state") {
+                state.board = data.board;
+                state.turn = data.turn;
+                state.winner = data.winner;
+                state.winLine = data.winLine;
+                state.scores = data.scores;
+                render();
+              }
+            }
+          });
+          c.on("close", function () { conn = null; onDisconnected(); });
+          c.on("error", function () { onDisconnected(); });
+        }
+
+        // ---------- Create room (host) ----------
+        function genCode() {
+          return String(Math.floor(1000 + Math.random() * 9000));
+        }
+
+        function startHost() {
+          cleanupPeer();
+          mode = "host";
+          mySymbol = "X";
+          state = freshState();
+          lastWinner = null;
+          hostAttempts = 0;
+          createHostPeer();
+        }
+
+        function createHostPeer() {
+          roomCode = genCode();
+          peer = new Peer(PREFIX + roomCode);
+          peer.on("open", function () {
+            $("room-code").textContent = roomCode;
+            setConnStatus("yellow", "في الانتظار");
+            showScreen("wait");
+          });
+          peer.on("connection", function (c) {
+            if (conn && conn.open) {
+              // Room already full; politely refuse extras.
+              c.on("open", function () { try { c.close(); } catch (e) {} });
+              return;
+            }
+            conn = c;
+            wireConnection(c, true);
+          });
+          peer.on("disconnected", function () {
+            if (peer && !peer.destroyed) { try { peer.reconnect(); } catch (e) {} }
+          });
+          peer.on("error", function (err) {
+            if (err.type === "unavailable-id" && hostAttempts < 6) {
+              hostAttempts++;
+              try { peer.destroy(); } catch (e) {}
+              createHostPeer();
+            } else if (err.type === "network" || err.type === "server-error") {
+              showError($("wait-error"), "في مشكلة في الاتصال بالنت، جرب تاني.");
+            }
+          });
+        }
+
+        // ---------- Join room (guest) ----------
+        function startGuest(code) {
+          cleanupPeer();
+          mode = "guest";
+          mySymbol = "O";
+          roomCode = code;
+          state = freshState();
+          lastWinner = null;
+          var btn = $("btn-join");
+          btn.disabled = true;
+          btn.textContent = "بيتصل…";
+          peer = new Peer();
+          peer.on("open", function () {
+            conn = peer.connect(PREFIX + code, { reliable: true });
+            wireConnection(conn, false);
+            joinTimer = setTimeout(function () {
+              if (!connAlive) {
+                showError($("home-error"), "الكود ده مش موجود، اتأكد منه وجرب تاني.");
+                resetJoinBtn();
+                cleanupPeer();
+                mode = "home";
+              }
+            }, 12000);
+          });
+          peer.on("error", function (err) {
+            if (err.type === "peer-unavailable") {
+              if (joinTimer) { clearTimeout(joinTimer); joinTimer = null; }
+              showError($("home-error"), "الكود ده مش موجود، اتأكد منه وجرب تاني.");
+              resetJoinBtn();
+              cleanupPeer();
+              mode = "home";
+            }
+          });
+        }
+
+        function resetJoinBtn() {
+          var btn = $("btn-join");
+          btn.disabled = false;
+          btn.textContent = "انضمام";
+        }
+
+        // ---------- Local mode ----------
+        function startLocal() {
+          cleanupPeer();
+          mode = "local";
+          mySymbol = null;
+          state = freshState();
+          lastWinner = null;
+          setConnStatus("green", "لاعبان هنا");
+          setupGameScreen();
+        }
+
+        // ---------- Input ----------
+        function onCellClick(idx) {
+          if (state.winner) return;
+          if (state.board[idx]) return;
+          if (mode === "local") {
+            if (applyMove(idx)) render();
+          } else if (mode === "host") {
+            if (state.turn !== "X") { toast("استنى دورك"); return; }
+            if (applyMove(idx)) { render(); sendState(); }
+          } else if (mode === "guest") {
+            if (state.turn !== "O") { toast("استنى دورك"); return; }
+            if (conn && conn.open) conn.send({ type: "move", i: idx });
+          }
+        }
+
+        function onNewRound() {
+          if (!state.winner) return;
+          if (mode === "local") {
+            resetRound(); render();
+          } else if (mode === "host") {
+            resetRound(); render(); sendState();
+          } else if (mode === "guest") {
+            if (conn && conn.open) conn.send({ type: "reset" });
+          }
+        }
+
+        function goHome() {
+          cleanupPeer();
+          mode = "home";
+          mySymbol = null;
+          state = freshState();
+          lastWinner = null;
+          resetJoinBtn();
+          hideError($("home-error"));
+          showScreen("home");
+        }
+
+        // ---------- Buttons ----------
+        $("btn-create").addEventListener("click", function () {
+          hideError($("home-error"));
+          if (typeof Peer === "undefined") {
+            showError($("home-error"), "مكتبة الاتصال لسه بتحمل أو النت فاصل، جرب تاني بعد ثواني.");
+            return;
+          }
+          startHost();
+        });
+
+        $("btn-join").addEventListener("click", function () {
+          hideError($("home-error"));
+          var code = $("join-code").value.replace(/\D/g, "");
+          if (code.length !== 4) {
+            showError($("home-error"), "اكتب كود الغرفة: 4 أرقام بالظبط.");
+            return;
+          }
+          if (typeof Peer === "undefined") {
+            showError($("home-error"), "مكتبة الاتصال لسه بتحمل أو النت فاصل، جرب تاني بعد ثواني.");
+            return;
+          }
+          startGuest(code);
+        });
+
+        $("join-code").addEventListener("input", function () {
+          this.value = this.value.replace(/\D/g, "").slice(0, 4);
+        });
+        $("join-code").addEventListener("keydown", function (e) {
+          if (e.key === "Enter") $("btn-join").click();
+        });
+
+        $("btn-local").addEventListener("click", startLocal);
+        $("btn-new-round").addEventListener("click", onNewRound);
+        $("btn-home").addEventListener("click", goHome);
+        $("btn-wait-back").addEventListener("click", goHome);
+        $("btn-disc-home").addEventListener("click", goHome);
+
+        $("btn-wait-again").addEventListener("click", function () {
+          // Host keeps the same room code and waits for the guest to rejoin.
+          $("disconnect-box").classList.remove("show");
+          setConnStatus("yellow", "في الانتظار");
+          $("room-code").textContent = roomCode;
+          showScreen("wait");
+        });
+
+        $("btn-copy").addEventListener("click", function () {
+          var code = roomCode;
+          function done() { toast("اتنسخ الكود: " + code); }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(code).then(done, function () { fallbackCopy(code); done(); });
+          } else {
+            fallbackCopy(code); done();
+          }
+        });
+
+        function fallbackCopy(text) {
+          var ta = document.createElement("textarea");
+          ta.value = text;
+          ta.style.position = "fixed";
+          ta.style.opacity = "0";
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand("copy"); } catch (e) {}
+          document.body.removeChild(ta);
+        }
+
+        window.addEventListener("beforeunload", function () { cleanupPeer(); });
+      })();
+    </script>
+  </body>
+</html>
