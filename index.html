@@ -112,9 +112,9 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
 <!-- PROMO-BAR:BEGIN — الشريط الإعلاني الموسمي، يتحدث كل موسم -->
 <div id="promo-bar" class="bg-gradient-to-r from-red-700 via-red-600 to-green-700 text-white">
   <div class="max-w-6xl mx-auto px-3 py-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-center">
-    <span class="text-xs sm:text-sm font-bold">🎄 Noël approche ! Nos deux livres de Noël sont <span class="text-amber-300 font-black">GRATUITS</span> à lire et à écouter 🎁</span>
-    <a href="etoile-de-noel.html" class="px-3 py-1 bg-white text-red-700 text-xs font-black rounded-full shadow pop-btn whitespace-nowrap">⭐ L'étoile de Noël (4-6 ans)</a>
-    <a href="bebe-adam-noel.html" class="px-3 py-1 bg-white/20 border border-white/60 text-white text-xs font-black rounded-full pop-btn whitespace-nowrap">👶 Le premier Noël de Bébé Adam (0-3 ans)</a>
+    <span id="promo-text" class="text-xs sm:text-sm font-bold">🎄 Noël approche ! Nos deux livres de Noël sont <span class="text-amber-300 font-black">GRATUITS</span> à lire et à écouter 🎁</span>
+    <span id="promo-btns" class="contents"><a href="etoile-de-noel.html" class="px-3 py-1 bg-white text-red-700 text-xs font-black rounded-full shadow pop-btn whitespace-nowrap">⭐ L'étoile de Noël (4-6 ans)</a>
+    <a href="bebe-adam-noel.html" class="px-3 py-1 bg-white/20 border border-white/60 text-white text-xs font-black rounded-full pop-btn whitespace-nowrap">👶 Le premier Noël de Bébé Adam (0-3 ans)</a></span>
     <button onclick="document.getElementById('promo-bar').style.display='none'" aria-label="Fermer" class="text-white/80 hover:text-white font-black text-sm leading-none px-1">✕</button>
   </div>
 </div>
@@ -2877,5 +2877,26 @@ if(!('speechSynthesis' in window)){var l1=document.getElementById('pn-listen'),l
 </script>
 <!-- CHRISTMAS: neige de Noël — supprimer cette ligne pour revenir au thème normal -->
 <script src="christmas.js" defer></script>
+<script>
+/* ===== PROMO BAR : un message différent toutes les 30 minutes ===== */
+var PROMO_MSGS=[
+ {g:'bg-gradient-to-r from-red-700 via-red-600 to-green-700',t:'🎄 Noël approche ! Nos deux livres de Noël sont <span class="text-amber-300 font-black">GRATUITS</span> à lire et à écouter 🎁',b:[{t:'⭐ L’étoile de Noël (4-6 ans)',h:'etoile-de-noel.html',c:'px-3 py-1 bg-white text-red-700 text-xs font-black rounded-full shadow pop-btn whitespace-nowrap'},{t:'👶 Le premier Noël de Bébé Adam (0-3 ans)',h:'bebe-adam-noel.html',c:'px-3 py-1 bg-white/20 border border-white/60 text-white text-xs font-black rounded-full pop-btn whitespace-nowrap'}]},
+ {g:'bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500',t:'📖 Le livre gratuit de la semaine t’attend !',spot:1,b:[{t:'⭐ Découvrir le livre',go:'semaine',c:'px-3 py-1 bg-white text-orange-700 text-xs font-black rounded-full shadow pop-btn whitespace-nowrap'}]},
+ {g:'bg-gradient-to-r from-violet-600 via-purple-500 to-fuchsia-500',t:'✨ Une histoire avec le prénom de ton enfant : 40 histoires gratuites à écouter !',b:[{t:'✨ Créer mon histoire',go:'perso',c:'px-3 py-1 bg-white text-violet-700 text-xs font-black rounded-full shadow pop-btn whitespace-nowrap'}]},
+ {g:'bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-500',t:'👆 22 scènes interactives pour les tout-petits : touche, écoute, découvre !',b:[{t:'👆 Explorer les scènes',go:'scenes',c:'px-3 py-1 bg-white text-emerald-700 text-xs font-black rounded-full shadow pop-btn whitespace-nowrap'}]},
+ {g:'bg-gradient-to-r from-blue-600 via-indigo-500 to-violet-500',t:'🎮 5 jeux gratuits, en ligne avec un ami ou en solo !',b:[{t:'🎮 Jouer',go:'jeux',c:'px-3 py-1 bg-white text-indigo-700 text-xs font-black rounded-full shadow pop-btn whitespace-nowrap'}]},
+ {g:'bg-gradient-to-r from-pink-500 via-rose-500 to-red-400',t:'🎨 Ton enfant dessine ? Publie son œuvre dans le Coin des artistes !',b:[{t:'🎨 Voir la galerie',h:'coin-des-artistes.html',c:'px-3 py-1 bg-white text-rose-700 text-xs font-black rounded-full shadow pop-btn whitespace-nowrap'}]}
+];
+var promoCur=-1;
+function promoRender(){var bar=document.getElementById('promo-bar');if(!bar||bar.style.display==='none')return;
+ var idx=Math.floor(Date.now()/1800000)%PROMO_MSGS.length;if(idx===promoCur)return;promoCur=idx;var m=PROMO_MSGS[idx];
+ bar.className=m.g+' text-white';
+ var txt=m.t;
+ if(m.spot){var el=document.querySelector('#spotlight-lundi p');var st=el?el.innerText.replace(/[«»]/g,'').trim():'';if(st)txt='📖 Le livre gratuit de la semaine : <span class="text-yellow-200 font-black">'+st+'</span>';}
+ document.getElementById('promo-text').innerHTML=txt;
+ var hb='';m.b.forEach(function(x){if(x.h)hb+='<a href="'+x.h+'" class="'+x.c+'">'+x.t+'</a>';else hb+='<button onclick="lapinGo(\''+x.go+'\')" class="'+x.c+'">'+x.t+'</button>';});
+ document.getElementById('promo-btns').innerHTML=hb;}
+document.addEventListener('DOMContentLoaded',function(){promoRender();setInterval(promoRender,30000);});
+</script>
 </body>
 </html>
