@@ -2173,10 +2173,11 @@ function lmAnswer(q){
   if(!best)return 'Bonne question ! 🤔 Je ne sais pas encore y répondre. Écris-nous à <b>lgmdesign35@gmail.com</b> ou visite l’onglet Contact — on te répond avec plaisir ! En attendant, essaie une des questions ci-dessous.';
   return (typeof best.a==='function')?best.a():best.a;
 }
-function lmAdd(html,who){var log=document.getElementById('lm-log');var d=document.createElement('div');d.className='lm-msg '+(who==='user'?'lm-user':'lm-bot');d.innerHTML=html;if(who!=='user'){var b=document.createElement('button');b.className='lm-spk';b.title='Écouter';b.innerText='🔊';b.onclick=function(){lmSpeakMsg(d);};d.appendChild(b);}log.appendChild(d);log.scrollTop=log.scrollHeight;return d;}
+function lmAttachSpk(d){var b=document.createElement('button');b.className='lm-spk';b.title='Écouter';b.innerText='🔊';b.onclick=function(){lmSpeakMsg(d);};d.appendChild(b);}
+function lmAdd(html,who){var log=document.getElementById('lm-log');var d=document.createElement('div');d.className='lm-msg '+(who==='user'?'lm-user':'lm-bot');d.innerHTML=html;if(who!=='user')lmAttachSpk(d);log.appendChild(d);log.scrollTop=log.scrollHeight;return d;}
 function lapinReply(q){
   var typing=lmAdd('Lapin écrit…','bot');
-  setTimeout(function(){typing.innerHTML=lmAnswer(q);var log=document.getElementById('lm-log');log.scrollTop=log.scrollHeight;if(LM_VOICE)lmSpeakMsg(typing);},650);
+  setTimeout(function(){typing.innerHTML=lmAnswer(q);lmAttachSpk(typing);var log=document.getElementById('lm-log');log.scrollTop=log.scrollHeight;if(LM_VOICE)lmSpeakMsg(typing);},650);
 }
 function lapinSend(){var inp=document.getElementById('lm-input');var q=inp.value.trim();if(!q)return;lmAdd(q.replace(/</g,'&lt;'),'user');inp.value='';lapinReply(q);}
 function lapinChip(btn){var q=btn.innerText;lmAdd(q,'user');lapinReply(q);}
@@ -2200,6 +2201,7 @@ function lmMic(){
   }catch(e){btn.classList.remove('listening');}
 }
 if(!(window.SpeechRecognition||window.webkitSpeechRecognition)){var mb=document.getElementById('lm-mic');if(mb)mb.style.display='none';}
+var lmGreet=document.querySelector('#lm-log .lm-bot');if(lmGreet)lmAttachSpk(lmGreet);
 (function(){
   var msgs=["Salut ! Moi, c’est Lapin 🐰",'📖 Un livre gratuit chaque lundi !','🎮 Essaie le jeu Adam-Man !','🎄 Deux livres de Noël gratuits !','🥅 Nouveau : les tirs au but !','💬 Touche-moi et pose-moi une question !'];
   var i=0;var b=document.getElementById('helper-bubble');if(!b)return;
