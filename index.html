@@ -459,7 +459,7 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
   <div id="section-perso" class="learn-section hidden space-y-6">
     <div class="bg-gradient-to-br from-violet-500 to-purple-500 rounded-[2rem] p-6 sm:p-8 text-white shadow-xl">
       <h3 class="brand-font text-2xl sm:text-3xl font-black">✨ Une histoire avec ton prénom !</h3>
-      <p class="text-violet-50 font-semibold text-sm sm:text-base">Écris le prénom de ton enfant : en quelques secondes, l’histoire se crée avec son prénom — et elle se raconte à voix haute ! Le prénom reste sur votre appareil ; rien n’est envoyé. 🔒</p>
+      <p class="text-violet-50 font-semibold text-sm sm:text-base">Écris le prénom de ton enfant : en quelques secondes, l’histoire se crée avec son prénom — et elle se raconte à voix haute ! 20 histoires du quotidien : le matin, la garderie, la neige, l’anniversaire... Le prénom reste sur votre appareil ; rien n’est envoyé. 🔒</p>
     </div>
     <div class="bg-white rounded-[2rem] shadow-xl border border-violet-100 p-5 sm:p-6 space-y-4">
       <label class="block font-black text-slate-700" for="pn-name">Le prénom de ton enfant :</label>
@@ -469,10 +469,7 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
         <button id="pn-g-f" onclick="pnSetGender('f')">👧 Une fille</button>
       </div>
       <label class="block font-black text-slate-700">Choisis l’histoire :</label>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <button id="pn-s-nuit" onclick="pnSetStory('nuit')" class="text-left">🌙 Bonne nuit !<span class="block text-xs font-bold opacity-80 mt-1">Une histoire douce pour le dodo</span></button>
-        <button id="pn-s-aventure" onclick="pnSetStory('aventure')" class="text-left">🚀 La grande aventure<span class="block text-xs font-bold opacity-80 mt-1">Avec Adam, Lapin, Canard et Renard</span></button>
-      </div>
+      <div id="pn-stories" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5"></div>
       <div id="pn-hint" class="text-rose-500 font-bold text-sm hidden">Écris le prénom de ton enfant pour commencer 🙂</div>
       <button onclick="pnCreate()" class="w-full bg-violet-600 hover:bg-violet-500 text-white font-black text-lg px-6 py-3.5 rounded-2xl shadow transition">✨ Créer mon histoire</button>
     </div>
@@ -2385,14 +2382,140 @@ scShow('ferme');
 
 /* ===== HISTOIRE PERSONNALISÉE ===== */
 var PN_STORIES={
- nuit:{title:'Bonne nuit, {N} !',pages:[
+ nuit:{icon:'🌙',label:'Bonne nuit',title:'Bonne nuit, {N} !',pages:[
   {e:'🌙',t:'Le soir arrive doucement. C’est l’heure de dormir pour {N}.'},
   {e:'🛁',t:'{N} prend un bain chaud. Plouf, plouf ! Les bulles dansent.'},
   {e:'🪥',t:'{N} brosse ses dents. Frotte, frotte, frotte ! Elles brillent comme des étoiles.'},
   {e:'🐰',t:'Lapin et Canard disent : « Bonne nuit, {N} ! »'},
   {e:'⭐',t:'{N} regarde les étoiles. Une, deux, trois étoiles qui brillent pour {lui}.'},
   {e:'💤',t:'{N} ferme les yeux. Bonne nuit, {N} ! Fais de beaux rêves.'}]},
- aventure:{title:'{N} et la grande aventure',pages:[
+ reveil:{icon:'🌅',label:'Le matin',title:'Le réveil de {N}',pages:[
+  {e:'☀️',t:'Le soleil se lève. « Bonjour, {N} ! » dit le soleil.'},
+  {e:'🥱',t:'{N} ouvre les yeux et s’étire : étire, étire, étire !'},
+  {e:'🍞',t:'Au petit-déjeuner : du pain grillé, un œuf et un grand verre de lait. Miam !'},
+  {e:'👕',t:'{N} choisit ses vêtements : un chandail doux et son pantalon préféré.'},
+  {e:'🪥',t:'{N} brosse ses dents et se coiffe. Souris, {N} !'},
+  {e:'🎒',t:'{N} est {pret} pour une belle journée. En route !'}]},
+ habille:{icon:'👕',label:'Je m’habille',title:'{N} s’habille',pages:[
+  {e:'🌅',t:'Ce matin, {N} décide : « Je m’habille tout {seul} ! »'},
+  {e:'👕',t:'{N} choisit un chandail avec un gros soleil dessus.'},
+  {e:'👖',t:'Le pantalon : une jambe, puis l’autre. Ça y est !'},
+  {e:'🧦',t:'Les chaussettes : une rouge, une bleue. C’est rigolo, {N} !'},
+  {e:'👟',t:'Les souliers... oups, les lacets sont tout mêlés ! {N} demande de l’aide.'},
+  {e:'✨',t:'{N} se regarde dans le miroir : « Je l’ai fait ! »'}]},
+ table:{icon:'🍽️',label:'À table',title:'{N} mange à table',pages:[
+  {e:'🧼',t:'Avant de manger, {N} se lave les mains avec du savon. Frotte, frotte !'},
+  {e:'🥕',t:'Dans l’assiette de {N} : des carottes, du poulet et du riz.'},
+  {e:'🥦',t:'{N} goûte un petit brocoli. « C’est croquant ! »'},
+  {e:'🥛',t:'{N} boit son lait sans renverser. Bravo, {N} !'},
+  {e:'🍎',t:'En dessert : une pomme rouge et croquante.'},
+  {e:'😊',t:'« Merci pour le repas ! » dit {N}. Tout le monde sourit.'}]},
+ garderie:{icon:'🏫',label:'La garderie',title:'{N} à la garderie',pages:[
+  {e:'🎒',t:'Ce matin, {N} va à la garderie avec son sac à dos.'},
+  {e:'👋',t:'« Bonjour ! » dit l’éducatrice avec un grand sourire.'},
+  {e:'🧒',t:'{N} rencontre un nouvel ami : « Tu veux jouer avec moi ? »'},
+  {e:'🎨',t:'À la garderie, {N} peint un beau soleil jaune.'},
+  {e:'🍽️',t:'C’est la collation : des morceaux de pomme et du fromage.'},
+  {e:'💛',t:'Maman arrive : « Tu m’as manqué ! » — « C’était amusant ! » dit {N}.'}]},
+ parc:{icon:'🛝',label:'Au parc',title:'{N} au parc',pages:[
+  {e:'🛝',t:'Au parc, {N} court vers la grande glissade.'},
+  {e:'😄',t:'{N} glisse : ouuuuh ! Encore, encore !'},
+  {e:'🪁',t:'Sur la balançoire, {N} vole presque jusqu’aux nuages.'},
+  {e:'🦆',t:'Près de l’étang, {N} dit bonjour aux canards : « Coin, coin ! »'},
+  {e:'🤝',t:'{N} partage son ballon avec un nouvel ami.'},
+  {e:'🌇',t:'Le soleil descend. « À demain, le parc ! » dit {N}.'}]},
+ supermarche:{icon:'🛒',label:'Le supermarché',title:'{N} au supermarché',pages:[
+  {e:'🛒',t:'{N} pousse le petit panier au supermarché.'},
+  {e:'🍌',t:'Sur la liste : des bananes, du pain et du lait. {N} trouve les bananes !'},
+  {e:'🧀',t:'Au comptoir, {N} choisit un fromage doux.'},
+  {e:'🍁',t:'Papa prend du sirop d’érable pour les crêpes de dimanche.'},
+  {e:'💬',t:'À la caisse, {N} dit : « Bonjour ! » et « Merci ! »'},
+  {e:'🏠',t:'De retour à la maison, {N} aide à ranger les sacs. Bravo, {N} !'}]},
+ bibliotheque:{icon:'📚',label:'La bibliothèque',title:'{N} à la bibliothèque',pages:[
+  {e:'📚',t:'À la bibliothèque, il y a des livres jusqu’au plafond !'},
+  {e:'🤫',t:'{N} marche doucement et parle tout bas : chut...'},
+  {e:'🐉',t:'{il} choisit un livre avec un dragon gentil sur la couverture.'},
+  {e:'🪑',t:'Dans le coin lecture, {N} tourne les pages doucement.'},
+  {e:'🦉',t:'La bibliothécaire lit une histoire à tous les enfants.'},
+  {e:'🏠',t:'{N} rapporte deux livres à la maison. Bonne lecture, {N} !'}]},
+ dessin:{icon:'🎨',label:'Mon dessin',title:'{N} fait un dessin',pages:[
+  {e:'🎨',t:'{N} sort ses crayons : rouge, bleu, jaune, vert et rose.'},
+  {e:'☀️',t:'D’abord, {N} dessine un gros soleil qui sourit.'},
+  {e:'🏠',t:'Puis une maison, un arbre et des fleurs partout.'},
+  {e:'🐰',t:'{N} ajoute Lapin, Canard et toute la famille.'},
+  {e:'✍️',t:'En bas du dessin, {N} écrit son nom, lettre par lettre.'},
+  {e:'🖼️',t:'Le dessin est sur le frigo, comme dans une galerie d’art. Bravo, {N} !'}]},
+ jardin:{icon:'🌻',label:'Le jardin',title:'{N} au jardin',pages:[
+  {e:'🌱',t:'Au printemps, {N} plante de petites graines dans la terre.'},
+  {e:'💧',t:'Chaque jour, {N} arrose les graines avec son petit arrosoir.'},
+  {e:'☀️',t:'Le soleil réchauffe la terre. Patience, {N}...'},
+  {e:'🌿',t:'Un matin : une petite pousse verte ! « Ça pousse ! » crie {N}.'},
+  {e:'🌻',t:'Quelques semaines plus tard, un grand tournesol sourit à {N}.'},
+  {e:'🐝',t:'Les abeilles et les papillons viennent dire merci à {N}.'}]},
+ pluie:{icon:'🌧️',label:'La pluie',title:'{N} et la pluie',pages:[
+  {e:'🌧️',t:'Aujourd’hui, il pleut. Ploc, ploc, ploc sur la fenêtre !'},
+  {e:'🥾',t:'{N} met ses bottes de pluie et son imperméable jaune.'},
+  {e:'☂️',t:'Avec son parapluie, {N} écoute la musique de la pluie.'},
+  {e:'💧',t:'Une flaque ! {N} saute dedans : PLOUF !'},
+  {e:'🐸',t:'Une grenouille regarde {N} et fait : « Coa, coa ! »'},
+  {e:'🌈',t:'La pluie s’arrête. Un arc-en-ciel dit au revoir à {N}.'}]},
+ neige:{icon:'❄️',label:'La neige',title:'{N} joue dans la neige',pages:[
+  {e:'❄️',t:'Ce matin, tout est blanc ! Il a neigé pendant la nuit.'},
+  {e:'🧤',t:'{N} met sa tuque, ses mitaines et son gros manteau chaud.'},
+  {e:'⛄',t:'{N} roule trois grosses boules : un bonhomme de neige !'},
+  {e:'🥕',t:'Une carotte pour le nez, deux boutons pour les yeux. Bonjour, monsieur Neige !'},
+  {e:'🛷',t:'{N} glisse en traîneau : ouuuuh, que c’est amusant !'},
+  {e:'☕',t:'De retour à la maison : un chocolat chaud bien mérité pour {N}.'}]},
+ voiture:{icon:'🚗',label:'En voiture',title:'{N} en voiture',pages:[
+  {e:'🚗',t:'{N} monte en voiture. Clic ! La ceinture est attachée.'},
+  {e:'🌲',t:'Par la fenêtre, {N} regarde les arbres qui défilent.'},
+  {e:'🎵',t:'Dans la voiture, toute la famille chante une chanson.'},
+  {e:'🐄',t:'« Regarde, {N} ! Des vaches dans le champ ! »'},
+  {e:'🔢',t:'{N} compte les voitures rouges : une, deux, trois !'},
+  {e:'🏁',t:'Et voilà, on est arrivés ! Quelle belle promenade, {N} !'}]},
+ grandmaman:{icon:'📞',label:'Grand-maman',title:'{N} appelle grand-maman',pages:[
+  {e:'📞',t:'Ce soir, {N} appelle grand-maman au téléphone.'},
+  {e:'💬',t:'« Allô, grand-maman ! C’est moi, {N} ! »'},
+  {e:'🎨',t:'{N} raconte son dessin : « J’ai dessiné un gros soleil pour toi ! »'},
+  {e:'😂',t:'Grand-maman raconte une blague. {N} rit très fort !'},
+  {e:'🎵',t:'Ensemble, ils chantent une petite chanson au téléphone.'},
+  {e:'💛',t:'« Je t’aime, grand-maman ! » — « Je t’aime aussi, {N} ! »'}]},
+ anniversaire:{icon:'🎂',label:'L’anniversaire',title:'L’anniversaire de {N}',pages:[
+  {e:'🎂',t:'Aujourd’hui, c’est l’anniversaire de {N} !'},
+  {e:'🎈',t:'Il y a des ballons partout : rouges, bleus, jaunes et verts.'},
+  {e:'🎁',t:'Les amis arrivent avec des cadeaux. « Joyeux anniversaire, {N} ! »'},
+  {e:'🕯️',t:'{N} souffle les bougies de son gâteau : un, deux, trois... pouf !'},
+  {e:'🍰',t:'Le gâteau au chocolat est délicieux. Miam, miam !'},
+  {e:'💛',t:'« Merci tout le monde ! » dit {N}, le cœur plein de bonheur.'}]},
+ legume:{icon:'🥦',label:'Je goûte !',title:'{N} goûte un nouveau légume',pages:[
+  {e:'🥦',t:'Ce soir, il y a un nouveau légume dans l’assiette de {N} : le brocoli.'},
+  {e:'👀',t:'{N} le regarde : « On dirait un petit arbre ! »'},
+  {e:'👃',t:'{N} le sent : « Ça sent le jardin. »'},
+  {e:'😬',t:'Une toute petite bouchée... {N} mâche doucement.'},
+  {e:'😋',t:'« Hé ! C’est bon ! » dit {N} en reprenant une bouchée.'},
+  {e:'🌟',t:'{N} est {courageux} : goûter, c’est une aventure !'}]},
+ rangement:{icon:'🧸',label:'On range !',title:'{N} range ses jouets',pages:[
+  {e:'🧸',t:'La chambre de {N} est pleine de jouets partout, partout !'},
+  {e:'🚗',t:'{N} range les petites voitures dans la boîte rouge. Vroum, vroum !'},
+  {e:'📚',t:'Les livres retournent sur l’étagère, un par un.'},
+  {e:'🧩',t:'{N} retrouve la dernière pièce du casse-tête. La voilà !'},
+  {e:'🐰',t:'Lapin aide {N} : « Encore un jouet, et c’est fini ! »'},
+  {e:'✨',t:'La chambre est toute belle. {N} est {fier} de son beau travail !'}]},
+ aide:{icon:'🧺',label:'J’aide à la maison',title:'{N} aide à la maison',pages:[
+  {e:'🧺',t:'Aujourd’hui, {N} décide d’aider à la maison.'},
+  {e:'🍽️',t:'{N} met les cuillères et les fourchettes sur la table.'},
+  {e:'🧦',t:'{N} retrouve les paires de chaussettes : deux rouges, deux bleues !'},
+  {e:'🌿',t:'{N} arrose la plante du salon, doucement, doucement.'},
+  {e:'🧸',t:'{N} partage ses blocs avec un ami venu jouer.'},
+  {e:'💛',t:'« Merci pour ton aide, {N} ! » {N} a le cœur tout chaud.'}]},
+ malade:{icon:'🩹',label:'Un peu malade',title:'{N} est un peu malade',pages:[
+  {e:'🤧',t:'Aujourd’hui, {N} éternue : atchoum ! {N} est un peu malade.'},
+  {e:'🛋️',t:'{N} se repose sur le divan avec sa doudou préférée.'},
+  {e:'🍲',t:'Maman prépare une soupe chaude et douce pour {N}.'},
+  {e:'📖',t:'Papa lit une histoire à {N}, tout doucement.'},
+  {e:'😴',t:'{N} fait une longue sieste. Le repos, c’est le meilleur remède.'},
+  {e:'🌈',t:'Le lendemain, {N} se réveille en pleine forme. Hourra !'}]},
+ aventure:{icon:'🚀',label:'Grande aventure',title:'{N} et la grande aventure',pages:[
   {e:'☀️',t:'Ce matin, {N} part à l’aventure avec Adam, Lapin et Canard !'},
   {e:'🌳',t:'Dans la forêt, {N} trouve une grande feuille en forme d’étoile.'},
   {e:'🦊',t:'Renard arrive : « Je peux jouer avec vous ? » — « Bien sûr ! » répond {N}.'},
@@ -2402,16 +2525,16 @@ var PN_STORIES={
 };
 var pnGender='g', pnStory='nuit', pnPages=[], pnI=0, pnChain=false;
 var PN_PILL='font-black text-sm sm:text-base px-4 py-2.5 rounded-full shadow transition border border-violet-200 ';
-var PN_CARD='font-black text-base sm:text-lg px-4 py-3.5 rounded-2xl shadow transition border border-violet-200 w-full ';
-function pnPaint(){var g=document.getElementById('pn-g-g'),f=document.getElementById('pn-g-f'),n=document.getElementById('pn-s-nuit'),a=document.getElementById('pn-s-aventure');if(!g)return;
+var PN_CARD='font-black px-3 py-3 rounded-2xl shadow transition border border-violet-200 text-center leading-tight ';
+function pnPaint(){var g=document.getElementById('pn-g-g'),f=document.getElementById('pn-g-f');if(!g)return;
  g.className=PN_PILL+(pnGender==='g'?'bg-violet-600 text-white':'bg-violet-50 text-violet-700 hover:bg-violet-100');
  f.className=PN_PILL+(pnGender==='f'?'bg-violet-600 text-white':'bg-violet-50 text-violet-700 hover:bg-violet-100');
- n.className=PN_CARD+(pnStory==='nuit'?'bg-violet-600 text-white':'bg-violet-50 text-violet-700 hover:bg-violet-100');
- a.className=PN_CARD+(pnStory==='aventure'?'bg-violet-600 text-white':'bg-violet-50 text-violet-700 hover:bg-violet-100');}
+ var box=document.getElementById('pn-stories');if(box){for(var i=0;i<box.children.length;i++){var b=box.children[i];b.className=PN_CARD+(b.getAttribute('data-k')===pnStory?'bg-violet-600 text-white':'bg-violet-50 text-violet-700 hover:bg-violet-100');}}}
+function pnBuildChooser(){var box=document.getElementById('pn-stories');if(!box)return;box.innerHTML='';for(var k in PN_STORIES){(function(key){var st=PN_STORIES[key];var b=document.createElement('button');b.setAttribute('data-k',key);b.innerHTML='<span class="text-2xl block">'+st.icon+'</span><span class="text-sm">'+st.label+'</span>';b.onclick=function(){pnSetStory(key);};box.appendChild(b);})(k);}pnPaint();}
 function pnSetGender(g){pnGender=g;pnPaint();}
 function pnSetStory(k){pnStory=k;pnPaint();}
 function pnCleanName(v){v=(v||'').replace(/[^A-Za-zÀ-ÿ' -]/g,'').trim().slice(0,20);return v?v.charAt(0).toUpperCase()+v.slice(1):'';}
-function pnFill(t,name){return t.split('{N}').join(name).split('{lui}').join(pnGender==='f'?'elle':'lui').split('{content}').join(pnGender==='f'?'contente':'content');}
+function pnFill(t,name){var f=pnGender==='f';return t.split('{N}').join(name).split('{lui}').join(f?'elle':'lui').split('{content}').join(f?'contente':'content').split('{pret}').join(f?'prête':'prêt').split('{fier}').join(f?'fière':'fier').split('{courageux}').join(f?'courageuse':'courageux').split('{seul}').join(f?'seule':'seul').split('{il}').join(f?'elle':'il');}
 function pnCreate(){var name=pnCleanName(document.getElementById('pn-name').value);var hint=document.getElementById('pn-hint');
  if(!name){hint.classList.remove('hidden');return;} hint.classList.add('hidden');
  var st=PN_STORIES[pnStory];pnPages=st.pages.map(function(p){return {e:p.e,t:pnFill(p.t,name)};});
@@ -2427,7 +2550,7 @@ function pnSpeak(chain){if(!('speechSynthesis' in window))return;var p=pnPages[p
  speechSynthesis.speak(u);}
 function pnSpeakAll(){if(pnChain){pnStop();return;}if(!pnPages.length)return;pnChain=true;document.getElementById('pn-all').innerText='⏹ Arrêter';pnSpeak(true);}
 function pnStop(){pnChain=false;if('speechSynthesis' in window)speechSynthesis.cancel();var b=document.getElementById('pn-all');if(b)b.innerText='▶ Tout écouter';}
-pnPaint();
+pnBuildChooser();
 if(!('speechSynthesis' in window)){var l1=document.getElementById('pn-listen'),l2=document.getElementById('pn-all');if(l1)l1.style.display='none';if(l2)l2.style.display='none';}
 
 }
