@@ -362,7 +362,7 @@ aBuild();
       <div class="flex-1 space-y-3 text-center sm:text-left">
         <h2 class="brand-font text-2xl font-bold">📖 Le livre gratuit à découvrir</h2>
         <p class="text-base font-black text-amber-300">« Les animaux et leurs sons » 🐶🐱 — le nouveau livre Bébé Adam !</p>
-        <p class="text-sm text-sky-100 leading-relaxed">Chaque lundi, un nouveau livre Bébé Adam gratuit arrive sur le site, à lire et à écouter avec votre enfant — avec les vrais sons des animaux. Aucune inscription : cliquez et lisez !</p>
+        <p class="text-sm text-sky-100 leading-relaxed">Un livre gratuit à lire et à écouter avec votre enfant — avec les vrais sons des animaux. Aucune inscription : cliquez et lisez !</p>
         <div class="flex flex-wrap gap-3 justify-center sm:justify-start">
           <a href="bebe-adam-animaux.html" class="px-6 py-3 bg-amber-400 hover:bg-amber-500 text-slate-900 font-black text-sm rounded-2xl shadow pop-btn">▶ Lire et écouter</a>
           <button onclick="switchSiteTab('livres')" class="px-6 py-3 bg-white/15 border border-white/40 text-white font-black text-sm rounded-2xl shadow pop-btn">Tous les livres gratuits 📚</button>
@@ -2372,7 +2372,7 @@ var LM_QA=[
  {k:['acheter','achat','prix','combien','coute','etsy','amazon','commander','payer','broche','papier','boutique'],a:'🛒 Nos livres payants sont en PDF sur Etsy (de 1,12 $ à 3,00 $ CA) : les aventures d’Adam, Halloween, Le jardin de la coopération et les coloriages. « Adam apprend à écouter » existe aussi en livre broché sur Amazon.ca.<br><button onclick="lapinGo(\'catalogue\')">Voir le catalogue</button>'},
  {k:['chanson','comptine','musique','berceuse','chanter'],a:'🎵 Nos comptines font une petite pause… En attendant, écoute une belle histoire 📖'},
  {k:['jeu','jeux','jouer','en ligne','online','multijoueur','code','xo','adam-man','adam man','navale','tirs au but','soccer','football'],a:'🎮 Nos jeux en ligne se jouent avec un code à 4 chiffres à partager avec un ami : X O, Cherche Adam !, Bataille navale, Adam-Man et les Tirs au but ! Il y a aussi 10 petits jeux pour apprendre les mots et les nombres.<br><button onclick="lapinGo(\'jouer\')">Aller aux jeux</button>'},
- {k:['semaine','lundi','nouveau','nouveaute','prochain','dernier livre','sortie'],a:function(){var t=lmSpotTitle();return '⭐ Chaque lundi, un nouveau livre Bébé Adam gratuit arrive sur le site !'+(t?' En ce moment : '+t+'.':'')+'<br><button onclick="lapinGo(\'semaine\')">Découvrir le livre gratuit</button>';}},
+ {k:['semaine','lundi','nouveau','nouveaute','prochain','dernier livre','sortie'],a:function(){var t=lmSpotTitle();return '⭐ Voici le livre gratuit à découvrir en ce moment !'+(t?' En ce moment : '+t+'.':'')+'<br><button onclick="lapinGo(\'semaine\')">Découvrir le livre gratuit</button>';}},
  {k:['age','ans','bebe','petit','convient','maternelle','prescolaire','garderie','cpe','pour quel'],a:'👶 Pour les 0 à 3 ans : la série Bébé Adam (couleurs, animaux, bonne nuit…). 🧒 Pour les 4 à 6 ans : les grandes aventures d’Adam et ses amis. Sur la page d’accueil, le bloc « Par où commencer ? » aide à choisir selon l’âge !'},
  {k:['audio','ecouter','son','narration','voix','entendre'],a:'🔊 Oui ! Nos livres gratuits se lisent ET s’écoutent : ouvre un livre et appuie sur « Écoute l’histoire ». La narration est lente et claire, avec de vrais sons d’animaux.'},
  {k:['pdf','telecharger','imprimer','telechargement','download'],a:'📄 Les livres gratuits ont un bouton « Télécharger le PDF » sur leur page — parfait pour imprimer ! Les PDF des livres payants arrivent avec l’achat sur Etsy.'},
@@ -2386,11 +2386,29 @@ function lmAnswer(q){
   var n=lmNorm(q),best=null,score=0;
   for(var i=0;i<LM_QA.length;i++){var sc=0;for(var j=0;j<LM_QA[i].k.length;j++){if(n.indexOf(LM_QA[i].k[j])>=0)sc+=LM_QA[i].k[j].length;}
     if(sc>score){score=sc;best=LM_QA[i];}}
-  if(!best)return 'Bonne question ! 🤔 Je ne sais pas encore y répondre. Écris-nous à <b>lgmdesign35@gmail.com</b> ou visite l’onglet Contact — on te répond avec plaisir ! En attendant, essaie une des questions ci-dessous.';
+  if(!best)return 'Bonne question ! 🤔 Je ne sais pas encore y répondre... mais l’équipe du site peut sûrement t’aider ! Écris ta question juste ici, avec le courriel d’un parent, et on te répondra par courriel. 💌<br><button onclick="lmShowAsk()">📩 Poser ma question à l’équipe</button>';
   return (typeof best.a==='function')?best.a():best.a;
 }
 function lmAttachSpk(d){var b=document.createElement('button');b.className='lm-spk';b.title='Écouter';b.innerText='🔊';b.onclick=function(){lmSpeakMsg(d);};d.appendChild(b);}
 function lmAdd(html,who){var log=document.getElementById('lm-log');var d=document.createElement('div');d.className='lm-msg '+(who==='user'?'lm-user':'lm-bot');d.innerHTML=html;if(who!=='user')lmAttachSpk(d);log.appendChild(d);log.scrollTop=log.scrollHeight;return d;}
+function lmShowAsk(){
+  var log=document.getElementById('lm-log');
+  var ex=document.getElementById('lm-ask-wrap');
+  if(ex){ex.scrollIntoView({block:'nearest'});var t0=ex.querySelector('textarea');if(t0)t0.focus();return;}
+  var d=document.createElement('div');d.className='lm-msg lm-bot';d.id='lm-ask-wrap';
+  d.innerHTML='<form action="https://formsubmit.co/lgmdesign35@gmail.com" method="POST" style="display:flex;flex-direction:column;gap:7px">'
+  +'<input type="hidden" name="_subject" value="Lapin — Question sans réponse">'
+  +'<input type="hidden" name="_template" value="table">'
+  +'<input type="hidden" name="_next" value="https://lgmdesign35.com/index.html">'
+  +'<label style="font-weight:800;font-size:13px">Ta question :<textarea name="question" required rows="3" style="width:100%;box-sizing:border-box;border:2px solid #fcd34d;border-radius:10px;padding:6px;font:inherit;margin-top:3px"></textarea></label>'
+  +'<label style="font-weight:800;font-size:13px">Le courriel d’un parent :<input type="email" name="courriel_parent" required placeholder="parent@exemple.ca" style="width:100%;box-sizing:border-box;border:2px solid #fcd34d;border-radius:10px;padding:6px;font:inherit;margin-top:3px"></label>'
+  +'<button type="submit" style="background:#f59e0b;color:#fff;border:none;border-radius:10px;padding:9px;font-weight:900;cursor:pointer;font-size:14px">Envoyer à l’équipe 📩</button>'
+  +'<div style="font-size:11px;color:#64748b;font-weight:700">C’est un parent qui écrit son courriel : c’est là que l’équipe envoie la réponse.</div></form>';
+  log.appendChild(d);log.scrollTop=log.scrollHeight;
+  var msgs=log.querySelectorAll('.lm-user');var ta=d.querySelector('textarea');
+  if(msgs.length&&ta)ta.value=msgs[msgs.length-1].textContent.trim();
+  if(ta)ta.focus();
+}
 function lapinReply(q){
   var typing=lmAdd('Lapin écrit…','bot');
   setTimeout(function(){typing.innerHTML=lmAnswer(q);lmAttachSpk(typing);var log=document.getElementById('lm-log');log.scrollTop=log.scrollHeight;if(LM_VOICE)lmSpeakMsg(typing);},650);
