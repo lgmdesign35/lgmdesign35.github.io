@@ -336,6 +336,7 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
       <button onclick="switchLearnTab('words')" id="ltab-words" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-qcblue-600 text-white shadow-md"><span>🎨</span> <span>Mots</span></button>
       <button onclick="switchLearnTab('abc123')" id="ltab-abc123" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-slate-600 hover:bg-sky-100 shadow-sm"><span>🔤</span> <span>ABC &amp; 123</span></button>
       <button onclick="switchLearnTab('cards')" id="ltab-cards" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-slate-600 hover:bg-sky-100 shadow-sm"><span>🃏</span> <span>Cartes</span></button>
+      <button onclick="switchLearnTab('scenes')" id="ltab-scenes" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-emerald-700 hover:bg-emerald-100 shadow-sm"><span>👆</span> <span>Touche et écoute</span></button>
       <button onclick="switchLearnTab('games')" id="ltab-games" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-slate-600 hover:bg-sky-100 shadow-sm"><span>🎮</span> <span>Jeux</span></button>
       <button onclick="switchLearnTab('certificat')" id="ltab-certificat" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-amber-700 hover:bg-amber-100 shadow-sm"><span>📜</span> <span>Certificat</span></button>
       <button onclick="switchLearnTab('parents')" id="ltab-parents" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-indigo-700 hover:bg-indigo-100 shadow-sm"><span>👨‍👩‍👧</span> <span>Parents</span></button>
@@ -423,6 +424,36 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
   </div>
 
   <!-- Jeux & Quiz (Apprendre) -->
+  <!-- Scènes interactives : Touche et écoute -->
+  <style>
+  .sc-spot{position:absolute;transform:translate(-50%,-50%);width:3.4rem;height:3.4rem;border-radius:9999px;background:rgba(255,255,255,.8);box-shadow:0 4px 14px rgba(0,0,0,.25);font-size:1.9rem;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;border:3px solid rgba(255,255,255,.95);animation:scPulse 2.2s infinite;z-index:2}
+  @keyframes scPulse{0%{box-shadow:0 0 0 0 rgba(16,185,129,.45)}70%{box-shadow:0 0 0 14px rgba(16,185,129,0)}100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}}
+  .sc-spot.found{background:rgba(167,243,208,.95);animation:none}
+  .sc-spot.pop{animation:scPop .45s}
+  @keyframes scPop{0%{transform:translate(-50%,-50%) scale(1)}40%{transform:translate(-50%,-50%) scale(1.35)}100%{transform:translate(-50%,-50%) scale(1)}}
+  @media(min-width:640px){.sc-spot{width:4.1rem;height:4.1rem;font-size:2.3rem}}
+  </style>
+  <div id="section-scenes" class="learn-section hidden space-y-6">
+    <div class="bg-gradient-to-br from-emerald-500 to-teal-500 rounded-[2rem] p-6 sm:p-8 text-white shadow-xl">
+      <h3 class="brand-font text-2xl sm:text-3xl font-black">👆 Touche et écoute</h3>
+      <p class="text-emerald-50 font-semibold text-sm sm:text-base">Pour les tout-petits : touche un animal ou un objet dans l’image et écoute son nom — et son vrai son à la ferme ! Aucune lecture, juste le plaisir de découvrir. 🔊</p>
+    </div>
+    <div class="flex flex-wrap gap-2 justify-center">
+      <button id="sc-btn-ferme" onclick="scShow('ferme')" class="font-black text-sm sm:text-base px-5 py-2.5 rounded-full shadow transition bg-emerald-600 text-white">🚜 La ferme</button>
+      <button id="sc-btn-jardin" onclick="scShow('jardin')" class="font-black text-sm sm:text-base px-5 py-2.5 rounded-full shadow transition bg-white text-emerald-700 hover:bg-emerald-50">🌷 Le jardin</button>
+    </div>
+    <div class="bg-white rounded-[2rem] shadow-xl border border-emerald-100 p-3 sm:p-4">
+      <div class="relative w-full rounded-[1.5rem] overflow-hidden shadow-inner" style="aspect-ratio:3/2">
+        <img id="sc-bg" src="images/scenes/ferme.jpg" alt="Scène interactive" class="absolute inset-0 w-full h-full object-cover">
+        <div id="sc-bubble" class="absolute left-1/2 top-3 -translate-x-1/2 bg-white/95 rounded-full px-5 py-2 shadow-lg font-black text-emerald-700 text-base sm:text-xl whitespace-nowrap z-10">👆 Touche un animal !</div>
+        <div id="sc-spots" class="absolute inset-0"></div>
+      </div>
+      <div class="flex items-center justify-between mt-3 px-1">
+        <div id="sc-count" class="font-black text-slate-600 text-sm sm:text-base">⭐ Découverts : 0 / 10</div>
+        <button onclick="scReset()" class="bg-emerald-100 hover:bg-emerald-200 text-emerald-800 font-black text-sm px-4 py-2 rounded-full transition">🔁 Recommencer</button>
+      </div>
+    </div>
+  </div>
   <div id="section-games" class="learn-section hidden space-y-6">
     <div class="text-center space-y-2">
       <h3 class="text-xl sm:text-2xl font-black text-slate-800">🎮 Jeux &amp; Quiz — 10 jeux pour apprendre en s'amusant</h3>
@@ -2178,6 +2209,7 @@ function lapinGo(dest){
   else if(dest==='atelier'){switchSiteTab('atelier');}
   else if(dest==='comptines'){switchSiteTab('apprendre');if(typeof switchLearnTab==='function')switchLearnTab('comptines');}
   else if(dest==='catalogue'){switchSiteTab('livres');}
+  else if(dest==='scenes'){switchSiteTab('apprendre');if(typeof switchLearnTab==='function')switchLearnTab('scenes');}
   else if(dest==='semaine'){switchSiteTab('accueil');setTimeout(function(){var el=document.getElementById('spotlight-lundi');if(el)el.scrollIntoView({behavior:'smooth',block:'center'});},80);}
 }
 function lmNorm(t){return (t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
@@ -2185,6 +2217,7 @@ function lmSpotTitle(){var el=document.querySelector('#spotlight-lundi p');retur
 var LM_QA=[
  {k:['coloriage','colorier','dessiner','atelier','crayon'],a:'🖍️ Deux livres de coloriage sont sur Etsy : « Coloriage de Noël » et « Coloriage des animaux ». Et dans l’Atelier du site, ton enfant peut dessiner et colorier en ligne !<br><button onclick="lapinGo(\'atelier\')">Ouvrir l’Atelier</button>'},
  {k:['dessin','galerie','artiste','envoyer','publier le dessin','oeuvre'],a:'🎨 Pour voir le dessin de ton enfant dans le Coin des artistes : remplis le formulaire avec la photo de son dessin — il est publié automatiquement sur le site !<br><a href="coin-des-artistes.html" style="color:#0284c7;font-weight:900">Ouvrir le Coin des artistes →</a>'},
+ {k:['touche','scene','scène','ferme','toucher'],a:'👆 « Touche et écoute » : ton enfant touche les animaux de la ferme et entend leur nom et leur vrai son — parfait pour les tout-petits qui ne lisent pas encore !<br><button onclick="lapinGo(\'scenes\')">Ouvrir les scènes</button>'},
  {k:['gratuit','gratuite','gratuits','lire','lecture','histoire'],a:'📚 Nos livres gratuits, à lire ET à écouter : « Les couleurs de Bébé Adam », « Les animaux et leurs sons », « Bonne nuit, Bébé Adam », « Le premier Noël de Bébé Adam », « L’étoile de Noël » et « La citrouille courageuse ».<br><button onclick="lapinGo(\'histoire\')">Voir les livres gratuits</button>'},
  {k:['acheter','achat','prix','combien','coute','etsy','amazon','commander','payer','broche','papier','boutique'],a:'🛒 Nos livres payants sont en PDF sur Etsy (de 1,12 $ à 3,00 $ CA) : les aventures d’Adam, Halloween, Le jardin de la coopération et les coloriages. « Adam apprend à écouter » existe aussi en livre broché sur Amazon.ca.<br><button onclick="lapinGo(\'catalogue\')">Voir le catalogue</button>'},
  {k:['chanson','comptine','musique','berceuse','chanter'],a:'🎵 Nos comptines font une petite pause… elles reviennent bientôt, encore plus belles ! En attendant, écoute une belle histoire 📖'},
@@ -2236,7 +2269,7 @@ function lmMic(){
 if(!(window.SpeechRecognition||window.webkitSpeechRecognition)){var mb=document.getElementById('lm-mic');if(mb)mb.style.display='none';}
 var lmGreet=document.querySelector('#lm-log .lm-bot');if(lmGreet)lmAttachSpk(lmGreet);
 (function(){
-  var msgs=["Salut ! Moi, c’est Lapin 🐰",'📖 Un livre gratuit chaque lundi !','🎮 Essaie le jeu Adam-Man !','🎄 Deux livres de Noël gratuits !','🥅 Nouveau : les tirs au but !','💬 Touche-moi et pose-moi une question !'];
+  var msgs=["Salut ! Moi, c’est Lapin 🐰",'📖 Un livre gratuit chaque lundi !','🎮 Essaie le jeu Adam-Man !','🎄 Deux livres de Noël gratuits !','👆 Nouveau : touche et écoute les animaux !','🥅 Nouveau : les tirs au but !','💬 Touche-moi et pose-moi une question !'];
   var i=0;var b=document.getElementById('helper-bubble');if(!b)return;
   function cycle(){b.style.opacity='1';setTimeout(function(){b.style.opacity='0';},4200);i=(i+1)%msgs.length;b.innerText=msgs[i];}
   b.innerText=msgs[0];setInterval(cycle,6000);setTimeout(function(){b.style.opacity='1';},1200);setTimeout(function(){b.style.opacity='0';},5400);
@@ -2270,6 +2303,47 @@ if(cpA){
  var cpRange=document.getElementById('cp-range');
  if(cpRange)cpRange.addEventListener('input',function(){if(cpA.duration)cpA.currentTime=this.value/100*cpA.duration;});
  cpBuild();
+/* ===== SCÈNES TOUCHE ET ÉCOUTE ===== */
+var SC_DATA={
+ ferme:{bg:'images/scenes/ferme.jpg',hint:'👆 Touche un animal !',items:[
+  {e:'🦆',x:38,y:80,t:'C’est le canard !',a:'audio/bebe-animaux/page-02.mp3'},
+  {e:'🐱',x:12,y:64,t:'C’est le chat !',a:'audio/bebe-animaux/page-03.mp3'},
+  {e:'🐶',x:48,y:72,t:'C’est le chien !',a:'audio/bebe-animaux/page-04.mp3'},
+  {e:'🐄',x:28,y:56,t:'C’est la vache !',a:'audio/bebe-animaux/page-05.mp3'},
+  {e:'🐷',x:42,y:61,t:'C’est le cochon !',a:'audio/bebe-animaux/page-06.mp3'},
+  {e:'🐔',x:19,y:50,t:'C’est la poule !',a:'audio/bebe-animaux/page-07.mp3'},
+  {e:'🐓',x:56,y:53,t:'C’est le coq !',a:'audio/bebe-animaux/page-08.mp3'},
+  {e:'🐑',x:64,y:62,t:'C’est le mouton !',a:'audio/bebe-animaux/page-09.mp3'},
+  {e:'🐸',x:69,y:82,t:'C’est la grenouille !',a:'audio/bebe-animaux/page-10.mp3'},
+  {e:'🦉',x:80,y:28,t:'C’est le hibou !',a:'audio/bebe-animaux/page-11.mp3'}]},
+ jardin:{bg:'images/scenes/jardin.jpg',hint:'👆 Touche une image !',items:[
+  {e:'☀️',x:10,y:11,t:'Le soleil !',a:'audio/scenes/soleil.mp3'},
+  {e:'☁️',x:84,y:9,t:'Le nuage !',a:'audio/scenes/nuage.mp3'},
+  {e:'🌳',x:13,y:50,t:'L’arbre !',a:'audio/scenes/arbre.mp3'},
+  {e:'🍎',x:23,y:60,t:'La pomme !',a:'audio/scenes/pomme.mp3'},
+  {e:'🌻',x:85,y:68,t:'La fleur !',a:'audio/scenes/fleur.mp3'},
+  {e:'🦋',x:56,y:40,t:'Le papillon !',a:'audio/scenes/papillon.mp3'},
+  {e:'🐰',x:45,y:70,t:'C’est Lapin !',a:'audio/scenes/lapin.mp3'},
+  {e:'🧑🏽‍🦱',x:31,y:83,t:'C’est Bébé Adam !',a:'audio/scenes/adam.mp3'}]}
+};
+var scCur='ferme', scFound={ferme:{},jardin:{}}, scA=new Audio();
+function scCount(){var sc=SC_DATA[scCur],n=0;for(var k in scFound[scCur])n++;document.getElementById('sc-count').innerText='⭐ Découverts : '+n+' / '+sc.items.length;}
+function scShow(name){scCur=name;var sc=SC_DATA[name];document.getElementById('sc-bg').src=sc.bg;document.getElementById('sc-bubble').innerText=sc.hint;
+ var bf=document.getElementById('sc-btn-ferme'),bj=document.getElementById('sc-btn-jardin');
+ bf.className='font-black text-sm sm:text-base px-5 py-2.5 rounded-full shadow transition '+(name==='ferme'?'bg-emerald-600 text-white':'bg-white text-emerald-700 hover:bg-emerald-50');
+ bj.className='font-black text-sm sm:text-base px-5 py-2.5 rounded-full shadow transition '+(name==='jardin'?'bg-emerald-600 text-white':'bg-white text-emerald-700 hover:bg-emerald-50');
+ var box=document.getElementById('sc-spots');box.innerHTML='';
+ sc.items.forEach(function(it,i){var b=document.createElement('button');b.className='sc-spot'+(scFound[name][i]?' found':'');b.style.left=it.x+'%';b.style.top=it.y+'%';b.innerText=it.e;b.setAttribute('aria-label',it.t);b.onclick=function(){scTap(i,b);};box.appendChild(b);});
+ scCount();}
+function scTap(i,btn){var it=SC_DATA[scCur].items[i];scA.src=it.a;scA.play();var bub=document.getElementById('sc-bubble');
+ if(!scFound[scCur][i]){scFound[scCur][i]=1;btn.classList.add('found');btn.classList.remove('pop');void btn.offsetWidth;btn.classList.add('pop');}
+ var n=0;for(var k in scFound[scCur])n++;
+ if(n>=SC_DATA[scCur].items.length){bub.innerText='🎉 Bravo ! Tu as tout découvert !';}
+ else{bub.innerText=it.e+' '+it.t;}
+ scCount();}
+function scReset(){scFound[scCur]={};scShow(scCur);}
+scShow('ferme');
+
 }
 </script>
 <!-- CHRISTMAS: neige de Noël — supprimer cette ligne pour revenir au thème normal -->
