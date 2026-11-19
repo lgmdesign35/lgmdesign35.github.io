@@ -1337,7 +1337,7 @@ function speakQuebec(text){showToast(text);playSpeech(text);}
 
 /* ============ NAVIGATION PRINCIPALE (site) ============ */
 function toggleMobileMenu(){var m=document.getElementById('mobile-menu');if(m)m.classList.toggle('hidden');}
-function switchSiteTab(tabId){
+function switchSiteTab(tabId){if(window.ttsStopAll)ttsStopAll();
   if(tabId!=='apprendre'&&typeof stopCourseTimer==='function')stopCourseTimer();
   var mm=document.getElementById('mobile-menu');if(mm)mm.classList.add('hidden');
   document.querySelectorAll('.site-page').forEach(function(s){s.classList.add('hidden');});
@@ -1448,7 +1448,7 @@ var NUMBERS_RAW=[[1,"un",1],[2,"deux",1],[3,"trois",1],[4,"quatre",1],[5,"cinq",
 var NUMBERS_DATA=NUMBERS_RAW.map(function(a){return {n:a[0],fr:a[1],level:a[2]};});
 
 /* ============ APPRENDRE : NAVIGATION ============ */
-function switchLearnTab(tabId){
+function switchLearnTab(tabId){if(window.ttsStopAll)ttsStopAll();
   if(tabId!=='games')stopCourseTimer();
   document.querySelectorAll('.learn-tab').forEach(function(b){b.classList.remove('bg-qcblue-600','text-white','shadow-md');if(!b.classList.contains('bg-white'))b.classList.add('bg-white');b.classList.add('text-slate-600');});
   var btn=document.getElementById('ltab-'+tabId);
@@ -2428,5 +2428,41 @@ function promoRender(){var bar=document.getElementById('promo-bar');if(!bar||bar
  document.getElementById('promo-btns').innerHTML=hb;}
 document.addEventListener('DOMContentLoaded',function(){promoRender();setInterval(promoRender,30000);});
 </script>
+<!-- ===== Écouter la page : lecture à voix haute lente et claire (fr-CA, vitesse 0.85) ===== -->
+<div id="tts-widget" style="position:fixed;right:14px;bottom:14px;z-index:9000;display:flex;gap:6px;align-items:center;">
+  <button id="tts-main" onclick="ttsToggle()" aria-label="Écouter la page à voix haute" style="background:#0055a5;color:#fff;font-weight:900;font-size:14px;border:none;border-radius:9999px;padding:11px 18px;box-shadow:0 6px 18px rgba(0,0,0,.28);cursor:pointer;font-family:inherit;">🔊 Écouter la page</button>
+  <button id="tts-stop" onclick="ttsStopAll()" aria-label="Arrêter la lecture" style="display:none;background:#fff;color:#b91c1c;font-weight:900;font-size:14px;border:2px solid #fecaca;border-radius:9999px;padding:9px 13px;box-shadow:0 6px 18px rgba(0,0,0,.22);cursor:pointer;font-family:inherit;">⏹</button>
+</div>
+<script>
+(function(){
+ var synth=window.speechSynthesis;
+ if(!synth){var w=document.getElementById('tts-widget');if(w)w.style.display='none';return;}
+ var chunks=[],idx=0,state='idle',resumeTimer=null;
+ function voice(){var vs=synth.getVoices();for(var i=0;i<vs.length;i++){if(vs[i].lang&&vs[i].lang.toLowerCase().indexOf('fr-ca')===0)return vs[i];}for(var j=0;j<vs.length;j++){if(vs[j].lang&&vs[j].lang.toLowerCase().indexOf('fr')===0)return vs[j];}return null;}
+ function root(){var vis=document.querySelector('.site-page:not(.hidden)');if(vis)return vis;var m=document.querySelector('main');return m||document.body;}
+ function collect(){var r=root();var els=r.querySelectorAll('h1,h2,h3,h4,p,li,blockquote,figcaption');var texts=[];
+  els.forEach(function(el){if(el.closest('button,nav,script,style,#tts-widget'))return;if(el.querySelector('p,h1,h2,h3,h4,li,blockquote'))return;var t=(el.innerText||'').replace(/\s+/g,' ').trim();if(t.length>1)texts.push(t);});
+  var parts=[];texts.forEach(function(t){var ms=t.match(/[^.!?…]+[.!?…]+["»]?\s*|[^.!?…]+$/g);if(ms)ms.forEach(function(x){parts.push(x);});else parts.push(t);});
+  chunks=[];var cur='';parts.forEach(function(p){p=p.trim();if(!p)return;if((cur+' '+p).length>190){if(cur)chunks.push(cur);cur=p;}else{cur=cur?cur+' '+p:p;}});if(cur)chunks.push(cur);}
+ function ui(){var b=document.getElementById('tts-main'),s=document.getElementById('tts-stop');if(!b||!s)return;
+  if(state==='idle'){b.innerHTML='🔊 Écouter la page';s.style.display='none';}
+  else if(state==='playing'){b.innerHTML='⏸ Pause';s.style.display='block';}
+  else{b.innerHTML='▶ Reprendre';s.style.display='block';}}
+ function speak(){if(idx>=chunks.length){stopAll();return;}
+  var u=new SpeechSynthesisUtterance(chunks[idx]);u.lang='fr-CA';var v=voice();if(v)u.voice=v;u.rate=0.85;u.pitch=1.0;
+  u.onend=function(){if(state==='playing'){idx++;speak();}};
+  u.onerror=function(){if(state==='playing'){idx++;speak();}};
+  synth.speak(u);}
+ function keepAlive(){clearInterval(resumeTimer);resumeTimer=setInterval(function(){if(state==='playing'&&synth.speaking&&!synth.paused){synth.resume();}},10000);}
+ window.ttsToggle=function(){
+  if(state==='idle'){collect();if(!chunks.length)return;idx=0;state='playing';synth.cancel();speak();keepAlive();ui();}
+  else if(state==='playing'){state='paused';synth.pause();ui();}
+  else{state='playing';synth.resume();ui();}};
+ function stopAll(){state='idle';idx=0;clearInterval(resumeTimer);try{synth.cancel();}catch(e){}ui();}
+ window.ttsStopAll=stopAll;
+ window.addEventListener('beforeunload',function(){try{synth.cancel();}catch(e){}});
+})();
+</script>
+
 </body>
 </html>
