@@ -143,5 +143,6 @@ seek.addEventListener('input',()=>{if(au.duration)au.currentTime=(seek.value/100
 au.addEventListener('ended',()=>{if(story){const n=nextAudioIdx(cur+1);if(n>=0){cur=n;render(true);}else{story=false;btnStory.textContent='▶ Écoute l\u2019histoire';statusEl.textContent='🎄 Fin de l\u2019histoire — Joyeux Noël !';}}});
 render(false);
 </script>
+<script data-goatcounter="https://lgmdesign35.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
