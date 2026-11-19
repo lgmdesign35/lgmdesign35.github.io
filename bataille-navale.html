@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="fr-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Bataille navale en ligne — cache tes bateaux ! | Adam et ses amis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
+    <style>
+      :root{
+        --bg:#8fd3ee;
+        --bg-deep:#3d9bc4;
+        --card:#ffffff;
+        --card-soft:#eaf7fd;
+        --ink:#0b3552;
+        --ink-soft:#3d6480;
+        --sea:#2e9fd8;
+        --sea-dark:#1b7fb8;
+        --sea-cell:#57b6e6;
+        --sea-cell2:#4aabdf;
+        --boat:#ff9f43;
+        --boat-dark:#e67e22;
+        --coral:#ff6b5e;
+        --green:#25b06a;
+        --green-dark:#1c9457;
+        --gold:#ffc93c;
+        --line:#bfe6f5;
+        --shadow:0 6px 0 rgba(11,53,82,.18);
+        --radius:18px;
+      }
+      @media (prefers-color-scheme: dark){
+        :root{
+          --bg:#062741;
+          --bg-deep:#041a2e;
+          --card:#0d3a5c;
+          --card-soft:#0a304e;
+          --ink:#eaf7ff;
+          --ink-soft:#a9cde4;
+          --sea:#1668a0;
+          --sea-dark:#0f5485;
+          --sea-cell:#1d74ad;
+          --sea-cell2:#19669c;
+          --line:#17557f;
+          --shadow:0 6px 0 rgba(0,0,0,.35);
+        }
+      }
+      *{ box-sizing:border-box; }
+      html,body{ margin:0; padding:0; }
+      body{
+        font-family:"Baloo 2","Comic Sans MS",system-ui,-apple-system,"Segoe UI",sans-serif;
+        background:linear-gradient(180deg,var(--bg) 0%,var(--bg-deep) 100%);
+        background-attachment:fixed;
+        color:var(--ink);
+        min-height:100vh;
+        -webkit-tap-highlight-color:transparent;
+      }
+      button, [role="button"], select, summary, input:not([type="checkbox"],[type="radio"]){ min-height:2.25rem; }
+      button{ font-family:inherit; cursor:pointer; }
+      .wrap{ max-width:680px; margin:0 auto; padding:14px 14px 30px; }
+      .topbar{ display:flex; justify-content:flex-end; gap:8px; }
+      .icon-btn{
+        border:none; background:var(--card); color:var(--ink);
+        width:46px; height:46px; border-radius:50%;
+        font-size:1.3rem; box-shadow:var(--shadow);
+        display:inline-flex; align-items:center; justify-content:center;
+      }
+      .icon-btn:active{ transform:translateY(2px); box-shadow:none; }
+      h1.title{
+        text-align:center; font-size:clamp(2rem,8vw,3rem); font-weight:800;
+        margin:6px 0 2px; color:var(--ink); letter-spacing:.5px;
+      }
+      .subtitle{ text-align:center; font-size:clamp(1rem,4vw,1.2rem); color:var(--ink-soft); font-weight:600; margin:0 0 18px; }
+      .card{
+        background:var(--card); border-radius:var(--radius);
+        box-shadow:var(--shadow); padding:16px; margin-bottom:16px;
+      }
+      .card h2{ margin:0 0 10px; font-size:1.25rem; font-weight:800; }
+      /* Niveau cards */
+      .levels{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+      .level-card{
+        border:3px solid var(--line); background:var(--card-soft); color:var(--ink);
+        border-radius:14px; padding:10px 6px; text-align:center;
+        font-size:.95rem; font-weight:700; line-height:1.25; min-height:96px;
+        display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+      }
+      .level-card .big{ font-size:1.9rem; }
+      .level-card .sub{ font-size:.78rem; color:var(--ink-soft); font-weight:600; }
+      .level-card.sel{ border-color:var(--coral); background:var(--card); box-shadow:0 4px 0 rgba(255,107,94,.35); }
+      /* Big buttons */
+      .btn{
+        display:block; width:100%; border:none; border-radius:14px;
+        padding:14px 16px; font-size:1.15rem; font-weight:800; color:#fff;
+        background:var(--sea-dark); box-shadow:0 5px 0 rgba(11,53,82,.35);
+        margin-bottom:10px; text-align:center;
+      }
+      .btn:active{ transform:translateY(3px); box-shadow:0 2px 0 rgba(11,53,82,.35); }
+      .btn.coral{ background:var(--coral); }
+      .btn.green{ background:var(--green); box-shadow:0 5px 0 var(--green-dark); }
+      .btn.green:active{ box-shadow:0 2px 0 var(--green-dark); }
+      .btn.ghost{ background:var(--card-soft); color:var(--ink); box-shadow:0 5px 0 var(--line); }
+      .btn:disabled{ opacity:.45; cursor:not-allowed; transform:none; }
+      .btn-row{ display:flex; gap:10px; }
+      .btn-row .btn{ flex:1; }
+      .hidden{ display:none !important; }
+      /* Online panel */
+      .code-input{
+        width:100%; font-family:inherit; font-size:1.8rem; font-weight:800; text-align:center;
+        letter-spacing:.5rem; padding:10px; border-radius:14px;
+        border:3px solid var(--line); background:var(--card-soft); color:var(--ink);
+      }
+      .big-code{
+        font-size:3rem; font-weight:800; letter-spacing:.6rem; text-align:center;
+        background:var(--card-soft); border:3px dashed var(--sea-dark);
+        border-radius:14px; padding:10px 0 10px .6rem; margin:8px 0 12px; color:var(--ink);
+      }
+      .status{ text-align:center; font-weight:700; font-size:1.05rem; min-height:1.5em; margin:6px 0; }
+      .status.err{ color:var(--coral); }
+      .status.ok{ color:var(--green); }
+      .waiting-dots::after{ content:""; animation:dots 1.2s steps(4) infinite; }
+      @keyframes dots{ 0%{content:"";} 25%{content:" .";} 50%{content:" . .";} 75%{content:" . . .";} }
+      /* Boards */
+      .board-title{ font-size:1.15rem; font-weight:800; margin:0 0 8px; text-align:center; }
+      .board{
+        display:grid; gap:3px; width:100%; max-width:430px; margin:0 auto;
+        background:var(--sea-dark); padding:6px; border-radius:14px;
+      }
+      .cell{
+        border:none; border-radius:7px; aspect-ratio:1/1; min-height:36px;
+        background:var(--sea-cell); color:#fff; font-size:clamp(.95rem,4.5vw,1.35rem);
+        display:flex; align-items:center; justify-content:center; padding:0; line-height:1;
+      }
+      .cell.alt{ background:var(--sea-cell2); }
+      .cell.boat{ background:var(--boat); box-shadow:inset 0 -4px 0 var(--boat-dark); }
+      .cell.hit{ background:#ff8a5e; }
+      .cell.sunk{ background:#7a4a21; }
+      .cell.miss{ background:var(--sea-dark); }
+      .cell:disabled{ cursor:default; opacity:1; }
+      button.cell:not(:disabled){ cursor:pointer; }
+      button.cell:not(:disabled):active{ transform:scale(.93); }
+      .cell.preview-ok{ background:#8be0a4 !important; }
+      .cell.preview-bad{ background:#ff9d94 !important; }
+      @keyframes shake{ 0%,100%{transform:translateX(0);} 20%{transform:translateX(-7px);} 40%{transform:translateX(7px);} 60%{transform:translateX(-5px);} 80%{transform:translateX(5px);} }
+      .shake{ animation:shake .4s ease; }
+      .banner{
+        text-align:center; font-size:clamp(1.15rem,5vw,1.45rem); font-weight:800;
+        border-radius:14px; padding:12px; margin-bottom:14px; color:#fff;
+        background:var(--sea-dark); box-shadow:var(--shadow);
+      }
+      .banner.myturn{ background:var(--green); }
+      .banner.wait{ background:var(--sea-dark); }
+      .msg{ text-align:center; font-size:1.1rem; font-weight:700; min-height:1.6em; margin:8px 0 2px; }
+      .score{
+        text-align:center; font-weight:800; font-size:1.05rem; margin-bottom:12px;
+        background:var(--card-soft); border-radius:999px; padding:7px 10px;
+      }
+      .to-place{ text-align:center; font-size:1.1rem; font-weight:700; margin-bottom:10px; }
+      .to-place .pips{ font-size:1.3rem; letter-spacing:2px; }
+      .level-line{ text-align:center; font-weight:700; color:var(--ink-soft); margin-bottom:10px; }
+      /* End / disconnect overlays */
+      .overlay{
+        position:fixed; inset:0; background:rgba(4,26,46,.55);
+        display:flex; align-items:center; justify-content:center; padding:18px; z-index:40;
+      }
+      .overlay .card{ max-width:420px; width:100%; text-align:center; margin:0; }
+      .overlay .emoji-big{ font-size:3.4rem; }
+      .overlay h2{ font-size:1.6rem; }
+      footer{ text-align:center; color:var(--ink); opacity:.75; font-weight:600; font-size:.9rem; padding:8px 0 4px; }
+      #confetti{ position:fixed; inset:0; pointer-events:none; z-index:50; }
+      .battle-cols{ display:block; }
+      @media (min-width:820px){
+        .wrap{ max-width:940px; }
+        .battle-cols{ display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:start; }
+      }
+    </style>
+  </head>
+  <body>
+<div style="position:sticky;top:0;z-index:50;background:#FFF9F0;border-bottom:1px solid #FDE68A;padding:10px 16px;font-family:sans-serif"><a href="index.html" style="color:#047857;font-weight:700;font-size:14px;text-decoration:none">← Retour aux jeux — Adam et ses amis (lgmdesign35.com)</a></div>
+    <canvas id="confetti" class="hidden"></canvas>
+    <div class="wrap">
+      <div class="topbar">
+        <button class="icon-btn" id="soundBtn" aria-label="Son activé ou coupé">🔊</button>
+        <button class="icon-btn hidden" id="homeBtn" aria-label="Retour à l'accueil">🏠</button>
+      </div>
+
+      <!-- ============ ACCUEIL ============ -->
+      <section id="screen-home">
+        <h1 class="title">🚢 Bataille navale</h1>
+        <p class="subtitle">Cache tes bateaux et devine où ton ami a caché les siens&nbsp;!</p>
+
+        <div class="card">
+          <h2>🌊 Choisis ton niveau</h2>
+          <div class="levels" id="levels">
+            <button class="level-card" data-level="1">
+              <span class="big">🌱</span>Niveau 1<br />Petite mer
+              <span class="sub">6 × 6 · 3 bateaux</span>
+            </button>
+            <button class="level-card sel" data-level="2">
+              <span class="big">🌊</span>Niveau 2<br />Mer moyenne
+              <span class="sub">7 × 7 · 4 bateaux</span>
+            </button>
+            <button class="level-card" data-level="3">
+              <span class="big">🔥</span>Niveau 3<br />Grand océan
+              <span class="sub">8 × 8 · 4 bateaux</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <button class="btn coral" id="btnOnline">👥 Jouer avec un ami (en ligne)</button>
+          <div id="onlinePanel" class="hidden">
+            <button class="btn" id="btnCreate">➕ Créer une partie</button>
+            <p style="text-align:center;font-weight:700;margin:10px 0 6px;">— ou rejoins la partie de ton ami —</p>
+            <input class="code-input" id="joinCode" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="0000" aria-label="Code de la partie" />
+            <div style="height:10px"></div>
+            <button class="btn green" id="btnJoin">🔑 Rejoindre</button>
+            <p class="status" id="homeStatus"></p>
+          </div>
+          <div style="height:6px"></div>
+          <button class="btn" id="btnSolo">🤖 Jouer seul contre l'ordinateur</button>
+        </div>
+      </section>
+
+      <!-- ============ SALLE D'ATTENTE ============ -->
+      <section id="screen-wait" class="hidden">
+        <h1 class="title">🚢 Bataille navale</h1>
+        <div class="card">
+          <h2 style="text-align:center;">Donne ce code à ton ami&nbsp;:</h2>
+          <div class="big-code" id="waitCode">····</div>
+          <p class="level-line" id="waitLevel"></p>
+          <button class="btn ghost" id="btnCopy">📋 Copier le code</button>
+          <p class="status waiting-dots" id="waitStatus">En attente de ton ami</p>
+          <button class="btn coral" id="btnCancelWait">✖️ Annuler</button>
+        </div>
+      </section>
+
+      <!-- ============ PLACEMENT ============ -->
+      <section id="screen-place" class="hidden">
+        <h1 class="title" style="font-size:clamp(1.6rem,6vw,2.2rem);">⚓ Place tes bateaux</h1>
+        <p class="level-line" id="placeLevel"></p>
+        <div class="card">
+          <p class="to-place" id="toPlace"></p>
+          <div class="board" id="placeBoard"></div>
+          <p class="msg" id="placeMsg"></p>
+          <div style="height:8px"></div>
+          <div class="btn-row">
+            <button class="btn" id="btnRotate">🔄 Tourner</button>
+            <button class="btn ghost" id="btnClear">🗑️ Tout effacer</button>
+          </div>
+          <button class="btn ghost" id="btnRandom">🎲 Placer au hasard</button>
+          <button class="btn green" id="btnReady" disabled>✅ Prêt&nbsp;!</button>
+          <p class="status" id="placeStatus"></p>
+        </div>
+      </section>
+
+      <!-- ============ BATAILLE ============ -->
+      <section id="screen-battle" class="hidden">
+        <div class="score" id="scoreLine"></div>
+        <p class="level-line" id="battleLevel" style="margin-bottom:8px;"></p>
+        <div class="banner wait" id="turnBanner">⏳ …</div>
+        <div class="battle-cols">
+          <div class="card">
+            <p class="board-title" id="enemyTitle">🌊 La mer de ton ami</p>
+            <div class="board" id="enemyBoard"></div>
+            <p class="msg" id="battleMsg"></p>
+          </div>
+          <div class="card">
+            <p class="board-title">⚓ Tes bateaux</p>
+            <div class="board" id="myBoard"></div>
+          </div>
+        </div>
+      </section>
+
+      <footer>Bataille navale — un jeu d'Adam et ses amis</footer>
+    </div>
+
+    <!-- ============ FIN DE PARTIE ============ -->
+    <div class="overlay hidden" id="endOverlay">
+      <div class="card">
+        <div class="emoji-big" id="endEmoji">🏆</div>
+        <h2 id="endTitle"></h2>
+        <p id="endText" style="font-weight:600;"></p>
+        <p class="score" id="endScore"></p>
+        <button class="btn green" id="btnRematch">🔁 Revanche&nbsp;!</button>
+        <button class="btn ghost" id="btnEndHome">🏠 Retour à l'accueil</button>
+      </div>
+    </div>
+
+    <!-- ============ AMI PARTI ============ -->
+    <div class="overlay hidden" id="byeOverlay">
+      <div class="card">
+        <div class="emoji-big">👋</div>
+        <h2>Ton ami a quitté la partie</h2>
+        <p style="font-weight:600;">Vous pourrez rejouer ensemble une autre fois&nbsp;!</p>
+        <button class="btn" id="btnByeHome">🏠 Retour à l'accueil</button>
+      </div>
+    </div>
+
+    <script>
+    "use strict";
+    /* ================= Données des niveaux ================= */
+    var LEVELS = {
+      1: { name: "Petite mer",  emoji: "🌱", n: 6, fleet: [3, 2, 2] },
+      2: { name: "Mer moyenne", emoji: "🌊", n: 7, fleet: [3, 3, 2, 2] },
+      3: { name: "Grand océan", emoji: "🔥", n: 8, fleet: [4, 3, 3, 2] }
+    };
+    var PREFIX = "lgm-navale-";
+
+    function $(id){ return document.getElementById(id); }
+    function shuffle(a){ for (var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+
+    /* ================= État ================= */
+    var G = null;
+    function freshGame(mode, role, level){
+      var L = LEVELS[level];
+      return {
+        mode: mode, role: role, level: level, n: L.n, fleet: L.fleet.slice(),
+        phase: "place",            // place | battle | over
+        orient: "h",
+        remaining: L.fleet.slice(),// tailles encore à placer
+        myBoats: [],               // {size, cells:[], hits:Set}
+        foeBoats: null,            // solo seulement
+        myShots: {},               // i -> 'miss'|'hit'|'sunk' (tirs sur la mer adverse)
+        foeShots: {},              // i -> 'miss'|'hit'|'sunk' (tirs reçus)
+        foeSunkCells: {},          // cellules adverses coulées révélées
+        myTurn: false,
+        meReady: false, foeReady: false,
+        aiHits: [], aiShots: {},   // mémoire de l'ordinateur
+        over: false
+      };
+    }
+    var scores = { me: 0, foe: 0 };
+    var selectedLevel = 2;
+
+    /* ================= Sons (WebAudio) ================= */
+    var audioCtx = null, soundOn = true;
+    function ac(){
+      if (!audioCtx){ try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e){} }
+      if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+      return audioCtx;
+    }
+    function tone(freq, dur, type, vol, when, slideTo){
+      if (!soundOn) return; var ctx = ac(); if (!ctx) return;
+      var t = ctx.currentTime + (when || 0);
+      var o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = type || "sine"; o.frequency.setValueAtTime(freq, t);
+      if (slideTo) o.frequency.exponentialRampToValueAtTime(slideTo, t + dur);
+      g.gain.setValueAtTime(vol || .18, t);
+      g.gain.exponentialRampToValueAtTime(.001, t + dur);
+      o.connect(g); g.connect(ctx.destination); o.start(t); o.stop(t + dur);
+    }
+    function splash(){
+      if (!soundOn) return; var ctx = ac(); if (!ctx) return;
+      var dur = .35, buf = ctx.createBuffer(1, ctx.sampleRate * dur, ctx.sampleRate);
+      var d = buf.getChannelData(0);
+      for (var i=0;i<d.length;i++) d[i] = (Math.random()*2-1) * (1 - i/d.length);
+      var src = ctx.createBufferSource(); src.buffer = buf;
+      var f = ctx.createBiquadFilter(); f.type = "lowpass"; f.frequency.value = 700;
+      var g = ctx.createGain(); g.gain.value = .25;
+      src.connect(f); f.connect(g); g.connect(ctx.destination); src.start();
+    }
+    function sndPlace(){ tone(520, .12, "triangle", .2); tone(780, .12, "triangle", .15, .07); }
+    function sndMiss(){ splash(); }
+    function sndHit(){ tone(220, .25, "square", .16, 0, 90); tone(140, .3, "sawtooth", .12, .05, 60); }
+    function sndSunk(){ tone(160, .5, "sawtooth", .18, 0, 45); tone(90, .6, "square", .14, .1, 40); splash(); }
+    function sndWin(){ [523,659,784,1046].forEach(function(f,i){ tone(f, .22, "triangle", .2, i*.13); }); }
+    function sndLose(){ [392,330,262].forEach(function(f,i){ tone(f, .25, "triangle", .16, i*.16); }); }
+    $("soundBtn").addEventListener("click", function(){
+      soundOn = !soundOn;
+      this.textContent = soundOn ? "🔊" : "🔇";
+      if (soundOn) sndPlace();
+    });
+
+    /* ================= Navigation ================= */
+    var screens = ["screen-home", "screen-wait", "screen-place", "screen-battle"];
+    function show(id){
+      screens.forEach(function(s){ $(s).classList.toggle("hidden", s !== id); });
+      $("homeBtn").classList.toggle("hidden", id === "screen-home");
+      window.scrollTo(0, 0);
+    }
+    $("homeBtn").addEventListener("click", goHome);
+    $("btnEndHome").addEventListener("click", goHome);
+    $("btnByeHome").addEventListener("click", goHome);
+    function goHome(){
+      closeNet();
+      G = null;
+      $("endOverlay").classList.add("hidden");
+      $("byeOverlay").classList.add("hidden");
+      setStatus($("homeStatus"), "", "");
+      show("screen-home");
+    }
+
+    function setStatus(el, txt, kind){ el.textContent = txt; el.className = "status" + (kind ? " " + kind : ""); }
+    function levelLine(level){ var L = LEVELS[level]; return "Niveau : " + L.name + " " + L.emoji + " · " + L.n + " × " + L.n; }
+
+    /* ================= Accueil : choix du niveau ================= */
+    $("levels").addEventListener("click", function(e){
+      var b = e.target.closest(".level-card"); if (!b) return;
+      selectedLevel = parseInt(b.getAttribute("data-level"), 10);
+      var cards = this.querySelectorAll(".level-card");
+      for (var i=0;i<cards.length;i++) cards[i].classList.toggle("sel", cards[i] === b);
+      sndPlace();
+    });
+    $("btnOnline").addEventListener("click", function(){
+      $("onlinePanel").classList.toggle("hidden");
+      ac();
+    });
+    $("btnSolo").addEventListener("click", function(){
+      ac();
+      scores = { me: 0, foe: 0 };
+      startPlacement("solo", null, selectedLevel);
+    });
+
+    /* ================= Placement ================= */
+    function startPlacement(mode, role, level){
+      G = freshGame(mode, role, level);
+      $("placeLevel").textContent = levelLine(level);
+      $("placeStatus").textContent = "";
+      $("placeMsg").textContent = "";
+      show("screen-place");
+      renderPlace();
+    }
+    function boatCells(start, size, orient, n){
+      var r = Math.floor(start / n), c = start % n, cells = [], i;
+      if (orient === "h"){ if (c + size > n) return null; for (i=0;i<size;i++) cells.push(start + i); }
+      else { if (r + size > n) return null; for (i=0;i<size;i++) cells.push(start + i * n); }
+      return cells;
+    }
+    function occupiedSet(boats){
+      var s = {}; boats.forEach(function(b){ b.cells.forEach(function(i){ s[i] = true; }); }); return s;
+    }
+    function tryPlace(start){
+      if (!G || G.remaining.length === 0) return;
+      var size = G.remaining[0];
+      var cells = boatCells(start, size, G.orient, G.n);
+      var occ = occupiedSet(G.myBoats);
+      var bad = !cells || cells.some(function(i){ return occ[i]; });
+      if (bad){
+        $("placeMsg").textContent = "Ça ne rentre pas ici !";
+        var bd = $("placeBoard"); bd.classList.remove("shake"); void bd.offsetWidth; bd.classList.add("shake");
+        tone(160, .15, "square", .12);
+        return;
+      }
+      G.myBoats.push({ size: size, cells: cells, hits: {} });
+      G.remaining.shift();
+      $("placeMsg").textContent = "";
+      sndPlace();
+      renderPlace();
+    }
+    function renderPlace(){
+      var n = G.n, occ = occupiedSet(G.myBoats), bd = $("placeBoard");
+      bd.style.gridTemplateColumns = "repeat(" + n + ", 1fr)";
+      var html = "";
+      for (var i=0;i<n*n;i++)
+        html += '<button class="cell' + (occ[i] ? " boat" : "") + (((Math.floor(i/n) + i%n) % 2) ? " alt" : "") + '" data-i="' + i + '">' + (occ[i] ? "🚢" : "") + "</button>";
+      bd.innerHTML = html;
+      if (G.remaining.length){
+        var s = G.remaining[0], pips = "";
+        for (var k=0;k<s;k++) pips += "🟧";
+        $("toPlace").innerHTML = "Bateau à placer : <span class='pips'>" + pips + "</span> (" + s + " cases) · " +
+          (G.orient === "h" ? "↔️ horizontal" : "↕️ vertical") +
+          "<br><span style='font-size:.9rem;color:var(--ink-soft)'>Touche une case de la mer pour le poser</span>";
+      } else {
+        $("toPlace").innerHTML = "🎉 Tous tes bateaux sont cachés !";
+      }
+      $("btnReady").disabled = G.remaining.length > 0;
+    }
+    $("placeBoard").addEventListener("click", function(e){
+      var c = e.target.closest(".cell"); if (!c) return;
+      tryPlace(parseInt(c.getAttribute("data-i"), 10));
+    });
+    $("placeBoard").addEventListener("mouseover", function(e){
+      var c = e.target.closest(".cell");
+      var cells = $("placeBoard").querySelectorAll(".cell");
+      for (var i=0;i<cells.length;i++) cells[i].classList.remove("preview-ok", "preview-bad");
+      if (!c || !G || G.remaining.length === 0) return;
+      var start = parseInt(c.getAttribute("data-i"), 10);
+      var cs = boatCells(start, G.remaining[0], G.orient, G.n);
+      var occ = occupiedSet(G.myBoats);
+      var bad = !cs || cs.some(function(i){ return occ[i]; });
+      if (cs) cs.forEach(function(i){ cells[i].classList.add(bad ? "preview-bad" : "preview-ok"); });
+    });
+    $("btnRotate").addEventListener("click", function(){
+      G.orient = G.orient === "h" ? "v" : "h"; sndPlace(); renderPlace();
+    });
+    $("btnClear").addEventListener("click", function(){
+      G.myBoats = []; G.remaining = G.fleet.slice(); $("placeMsg").textContent = ""; renderPlace();
+    });
+    $("btnRandom").addEventListener("click", function(){
+      G.myBoats = randomFleet(G.n, G.fleet); G.remaining = []; $("placeMsg").textContent = ""; sndPlace(); renderPlace();
+    });
+    function randomFleet(n, fleet){
+      var boats = [], occ = {};
+      fleet.forEach(function(size){
+        var placed = false, guard = 0;
+        while (!placed && guard++ < 500){
+          var orient = Math.random() < .5 ? "h" : "v";
+          var start = Math.floor(Math.random() * n * n);
+          var cells = boatCells(start, size, orient, n);
+          if (cells && !cells.some(function(i){ return occ[i]; })){
+            cells.forEach(function(i){ occ[i] = true; });
+            boats.push({ size: size, cells: cells, hits: {} });
+            placed = true;
+          }
+        }
+      });
+      return boats;
+    }
+
+    /* ================= Prêt ! ================= */
+    $("btnReady").addEventListener("click", function(){
+      if (!G || G.remaining.length) return;
+      sndPlace();
+      if (G.mode === "solo"){
+        G.foeBoats = randomFleet(G.n, G.fleet);
+        G.meReady = true; G.foeReady = true;
+        startBattle(true);
+      } else {
+        G.meReady = true;
+        $("btnReady").disabled = true;
+        setStatus($("placeStatus"), "✅ Tu es prêt ! En attente de ton ami…", "ok");
+        if (conn && conn.open) conn.send({ type: "ready" });
+        maybeStartBattle();
+      }
+    });
+    function maybeStartBattle(){
+      if (G && G.mode === "online" && G.meReady && G.foeReady && G.phase === "place")
+        startBattle(G.role === "host");
+    }
+
+    /* ================= Bataille ================= */
+    function startBattle(iStart){
+      G.phase = "battle";
+      G.myTurn = iStart;
+      $("battleLevel").textContent = levelLine(G.level);
+      $("enemyTitle").textContent = G.mode === "solo" ? "🌊 La mer de l'ordinateur" : "🌊 La mer de ton ami";
+      updateScore();
+      show("screen-battle");
+      renderBattle();
+      setBanner();
+      $("battleMsg").textContent = iStart ? "La bataille commence ! À toi de tirer le premier !" : "La bataille commence !";
+    }
+    function updateScore(){
+      var foeName = G && G.mode === "solo" ? "Ordinateur" : "Ami";
+      var txt = "Toi ⭐ " + scores.me + " — " + foeName + " ⭐ " + scores.foe;
+      $("scoreLine").textContent = txt;
+      $("endScore").textContent = txt;
+    }
+    function setBanner(){
+      var b = $("turnBanner");
+      if (G.myTurn){ b.textContent = "🎯 À toi de tirer !"; b.className = "banner myturn"; }
+      else {
+        b.textContent = G.mode === "solo" ? "⏳ L'ordinateur réfléchit…" : "⏳ Ton ami réfléchit…";
+        b.className = "banner wait";
+      }
+    }
+    function renderBattle(){
+      var n = G.n, i, html;
+      // Mer adverse (tirs)
+      var eb = $("enemyBoard");
+      eb.style.gridTemplateColumns = "repeat(" + n + ", 1fr)";
+      html = "";
+      for (i=0;i<n*n;i++){
+        var st = G.myShots[i], cls = "cell" + (((Math.floor(i/n) + i%n) % 2) ? " alt" : ""), em = "", dis = true;
+        if (st === "miss"){ cls += " miss"; em = "💦"; }
+        else if (st === "hit"){ cls += " hit"; em = "💥"; }
+        else if (st === "sunk"){ cls += " sunk"; em = "🚢"; }
+        else if (G.phase === "battle" && G.myTurn) dis = false;
+        html += '<button class="' + cls + '" data-i="' + i + '"' + (dis ? " disabled" : "") + ">" + em + "</button>";
+      }
+      eb.innerHTML = html;
+      // Mes bateaux
+      var boatAt = {};
+      G.myBoats.forEach(function(bt, bi){ bt.cells.forEach(function(ci){ boatAt[ci] = bi; }); });
+      var mb = $("myBoard");
+      mb.style.gridTemplateColumns = "repeat(" + n + ", 1fr)";
+      html = "";
+      for (i=0;i<n*n;i++){
+        var fs = G.foeShots[i], c2 = "cell" + (((Math.floor(i/n) + i%n) % 2) ? " alt" : ""), e2 = "";
+        if (boatAt[i] !== undefined){
+          var bt2 = G.myBoats[boatAt[i]];
+          var sunk = bt2.cells.every(function(ci){ return bt2.hits[ci]; });
+          c2 += sunk ? " sunk" : " boat"; e2 = "🚢";
+          if (fs === "hit" || fs === "sunk"){ c2 += " hit"; e2 = "💥"; if (sunk) e2 = "🚢"; }
+        } else if (fs === "miss"){ c2 += " miss"; e2 = "💦"; }
+        html += '<div class="' + c2 + '">' + e2 + "</div>";
+      }
+      mb.innerHTML = html;
+    }
+    function resolveShot(boats, i){
+      for (var b=0;b<boats.length;b++){
+        var bt = boats[b];
+        if (bt.cells.indexOf(i) >= 0){
+          bt.hits[i] = true;
+          var sunk = bt.cells.every(function(ci){ return bt.hits[ci]; });
+          if (sunk){
+            var allSunk = boats.every(function(x){ return x.cells.every(function(ci){ return x.hits[ci]; }); });
+            return { outcome: "sunk", sunkCells: bt.cells.slice(), gameOver: allSunk };
+          }
+          return { outcome: "hit", sunkCells: null, gameOver: false };
+        }
+      }
+      return { outcome: "miss", sunkCells: null, gameOver: false };
+    }
+    function applyMyShotResult(i, res){
+      if (res.outcome === "sunk" && res.sunkCells)
+        res.sunkCells.forEach(function(ci){ G.myShots[ci] = "sunk"; G.foeSunkCells[ci] = true; });
+      else G.myShots[i] = res.outcome;
+      if (res.outcome === "miss"){ sndMiss(); $("battleMsg").textContent = "💦 Dans l'eau !"; G.myTurn = false; }
+      else if (res.outcome === "hit"){ sndHit(); $("battleMsg").textContent = "💥 Touché ! Tu rejoues !"; }
+      else { sndSunk(); $("battleMsg").textContent = "🚢 Coulé ! Tu rejoues !"; }
+      if (res.gameOver){ endGame(true); return; }
+      renderBattle(); setBanner();
+    }
+    $("enemyBoard").addEventListener("click", function(e){
+      var c = e.target.closest(".cell");
+      if (!c || c.disabled || !G || G.phase !== "battle" || !G.myTurn) return;
+      var i = parseInt(c.getAttribute("data-i"), 10);
+      if (G.myShots[i]) return;
+      if (G.mode === "solo"){
+        var res = resolveShot(G.foeBoats, i);
+        applyMyShotResult(i, res);
+        if (!G.over && !G.myTurn) setTimeout(aiTurn, 800);
+      } else if (conn && conn.open){
+        // Désactive tout de suite pour éviter le double tir
+        G.myShots[i] = "pending";
+        renderBattle();
+        conn.send({ type: "shot", i: i });
+      }
+    });
+    function receiveShot(i){
+      var res = resolveShot(G.myBoats, i);
+      G.foeShots[i] = res.outcome;
+      if (res.outcome === "sunk" && res.sunkCells) res.sunkCells.forEach(function(ci){ G.foeShots[ci] = "sunk"; });
+      if (conn && conn.open) conn.send({ type: "result", i: i, outcome: res.outcome, sunkCells: res.sunkCells, gameOver: res.gameOver });
+      if (res.outcome === "miss"){ sndMiss(); $("battleMsg").textContent = "💦 Ton ami a tiré dans l'eau ! À toi !"; G.myTurn = true; }
+      else if (res.outcome === "hit"){ sndHit(); $("battleMsg").textContent = "💥 Oh non, un de tes bateaux est touché !"; }
+      else { sndSunk(); $("battleMsg").textContent = "🚢 Un de tes bateaux a coulé !"; }
+      if (res.gameOver){ endGame(false); return; }
+      renderBattle(); setBanner();
+    }
+    function receiveResult(msg){
+      delete G.myShots[msg.i];
+      var res = { outcome: msg.outcome, sunkCells: msg.sunkCells, gameOver: msg.gameOver };
+      applyMyShotResult(msg.i, res);
+    }
+
+    /* ================= Ordinateur (solo) ================= */
+    function aiPick(){
+      var n = G.n, i, unshot = [];
+      for (i=0;i<n*n;i++) if (!G.aiShots[i]) unshot.push(i);
+      if (G.level > 1 && G.aiHits.length){
+        var cand = aiCandidates();
+        cand = cand.filter(function(x){ return !G.aiShots[x]; });
+        if (cand.length) return cand[Math.floor(Math.random() * cand.length)];
+      }
+      if (G.level === 3){
+        var board = unshot.filter(function(x){ var r = Math.floor(x/n), c = x%n; return (r + c) % 2 === 0; });
+        var pool = board.length ? board : unshot;
+        return pool[Math.floor(Math.random() * pool.length)];
+      }
+      return unshot[Math.floor(Math.random() * unshot.length)];
+    }
+    function aiCandidates(){
+      var n = G.n, hits = G.aiHits, out = {}, res = [];
+      function add(i){ if (i >= 0 && i < n*n && !out[i]){ out[i] = true; res.push(i); } }
+      if (G.level === 3 && hits.length >= 2){
+        // Cherche une ligne de 2 touchés pour l'allonger
+        var byRow = {}, byCol = {};
+        hits.forEach(function(i){
+          var r = Math.floor(i/n), c = i%n;
+          (byRow[r] = byRow[r] || []).push(c);
+          (byCol[c] = byCol[c] || []).push(r);
+        });
+        var r, c, arr;
+        for (r in byRow){ arr = byRow[r]; if (arr.length >= 2){ add(r*n + Math.min.apply(null, arr) - 1); add(r*n + Math.max.apply(null, arr) + 1); } }
+        for (c in byCol){ arr = byCol[c]; if (arr.length >= 2){ add((Math.min.apply(null, arr) - 1)*n + (+c)); add((Math.max.apply(null, arr) + 1)*n + (+c)); } }
+        // Valide les bords (même rangée / colonne)
+        res = res.filter(function(i){
+          return hits.some(function(h){
+            var hr = Math.floor(h/n), hc = h%n, ir = Math.floor(i/n), ic = i%n;
+            return (hr === ir && Math.abs(hc - ic) <= 4) || (hc === ic && Math.abs(hr - ir) <= 4);
+          });
+        });
+        if (res.length) return res;
+      }
+      hits.forEach(function(i){
+        var r = Math.floor(i/n), c = i%n;
+        if (c > 0) add(i - 1);
+        if (c < n - 1) add(i + 1);
+        if (r > 0) add(i - n);
+        if (r < n - 1) add(i + n);
+      });
+      return res;
+    }
+    function aiTurn(){
+      if (!G || G.over || G.phase !== "battle" || G.myTurn) return;
+      var i = aiPick();
+      if (i === undefined) return;
+      G.aiShots[i] = true;
+      var res = resolveShot(G.myBoats, i);
+      G.foeShots[i] = res.outcome;
+      if (res.outcome === "sunk" && res.sunkCells){
+        res.sunkCells.forEach(function(ci){ G.foeShots[ci] = "sunk"; });
+        G.aiHits = G.aiHits.filter(function(h){ return res.sunkCells.indexOf(h) < 0; });
+      } else if (res.outcome === "hit") G.aiHits.push(i);
+      if (res.outcome === "miss"){ sndMiss(); $("battleMsg").textContent = "💦 L'ordinateur a tiré dans l'eau ! À toi !"; G.myTurn = true; }
+      else if (res.outcome === "hit"){ sndHit(); $("battleMsg").textContent = "💥 L'ordinateur a touché un de tes bateaux !"; }
+      else { sndSunk(); $("battleMsg").textContent = "🚢 L'ordinateur a coulé un de tes bateaux !"; }
+      if (res.gameOver){ renderBattle(); endGame(false); return; }
+      renderBattle(); setBanner();
+      if (!G.myTurn && !G.over) setTimeout(aiTurn, 900);
+    }
+
+    /* ================= Fin de partie ================= */
+    function endGame(iWon){
+      G.over = true; G.phase = "over";
+      if (iWon){ scores.me++; sndWin(); confetti(); }
+      else { scores.foe++; sndLose(); }
+      updateScore();
+      $("endEmoji").textContent = iWon ? "🏆" : "🌧️";
+      $("endTitle").textContent = iWon ? "Tu as gagné !" : (G.mode === "solo" ? "L'ordinateur a gagné !" : "Ton ami a gagné !");
+      $("endText").textContent = iWon
+        ? "Tu as coulé tous les bateaux ! Bravo, capitaine !"
+        : (G.mode === "solo"
+            ? "L'ordinateur a coulé tous tes bateaux ! La revanche s'en vient !"
+            : "Ton ami a coulé tous tes bateaux ! La revanche s'en vient !");
+      setTimeout(function(){ $("endOverlay").classList.remove("hidden"); }, 900);
+    }
+    $("btnRematch").addEventListener("click", function(){
+      $("endOverlay").classList.add("hidden");
+      sndPlace();
+      if (G.mode === "online" && conn && conn.open) conn.send({ type: "rematch" });
+      startPlacement(G.mode, G.role, G.level);
+    });
+    function confetti(){
+      var cv = $("confetti"), ctx = cv.getContext("2d");
+      cv.width = window.innerWidth; cv.height = window.innerHeight;
+      cv.classList.remove("hidden");
+      var colors = ["#ff6b5e", "#ffc93c", "#25b06a", "#2e9fd8", "#ff9f43"];
+      var parts = [];
+      for (var i=0;i<130;i++) parts.push({
+        x: Math.random()*cv.width, y: -20 - Math.random()*cv.height*.4,
+        w: 6 + Math.random()*6, h: 8 + Math.random()*8,
+        vy: 2 + Math.random()*3, vx: -1.5 + Math.random()*3,
+        rot: Math.random()*Math.PI, vr: -.1 + Math.random()*.2,
+        col: colors[i % colors.length]
+      });
+      var t0 = performance.now();
+      (function frame(t){
+        ctx.clearRect(0, 0, cv.width, cv.height);
+        parts.forEach(function(p){
+          p.y += p.vy; p.x += p.vx; p.rot += p.vr;
+          ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+          ctx.fillStyle = p.col; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h); ctx.restore();
+        });
+        if (t - t0 < 3200) requestAnimationFrame(frame);
+        else { ctx.clearRect(0, 0, cv.width, cv.height); cv.classList.add("hidden"); }
+      })(t0);
+    }
+
+    /* ================= En ligne (PeerJS) ================= */
+    var peer = null, conn = null, myCode = null;
+
+    function closeNet(){
+      try { if (conn) conn.close(); } catch(e){}
+      try { if (peer) peer.destroy(); } catch(e){}
+      conn = null; peer = null; myCode = null;
+    }
+    function peerAvailable(){
+      if (typeof Peer === "undefined"){
+        setStatus($("homeStatus"), "Oups ! La connexion en ligne n'est pas disponible pour le moment. Essaie le mode contre l'ordinateur !", "err");
+        return false;
+      }
+      return true;
+    }
+    function wireConn(c){
+      conn = c;
+      c.on("data", onData);
+      c.on("close", function(){
+        if (G && (G.phase === "battle" || G.phase === "place") && !G.over){
+          $("byeOverlay").classList.remove("hidden");
+        }
+      });
+      c.on("error", function(){});
+    }
+    function onData(msg){
+      if (!msg || !msg.type) return;
+      if (msg.type === "start"){
+        // L'invité reçoit le niveau choisi par l'hôte
+        scores = { me: 0, foe: 0 };
+        startPlacement("online", "guest", msg.level);
+        setStatus($("homeStatus"), "", "");
+      }
+      else if (msg.type === "ready"){
+        if (!G) return;
+        G.foeReady = true;
+        if (G.phase === "place" && !G.meReady)
+          setStatus($("placeStatus"), "Ton ami est prêt ! Place tes bateaux et appuie sur « Prêt ! »", "ok");
+        maybeStartBattle();
+      }
+      else if (msg.type === "shot"){ if (G && G.phase === "battle") receiveShot(msg.i); }
+      else if (msg.type === "result"){ if (G && G.phase === "battle") receiveResult(msg); }
+      else if (msg.type === "rematch"){
+        if (G){
+          $("endOverlay").classList.add("hidden");
+          startPlacement("online", G.role, G.level);
+        }
+      }
+    }
+
+    $("btnCreate").addEventListener("click", function(){
+      if (!peerAvailable()) return;
+      ac();
+      closeNet();
+      myCode = String(Math.floor(1000 + Math.random() * 9000));
+      setStatus($("homeStatus"), "Création de la partie…", "");
+      try { peer = new Peer(PREFIX + myCode); }
+      catch(e){ setStatus($("homeStatus"), "Oups ! La connexion n'a pas marché. Réessaie.", "err"); return; }
+      peer.on("open", function(){
+        $("waitCode").textContent = myCode;
+        $("waitLevel").textContent = levelLine(selectedLevel);
+        setStatus($("homeStatus"), "", "");
+        show("screen-wait");
+      });
+      peer.on("connection", function(c){
+        wireConn(c);
+        c.on("open", function(){
+          setStatus($("waitStatus"), "Connecté !", "ok");
+          c.send({ type: "start", level: selectedLevel });
+          scores = { me: 0, foe: 0 };
+          setTimeout(function(){ startPlacement("online", "host", selectedLevel); }, 500);
+        });
+      });
+      peer.on("error", function(err){
+        if (err && err.type === "unavailable-id"){
+          setStatus($("homeStatus"), "Ce code est déjà pris — réessaie, un autre code sera créé.", "err");
+        } else {
+          setStatus($("homeStatus"), "Oups ! La connexion n'a pas marché. Réessaie.", "err");
+        }
+        show("screen-home");
+      });
+      peer.on("disconnected", function(){ try { peer.reconnect(); } catch(e){} });
+    });
+
+    $("btnJoin").addEventListener("click", function(){
+      if (!peerAvailable()) return;
+      ac();
+      var code = $("joinCode").value.replace(/\D/g, "");
+      if (code.length !== 4){
+        setStatus($("homeStatus"), "Écris le code à 4 chiffres de ton ami.", "err");
+        return;
+      }
+      closeNet();
+      setStatus($("homeStatus"), "Connexion à la partie de ton ami…", "");
+      try { peer = new Peer(); }
+      catch(e){ setStatus($("homeStatus"), "Oups ! La connexion n'a pas marché. Réessaie.", "err"); return; }
+      var joined = false;
+      peer.on("open", function(){
+        var c = peer.connect(PREFIX + code, { reliable: true });
+        wireConn(c);
+        c.on("open", function(){
+          joined = true;
+          setStatus($("homeStatus"), "Connecté !", "ok");
+        });
+      });
+      peer.on("error", function(err){
+        if (err && err.type === "peer-unavailable"){
+          setStatus($("homeStatus"), "Ce code n'existe pas — vérifie-le et réessaie.", "err");
+        } else if (!joined) {
+          setStatus($("homeStatus"), "Oups ! La connexion n'a pas marché. Réessaie.", "err");
+        }
+      });
+      peer.on("disconnected", function(){ try { peer.reconnect(); } catch(e){} });
+    });
+
+    $("btnCopy").addEventListener("click", function(){
+      var code = $("waitCode").textContent;
+      function done(){ setStatus($("waitStatus"), "Code copié ! Envoie-le à ton ami.", "ok"); }
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(code).then(done, function(){ setStatus($("waitStatus"), "Code : " + code, ""); });
+      } else setStatus($("waitStatus"), "Code : " + code, "");
+    });
+    $("btnCancelWait").addEventListener("click", goHome);
+    </script>
+  </body>
+</html>
