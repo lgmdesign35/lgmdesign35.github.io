@@ -337,6 +337,7 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
       <button onclick="switchLearnTab('abc123')" id="ltab-abc123" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-slate-600 hover:bg-sky-100 shadow-sm"><span>🔤</span> <span>ABC &amp; 123</span></button>
       <button onclick="switchLearnTab('cards')" id="ltab-cards" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-slate-600 hover:bg-sky-100 shadow-sm"><span>🃏</span> <span>Cartes</span></button>
       <button onclick="switchLearnTab('scenes')" id="ltab-scenes" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-emerald-700 hover:bg-emerald-100 shadow-sm"><span>👆</span> <span>Touche et écoute</span></button>
+      <button onclick="switchLearnTab('perso')" id="ltab-perso" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-violet-700 hover:bg-violet-100 shadow-sm"><span>✨</span> <span>Mon histoire</span></button>
       <button onclick="switchLearnTab('games')" id="ltab-games" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-slate-600 hover:bg-sky-100 shadow-sm"><span>🎮</span> <span>Jeux</span></button>
       <button onclick="switchLearnTab('certificat')" id="ltab-certificat" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-amber-700 hover:bg-amber-100 shadow-sm"><span>📜</span> <span>Certificat</span></button>
       <button onclick="switchLearnTab('parents')" id="ltab-parents" class="learn-tab py-2 px-1 rounded-2xl font-black text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 transition bg-white text-indigo-700 hover:bg-indigo-100 shadow-sm"><span>👨‍👩‍👧</span> <span>Parents</span></button>
@@ -451,6 +452,42 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
       <div class="flex items-center justify-between mt-3 px-1">
         <div id="sc-count" class="font-black text-slate-600 text-sm sm:text-base">⭐ Découverts : 0 / 10</div>
         <button onclick="scReset()" class="bg-emerald-100 hover:bg-emerald-200 text-emerald-800 font-black text-sm px-4 py-2 rounded-full transition">🔁 Recommencer</button>
+      </div>
+    </div>
+  </div>
+  <!-- Histoire personnalisée -->
+  <div id="section-perso" class="learn-section hidden space-y-6">
+    <div class="bg-gradient-to-br from-violet-500 to-purple-500 rounded-[2rem] p-6 sm:p-8 text-white shadow-xl">
+      <h3 class="brand-font text-2xl sm:text-3xl font-black">✨ Une histoire avec ton prénom !</h3>
+      <p class="text-violet-50 font-semibold text-sm sm:text-base">Écris le prénom de ton enfant : en quelques secondes, l’histoire se crée avec son prénom — et elle se raconte à voix haute ! Le prénom reste sur votre appareil ; rien n’est envoyé. 🔒</p>
+    </div>
+    <div class="bg-white rounded-[2rem] shadow-xl border border-violet-100 p-5 sm:p-6 space-y-4">
+      <label class="block font-black text-slate-700" for="pn-name">Le prénom de ton enfant :</label>
+      <input id="pn-name" type="text" maxlength="20" placeholder="Ex. : Léa, Noah, Emma…" onkeydown="if(event.key==='Enter')pnCreate()" class="w-full text-xl font-black text-slate-700 bg-violet-50 border-2 border-violet-200 rounded-2xl px-4 py-3 outline-none focus:border-violet-400">
+      <div class="flex flex-wrap gap-2">
+        <button id="pn-g-g" onclick="pnSetGender('g')">🧒 Un garçon</button>
+        <button id="pn-g-f" onclick="pnSetGender('f')">👧 Une fille</button>
+      </div>
+      <label class="block font-black text-slate-700">Choisis l’histoire :</label>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <button id="pn-s-nuit" onclick="pnSetStory('nuit')" class="text-left">🌙 Bonne nuit !<span class="block text-xs font-bold opacity-80 mt-1">Une histoire douce pour le dodo</span></button>
+        <button id="pn-s-aventure" onclick="pnSetStory('aventure')" class="text-left">🚀 La grande aventure<span class="block text-xs font-bold opacity-80 mt-1">Avec Adam, Lapin, Canard et Renard</span></button>
+      </div>
+      <div id="pn-hint" class="text-rose-500 font-bold text-sm hidden">Écris le prénom de ton enfant pour commencer 🙂</div>
+      <button onclick="pnCreate()" class="w-full bg-violet-600 hover:bg-violet-500 text-white font-black text-lg px-6 py-3.5 rounded-2xl shadow transition">✨ Créer mon histoire</button>
+    </div>
+    <div id="pn-player" class="hidden bg-white rounded-[2rem] shadow-xl border border-violet-100 p-5 sm:p-6 space-y-4">
+      <div id="pn-title" class="brand-font text-xl sm:text-2xl font-black text-violet-700 text-center"></div>
+      <div class="bg-gradient-to-br from-violet-50 to-purple-50 rounded-[1.5rem] py-8 px-4 text-center">
+        <div id="pn-emoji" class="text-7xl sm:text-8xl"></div>
+      </div>
+      <p id="pn-text" class="text-lg sm:text-xl font-bold text-slate-700 text-center leading-relaxed"></p>
+      <div class="flex flex-wrap items-center justify-center gap-2">
+        <button onclick="pnNav(-1)" class="bg-violet-100 hover:bg-violet-200 text-violet-800 font-black px-4 py-2.5 rounded-full transition">◀</button>
+        <span id="pn-page" class="font-black text-slate-500 text-sm px-1"></span>
+        <button onclick="pnNav(1)" class="bg-violet-100 hover:bg-violet-200 text-violet-800 font-black px-4 py-2.5 rounded-full transition">▶</button>
+        <button id="pn-listen" onclick="pnSpeak(false)" class="bg-violet-600 hover:bg-violet-500 text-white font-black text-sm px-4 py-2.5 rounded-full shadow transition">🔊 Écouter la page</button>
+        <button id="pn-all" onclick="pnSpeakAll()" class="bg-white border border-violet-300 text-violet-700 hover:bg-violet-50 font-black text-sm px-4 py-2.5 rounded-full shadow transition">▶ Tout écouter</button>
       </div>
     </div>
   </div>
@@ -2210,6 +2247,7 @@ function lapinGo(dest){
   else if(dest==='comptines'){switchSiteTab('apprendre');if(typeof switchLearnTab==='function')switchLearnTab('comptines');}
   else if(dest==='catalogue'){switchSiteTab('livres');}
   else if(dest==='scenes'){switchSiteTab('apprendre');if(typeof switchLearnTab==='function')switchLearnTab('scenes');}
+  else if(dest==='perso'){switchSiteTab('apprendre');if(typeof switchLearnTab==='function')switchLearnTab('perso');}
   else if(dest==='semaine'){switchSiteTab('accueil');setTimeout(function(){var el=document.getElementById('spotlight-lundi');if(el)el.scrollIntoView({behavior:'smooth',block:'center'});},80);}
 }
 function lmNorm(t){return (t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
@@ -2217,6 +2255,7 @@ function lmSpotTitle(){var el=document.querySelector('#spotlight-lundi p');retur
 var LM_QA=[
  {k:['coloriage','colorier','dessiner','atelier','crayon'],a:'🖍️ Deux livres de coloriage sont sur Etsy : « Coloriage de Noël » et « Coloriage des animaux ». Et dans l’Atelier du site, ton enfant peut dessiner et colorier en ligne !<br><button onclick="lapinGo(\'atelier\')">Ouvrir l’Atelier</button>'},
  {k:['dessin','galerie','artiste','envoyer','publier le dessin','oeuvre'],a:'🎨 Pour voir le dessin de ton enfant dans le Coin des artistes : remplis le formulaire avec la photo de son dessin — il est publié automatiquement sur le site !<br><a href="coin-des-artistes.html" style="color:#0284c7;font-weight:900">Ouvrir le Coin des artistes →</a>'},
+ {k:['prénom','prenom','personnalisée','personnalisee','mon histoire','avec son nom'],a:'✨ Oui ! Dans « Mon histoire », écris le prénom de ton enfant et l’histoire se crée avec son prénom — et se raconte à voix haute !<br><button onclick="lapinGo(\'perso\')">Créer une histoire personnalisée</button>'},
  {k:['touche','scene','scène','ferme','toucher'],a:'👆 « Touche et écoute » : ton enfant touche les animaux de la ferme et entend leur nom et leur vrai son — parfait pour les tout-petits qui ne lisent pas encore !<br><button onclick="lapinGo(\'scenes\')">Ouvrir les scènes</button>'},
  {k:['gratuit','gratuite','gratuits','lire','lecture','histoire'],a:'📚 Nos livres gratuits, à lire ET à écouter : « Les couleurs de Bébé Adam », « Les animaux et leurs sons », « Bonne nuit, Bébé Adam », « Le premier Noël de Bébé Adam », « L’étoile de Noël » et « La citrouille courageuse ».<br><button onclick="lapinGo(\'histoire\')">Voir les livres gratuits</button>'},
  {k:['acheter','achat','prix','combien','coute','etsy','amazon','commander','payer','broche','papier','boutique'],a:'🛒 Nos livres payants sont en PDF sur Etsy (de 1,12 $ à 3,00 $ CA) : les aventures d’Adam, Halloween, Le jardin de la coopération et les coloriages. « Adam apprend à écouter » existe aussi en livre broché sur Amazon.ca.<br><button onclick="lapinGo(\'catalogue\')">Voir le catalogue</button>'},
@@ -2269,7 +2308,7 @@ function lmMic(){
 if(!(window.SpeechRecognition||window.webkitSpeechRecognition)){var mb=document.getElementById('lm-mic');if(mb)mb.style.display='none';}
 var lmGreet=document.querySelector('#lm-log .lm-bot');if(lmGreet)lmAttachSpk(lmGreet);
 (function(){
-  var msgs=["Salut ! Moi, c’est Lapin 🐰",'📖 Un livre gratuit chaque lundi !','🎮 Essaie le jeu Adam-Man !','🎄 Deux livres de Noël gratuits !','👆 Nouveau : touche et écoute les animaux !','🥅 Nouveau : les tirs au but !','💬 Touche-moi et pose-moi une question !'];
+  var msgs=["Salut ! Moi, c’est Lapin 🐰",'📖 Un livre gratuit chaque lundi !','🎮 Essaie le jeu Adam-Man !','🎄 Deux livres de Noël gratuits !','👆 Nouveau : touche et écoute les animaux !','✨ Nouveau : une histoire avec ton prénom !','🥅 Nouveau : les tirs au but !','💬 Touche-moi et pose-moi une question !'];
   var i=0;var b=document.getElementById('helper-bubble');if(!b)return;
   function cycle(){b.style.opacity='1';setTimeout(function(){b.style.opacity='0';},4200);i=(i+1)%msgs.length;b.innerText=msgs[i];}
   b.innerText=msgs[0];setInterval(cycle,6000);setTimeout(function(){b.style.opacity='1';},1200);setTimeout(function(){b.style.opacity='0';},5400);
@@ -2343,6 +2382,53 @@ function scTap(i,btn){var it=SC_DATA[scCur].items[i];scA.src=it.a;scA.play();var
  scCount();}
 function scReset(){scFound[scCur]={};scShow(scCur);}
 scShow('ferme');
+
+/* ===== HISTOIRE PERSONNALISÉE ===== */
+var PN_STORIES={
+ nuit:{title:'Bonne nuit, {N} !',pages:[
+  {e:'🌙',t:'Le soir arrive doucement. C’est l’heure de dormir pour {N}.'},
+  {e:'🛁',t:'{N} prend un bain chaud. Plouf, plouf ! Les bulles dansent.'},
+  {e:'🪥',t:'{N} brosse ses dents. Frotte, frotte, frotte ! Elles brillent comme des étoiles.'},
+  {e:'🐰',t:'Lapin et Canard disent : « Bonne nuit, {N} ! »'},
+  {e:'⭐',t:'{N} regarde les étoiles. Une, deux, trois étoiles qui brillent pour {lui}.'},
+  {e:'💤',t:'{N} ferme les yeux. Bonne nuit, {N} ! Fais de beaux rêves.'}]},
+ aventure:{title:'{N} et la grande aventure',pages:[
+  {e:'☀️',t:'Ce matin, {N} part à l’aventure avec Adam, Lapin et Canard !'},
+  {e:'🌳',t:'Dans la forêt, {N} trouve une grande feuille en forme d’étoile.'},
+  {e:'🦊',t:'Renard arrive : « Je peux jouer avec vous ? » — « Bien sûr ! » répond {N}.'},
+  {e:'🌈',t:'Un arc-en-ciel ! {N} compte les couleurs : rouge, orange, jaune, vert, bleu...'},
+  {e:'🧺',t:'C’est l’heure du pique-nique : des pommes, du fromage et du jus pour tout le monde.'},
+  {e:'🏠',t:'Le soir, {N} rentre à la maison, {content} et le sourire aux lèvres. Quelle belle aventure !'}]}
+};
+var pnGender='g', pnStory='nuit', pnPages=[], pnI=0, pnChain=false;
+var PN_PILL='font-black text-sm sm:text-base px-4 py-2.5 rounded-full shadow transition border border-violet-200 ';
+var PN_CARD='font-black text-base sm:text-lg px-4 py-3.5 rounded-2xl shadow transition border border-violet-200 w-full ';
+function pnPaint(){var g=document.getElementById('pn-g-g'),f=document.getElementById('pn-g-f'),n=document.getElementById('pn-s-nuit'),a=document.getElementById('pn-s-aventure');if(!g)return;
+ g.className=PN_PILL+(pnGender==='g'?'bg-violet-600 text-white':'bg-violet-50 text-violet-700 hover:bg-violet-100');
+ f.className=PN_PILL+(pnGender==='f'?'bg-violet-600 text-white':'bg-violet-50 text-violet-700 hover:bg-violet-100');
+ n.className=PN_CARD+(pnStory==='nuit'?'bg-violet-600 text-white':'bg-violet-50 text-violet-700 hover:bg-violet-100');
+ a.className=PN_CARD+(pnStory==='aventure'?'bg-violet-600 text-white':'bg-violet-50 text-violet-700 hover:bg-violet-100');}
+function pnSetGender(g){pnGender=g;pnPaint();}
+function pnSetStory(k){pnStory=k;pnPaint();}
+function pnCleanName(v){v=(v||'').replace(/[^A-Za-zÀ-ÿ' -]/g,'').trim().slice(0,20);return v?v.charAt(0).toUpperCase()+v.slice(1):'';}
+function pnFill(t,name){return t.split('{N}').join(name).split('{lui}').join(pnGender==='f'?'elle':'lui').split('{content}').join(pnGender==='f'?'contente':'content');}
+function pnCreate(){var name=pnCleanName(document.getElementById('pn-name').value);var hint=document.getElementById('pn-hint');
+ if(!name){hint.classList.remove('hidden');return;} hint.classList.add('hidden');
+ var st=PN_STORIES[pnStory];pnPages=st.pages.map(function(p){return {e:p.e,t:pnFill(p.t,name)};});
+ document.getElementById('pn-title').innerText=pnFill(st.title,name);
+ document.getElementById('pn-player').classList.remove('hidden');pnI=0;pnShow();
+ document.getElementById('pn-player').scrollIntoView({behavior:'smooth',block:'start'});}
+function pnShow(){var p=pnPages[pnI];if(!p)return;document.getElementById('pn-emoji').innerText=p.e;document.getElementById('pn-text').innerText=p.t;document.getElementById('pn-page').innerText='Page '+(pnI+1)+' / '+pnPages.length;}
+function pnNav(d){pnStop();pnI=Math.min(pnPages.length-1,Math.max(0,pnI+d));pnShow();}
+function pnVoice(){var vs=speechSynthesis.getVoices();for(var i=0;i<vs.length;i++){if(vs[i].lang&&vs[i].lang.toLowerCase().indexOf('fr-ca')===0)return vs[i];}for(var j=0;j<vs.length;j++){if(vs[j].lang&&vs[j].lang.toLowerCase().indexOf('fr')===0)return vs[j];}return null;}
+function pnSpeak(chain){if(!('speechSynthesis' in window))return;var p=pnPages[pnI];if(!p)return;if(!chain)pnChain=false;speechSynthesis.cancel();
+ var u=new SpeechSynthesisUtterance(p.t);u.lang='fr-CA';var v=pnVoice();if(v)u.voice=v;u.rate=0.95;u.pitch=1.05;
+ u.onend=function(){if(pnChain){if(pnI<pnPages.length-1){pnI++;pnShow();pnSpeak(true);}else{pnStop();}}};
+ speechSynthesis.speak(u);}
+function pnSpeakAll(){if(pnChain){pnStop();return;}if(!pnPages.length)return;pnChain=true;document.getElementById('pn-all').innerText='⏹ Arrêter';pnSpeak(true);}
+function pnStop(){pnChain=false;if('speechSynthesis' in window)speechSynthesis.cancel();var b=document.getElementById('pn-all');if(b)b.innerText='▶ Tout écouter';}
+pnPaint();
+if(!('speechSynthesis' in window)){var l1=document.getElementById('pn-listen'),l2=document.getElementById('pn-all');if(l1)l1.style.display='none';if(l2)l2.style.display='none';}
 
 }
 </script>
