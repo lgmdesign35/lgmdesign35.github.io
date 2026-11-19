@@ -697,6 +697,7 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
         <input id="cp-range" type="range" min="0" max="100" value="0" class="flex-1 accent-rose-500">
         <span id="cp-dur">0:00</span>
       </div>
+      <div id="cp-paroles" class="bg-rose-50 border border-rose-100 rounded-2xl px-4 py-3 text-center text-sm sm:text-base font-bold text-slate-600 leading-relaxed">🎤 Les paroles s’affichent ici — chantez en famille !</div>
     </div>
     <div id="cp-list" class="space-y-2.5"></div>
     <p class="text-xs text-slate-400 font-semibold text-center">🎵 Mélodies traditionnelles du domaine public, interprétées à la boîte à musique pour Adam et ses amis.</p>
@@ -2245,18 +2246,18 @@ var lmGreet=document.querySelector('#lm-log .lm-bot');if(lmGreet)lmAttachSpk(lmG
 </script>
 <script>
 var CP_SONGS=[
- {t:'Frère Jacques',e:'🔔',f:'audio/comptines/frere-jacques.mp3',d:'0:33'},
- {t:'Au clair de la lune',e:'🌙',f:'audio/comptines/au-clair-de-la-lune.mp3',d:'1:15'},
- {t:'Ah ! vous dirai-je, maman',e:'⭐',f:'audio/comptines/ah-vous-dirai-je-maman.mp3',d:'0:51'},
- {t:'Petit escargot',e:'🐌',f:'audio/comptines/petit-escargot.mp3',d:'0:37'},
- {t:'Frère Jacques en canon',e:'🎶',f:'audio/comptines/frere-jacques-canon.mp3',d:'0:35'}
+ {t:'Frère Jacques',e:'🔔',f:'audio/comptines/frere-jacques.mp3',d:'0:33',par:'Frère Jacques, Frère Jacques,<br>Dormez-vous ? Dormez-vous ?<br>Sonnez les matines, sonnez les matines,<br>Ding, ding, dong ! Ding, ding, dong !'},
+ {t:'Au clair de la lune',e:'🌙',f:'audio/comptines/au-clair-de-la-lune.mp3',d:'1:15',par:'Au clair de la lune,<br>Mon ami Pierrot,<br>Prête-moi ta plume<br>Pour écrire un mot.<br>Ma chandelle est morte,<br>Je n’ai plus de feu ;<br>Ouvre-moi ta porte,<br>Pour l’amour de Dieu.'},
+ {t:'Ah ! vous dirai-je, maman',e:'⭐',f:'audio/comptines/ah-vous-dirai-je-maman.mp3',d:'0:51',par:'Ah ! vous dirai-je, maman,<br>Ce qui cause mon tourment ?<br>Papa veut que je raisonne<br>Comme une grande personne.<br>Moi, je dis que les bonbons<br>Valent mieux que la raison.'},
+ {t:'Petit escargot',e:'🐌',f:'audio/comptines/petit-escargot.mp3',d:'0:37',par:'Petit escargot,<br>Porte sur son dos<br>Sa maisonnette.<br>Aussitôt qu’il pleut,<br>Il est tout heureux,<br>Il sort sa tête !'},
+ {t:'Frère Jacques en canon',e:'🎶',f:'audio/comptines/frere-jacques-canon.mp3',d:'0:35',par:'Frère Jacques, Frère Jacques,<br>Dormez-vous ? Dormez-vous ?<br>Sonnez les matines, sonnez les matines,<br>Ding, ding, dong ! Ding, ding, dong !<br><span class="text-rose-500">🎶 En canon : la deuxième voix suit la première, comme un écho !</span>'}
 ];
 var cpI=-1;
 var cpA=document.getElementById('cp-audio');
 function cpFmt(x){x=Math.max(0,Math.floor(x||0));return Math.floor(x/60)+':'+('0'+(x%60)).slice(-2);}
 function cpBuild(){var w=document.getElementById('cp-list');if(!w)return;var h='';CP_SONGS.forEach(function(sg,i){h+='<button onclick="cpPlay('+i+')" id="cp-row-'+i+'" class="w-full flex items-center gap-3 bg-white hover:bg-rose-50 border border-rose-100 rounded-2xl px-4 py-3 shadow-sm text-left transition"><span class="text-2xl">'+sg.e+'</span><span class="flex-1"><span class="block font-black text-slate-700 text-sm sm:text-base">'+sg.t+'</span><span class="block text-xs text-slate-400 font-bold">Boîte à musique · traditionnel</span></span><span class="text-xs font-black text-rose-400">'+sg.d+'</span><span class="cp-eq text-rose-500 font-black"></span></button>';});w.innerHTML=h;}
 function cpMark(){CP_SONGS.forEach(function(_,i){var r=document.getElementById('cp-row-'+i);if(r){r.classList.toggle('ring-2',i===cpI);r.classList.toggle('ring-rose-400',i===cpI);var eq=r.querySelector('.cp-eq');if(eq)eq.innerText=(i===cpI&&cpA&&!cpA.paused)?'🎵':'';}});var ico=document.getElementById('cp-play-ico');if(ico)ico.innerText=(cpA&&!cpA.paused)?'⏸️':'▶️';}
-function cpPlay(i){cpI=i;cpA.src=CP_SONGS[i].f;cpA.play();document.getElementById('cp-title').innerText=CP_SONGS[i].e+' '+CP_SONGS[i].t;cpMark();}
+function cpPlay(i){cpI=i;cpA.src=CP_SONGS[i].f;cpA.play();document.getElementById('cp-title').innerText=CP_SONGS[i].e+' '+CP_SONGS[i].t;var par=document.getElementById('cp-paroles');if(par)par.innerHTML=CP_SONGS[i].par||'';cpMark();}
 function cpToggle(){if(cpI<0){cpPlay(0);return;}if(cpA.paused)cpA.play();else cpA.pause();cpMark();}
 function cpStep(d){if(cpI<0){cpPlay(0);return;}var n=cpI+d;if(n<0)n=0;if(n>=CP_SONGS.length)n=CP_SONGS.length-1;cpPlay(n);}
 if(cpA){
