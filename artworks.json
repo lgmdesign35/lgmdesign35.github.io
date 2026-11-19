@@ -1,5 +1,14 @@
 [
   {
+    "id": "jules-01",
+    "title": "Spiderman",
+    "firstName": "Jules",
+    "age": 4,
+    "category": "bricolages",
+    "img": "images/artistes/jules-01.jpg",
+    "date": "2026-11-19"
+  },
+  {
     "id": "nicolas-01",
     "title": "Coeur",
     "firstName": "Nicolas",
