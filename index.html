@@ -2325,7 +2325,7 @@ document.getElementById('book-modal').addEventListener('click',function(e){if(e.
 </script>
 
 <!-- Lapin guide : compagnon qui suit la souris (ordinateurs seulement) -->
-<button id="lapin-guide-btn" onclick="toggleLapinMenu()" aria-label="Guide Lapin — poser une question"><img src="images/mascotte-lapin.png" alt="Lapin, ton guide"><span class="lgb-label">Une question ?</span></button><div id="lm-hint" aria-hidden="true">👋 Salut ! Pose-moi une question !</div><script>(function(){var h=document.getElementById('lm-hint');var b=document.getElementById('lapin-guide-btn');if(!h||!b)return;var vu=false;try{vu=!!localStorage.getItem('lmHintVu');}catch(e){}if(vu)return;b.addEventListener('click',function(){h.classList.remove('lm-hint-on');});setTimeout(function(){h.classList.add('lm-hint-on');try{localStorage.setItem('lmHintVu','1');}catch(e){}setTimeout(function(){h.classList.remove('lm-hint-on');},6000);},1500);})();</script>
+<button id="lapin-guide-btn" onclick="toggleLapinMenu()" aria-label="Guide Lapin — poser une question"><img src="images/mascotte-lapin.png" alt="Lapin, ton guide"><span class="lgb-label">Une question ?</span></button><div id="lm-hint" aria-hidden="true">👋 Salut ! Pose-moi une question !</div><script>(function(){var h=document.getElementById('lm-hint');var b=document.getElementById('lapin-guide-btn');if(!h||!b)return;var vu=false;try{vu=!!localStorage.getItem('lmHintVu');}catch(e){}if(vu)return;b.addEventListener('click',function(){h.classList.remove('lm-hint-on');});setTimeout(function(){h.classList.add('lm-hint-on');try{localStorage.setItem('lmHintVu','1');}catch(e){}setTimeout(function(){h.classList.remove('lm-hint-on');},6000);},1500);})();</script><script>(function(){if(location.search.indexOf('question=envoyee')<0)return;try{history.replaceState(null,'',location.pathname+location.hash);}catch(e){}var t=document.createElement('div');t.setAttribute('style','position:fixed;left:14px;bottom:96px;z-index:9999;background:#fffbeb;border:2px solid #f59e0b;color:#78350f;border-radius:14px;padding:12px 14px;font-weight:800;font-size:14px;line-height:1.45;max-width:300px;box-shadow:0 10px 30px rgba(0,0,0,.18)');t.innerHTML='Merci ! 🐰 Ta question est bien partie.<br>L’équipe te répondra par courriel. 💛';document.body.appendChild(t);setTimeout(function(){t.remove();},9000);})();</script>
 <div id="lapin-menu">
   <div style="font-weight:900;color:#92400e;font-size:15px">Salut ! Moi, c’est Lapin 🐰</div>
   <div style="font-size:12px;color:#64748b;font-weight:700">Que veux-tu faire ? Ou pose-moi une question !</div>
@@ -2408,7 +2408,7 @@ function lmShowAsk(){
   +'<input type="hidden" name="_subject" value="Lapin — Question sans réponse">'
   +'<input type="hidden" name="_template" value="table">'
   +'<input type="hidden" name="_captcha" value="false">'
-  +'<input type="hidden" name="_next" value="https://lgmdesign35.com/index.html">'
+  +'<input type="hidden" name="_next" value="https://lgmdesign35.com/index.html?question=envoyee">'
   +'<label style="font-weight:800;font-size:13px">Ta question :<textarea name="question" required rows="3" style="width:100%;box-sizing:border-box;border:2px solid #fcd34d;border-radius:10px;padding:6px;font:inherit;margin-top:3px"></textarea></label>'
   +'<label style="font-weight:800;font-size:13px">Le courriel d’un parent :<input type="email" name="courriel_parent" required placeholder="parent@exemple.ca" style="width:100%;box-sizing:border-box;border:2px solid #fcd34d;border-radius:10px;padding:6px;font:inherit;margin-top:3px"></label>'
   +'<button type="submit" style="background:#f59e0b;color:#fff;border:none;border-radius:10px;padding:9px;font-weight:900;cursor:pointer;font-size:14px">Envoyer à l’équipe 📩</button>'
@@ -2425,14 +2425,19 @@ function lmAskSubmit(ev){
   var em=form.querySelector('input[name=courriel_parent]').value.trim();
   if(!q||!em)return false;
   if(btn){btn.disabled=true;btn.textContent='Envoi en cours…';}
+  var done=false;
+  var timer=setTimeout(function(){if(!done){done=true;form.removeAttribute('onsubmit');form.submit();}},8000);
   fetch('https://formsubmit.co/ajax/lgmdesign35@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({question:q,courriel_parent:em,_subject:'Lapin — Question sans réponse',_template:'table',_captcha:'false'})})
-  .then(function(r){if(!r.ok)throw new Error('send failed');return r.json();})
-  .then(function(){
+  .then(function(r){return r.json();})
+  .then(function(data){
+    if(done)return;
+    if(!data||!(data.success===true||data.success==='true'))throw new Error('send failed');
+    done=true;clearTimeout(timer);
     var wrap=document.getElementById('lm-ask-wrap');
     if(wrap){wrap.innerHTML='<div style="font-weight:800;font-size:14px;line-height:1.5">Merci ! 🐰 Ta question est bien partie.<br>L’équipe te répondra par courriel. 💛</div>';}
     var log=document.getElementById('lm-log');if(log)log.scrollTop=log.scrollHeight;
   })
-  .catch(function(){form.removeAttribute('onsubmit');form.submit();});
+  .catch(function(){if(!done){done=true;clearTimeout(timer);form.removeAttribute('onsubmit');form.submit();}});
   return false;
 }
 function lapinReply(q){
