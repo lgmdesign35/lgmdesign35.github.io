@@ -2445,13 +2445,13 @@ function lmMic(){
 if(!(window.SpeechRecognition||window.webkitSpeechRecognition)){var mb=document.getElementById('lm-mic');if(mb)mb.style.display='none';}
 var lmGreet=document.querySelector('#lm-log .lm-bot');if(lmGreet)lmAttachSpk(lmGreet);
 (function(){
-  var msgs=["Salut ! Moi, c’est Lapin 🐰",'📖 Des livres gratuits à découvrir !','🎮 Essaie le jeu Adam-Man !','🎄 Deux livres de Noël gratuits !','👆 Nouveau : touche et écoute les animaux !','✨ Nouveau : une histoire avec ton prénom !','🥅 Nouveau : les tirs au but !','💬 Touche-moi et pose-moi une question !'];
+  var msgs=["Ho ho ho ! C’est le père Noël 🎅",'📖 Des livres gratuits à découvrir !','🎮 Essaie le jeu Adam-Man !','🎄 Deux livres de Noël gratuits !','👆 Nouveau : touche et écoute les animaux !','✨ Nouveau : une histoire avec ton prénom !','🥅 Nouveau : les tirs au but !','💬 Touche-moi et pose-moi une question !'];
   var i=0;var b=document.getElementById('helper-bubble');if(!b)return;
   function cycle(){b.style.opacity='1';setTimeout(function(){b.style.opacity='0';},4200);i=(i+1)%msgs.length;b.innerText=msgs[i];}
   b.innerText=msgs[0];setInterval(cycle,6000);setTimeout(function(){b.style.opacity='1';},1200);setTimeout(function(){b.style.opacity='0';},5400);
 })();
 </script>
-<div id="helper-follower" aria-hidden="true"><div id="helper-bubble">Salut ! Moi, c'est Lapin 🐰</div><img src="images/mascotte-lapin.png" alt="" onerror="this.parentNode.style.display='none'"></div>
+<div id="helper-follower" aria-hidden="true"><div id="helper-bubble">Ho ho ho ! C'est le père Noël 🎅</div><img src="images/pere-noel.jpg" alt="" onerror="this.parentNode.style.display='none'"></div>
 <script>
 (function(){if(!window.matchMedia||!window.matchMedia('(pointer:fine)').matches)return;var f=document.getElementById('helper-follower');if(!f)return;var x=window.innerWidth/2,y=window.innerHeight/2,tx=x,ty=y,shown=false;function loop(){x+=(tx-x)*0.2;y+=(ty-y)*0.2;f.style.transform='translate('+(x+16)+'px,'+(y+16)+'px)';requestAnimationFrame(loop);}document.addEventListener('mousemove',function(e){tx=e.clientX;ty=e.clientY;if(!shown){shown=true;f.style.opacity='1';}});document.addEventListener('mouseleave',function(){f.style.opacity='0';shown=false;});document.addEventListener('mouseover',function(e){if(e.target.closest('a,button,[onclick],input,select,textarea,label'))f.classList.add('helper-hi');});document.addEventListener('mouseout',function(e){if(e.target.closest('a,button,[onclick],input,select,textarea,label'))f.classList.remove('helper-hi');});requestAnimationFrame(loop);})();
 </script>

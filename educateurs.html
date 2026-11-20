@@ -298,7 +298,7 @@ apBuild();
 </footer>
 
 <!-- Lapin guide : compagnon qui suit la souris (ordinateurs seulement) -->
-<div id="helper-follower" aria-hidden="true"><img src="images/mascotte-lapin.png" alt="" onerror="this.parentNode.style.display='none'"></div>
+<div id="helper-follower" aria-hidden="true"><img src="images/pere-noel.jpg" alt="" onerror="this.parentNode.style.display='none'"></div>
 <script>
 (function(){if(!window.matchMedia||!window.matchMedia('(pointer:fine)').matches)return;var f=document.getElementById('helper-follower');if(!f)return;var x=window.innerWidth/2,y=window.innerHeight/2,tx=x,ty=y,shown=false;function loop(){x+=(tx-x)*0.2;y+=(ty-y)*0.2;f.style.transform='translate('+(x-24)+'px,'+(y-24)+'px)';requestAnimationFrame(loop);}document.addEventListener('mousemove',function(e){tx=e.clientX;ty=e.clientY;if(!shown){shown=true;f.style.opacity='1';}});document.addEventListener('mouseleave',function(){f.style.opacity='0';shown=false;});document.addEventListener('mouseover',function(e){if(e.target.closest('a,button,[onclick],input,select,textarea,label'))f.classList.add('helper-hi');});document.addEventListener('mouseout',function(e){if(e.target.closest('a,button,[onclick],input,select,textarea,label'))f.classList.remove('helper-hi');});requestAnimationFrame(loop);})();
 </script>
