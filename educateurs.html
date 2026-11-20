@@ -19,7 +19,7 @@
 <meta property="og:image" content="https://lgmdesign35.com/images/logo.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Éducateurs & CPE — LGMDesign35 | Ressources gratuites 0 à 6 ans">
-<meta name="twitter:description" content="Contactez LGMDesign35 : questions sur nos livres pour enfants en français au Québec, suggestions ou avis de parents. Réponse en français sous 24 à 48 h.">
+<meta name="twitter:description" content="Espace éducateurs et CPE : livres gratuits avec audio, PDF à imprimer, scènes interactives et dictionnaire illustré en français québécois, organisés par domaine de développement (0 à 6 ans).">
 <meta name="twitter:image" content="https://lgmdesign35.com/images/logo.jpg">
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -304,7 +304,7 @@ apBuild();
 </script>
 <script>
 function copyContactEmail(btn){var addr='lgmdesign35'+'@'+'gmail.com';function done(){if(btn){var t=btn.textContent;btn.textContent='✓ Adresse copiée !';setTimeout(function(){btn.textContent=t;},2500);}}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(addr).then(done).catch(function(){fallbackCopy(addr);done();});}else{fallbackCopy(addr);done();}function fallbackCopy(text){var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);}}
-document.getElementById('page-contact-form').addEventListener('submit',function(e){e.preventDefault();var f=e.target;var ok=document.getElementById('pc-success');var err=document.getElementById('pc-error');var btn=f.querySelector('button[type="submit"]');if(ok)ok.classList.add('hidden');if(err)err.classList.add('hidden');var fd=new FormData(f);fd.append('_subject','Nouveau message — lgmdesign35.com');if(btn){btn.disabled=true;btn.textContent='Envoi en cours…';}fetch('https://formspree.io/f/xeagalwv',{method:'POST',body:fd,headers:{'Accept':'application/json'}}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);if(ok)ok.classList.remove('hidden');f.reset();}).catch(function(){if(err)err.classList.remove('hidden');}).finally(function(){if(btn){btn.disabled=false;btn.textContent='Envoyer le message ✉️';}});});
+var pcForm=document.getElementById('page-contact-form');if(pcForm){pcForm.addEventListener('submit',function(e){e.preventDefault();var f=e.target;var ok=document.getElementById('pc-success');var err=document.getElementById('pc-error');var btn=f.querySelector('button[type="submit"]');if(ok)ok.classList.add('hidden');if(err)err.classList.add('hidden');var fd=new FormData(f);fd.append('_subject','Nouveau message — lgmdesign35.com');if(btn){btn.disabled=true;btn.textContent='Envoi en cours…';}fetch('https://formspree.io/f/xeagalwv',{method:'POST',body:fd,headers:{'Accept':'application/json'}}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);if(ok)ok.classList.remove('hidden');f.reset();}).catch(function(){if(err)err.classList.remove('hidden');}).finally(function(){if(btn){btn.disabled=false;btn.textContent='Envoyer le message ✉️';}});});}
 </script>
 
 <!-- CHRISTMAS: neige de Noël — supprimer cette ligne pour revenir au thème normal -->
