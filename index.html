@@ -2404,9 +2404,10 @@ function lmShowAsk(){
   var ex=document.getElementById('lm-ask-wrap');
   if(ex){ex.scrollIntoView({block:'nearest'});var t0=ex.querySelector('textarea');if(t0)t0.focus();return;}
   var d=document.createElement('div');d.className='lm-msg lm-bot';d.id='lm-ask-wrap';
-  d.innerHTML='<form action="https://formsubmit.co/lgmdesign35@gmail.com" method="POST" style="display:flex;flex-direction:column;gap:7px">'
+  d.innerHTML='<form id="lm-ask-form" onsubmit="return lmAskSubmit(event)" action="https://formsubmit.co/lgmdesign35@gmail.com" method="POST" style="display:flex;flex-direction:column;gap:7px">'
   +'<input type="hidden" name="_subject" value="Lapin — Question sans réponse">'
   +'<input type="hidden" name="_template" value="table">'
+  +'<input type="hidden" name="_captcha" value="false">'
   +'<input type="hidden" name="_next" value="https://lgmdesign35.com/index.html">'
   +'<label style="font-weight:800;font-size:13px">Ta question :<textarea name="question" required rows="3" style="width:100%;box-sizing:border-box;border:2px solid #fcd34d;border-radius:10px;padding:6px;font:inherit;margin-top:3px"></textarea></label>'
   +'<label style="font-weight:800;font-size:13px">Le courriel d’un parent :<input type="email" name="courriel_parent" required placeholder="parent@exemple.ca" style="width:100%;box-sizing:border-box;border:2px solid #fcd34d;border-radius:10px;padding:6px;font:inherit;margin-top:3px"></label>'
@@ -2416,6 +2417,23 @@ function lmShowAsk(){
   var msgs=log.querySelectorAll('.lm-user');var ta=d.querySelector('textarea');
   if(msgs.length&&ta)ta.value=msgs[msgs.length-1].textContent.trim();
   if(ta)ta.focus();
+}
+function lmAskSubmit(ev){
+  ev.preventDefault();
+  var form=ev.target;var btn=form.querySelector('button[type=submit]');
+  var q=form.querySelector('textarea[name=question]').value.trim();
+  var em=form.querySelector('input[name=courriel_parent]').value.trim();
+  if(!q||!em)return false;
+  if(btn){btn.disabled=true;btn.textContent='Envoi en cours…';}
+  fetch('https://formsubmit.co/ajax/lgmdesign35@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({question:q,courriel_parent:em,_subject:'Lapin — Question sans réponse',_template:'table',_captcha:'false'})})
+  .then(function(r){if(!r.ok)throw new Error('send failed');return r.json();})
+  .then(function(){
+    var wrap=document.getElementById('lm-ask-wrap');
+    if(wrap){wrap.innerHTML='<div style="font-weight:800;font-size:14px;line-height:1.5">Merci ! 🐰 Ta question est bien partie.<br>L’équipe te répondra par courriel. 💛</div>';}
+    var log=document.getElementById('lm-log');if(log)log.scrollTop=log.scrollHeight;
+  })
+  .catch(function(){form.removeAttribute('onsubmit');form.submit();});
+  return false;
 }
 function lapinReply(q){
   var typing=lmAdd('Lapin écrit…','bot');
