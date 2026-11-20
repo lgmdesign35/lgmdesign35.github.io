@@ -2367,35 +2367,80 @@ function lapinGo(dest){
 function lmNorm(t){return (t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
 function lmSpotTitle(){var el=document.querySelector('#spotlight-lundi p');return el?el.innerText.replace(/[«»]/g,'').trim():'';}
 var LM_QA=[
- {k:['coloriage','colorier','dessiner','atelier','crayon'],a:'🖍️ Deux livres de coloriage sont sur Etsy : « Coloriage de Noël » et « Coloriage des animaux ». Et dans l’Atelier du site, ton enfant peut dessiner et colorier en ligne !<br><button onclick="lapinGo(\'atelier\')">Ouvrir l’Atelier</button>'},
- {k:['dessin','galerie','artiste','envoyer','publier le dessin','oeuvre'],a:'🎨 Pour voir le dessin de ton enfant dans le Coin des artistes : remplis le formulaire avec la photo de son dessin — il est publié automatiquement sur le site !<br><a href="coin-des-artistes.html" style="color:#0284c7;font-weight:900">Ouvrir le Coin des artistes →</a>'},
- {k:['prénom','prenom','personnalisée','personnalisee','mon histoire','avec son nom'],a:'✨ Oui ! Dans « Mon histoire », écris le prénom de ton enfant et l’histoire se crée avec son prénom — et se raconte à voix haute !<br><button onclick="lapinGo(\'perso\')">Créer une histoire personnalisée</button>'},
- {k:['touche','scene','scène','ferme','toucher'],a:'👆 « Touche et écoute » : ton enfant touche les animaux de la ferme et entend leur nom et leur vrai son — parfait pour les tout-petits qui ne lisent pas encore !<br><button onclick="lapinGo(\'scenes\')">Ouvrir les scènes</button>'},
- {k:['gratuit','gratuite','gratuits','lire','lecture','histoire'],a:'📚 Nos livres gratuits, à lire ET à écouter : « Les couleurs de Bébé Adam », « Les animaux et leurs sons », « Bonne nuit, Bébé Adam », « Le premier Noël de Bébé Adam », « L’étoile de Noël » et « La citrouille courageuse ».<br><button onclick="lapinGo(\'histoire\')">Voir les livres gratuits</button>'},
- {k:['acheter','achat','prix','combien','coute','etsy','amazon','commander','payer','broche','papier','boutique'],a:'🛒 Nos livres payants sont en PDF sur Etsy (de 1,12 $ à 3,00 $ CA) : les aventures d’Adam, Halloween, Le jardin de la coopération et les coloriages. « Adam apprend à écouter » existe aussi en livre broché sur Amazon.ca.<br><button onclick="lapinGo(\'catalogue\')">Voir le catalogue</button>'},
- {k:['chanson','comptine','musique','berceuse','chanter'],a:'🎵 Nos comptines font une petite pause… En attendant, écoute une belle histoire 📖'},
- {k:['jeu','jeux','jouer','en ligne','online','multijoueur','code','xo','adam-man','adam man','navale','tirs au but','soccer','football'],a:'🎮 Nos jeux en ligne se jouent avec un code à 4 chiffres à partager avec un ami : X O, Cherche Adam !, Bataille navale, Adam-Man et les Tirs au but ! Il y a aussi 10 petits jeux pour apprendre les mots et les nombres.<br><button onclick="lapinGo(\'jouer\')">Aller aux jeux</button>'},
- {k:['semaine','lundi','nouveau','nouveaute','prochain','dernier livre','sortie'],a:function(){var t=lmSpotTitle();return '⭐ Voici le livre gratuit à découvrir en ce moment !'+(t?' En ce moment : '+t+'.':'')+'<br><button onclick="lapinGo(\'semaine\')">Découvrir le livre gratuit</button>';}},
- {k:['age','ans','bebe','petit','convient','maternelle','prescolaire','garderie','cpe','pour quel'],a:'👶 Pour les 0 à 3 ans : la série Bébé Adam (couleurs, animaux, bonne nuit…). 🧒 Pour les 4 à 6 ans : les grandes aventures d’Adam et ses amis. Sur la page d’accueil, le bloc « Par où commencer ? » aide à choisir selon l’âge !'},
- {k:['audio','ecouter','son','narration','voix','entendre'],a:'🔊 Oui ! Nos livres gratuits se lisent ET s’écoutent : ouvre un livre et appuie sur « Écoute l’histoire ». La narration est lente et claire, avec de vrais sons d’animaux.'},
- {k:['pdf','telecharger','imprimer','telechargement','download'],a:'📄 Les livres gratuits ont un bouton « Télécharger le PDF » sur leur page — parfait pour imprimer ! Les PDF des livres payants arrivent avec l’achat sur Etsy.'},
- {k:['blogue','blog','parents','article','conseils','mercredi','infolettre','education'],a:'✏️ « Le mercredi des parents » : des articles de conseils pour les parents (crises de colère, écrans, langage…). Tu les trouves dans la section Parents !<br><button onclick="lapinGo(\'parents\')">Voir la section Parents</button>'},
- {k:['contact','courriel','email','mail','ecrire','joindre','telephone'],a:'✉️ Écris-nous à <b>lgmdesign35@gmail.com</b> — ou passe par l’onglet Contact du site. On répond avec plaisir !'},
- {k:['livraison','recevoir','poste','envoi','delai'],a:'📬 Les PDF sont des téléchargements instantanés sur Etsy, juste après l’achat. Le livre broché, lui, est livré par Amazon.ca.'},
- {k:['journal','petit journal','gazette','journal d adam'],a:'🗞️ « Le Petit Journal d’Adam » : un journal pour les enfants avec une histoire à suivre, des jeux, un coloriage à imprimer et un concours de dessin !<br><a href="journal.html" style="color:#0284c7;font-weight:900">Ouvrir le journal →</a>'},
- {k:['concours','gagner','ecrire une histoire','envoyer une histoire','publier mon histoire'],a:'✍️ Dans le journal, il y a un concours de dessin et une rubrique « À toi d’écrire ! » : un enfant peut envoyer son histoire — elle est lue par l’équipe, et les histoires choisies pourront paraître dans le journal !<br><a href="journal.html" style="color:#0284c7;font-weight:900">Voir le journal →</a>'},
- {k:['educatrice','educateur','enseignante','enseignant','cpe','classe','ecole','ressource'],a:'🍎 Oui ! La page « Espace éducateurs & CPE » regroupe nos ressources par domaine de développement, prêtes à utiliser en groupe.<br><a href="educateurs.html" style="color:#0284c7;font-weight:900">Ouvrir l’espace éducateurs →</a>'},
- {k:['publicite','pub','annonce','donnees','confidentialite','vie privee','securite'],a:'🛡️ Notre site est sans publicité, pensé pour les enfants. Et dans « Mon histoire », le prénom de ton enfant ne quitte jamais ton appareil.'},
- {k:['qui a fait','maison d edition','lgmdesign','votre histoire','a propos'],a:'💛 LGMDesign35, c’est une petite maison d’édition d’ici, auprès des enfants depuis 2003. L’onglet « Notre Histoire » raconte tout !<br><button onclick="switchSiteTab(\'histoire\')">Découvrir notre histoire</button>'},
- {k:['merci'],a:'Avec plaisir ! 🐰💛 Autre chose ?'},
- {k:['bonjour','salut','bonsoir','allo','coucou','qui es','ton nom','appelles','adam','site'],a:'Salut ! 👋 Moi, c’est Lapin, l’ami d’Adam. Ici, on lit des histoires en français québécois, on joue et on apprend — pour les enfants de 0 à 6 ans. Demande-moi les livres gratuits, les jeux ou les prix !'}
+ {t:'🎄 Livres de Noël',k:['noel','pere noel','santa','lutin'],a:'🎄 Pour Noël : « L’étoile de Noël » et « Le premier Noël de Bébé Adam » sont gratuits à lire et à écouter sur le site, et le « Coloriage de Noël » est sur Etsy (3,00 $ CA).<br><button onclick="lapinGo(\'histoire\')">Voir les livres gratuits</button>'},
+ {t:'📖 Livre papier',k:['amazon','broche','papier','livre papier','version papier'],a:'📖 « Adam apprend à écouter » existe en livre broché (papier) sur Amazon.ca ! Tous nos autres livres sont en PDF sur Etsy.<br><button onclick="lapinGo(\'catalogue\')">Voir le catalogue</button>'},
+ {t:'🛒 Prix et achats',k:['acheter','achat','prix','combien','coute','coutent','etsy','commander','payer','paiement','boutique','vendre','ou acheter','comment acheter'],a:'🛒 Nos livres payants sont en PDF sur Etsy (de 1,12 $ à 3,00 $ CA) : les aventures d’Adam, Halloween, Le jardin de la coopération et les coloriages. « Adam apprend à écouter » existe aussi en livre broché sur Amazon.ca.<br><button onclick="lapinGo(\'catalogue\')">Voir le catalogue</button>'},
+ {t:'🖍️ Coloriages',k:['coloriage','colorier','atelier','crayon','crayons'],a:'🖍️ Deux livres de coloriage sont sur Etsy : « Coloriage de Noël » et « Coloriage des animaux ». Et dans l’Atelier du site, ton enfant peut dessiner et colorier en ligne !<br><button onclick="lapinGo(\'atelier\')">Ouvrir l’Atelier</button>'},
+ {t:'🎨 Coin des artistes',k:['dessin','galerie','artiste','artistes','oeuvre','publier le dessin','envoyer un dessin','coin des artistes'],a:'🎨 Pour voir le dessin de ton enfant dans le Coin des artistes : remplis le formulaire avec la photo de son dessin — il paraît dans la galerie du site !<br><a href="coin-des-artistes.html" style="color:#0284c7;font-weight:900">Ouvrir le Coin des artistes →</a>'},
+ {t:'✨ Mon histoire personnalisée',k:['prenom','personnalisee','personnaliser','mon histoire','avec son nom'],a:'✨ Oui ! Dans « Mon histoire », écris le prénom de ton enfant et l’histoire se crée avec son prénom — et se raconte à voix haute !<br><button onclick="lapinGo(\'perso\')">Créer une histoire personnalisée</button>'},
+ {t:'👆 Touche et écoute',k:['touche','scene','ferme','toucher','animaux'],a:'👆 « Touche et écoute » : ton enfant touche les animaux de la ferme et entend leur nom et leur vrai son — parfait pour les tout-petits qui ne lisent pas encore !<br><button onclick="lapinGo(\'scenes\')">Ouvrir les scènes</button>'},
+ {t:'📚 Livres gratuits',k:['gratuit','gratuite','gratuits','gratuites','lire','lecture','histoire','histoires'],a:'📚 Nos livres gratuits, à lire ET à écouter : « Les couleurs de Bébé Adam », « Les animaux et leurs sons », « Bonne nuit, Bébé Adam », « Le premier Noël de Bébé Adam », « L’étoile de Noël » et « La citrouille courageuse ».<br><button onclick="lapinGo(\'histoire\')">Voir les livres gratuits</button>'},
+ {t:'🔤 Apprendre en jouant',k:['mots','chiffres','nombres','lettres','alphabet','quiz','cartes eclair','dictionnaire','apprendre','certificat','abc'],a:'🔤 Dans la section Apprendre : un dictionnaire en images, ABC & 123, des cartes éclair, des jeux et des quiz — et même un certificat pour ton enfant !<br><button onclick="switchSiteTab(\'apprendre\')">Ouvrir Apprendre</button>'},
+ {t:'🎮 Jeux en ligne',k:['jeu','jeux','jouer','en ligne','multijoueur','code ami','xo','adam man','navale','tirs au but','soccer','football','partie'],a:'🎮 Nos jeux en ligne se jouent avec un code à 4 chiffres à partager avec un ami : X O, Cherche Adam !, Bataille navale, Adam-Man et les Tirs au but ! Il y a aussi des petits jeux pour apprendre les mots et les nombres.<br><button onclick="lapinGo(\'jouer\')">Aller aux jeux</button>'},
+ {t:'⭐ Livre gratuit à découvrir',k:['semaine','nouveau','nouveaute','prochain','dernier livre','sortie','decouvrir'],a:function(){var t=lmSpotTitle();return '⭐ Voici le livre gratuit à découvrir en ce moment !'+(t?' En ce moment : '+t+'.':'')+'<br><button onclick="lapinGo(\'semaine\')">Découvrir le livre gratuit</button>';}},
+ {t:'👶 Pour quel âge ?',k:['age','ans','bebe','petit','convient','maternelle','prescolaire','garderie','pour quel age'],a:'👶 Pour les 0 à 3 ans : la série Bébé Adam (couleurs, animaux, bonne nuit…). 🧒 Pour les 4 à 6 ans : les grandes aventures d’Adam et ses amis. Sur la page d’accueil, le bloc « Par où commencer ? » aide à choisir selon l’âge !'},
+ {t:'🔊 Écouter les histoires',k:['audio','ecouter','son','narration','voix','entendre','raconte'],a:'🔊 Oui ! Nos livres gratuits se lisent ET s’écoutent : ouvre un livre et appuie sur « Écoute l’histoire ». La narration est lente et claire, avec de vrais sons d’animaux.'},
+ {t:'📄 PDF et impression',k:['pdf','telecharger','imprimer','telechargement','download','impression'],a:'📄 Les livres gratuits ont un bouton « Télécharger le PDF » sur leur page — parfait pour imprimer ! Les PDF des livres payants arrivent avec l’achat sur Etsy.'},
+ {t:'✏️ Mercredi des parents',k:['blogue','blog','parents','article','conseils','mercredi','education','ecrans','colere'],a:'✏️ « Le mercredi des parents » : des articles de conseils pour les parents (crises de colère, écrans, langage…). Tu les trouves dans la section Parents !<br><button onclick="lapinGo(\'parents\')">Voir la section Parents</button>'},
+ {t:'🗞️ Le Petit Journal',k:['journal','petit journal','gazette','numero'],a:'🗞️ « Le Petit Journal d’Adam » : un journal pour les enfants avec une histoire à suivre, des jeux, un coloriage à imprimer et un concours de dessin !<br><a href="journal.html" style="color:#0284c7;font-weight:900">Ouvrir le journal →</a>'},
+ {t:'✍️ Concours et histoires',k:['concours','gagner','ecrire une histoire','envoyer une histoire','publier mon histoire','publier une histoire'],a:'✍️ Dans le journal, il y a un concours de dessin et une rubrique « À toi d’écrire ! » : un enfant peut envoyer son histoire — elle est lue par l’équipe, et les histoires choisies pourront paraître dans le journal !<br><a href="journal.html" style="color:#0284c7;font-weight:900">Voir le journal →</a>'},
+ {t:'🍎 Éducateurs et CPE',k:['educatrice','educateur','enseignante','enseignant','cpe','classe','ecole','ressource'],a:'🍎 Oui ! La page « Espace éducateurs & CPE » regroupe nos ressources par domaine de développement, prêtes à utiliser en groupe.<br><a href="educateurs.html" style="color:#0284c7;font-weight:900">Ouvrir l’espace éducateurs →</a>'},
+ {t:'✉️ Nous contacter',k:['contact','courriel','email','mail','ecrire','joindre','telephone'],a:'✉️ Écris-nous à <b>lgmdesign35@gmail.com</b> — ou passe par l’onglet Contact du site. On répond avec plaisir !'},
+ {t:'📬 Livraison',k:['livraison','recevoir','poste','envoi','delai','quand je recois'],a:'📬 Les PDF sont des téléchargements instantanés sur Etsy, juste après l’achat. Le livre broché, lui, est livré par Amazon.ca.'},
+ {t:'🛡️ Sans publicité',k:['publicite','pub','annonce','donnees','confidentialite','vie privee','securite','sans pub'],a:'🛡️ Notre site est sans publicité, pensé pour les enfants. Et dans « Mon histoire », le prénom de ton enfant ne quitte jamais ton appareil.'},
+ {t:'💛 Notre histoire',k:['qui a fait','maison d edition','lgmdesign','votre histoire','a propos','qui etes vous'],a:'💛 LGMDesign35, c’est une petite maison d’édition d’ici, auprès des enfants depuis 2003. L’onglet « Notre Histoire » raconte tout !<br><button onclick="switchSiteTab(\'histoire\')">Découvrir notre histoire</button>'},
+ {t:'🐰 Adam et ses amis',k:['adam','amis','personnages','canard','renard','heros','qui est adam','les amis d adam'],a:'🐰 Adam, c’est le petit héros de nos histoires ! Ses amis : moi, Lapin, Canard jaune avec son écharpe rouge, et Renard roux. On vit plein d’aventures douces pour les 0 à 6 ans. 💛'},
+ {t:'📱 Nous suivre',k:['facebook','instagram','tiktok','reseaux','suivre','medias sociaux'],a:'📱 Oui ! Tu peux nous suivre sur Facebook et Instagram (cherche « LGMDesign35 ») et sur TikTok (@lgm.design). À bientôt !'},
+ {t:'🌎 Langues du site',k:['anglais','english','espagnol','autre langue','traduit','traduction','en anglais'],a:'🌎 Notre site est en français québécois seulement — c’est notre spécialité et notre fierté ! 💛'},
+ {t:'🎁 Idées cadeaux',k:['cadeau','offrir','idee cadeau','anniversaire'],a:'🎁 Belle idée ! Les livres de coloriage et les aventures d’Adam font de beaux cadeaux — et les PDF sur Etsy s’impriment très bien.<br><button onclick="lapinGo(\'catalogue\')">Voir le catalogue</button>'},
+ {t:'🛠️ Un souci technique ?',k:['ne marche pas','fonctionne pas','bug','probleme technique','erreur','ne charge pas','ne s ouvre pas','ca marche pas'],a:'🛠️ Zut ! Essaie ceci : recharge la page, vérifie que le volume de ton appareil est ouvert, ou essaie un autre navigateur. Si ça ne marche toujours pas, écris à <b>lgmdesign35@gmail.com</b> — l’équipe va t’aider !'},
+ {t:'💳 Problème d’achat',k:['remboursement','rembourser','pas recu','numero de commande','probleme avec ma commande','annuler ma commande'],a:'💳 Les achats se font sur Etsy ou Amazon.ca, mais écris-nous à <b>lgmdesign35@gmail.com</b> avec ton numéro de commande : l’équipe va regarder ça avec toi. 💛'},
+ {t:'🎵 Comptines',k:['chanson','chansons','comptine','musique','berceuse','chanter'],a:'🎵 Nos comptines font une petite pause… En attendant, écoute une belle histoire 📖'},
+ {t:'🙏 Merci',k:['merci'],a:'Avec plaisir ! 🐰💛 Autre chose ?'},
+ {t:'👋 Au revoir',k:['au revoir','bye','a bientot','bonne journee'],a:'Au revoir ! 👋 À bientôt pour une autre histoire ! 🐰💛'},
+ {t:'👋 Bonjour',k:['bonjour','salut','bonsoir','allo','coucou','qui es tu','ton nom','tu t appelles','ca va','comment ca va','hello'],a:'Salut ! 👋 Moi, c’est Lapin, l’ami d’Adam. Ici, on lit des histoires en français québécois, on joue et on apprend — pour les enfants de 0 à 6 ans. Demande-moi les livres gratuits, les jeux ou les prix !'}
 ];
+function lmScoreTopic(n,words,topic){
+  var sc=0;
+  for(var j=0;j<topic.k.length;j++){
+    var kw=lmNorm(topic.k[j]);
+    if(kw.indexOf(' ')>=0){if(n.indexOf(kw)>=0)sc+=kw.length*2;}
+    else{
+      for(var w=0;w<words.length;w++){
+        var word=words[w];
+        if(word===kw){sc+=kw.length+2;break;}
+        if(kw.length>=3&&word.length>=3&&(word.indexOf(kw)===0||kw.indexOf(word)===0)){sc+=kw.length-1;break;}
+      }
+    }
+  }
+  return sc;
+}
+function lmFallbackHtml(){
+  return 'Bonne question ! 🤔 Je ne sais pas encore y répondre... mais l’équipe du site peut sûrement t’aider ! Écris ta question juste ici, avec le courriel d’un parent, et on te répondra par courriel. 💌<br><button onclick="lmShowAsk()">📩 Poser ma question à l’équipe</button>';
+}
+function lmTopic(i){
+  var tp=LM_QA[i];if(!tp)return;
+  var html=(typeof tp.a==='function')?tp.a():tp.a;
+  var d=lmAdd(html,'bot');
+  var log=document.getElementById('lm-log');if(log)log.scrollTop=log.scrollHeight;
+  if(LM_VOICE)lmSpeakMsg(d);
+}
 function lmAnswer(q){
-  var n=lmNorm(q),best=null,score=0;
-  for(var i=0;i<LM_QA.length;i++){var sc=0;for(var j=0;j<LM_QA[i].k.length;j++){if(n.indexOf(LM_QA[i].k[j])>=0)sc+=LM_QA[i].k[j].length;}
-    if(sc>score){score=sc;best=LM_QA[i];}}
-  if(!best)return 'Bonne question ! 🤔 Je ne sais pas encore y répondre... mais l’équipe du site peut sûrement t’aider ! Écris ta question juste ici, avec le courriel d’un parent, et on te répondra par courriel. 💌<br><button onclick="lmShowAsk()">📩 Poser ma question à l’équipe</button>';
-  return (typeof best.a==='function')?best.a():best.a;
+  var n=lmNorm(q);
+  var words=n.split(/[^a-z0-9]+/).filter(Boolean);
+  var scored=[];
+  for(var i=0;i<LM_QA.length;i++){var sc=lmScoreTopic(n,words,LM_QA[i]);if(sc>0)scored.push({i:i,sc:sc});}
+  if(!scored.length)return lmFallbackHtml();
+  scored.sort(function(x,y){return y.sc-x.sc;});
+  var top=scored[0];
+  if(top.sc>=5||(top.sc>=3&&(scored.length===1||top.sc>scored[1].sc))){
+    var b=LM_QA[top.i];return (typeof b.a==='function')?b.a():b.a;
+  }
+  var h='Hmm, je veux bien t’aider ! 🤔 Tu veux peut-être dire :<br>';
+  var max=Math.min(3,scored.length);
+  for(var m=0;m<max;m++){h+='<button onclick="lmTopic('+scored[m].i+')">'+LM_QA[scored[m].i].t+'</button> ';}
+  h+='<br>Ou écris ta question à l’équipe :<br><button onclick="lmShowAsk()">📩 Poser ma question à l’équipe</button>';
+  return h;
 }
 function lmAttachSpk(d){var b=document.createElement('button');b.className='lm-spk';b.title='Écouter';b.innerText='🔊';b.onclick=function(){lmSpeakMsg(d);};d.appendChild(b);}
 function lmAdd(html,who){var log=document.getElementById('lm-log');var d=document.createElement('div');d.className='lm-msg '+(who==='user'?'lm-user':'lm-bot');d.innerHTML=html;if(who!=='user')lmAttachSpk(d);log.appendChild(d);log.scrollTop=log.scrollHeight;return d;}
