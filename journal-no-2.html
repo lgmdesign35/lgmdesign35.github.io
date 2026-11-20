@@ -62,10 +62,8 @@ h1,h2,h3,.brand-font{font-family:'Fredoka',sans-serif}
 .dlg-bubble::after{content:'';position:absolute;left:50%;bottom:-8px;width:14px;height:14px;background:#fff;border-right:2px solid #1e293b;border-bottom:2px solid #1e293b;transform:translateX(-50%) rotate(45deg)}
 .dlg-bubble.below::after{bottom:auto;top:-8px;border-right:none;border-bottom:none;border-left:2px solid #1e293b;border-top:2px solid #1e293b}
 .dlg-wrap{border:4px solid #1e293b !important;border-radius:1rem !important;box-shadow:7px 7px 0 rgba(30,41,59,.85)}
-.dlg-print{position:absolute;transform:translate(-50%,-138%);background:#fff;border:2px solid #1e293b;border-radius:.75rem;padding:.22rem .5rem;font-size:.68rem;line-height:1.2;font-weight:600;color:#1e293b;text-align:center;max-width:40%;z-index:4;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2);transition:transform .15s,background .15s}
-.dlg-print.below{transform:translate(-50%,18%)}
-.dlg-print.speaking{background:#fef08a;transform:translate(-50%,-138%) scale(1.07);z-index:6}
-.dlg-print.below.speaking{transform:translate(-50%,18%) scale(1.07)}
+.dlg-bubble{opacity:0;visibility:hidden;transition:opacity .25s ease,visibility .25s;pointer-events:none}
+.dlg-bubble.show{opacity:1;visibility:visible}
 .dlg-fx{position:absolute;font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(1.1rem,3.4vw,1.7rem);z-index:4;pointer-events:none;text-shadow:-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 3px 8px rgba(0,0,0,.3)}
 @media print{
   .no-print{display:none !important}
@@ -149,7 +147,7 @@ h1,h2,h3,.brand-font{font-family:'Fredoka',sans-serif}
 <!-- ===== HISTOIRE EN DIALOGUES (interactif, écran seulement) ===== -->
 <section class="sheet no-print bg-white rounded-3xl shadow-lg border-2 border-pink-100 p-5 sm:p-8 space-y-6">
   <h2 class="text-3xl font-bold text-qcblue-700">📖 L'histoire en bande dessinée</h2>
-  <p class="font-semibold text-slate-600">Lis les bulles comme dans une vraie bande dessinée ! Touche une bulle ou un personnage pour entendre sa voix, ou écoute toute la scène d'un coup avec le bouton sous chaque image.</p>
+  <p class="font-semibold text-slate-600">Touche un personnage pour entendre sa voix : sa bulle de bande dessinée apparaît quand c'est son tour de parler, puis elle disparaît. Ou écoute toute la scène d'un coup avec le bouton sous chaque image.</p>
   <div id="dlg-scenes" class="space-y-10"></div>
 </section>
 
@@ -337,15 +335,24 @@ var DLG=[
 {who:"La Lune",em:"🌙",x:41.3,y:13.2,below:1,aud:"audio/journal/no2/s4-lune.mp3",txt:"Bonsoir, petite étoile. Je monte doucement dans le ciel..."}
 ]}
 ];
-function dlgStop(){if(window._dlgA){try{window._dlgA.pause();}catch(e){} window._dlgA=null;} if(window._dlgT){clearTimeout(window._dlgT);window._dlgT=null;} var bs=document.querySelectorAll(".dlg-hot.speaking,.dlg-print.speaking"); for(var i=0;i<bs.length;i++){bs[i].classList.remove("speaking");}}
+function dlgStop(){if(window._dlgA){try{window._dlgA.pause();}catch(e){} window._dlgA=null;} if(window._dlgT){clearTimeout(window._dlgT);window._dlgT=null;} var bs=document.querySelectorAll(".dlg-hot.speaking"); for(var i=0;i<bs.length;i++){bs[i].classList.remove("speaking");} var bb=document.querySelectorAll(".dlg-bubble.show"); for(var j=0;j<bb.length;j++){bb[j].classList.remove("show");}}
 function dlgSay(wrap,scene,i,chain){
   dlgStop();
   var L=scene.lines[i]; if(!L){return;}
-  var pb=wrap.querySelectorAll(".dlg-print")[i]; if(pb){pb.classList.add("speaking");}
+  var bub=wrap.querySelector(".dlg-bubble");
+  if(bub){
+    bub.className="dlg-bubble "+(L.below?"below":"above");
+    var bx=Math.max(24,Math.min(76,L.x));
+    bub.style.left=bx+"%"; bub.style.top=L.y+"%";
+    bub.innerHTML="";
+    var who=document.createElement("span"); who.className="who"; who.textContent=L.who; bub.appendChild(who);
+    bub.appendChild(document.createTextNode(L.txt));
+    bub.classList.add("show");
+  }
   var btn=wrap.querySelectorAll(".dlg-hot")[i]; if(btn){btn.classList.add("speaking");}
   var a=new Audio(L.aud); window._dlgA=a;
-  a.onended=function(){ if(pb){pb.classList.remove("speaking");} if(btn){btn.classList.remove("speaking");} if(chain&&i+1<scene.lines.length){ window._dlgT=setTimeout(function(){dlgSay(wrap,scene,i+1,true);},400);} };
-  a.onerror=function(){ if(pb){pb.classList.remove("speaking");} if(btn){btn.classList.remove("speaking");} };
+  a.onended=function(){ if(btn){btn.classList.remove("speaking");} if(chain&&i+1<scene.lines.length){ window._dlgT=setTimeout(function(){dlgSay(wrap,scene,i+1,true);},350); } else { window._dlgT=setTimeout(function(){ if(bub){bub.classList.remove("show");} },600); } };
+  a.onerror=function(){ if(btn){btn.classList.remove("speaking");} if(bub){bub.classList.remove("show");} };
   var p=a.play(); if(p&&p.catch){p.catch(function(){});}
 }
 (function(){
@@ -362,17 +369,11 @@ function dlgSay(wrap,scene,i,chain){
       btn.setAttribute("aria-label","Écouter "+L.who);
       btn.addEventListener("click",function(){dlgSay(wrap,scene,i,false);});
       wrap.appendChild(btn);
-      var pb=document.createElement("div");
-      pb.className="dlg-print"+(L.below?" below":"");
-      var bx=Math.max(24,Math.min(76,L.x));
-      pb.style.left=bx+"%"; pb.style.top=L.y+"%";
-      if(!L.below&&scene.lines.length>=4&&i%2===1){pb.style.marginTop="-2.5rem";}
-      pb.textContent=L.txt;
-      pb.setAttribute("role","button");
-      pb.setAttribute("aria-label","Écouter "+L.who+" : "+L.txt);
-      pb.addEventListener("click",function(){dlgSay(wrap,scene,i,false);});
-      wrap.appendChild(pb);
     });
+    var bub=document.createElement("div");
+    bub.className="dlg-bubble above";
+    bub.setAttribute("aria-live","polite");
+    wrap.appendChild(bub);
     var FX=[{t:"HOP !",x:9,y:6,c:"#d97706",r:-9},{t:"CRAC !",x:88,y:5,c:"#0284c7",r:7},{t:"VOUUU !",x:11,y:5,c:"#7c3aed",r:-7},{t:"OHHH !",x:87,y:87,c:"#db2777",r:6}][DLG.indexOf(scene)];
     if(FX){ var fx=document.createElement("span"); fx.className="dlg-fx"; fx.textContent=FX.t; fx.style.left=FX.x+"%"; fx.style.top=FX.y+"%"; fx.style.color=FX.c; fx.style.transform="translate(-50%,-50%) rotate("+FX.r+"deg)"; wrap.appendChild(fx); }
     box.appendChild(wrap);
