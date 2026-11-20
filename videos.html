@@ -240,5 +240,17 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
 <!-- CHRISTMAS: neige de Noël — supprimer cette ligne pour revenir au thème normal -->
 <script src="christmas.js" defer></script>
 <script data-goatcounter="https://lgmdesign35.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>
+/* Mesure du temps de visite (événements GoatCounter, sans témoins) */
+(function(){
+var S=[[30,"duree-30-secondes"],[60,"duree-1-minute"],[180,"duree-3-minutes"],[300,"duree-5-minutes"],[600,"duree-10-minutes"]],p=0,d=null,f={};
+function vis(){return document.visibilityState==="visible";}
+function tick(){var n=Date.now();if(d){p+=n-d;d=null;}var s=p/1000;for(var i=0;i<S.length;i++){if(s>=S[i][0]&&!f[S[i][1]]){f[S[i][1]]=1;try{if(window.goatcounter&&window.goatcounter.count){window.goatcounter.count({path:S[i][1],event:true});}}catch(e){}}}if(vis()){d=n;}}
+document.addEventListener("visibilitychange",tick);
+window.addEventListener("pagehide",tick);
+if(vis()){d=Date.now();}
+setInterval(tick,5000);
+})();
+</script>
 </body>
 </html>
