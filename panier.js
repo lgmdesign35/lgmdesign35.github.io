@@ -1,13 +1,16 @@
 // Panier LGMDesign35 — prix en dollars canadiens, alignés sur la boutique
 // Etsy : Etsy est la référence des prix (décision du 2026-11-18).
 // Seuls les titres vendus sur Etsy sont vendables ici, au même prix.
-// Les autres titres (écoute, étoile de Noël)
-// ne sont PAS vendus tant qu'ils n'ont pas de fiche Etsy :
-// ils sont offerts en aperçu gratuit seulement.
+// « écoute » a maintenant une fiche Etsy et est vendu.
+// Seule « L’étoile de Noël » reste gratuite et non vendue.
 var LGM_PRODUCTS = {
-  aventures: { id: 'aventures', title: 'Les aventures d\u2019Adam et ses amis', pages: 71, age: '4 \u00e0 6 ans', priceCAD: 3.00, format: 'PDF', etsy: 'https://www.etsy.com/listing/4601808390', img: 'images/couverture-aventures.jpg' },
-  halloween: { id: 'halloween', title: 'Adam et ses amis : Halloween \u2014 6 histoires', pages: 71, age: '4 \u00e0 6 ans', priceCAD: 3.00, format: 'PDF', etsy: 'https://www.etsy.com/listing/4603634496', img: 'images/couverture-halloween.jpg' },
-  jardin: { id: 'jardin', title: 'Adam et ses amis : Le jardin de la coop\u00e9ration', pages: 13, age: '4 \u00e0 6 ans', priceCAD: 1.12, format: 'PDF', etsy: 'https://www.etsy.com/listing/4601160031', img: 'images/couverture-jardin.jpg' },
+  aventures: { id: 'aventures', title: 'Les aventures d’Adam et ses amis', pages: 71, age: '4 à 6 ans', priceCAD: 3.00, format: 'PDF', etsy: 'https://www.etsy.com/listing/4601808390', img: 'images/couverture-aventures.jpg' },
+  halloween: { id: 'halloween', title: 'Adam et ses amis : Halloween — 6 histoires', pages: 71, age: '4 à 6 ans', priceCAD: 3.00, format: 'PDF', etsy: 'https://www.etsy.com/listing/4603634496', img: 'images/couverture-halloween.jpg' },
+  jardin: { id: 'jardin', title: 'Adam et ses amis : Le jardin de la coopération', pages: 13, age: '4 à 6 ans', priceCAD: 1.12, format: 'PDF', etsy: 'https://www.etsy.com/listing/4601160031', img: 'images/couverture-jardin.jpg' },
+  bonnenuit: { id: 'bonnenuit', title: 'Bonne nuit, Adam !', pages: 24, age: '1 à 2 ans', priceCAD: 3.00, format: 'PDF', etsy: 'https://www.etsy.com/listing/4623667943', img: 'images/couverture-bonne-nuit.jpg' },
+  lettres: { id: 'lettres', title: 'Adam et ses amis : Les lettres', pages: 33, age: '2 à 6 ans', priceCAD: 3.00, format: 'PDF', etsy: 'https://www.etsy.com/listing/4623669355', img: 'images/couverture-lettres.jpg' },
+  histoires2: { id: 'histoires2', title: 'Adam et ses amis : 2 histoires', pages: 25, age: '3 à 6 ans', priceCAD: 3.00, format: 'PDF', etsy: 'https://www.etsy.com/listing/4623677646', img: 'images/couverture-2histoires.jpg' },
+  ecoute: { id: 'ecoute', title: 'Adam apprend à écouter', pages: 30, age: '4 à 6 ans', priceCAD: 3.00, format: 'PDF', etsy: 'https://www.etsy.com/listing/4623670811', img: 'images/couverture-ecoute.jpg' },
 };
 var LGM_CART_KEY = 'lgm-panier-v1';
 
@@ -45,7 +48,7 @@ function addToCart(id) {
   var btn = document.querySelector('[data-add="' + id + '"]');
   if (btn) {
     var old = btn.textContent;
-    btn.textContent = '\u2713 Ajout\u00e9 au panier !';
+    btn.textContent = '✓ Ajouté au panier !';
     setTimeout(function () { btn.textContent = old; }, 1600);
   }
   if (typeof renderCart === 'function') renderCart();
