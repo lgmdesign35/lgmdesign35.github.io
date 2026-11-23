@@ -1,5 +1,14 @@
 [
   {
+    "id": "georgina-02",
+    "title": "Spiderman",
+    "firstName": "Georgina",
+    "age": 3,
+    "category": "dessins",
+    "img": "images/artistes/georgina-02.jpg",
+    "date": "2026-11-23"
+  },
+  {
     "id": "georgina-01",
     "title": "Barbouillage",
     "firstName": "Georgina",
