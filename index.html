@@ -626,7 +626,9 @@ aBuild();
       <div id="match-win-msg" class="hidden text-center py-4 bg-emerald-50 border-2 border-emerald-300 rounded-2xl">
         <span class="text-4xl block mb-1">⭐ 🦫 ⭐</span>
         <h4 class="text-lg font-black text-emerald-700">Fantastique! Association réussie!</h4>
+        <p class="text-xs font-bold text-emerald-600 mt-1">Une nouvelle partie commence toute seule… 🎲</p>
       </div>
+      <div class="text-center"><button onclick="initMatchGame()" class="px-6 py-3 bg-emerald-600 text-white font-black rounded-2xl shadow-lg hover:bg-emerald-700 pop-btn">🔄 Nouvelle partie</button></div>
     </div>
 
     <div id="game-hangman-container" class="hidden max-w-xl mx-auto bg-white p-6 sm:p-8 rounded-3xl border-4 border-purple-300 shadow-xl space-y-6 text-center w-full">
@@ -1788,7 +1790,7 @@ function selectMatchImage(btn,str){
     btn.disabled=true;btn.classList.add('border-emerald-400','bg-emerald-50','opacity-70');
     selectedMatchBtn.disabled=true;selectedMatchBtn.classList.add('border-emerald-400','bg-emerald-50','opacity-70');
     selectedMatchStr=null;selectedMatchBtn=null;matchFound++;awardCorrect(10);
-    if(matchFound>=matchTotal){document.getElementById('match-win-msg').classList.remove('hidden');addStars(2);updateScoreboard();triggerConfetti();speakQuebec('Fantastique! Association réussie! ⭐');}
+    if(matchFound>=matchTotal){document.getElementById('match-win-msg').classList.remove('hidden');addStars(2);updateScoreboard();triggerConfetti();speakQuebec('Fantastique! Association réussie! ⭐');setTimeout(function(){if(currentGameMode==='match')initMatchGame();},3500);}
     else showToast('Bravo! Bonne association! 🧩');
   }else{playSound('wrong');breakStreak();showToast('Pas tout à fait… essaie une autre image!');}
 }
