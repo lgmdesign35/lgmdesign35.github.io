@@ -49,10 +49,7 @@
     <!-- Voice + interactive controls -->
     <div class="bg-white rounded-3xl shadow border border-amber-200 p-5 mt-6 text-left">
       <h2 class="brand-font font-black text-xl">🎧 Lecture audio interactive — français québécois</h2>
-      <p class="text-sm text-slate-600 mt-1">La lecture utilise la voix française de votre appareil. On choisit d'abord la meilleure voix québécoise disponible, puis l'histoire pose une petite question à votre enfant à chaque page — il répond, il montre, il répète, et on continue ensemble !</p>
-      <label for="voice-select" class="block font-bold text-sm mt-4 mb-1">Voix de lecture :</label>
-      <select id="voice-select" class="w-full border border-slate-300 rounded-xl px-3 py-2.5 font-semibold"></select>
-      <p id="voice-note" class="text-xs text-slate-500 mt-2"></p>
+      <p class="text-sm text-slate-600 mt-1">La lecture est racontée comme une vraie histoire : la voix change avec l'émotion — excitée le matin de Noël, douce au moment du dodo, et grave comme le père Noël ! À chaque page, une petite question invite votre enfant à répondre, à montrer et à répéter — on continue ensemble !</p>
       <div class="flex flex-wrap justify-center gap-3 mt-5">
         <button onclick="speakAll(this)" class="listen-btn px-6 py-3 rounded-full bg-emerald-600 text-white font-black text-lg shadow hover:bg-emerald-700">🔊 Tout écouter</button>
         <button onclick="stopSpeaking()" class="px-6 py-3 rounded-full bg-slate-200 font-black text-lg hover:bg-slate-300">⏹ Arrêter</button>
@@ -86,20 +83,20 @@
 
 <script>
 const PAGES = [
-  { img: "images/prepare-noel/p01.jpg", text: "C'est le mois de décembre. La neige tombe doucement sur la maison d'Adam. « Bientôt, c'est Noël ! » dit Adam en regardant par la fenêtre. Flocon, flocon, la neige danse dans le ciel !", prompt: "Et toi, tu as déjà vu la neige tomber ? Dis-moi : il neige !", rate: 0.9 },
-  { img: "images/prepare-noel/p02.jpg", text: "Aujourd'hui, on décore le sapin ! Adam sort les boules rouges, dorées et bleues de la boîte. « Celle-ci va ici ! Et celle-là, là-haut ! »", prompt: "Quelle est ta boule préférée ? La rouge, la dorée ou la bleue ?", rate: 0.95 },
-  { img: "images/prepare-noel/p03.jpg", text: "Adam accroche une guirlande lumineuse autour du sapin. Les petites lumières clignotent : cling, cling, cling ! Le sapin brille comme un trésor.", prompt: "Compte les lumières avec moi : une, deux, trois !", rate: 0.95 },
-  { img: "images/prepare-noel/p04.jpg", text: "En haut du sapin, il faut une étoile ! Papa soulève Adam tout en haut. Adam pose l'étoile dorée. « Elle est magnifique ! »", prompt: "Lève ton bras tout en haut, comme Adam ! Tu touches l'étoile ?", rate: 0.95 },
-  { img: "images/prepare-noel/p05.jpg", text: "Dans la cuisine, ça sent bon les biscuits ! Adam aide Maman à mélanger la pâte. « On fait des étoiles et des sapins en biscuits ! » Miam, miam !", prompt: "Miam, miam ! Quel biscuit tu préfères ? Une étoile ou un sapin ?", rate: 0.95 },
-  { img: "images/prepare-noel/p06.jpg", text: "Adam écrit une lettre au père Noël. « Cher père Noël, cette année, j'ai été sage. J'aimerais un livre d'histoires. Merci ! Adam. » Il glisse la lettre dans la boîte aux lettres.", prompt: "Et toi, tu as écrit ta lettre au père Noël ?", rate: 0.9 },
-  { img: "images/prepare-noel/p07.jpg", text: "Le soir, Adam prépare un verre de lait et des biscuits pour le père Noël. « Il aura faim après son long voyage ! » Il les pose près de la cheminée.", prompt: "Chut ! On prépare le lait et les biscuits pour le père Noël.", rate: 0.9 },
-  { img: "images/prepare-noel/p08.jpg", text: "Adam accroche son bas de Noël près de la cheminée. « Père Noël, n'oublie pas mon bas ! » Il est rouge, avec une bordure blanche et douce.", prompt: "Montre-moi ton bas de Noël ! Il est où, chez toi ?", rate: 0.95 },
-  { img: "images/prepare-noel/p09.jpg", text: "Dehors, la neige continue de tomber. Adam regarde les flocons par la fenêtre. « Dors bien, petit flocon. À demain ! »", prompt: "Regarde par la fenêtre : tu vois des flocons ?", rate: 0.85 },
-  { img: "images/prepare-noel/p10.jpg", text: "C'est l'heure d'aller au lit. Adam met son pyjama rouge. « Bonne nuit, sapin. Bonne nuit, étoile. » Il ferme les yeux et fait un beau rêve.", prompt: "C'est l'heure de dormir. Ferme tes yeux… et fais un beau rêve.", rate: 0.8 },
-  { img: "images/prepare-noel/p11.jpg", text: "Pendant qu'Adam dort, un bruit doux se fait entendre : « Ho, ho, ho ! » Le père Noël dépose les cadeaux sous le sapin. Chut ! Il ne faut pas le réveiller.", prompt: "Chut ! Le père Noël est là. Dis doucement : Ho, ho, ho !", rate: 0.9 },
-  { img: "images/prepare-noel/p12.jpg", text: "Le matin de Noël, Adam se réveille en vitesse ! « C'est Noël ! C'est Noël ! » Il court vers le sapin. Les cadeaux sont là !", prompt: "C'est Noël ! Saute de joie comme Adam !", rate: 1.0 },
-  { img: "images/prepare-noel/p13.jpg", text: "Adam ouvre ses cadeaux. Un livre d'histoires ! Des crayons de couleur ! « Merci, père Noël ! » Son cœur est plein de joie.", prompt: "Ouvre tes cadeaux ! Qu'est-ce que tu as reçu ?", rate: 0.95 },
-  { img: "images/prepare-noel/p14.jpg", text: "Toute la famille est réunie. On joue, on rit et on partage. « Joyeux Noël à tous ! » C'est le plus beau jour de l'année.", prompt: "Fais un gros câlin à ta famille. Joyeux Noël !", rate: 0.9 }
+  { img: "images/prepare-noel/p01.jpg", text: "C'est le mois de décembre. La neige tombe doucement sur la maison d'Adam. « Bientôt, c'est Noël ! » dit Adam en regardant par la fenêtre. Flocon, flocon, la neige danse dans le ciel !", prompt: "Et toi, tu as déjà vu la neige tomber ? Dis-moi : il neige !", rate: 0.9, pitch: 1.0 },
+  { img: "images/prepare-noel/p02.jpg", text: "Aujourd'hui, on décore le sapin ! Adam sort les boules rouges, dorées et bleues de la boîte. « Celle-ci va ici ! Et celle-là, là-haut ! »", prompt: "Quelle est ta boule préférée ? La rouge, la dorée ou la bleue ?", rate: 0.95, pitch: 1.1 },
+  { img: "images/prepare-noel/p03.jpg", text: "Adam accroche une guirlande lumineuse autour du sapin. Les petites lumières clignotent : cling, cling, cling ! Le sapin brille comme un trésor.", prompt: "Compte les lumières avec moi : une, deux, trois !", rate: 0.95, pitch: 1.15 },
+  { img: "images/prepare-noel/p04.jpg", text: "En haut du sapin, il faut une étoile ! Papa soulève Adam tout en haut. Adam pose l'étoile dorée. « Elle est magnifique ! »", prompt: "Lève ton bras tout en haut, comme Adam ! Tu touches l'étoile ?", rate: 0.95, pitch: 1.1 },
+  { img: "images/prepare-noel/p05.jpg", text: "Dans la cuisine, ça sent bon les biscuits ! Adam aide Maman à mélanger la pâte. « On fait des étoiles et des sapins en biscuits ! » Miam, miam !", prompt: "Miam, miam ! Quel biscuit tu préfères ? Une étoile ou un sapin ?", rate: 0.95, pitch: 1.15 },
+  { img: "images/prepare-noel/p06.jpg", text: "Adam écrit une lettre au père Noël. « Cher père Noël, cette année, j'ai été sage. J'aimerais un livre d'histoires. Merci ! Adam. » Il glisse la lettre dans la boîte aux lettres.", prompt: "Et toi, tu as écrit ta lettre au père Noël ?", rate: 0.9, pitch: 1.0 },
+  { img: "images/prepare-noel/p07.jpg", text: "Le soir, Adam prépare un verre de lait et des biscuits pour le père Noël. « Il aura faim après son long voyage ! » Il les pose près de la cheminée.", prompt: "Chut ! On prépare le lait et les biscuits pour le père Noël.", rate: 0.9, pitch: 0.95 },
+  { img: "images/prepare-noel/p08.jpg", text: "Adam accroche son bas de Noël près de la cheminée. « Père Noël, n'oublie pas mon bas ! » Il est rouge, avec une bordure blanche et douce.", prompt: "Montre-moi ton bas de Noël ! Il est où, chez toi ?", rate: 0.95, pitch: 1.1 },
+  { img: "images/prepare-noel/p09.jpg", text: "Dehors, la neige continue de tomber. Adam regarde les flocons par la fenêtre. « Dors bien, petit flocon. À demain ! »", prompt: "Regarde par la fenêtre : tu vois des flocons ?", rate: 0.85, pitch: 0.85 },
+  { img: "images/prepare-noel/p10.jpg", text: "C'est l'heure d'aller au lit. Adam met son pyjama rouge. « Bonne nuit, sapin. Bonne nuit, étoile. » Il ferme les yeux et fait un beau rêve.", prompt: "C'est l'heure de dormir. Ferme tes yeux… et fais un beau rêve.", rate: 0.8, pitch: 0.8 },
+  { img: "images/prepare-noel/p11.jpg", text: "Pendant qu'Adam dort, un bruit doux se fait entendre : « Ho, ho, ho ! » Le père Noël dépose les cadeaux sous le sapin. Chut ! Il ne faut pas le réveiller.", prompt: "Chut ! Le père Noël est là. Dis doucement : Ho, ho, ho !", rate: 0.9, pitch: 0.7 },
+  { img: "images/prepare-noel/p12.jpg", text: "Le matin de Noël, Adam se réveille en vitesse ! « C'est Noël ! C'est Noël ! » Il court vers le sapin. Les cadeaux sont là !", prompt: "C'est Noël ! Saute de joie comme Adam !", rate: 1.0, pitch: 1.25 },
+  { img: "images/prepare-noel/p13.jpg", text: "Adam ouvre ses cadeaux. Un livre d'histoires ! Des crayons de couleur ! « Merci, père Noël ! » Son cœur est plein de joie.", prompt: "Ouvre tes cadeaux ! Qu'est-ce que tu as reçu ?", rate: 0.95, pitch: 1.2 },
+  { img: "images/prepare-noel/p14.jpg", text: "Toute la famille est réunie. On joue, on rit et on partage. « Joyeux Noël à tous ! » C'est le plus beau jour de l'année.", prompt: "Fais un gros câlin à ta famille. Joyeux Noël !", rate: 0.9, pitch: 1.05 }
 ];
 
 const container = document.getElementById('pages');
@@ -124,7 +121,7 @@ PAGES.forEach((p, i) => {
   container.appendChild(card);
 });
 
-/* ---- Québec French voice selection ---- */
+/* ---- Québec French voice selection (silent — best voice picked automatically) ---- */
 let chosenVoice = null;
 function scoreVoice(v) {
   const lang = (v.lang || '').toLowerCase();
@@ -141,47 +138,29 @@ function scoreVoice(v) {
   return s;
 }
 function refreshVoices() {
-  if (!('speechSynthesis' in window)) {
-    document.getElementById('voice-note').textContent = "La lecture audio n'est pas disponible sur cet appareil ou ce navigateur.";
-    return;
-  }
+  if (!('speechSynthesis' in window)) return;
   const voices = speechSynthesis.getVoices().filter(v => (v.lang || '').toLowerCase().startsWith('fr'));
-  const sel = document.getElementById('voice-select');
-  sel.innerHTML = '';
-  if (!voices.length) {
-    const o = document.createElement('option');
-    o.textContent = 'Aucune voix française trouvée sur cet appareil';
-    sel.appendChild(o);
-    document.getElementById('voice-note').textContent = "Aucune voix française n'a été trouvée. Sur Android, installez une voix française (Canada) dans les paramètres de synthèse vocale de Google.";
-    return;
-  }
+  if (!voices.length) { chosenVoice = null; return; }
   voices.sort((a, b) => scoreVoice(b) - scoreVoice(a));
-  voices.forEach(v => {
-    const o = document.createElement('option');
-    o.value = v.name;
-    const tag = scoreVoice(v) >= 100 ? ' • québécoise' : '';
-    o.textContent = v.name + ' (' + v.lang + ')' + tag;
-    sel.appendChild(o);
-  });
   chosenVoice = voices[0];
-  sel.value = chosenVoice.name;
-  const isQc = scoreVoice(chosenVoice) >= 100;
-  document.getElementById('voice-note').textContent = isQc
-    ? 'Voix québécoise sélectionnée : ' + chosenVoice.name + '. Vous pouvez en choisir une autre ci-dessus.'
-    : 'Aucune voix québécoise détectée sur cet appareil — on utilise la meilleure voix française disponible (' + chosenVoice.name + '). Pour une vraie voix québécoise, installez une voix « Français (Canada) » dans les paramètres de synthèse vocale de votre appareil.';
-  sel.onchange = function() {
-    chosenVoice = voices.find(v => v.name === sel.value) || voices[0];
-  };
 }
 if ('speechSynthesis' in window) {
   refreshVoices();
   speechSynthesis.onvoiceschanged = refreshVoices;
-} else {
-  refreshVoices();
 }
 
-/* ---- Speaking ---- */
+/* ---- Expressive storytelling (a storyteller, not a robot) ---- */
+/* The voice changes with the emotion: exclamations lift it, questions lift
+   it a little, quiet words lower it, dialogue sounds like a child, and
+   Santa gets a deep voice. Sentences are spoken one by one with a small
+   dramatic pause between them. */
 let stopAll = false;
+let speakSeq = 0;
+function beginSpeech() {
+  speakSeq++;
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  return speakSeq;
+}
 function setPlaying(btn) {
   document.querySelectorAll('.listen-btn.playing').forEach(b => b.classList.remove('playing'));
   if (btn) { btn.classList.add('playing'); }
@@ -189,64 +168,91 @@ function setPlaying(btn) {
 function clearReading() {
   document.querySelectorAll('.page-card.reading').forEach(c => c.classList.remove('reading'));
 }
-function speakUtterance(text, rate, onend) {
-  return new Promise(resolve => {
-    if (!('speechSynthesis' in window)) { alert("La lecture audio n'est pas disponible sur cet appareil."); resolve(); return; }
+function sentenceMood(s) {
+  const t = s.toLowerCase();
+  if (t.indexOf('ho, ho, ho') >= 0) return { pitch: -0.45, rate: -0.12 };
+  if (/chut|dors bien|bonne nuit|doucement/.test(t)) return { pitch: -0.2, rate: -0.12 };
+  if (s.trim().endsWith('!')) return { pitch: 0.22, rate: 0.06 };
+  if (s.trim().endsWith('?')) return { pitch: 0.15, rate: 0 };
+  if (s.indexOf('«') >= 0) return { pitch: 0.12, rate: 0.03 };
+  return { pitch: 0, rate: 0 };
+}
+function splitSentences(text) {
+  const parts = text.match(/[^.!?]+[.!?]+["»\s]*/g);
+  return parts ? parts.map(function(s){ return s.trim(); }).filter(Boolean) : [text];
+}
+function speakOne(text, rate, pitch) {
+  return new Promise(function(resolve) {
+    if (!('speechSynthesis' in window)) { resolve(); return; }
     const u = new SpeechSynthesisUtterance(text);
     u.lang = 'fr-CA';
     if (chosenVoice) u.voice = chosenVoice;
-    u.rate = rate || 0.9;
-    u.onend = function() { if (onend) onend(); resolve(); };
+    u.rate = Math.min(1.4, Math.max(0.5, rate || 0.9));
+    u.pitch = Math.min(1.6, Math.max(0.3, pitch || 1));
+    u.onend = function() { resolve(); };
     u.onerror = function() { resolve(); };
     speechSynthesis.speak(u);
   });
 }
+async function speakExpressive(text, baseRate, basePitch, seq) {
+  const sentences = splitSentences(text);
+  for (let i = 0; i < sentences.length; i++) {
+    if (seq !== speakSeq) return;
+    const mood = sentenceMood(sentences[i]);
+    await speakOne(sentences[i], (baseRate || 0.9) + mood.rate, (basePitch || 1) + mood.pitch);
+    if (seq !== speakSeq) return;
+    const pause = sentences[i].trim().endsWith('!') ? 450 : 260;
+    await new Promise(function(r){ setTimeout(r, pause); });
+  }
+}
 function speakPage(i, btn) {
   if (!('speechSynthesis' in window)) { alert("La lecture audio n'est pas disponible sur cet appareil."); return; }
   stopAll = true;
-  speechSynthesis.cancel();
+  const seq = beginSpeech();
   clearReading();
   setPlaying(btn);
   const card = document.getElementById('page-' + i);
   if (card) card.classList.add('reading');
-  speakUtterance(PAGES[i].text, PAGES[i].rate, function() {
+  speakExpressive(PAGES[i].text, PAGES[i].rate, PAGES[i].pitch, seq).then(function() {
     setPlaying(null);
     if (card) card.classList.remove('reading');
   });
 }
 function speakPrompt(i, btn) {
   if (!('speechSynthesis' in window)) { alert("La lecture audio n'est pas disponible sur cet appareil."); return; }
-  speechSynthesis.cancel();
-  speakUtterance(PAGES[i].prompt, 0.9);
+  const seq = beginSpeech();
+  speakExpressive(PAGES[i].prompt, 0.95, 1.15, seq);
 }
 async function speakAll(btn) {
   if (!('speechSynthesis' in window)) { alert("La lecture audio n'est pas disponible sur cet appareil."); return; }
   stopAll = false;
-  speechSynthesis.cancel();
+  const seq = beginSpeech();
   clearReading();
   setPlaying(btn);
   const interactive = document.getElementById('interactive-toggle').checked;
   for (let i = 0; i < PAGES.length; i++) {
-    if (stopAll) break;
+    if (stopAll || seq !== speakSeq) break;
     const card = document.getElementById('page-' + i);
     if (card) {
       clearReading();
       card.classList.add('reading');
       card.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-    await speakUtterance(PAGES[i].text, PAGES[i].rate);
-    if (stopAll) break;
+    await speakExpressive(PAGES[i].text, PAGES[i].rate, PAGES[i].pitch, seq);
+    if (stopAll || seq !== speakSeq) break;
     if (interactive) {
-      await speakUtterance(PAGES[i].prompt, 0.9);
-      await new Promise(r => setTimeout(r, 1200));
+      await new Promise(function(r){ setTimeout(r, 400); });
+      await speakExpressive(PAGES[i].prompt, 0.95, 1.15, seq);
+      await new Promise(function(r){ setTimeout(r, 1200); });
     }
-    if (stopAll) break;
+    if (stopAll || seq !== speakSeq) break;
   }
   clearReading();
   setPlaying(null);
 }
 function stopSpeaking() {
   stopAll = true;
+  speakSeq++;
   if ('speechSynthesis' in window) speechSynthesis.cancel();
   setPlaying(null);
   clearReading();
