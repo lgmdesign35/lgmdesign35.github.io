@@ -84,19 +84,19 @@
 <script>
 const PAGES = [
   { img: "images/prepare-noel/p01.jpg", text: "C'est le mois de décembre. La neige tombe doucement sur la maison d'Adam. « Bientôt, c'est Noël ! » dit Adam en regardant par la fenêtre. Flocon, flocon, la neige danse dans le ciel !", prompt: "Et toi, tu as déjà vu la neige tomber ? Dis-moi : il neige !", rate: 0.9, pitch: 1.0 },
-  { img: "images/prepare-noel/p02.jpg", text: "Aujourd'hui, on décore le sapin ! Adam sort les boules rouges, dorées et bleues de la boîte. « Celle-ci va ici ! Et celle-là, là-haut ! »", prompt: "Quelle est ta boule préférée ? La rouge, la dorée ou la bleue ?", rate: 0.95, pitch: 1.1 },
-  { img: "images/prepare-noel/p03.jpg", text: "Adam accroche une guirlande lumineuse autour du sapin. Les petites lumières clignotent : cling, cling, cling ! Le sapin brille comme un trésor.", prompt: "Compte les lumières avec moi : une, deux, trois !", rate: 0.95, pitch: 1.15 },
-  { img: "images/prepare-noel/p04.jpg", text: "En haut du sapin, il faut une étoile ! Papa soulève Adam tout en haut. Adam pose l'étoile dorée. « Elle est magnifique ! »", prompt: "Lève ton bras tout en haut, comme Adam ! Tu touches l'étoile ?", rate: 0.95, pitch: 1.1 },
-  { img: "images/prepare-noel/p05.jpg", text: "Dans la cuisine, ça sent bon les biscuits ! Adam aide Maman à mélanger la pâte. « On fait des étoiles et des sapins en biscuits ! » Miam, miam !", prompt: "Miam, miam ! Quel biscuit tu préfères ? Une étoile ou un sapin ?", rate: 0.95, pitch: 1.15 },
+  { img: "images/prepare-noel/p02.jpg", text: "Aujourd'hui, on décore le sapin ! Adam sort les boules rouges, dorées et bleues de la boîte. « Celle-ci va ici ! Et celle-là, là-haut ! »", prompt: "Quelle est ta boule préférée ? La rouge, la dorée ou la bleue ?", rate: 0.95, pitch: 1.08 },
+  { img: "images/prepare-noel/p03.jpg", text: "Adam accroche une guirlande lumineuse autour du sapin. Les petites lumières clignotent : cling, cling, cling ! Le sapin brille comme un trésor.", prompt: "Compte les lumières avec moi : une, deux, trois !", rate: 0.95, pitch: 1.1 },
+  { img: "images/prepare-noel/p04.jpg", text: "En haut du sapin, il faut une étoile ! Papa soulève Adam tout en haut. Adam pose l'étoile dorée. « Elle est magnifique ! »", prompt: "Lève ton bras tout en haut, comme Adam ! Tu touches l'étoile ?", rate: 0.95, pitch: 1.08 },
+  { img: "images/prepare-noel/p05.jpg", text: "Dans la cuisine, ça sent bon les biscuits ! Adam aide Maman à mélanger la pâte. « On fait des étoiles et des sapins en biscuits ! » Miam, miam !", prompt: "Miam, miam ! Quel biscuit tu préfères ? Une étoile ou un sapin ?", rate: 0.95, pitch: 1.1 },
   { img: "images/prepare-noel/p06.jpg", text: "Adam écrit une lettre au père Noël. « Cher père Noël, cette année, j'ai été sage. J'aimerais un livre d'histoires. Merci ! Adam. » Il glisse la lettre dans la boîte aux lettres.", prompt: "Et toi, tu as écrit ta lettre au père Noël ?", rate: 0.9, pitch: 1.0 },
   { img: "images/prepare-noel/p07.jpg", text: "Le soir, Adam prépare un verre de lait et des biscuits pour le père Noël. « Il aura faim après son long voyage ! » Il les pose près de la cheminée.", prompt: "Chut ! On prépare le lait et les biscuits pour le père Noël.", rate: 0.9, pitch: 0.95 },
-  { img: "images/prepare-noel/p08.jpg", text: "Adam accroche son bas de Noël près de la cheminée. « Père Noël, n'oublie pas mon bas ! » Il est rouge, avec une bordure blanche et douce.", prompt: "Montre-moi ton bas de Noël ! Il est où, chez toi ?", rate: 0.95, pitch: 1.1 },
-  { img: "images/prepare-noel/p09.jpg", text: "Dehors, la neige continue de tomber. Adam regarde les flocons par la fenêtre. « Dors bien, petit flocon. À demain ! »", prompt: "Regarde par la fenêtre : tu vois des flocons ?", rate: 0.85, pitch: 0.85 },
-  { img: "images/prepare-noel/p10.jpg", text: "C'est l'heure d'aller au lit. Adam met son pyjama rouge. « Bonne nuit, sapin. Bonne nuit, étoile. » Il ferme les yeux et fait un beau rêve.", prompt: "C'est l'heure de dormir. Ferme tes yeux… et fais un beau rêve.", rate: 0.8, pitch: 0.8 },
-  { img: "images/prepare-noel/p11.jpg", text: "Pendant qu'Adam dort, un bruit doux se fait entendre : « Ho, ho, ho ! » Le père Noël dépose les cadeaux sous le sapin. Chut ! Il ne faut pas le réveiller.", prompt: "Chut ! Le père Noël est là. Dis doucement : Ho, ho, ho !", rate: 0.9, pitch: 0.7 },
-  { img: "images/prepare-noel/p12.jpg", text: "Le matin de Noël, Adam se réveille en vitesse ! « C'est Noël ! C'est Noël ! » Il court vers le sapin. Les cadeaux sont là !", prompt: "C'est Noël ! Saute de joie comme Adam !", rate: 1.0, pitch: 1.25 },
-  { img: "images/prepare-noel/p13.jpg", text: "Adam ouvre ses cadeaux. Un livre d'histoires ! Des crayons de couleur ! « Merci, père Noël ! » Son cœur est plein de joie.", prompt: "Ouvre tes cadeaux ! Qu'est-ce que tu as reçu ?", rate: 0.95, pitch: 1.2 },
-  { img: "images/prepare-noel/p14.jpg", text: "Toute la famille est réunie. On joue, on rit et on partage. « Joyeux Noël à tous ! » C'est le plus beau jour de l'année.", prompt: "Fais un gros câlin à ta famille. Joyeux Noël !", rate: 0.9, pitch: 1.05 }
+  { img: "images/prepare-noel/p08.jpg", text: "Adam accroche son bas de Noël près de la cheminée. « Père Noël, n'oublie pas mon bas ! » Il est rouge, avec une bordure blanche et douce.", prompt: "Montre-moi ton bas de Noël ! Il est où, chez toi ?", rate: 0.95, pitch: 1.08 },
+  { img: "images/prepare-noel/p09.jpg", text: "Dehors, la neige continue de tomber. Adam regarde les flocons par la fenêtre. « Dors bien, petit flocon. À demain ! »", prompt: "Regarde par la fenêtre : tu vois des flocons ?", rate: 0.85, pitch: 0.9 },
+  { img: "images/prepare-noel/p10.jpg", text: "C'est l'heure d'aller au lit. Adam met son pyjama rouge. « Bonne nuit, sapin. Bonne nuit, étoile. » Il ferme les yeux et fait un beau rêve.", prompt: "C'est l'heure de dormir. Ferme tes yeux… et fais un beau rêve.", rate: 0.8, pitch: 0.9 },
+  { img: "images/prepare-noel/p11.jpg", text: "Pendant qu'Adam dort, un bruit doux se fait entendre : « Ho, ho, ho ! » Le père Noël dépose les cadeaux sous le sapin. Chut ! Il ne faut pas le réveiller.", prompt: "Chut ! Le père Noël est là. Dis doucement : Ho, ho, ho !", rate: 0.9, pitch: 0.85 },
+  { img: "images/prepare-noel/p12.jpg", text: "Le matin de Noël, Adam se réveille en vitesse ! « C'est Noël ! C'est Noël ! » Il court vers le sapin. Les cadeaux sont là !", prompt: "C'est Noël ! Saute de joie comme Adam !", rate: 1.0, pitch: 1.15 },
+  { img: "images/prepare-noel/p13.jpg", text: "Adam ouvre ses cadeaux. Un livre d'histoires ! Des crayons de couleur ! « Merci, père Noël ! » Son cœur est plein de joie.", prompt: "Ouvre tes cadeaux ! Qu'est-ce que tu as reçu ?", rate: 0.95, pitch: 1.12 },
+  { img: "images/prepare-noel/p14.jpg", text: "Toute la famille est réunie. On joue, on rit et on partage. « Joyeux Noël à tous ! » C'est le plus beau jour de l'année.", prompt: "Fais un gros câlin à ta famille. Joyeux Noël !", rate: 0.9, pitch: 1.03 }
 ];
 
 const container = document.getElementById('pages');
@@ -170,11 +170,11 @@ function clearReading() {
 }
 function sentenceMood(s) {
   const t = s.toLowerCase();
-  if (t.indexOf('ho, ho, ho') >= 0) return { pitch: -0.45, rate: -0.12 };
-  if (/chut|dors bien|bonne nuit|doucement/.test(t)) return { pitch: -0.2, rate: -0.12 };
-  if (s.trim().endsWith('!')) return { pitch: 0.22, rate: 0.06 };
-  if (s.trim().endsWith('?')) return { pitch: 0.15, rate: 0 };
-  if (s.indexOf('«') >= 0) return { pitch: 0.12, rate: 0.03 };
+  if (t.indexOf('ho, ho, ho') >= 0) return { pitch: -0.2, rate: -0.08 };
+  if (/chut|dors bien|bonne nuit|doucement/.test(t)) return { pitch: -0.1, rate: -0.08 };
+  if (s.trim().endsWith('!')) return { pitch: 0.12, rate: 0.03 };
+  if (s.trim().endsWith('?')) return { pitch: 0.08, rate: 0 };
+  if (s.indexOf('«') >= 0) return { pitch: 0.06, rate: 0.02 };
   return { pitch: 0, rate: 0 };
 }
 function splitSentences(text) {
@@ -188,7 +188,7 @@ function speakOne(text, rate, pitch) {
     u.lang = 'fr-CA';
     if (chosenVoice) u.voice = chosenVoice;
     u.rate = Math.min(1.4, Math.max(0.5, rate || 0.9));
-    u.pitch = Math.min(1.6, Math.max(0.3, pitch || 1));
+    u.pitch = Math.min(1.25, Math.max(0.85, pitch || 1));
     u.onend = function() { resolve(); };
     u.onerror = function() { resolve(); };
     speechSynthesis.speak(u);
@@ -201,7 +201,7 @@ async function speakExpressive(text, baseRate, basePitch, seq) {
     const mood = sentenceMood(sentences[i]);
     await speakOne(sentences[i], (baseRate || 0.9) + mood.rate, (basePitch || 1) + mood.pitch);
     if (seq !== speakSeq) return;
-    const pause = sentences[i].trim().endsWith('!') ? 450 : 260;
+    const pause = sentences[i].trim().endsWith('!') ? 350 : 200;
     await new Promise(function(r){ setTimeout(r, pause); });
   }
 }
