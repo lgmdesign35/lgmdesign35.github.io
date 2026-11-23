@@ -1896,7 +1896,7 @@ function nextHangmanWord(){initHangmanGame();playSound('pop');}
 var gameScore={points:0,streak:0,best:0};
 function shuffleArr(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
 function sampleArr(a,n){return shuffleArr(a).slice(0,n);}
-function levelLabel(){return state.ageGroup==='toddler'?'0 à 3 ans':'4 à 6 ans';}
+function levelLabel(){return state.ageGroup==='toddler'?'Niveau 1':'Niveau 2';}
 function updateScoreboard(){
   var p=document.getElementById('games-points');if(p)p.innerText=gameScore.points;
   var s=document.getElementById('games-streak');if(s)s.innerText=gameScore.streak;
