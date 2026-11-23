@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adam prépare Noël — Livre gratuit avec lecture audio | LGMDesign35</title>
+<meta name="description" content="Adam prépare Noël : une histoire gratuite pour les 3 à 6 ans, avec lecture audio. Adam décore le sapin, fait des biscuits, écrit au père Noël et attend le matin de Noël. Lisez et écoutez ensemble sur lgmdesign35.com.">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  body { font-family: 'Segoe UI', system-ui, sans-serif; }
+  .brand-font { font-family: 'Baloo 2', 'Segoe UI', cursive, sans-serif; }
+  .page-card { scroll-margin-top: 90px; }
+  .listen-btn.playing { background: #059669 !important; }
+</style>
+</head>
+<body class="bg-amber-50 text-slate-800">
+
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur shadow-sm">
+  <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
+    <a href="index.html" class="brand-font font-black text-xl sm:text-2xl text-slate-800">🎄 LGMDesign35</a>
+    <nav class="flex gap-2 text-sm">
+      <a href="histoires-gratuites.html" class="px-3 py-2 rounded-full bg-slate-100 hover:bg-slate-200 font-bold">← Histoires gratuites</a>
+      <a href="pdf/adam-prepare-noel.pdf" class="px-3 py-2 rounded-full bg-red-600 text-white hover:bg-red-700 font-bold" download>📄 PDF</a>
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-3xl mx-auto px-4 pb-16">
+
+  <!-- Cover / intro -->
+  <section class="text-center pt-8">
+    <span class="inline-block bg-red-100 text-red-700 font-bold text-sm px-4 py-1 rounded-full">🎄 Noël • 3 à 6 ans • Gratuit</span>
+    <h1 class="brand-font font-black text-4xl sm:text-5xl mt-4 leading-tight">Adam prépare Noël</h1>
+    <p class="text-lg text-slate-600 mt-2">Une histoire d'Adam et ses amis, à lire et à écouter ensemble.</p>
+    <img src="images/prepare-noel/cover.jpg" alt="Adam prépare Noël — couverture" class="w-full rounded-3xl mt-6 shadow-lg border border-amber-200">
+    <div class="flex flex-wrap justify-center gap-3 mt-6">
+      <button onclick="speakAll(this)" class="listen-btn px-6 py-3 rounded-full bg-emerald-600 text-white font-black text-lg shadow hover:bg-emerald-700">🔊 Tout écouter</button>
+      <button onclick="stopSpeaking()" class="px-6 py-3 rounded-full bg-slate-200 font-black text-lg hover:bg-slate-300">⏹ Arrêter</button>
+      <a href="pdf/adam-prepare-noel.pdf" class="px-6 py-3 rounded-full bg-red-600 text-white font-black text-lg shadow hover:bg-red-700" download>📄 Télécharger le PDF</a>
+    </div>
+    <p class="text-sm text-slate-500 mt-3">La lecture audio utilise la voix de votre appareil. Écrit par <strong>LGMDesign35</strong> • lgmdesign35.com</p>
+  </section>
+
+  <!-- Story pages -->
+  <section id="pages" class="mt-10 space-y-8"></section>
+
+  <!-- Closing -->
+  <section class="text-center mt-12 bg-white rounded-3xl shadow p-8 border border-amber-200">
+    <h2 class="brand-font font-black text-3xl">Joyeux Noël ! 🎄</h2>
+    <p class="text-lg text-slate-600 mt-2">Merci d'avoir lu cette histoire avec Adam et ses amis.</p>
+    <p class="mt-4 font-bold">Découvrez aussi nos autres livres gratuits :</p>
+    <div class="flex flex-wrap justify-center gap-2 mt-3">
+      <a href="bebe-adam-couleurs.html" class="px-4 py-2 rounded-full bg-amber-100 font-bold">Bébé Adam : les couleurs</a>
+      <a href="bebe-adam-animaux.html" class="px-4 py-2 rounded-full bg-amber-100 font-bold">Bébé Adam : les animaux</a>
+      <a href="bebe-adam-bonne-nuit.html" class="px-4 py-2 rounded-full bg-amber-100 font-bold">Bébé Adam : bonne nuit</a>
+      <a href="bebe-adam-noel.html" class="px-4 py-2 rounded-full bg-amber-100 font-bold">Bébé Adam : Noël</a>
+      <a href="histoires-gratuites.html" class="px-4 py-2 rounded-full bg-red-600 text-white font-bold">Toutes les histoires gratuites →</a>
+    </div>
+    <p class="text-sm text-slate-500 mt-6">PDF sur Etsy • Livre broché sur Amazon.ca • lgmdesign35.com</p>
+  </section>
+</main>
+
+<script>
+const PAGES = [
+  { img: "images/prepare-noel/p01.jpg", text: "C'est le mois de décembre. La neige tombe doucement sur la maison d'Adam. « Bientôt, c'est Noël ! » dit Adam en regardant par la fenêtre. Flocon, flocon, la neige danse dans le ciel !" },
+  { img: "images/prepare-noel/p02.jpg", text: "Aujourd'hui, on décore le sapin ! Adam sort les boules rouges, dorées et bleues de la boîte. « Celle-ci va ici ! Et celle-là, là-haut ! »" },
+  { img: "images/prepare-noel/p03.jpg", text: "Adam accroche une guirlande lumineuse autour du sapin. Les petites lumières clignotent : cling, cling, cling ! Le sapin brille comme un trésor." },
+  { img: "images/prepare-noel/p04.jpg", text: "En haut du sapin, il faut une étoile ! Papa soulève Adam tout en haut. Adam pose l'étoile dorée. « Elle est magnifique ! »" },
+  { img: "images/prepare-noel/p05.jpg", text: "Dans la cuisine, ça sent bon les biscuits ! Adam aide Maman à mélanger la pâte. « On fait des étoiles et des sapins en biscuits ! » Miam, miam !" },
+  { img: "images/prepare-noel/p06.jpg", text: "Adam écrit une lettre au père Noël. « Cher père Noël, cette année, j'ai été sage. J'aimerais un livre d'histoires. Merci ! Adam. » Il glisse la lettre dans la boîte aux lettres." },
+  { img: "images/prepare-noel/p07.jpg", text: "Le soir, Adam prépare un verre de lait et des biscuits pour le père Noël. « Il aura faim après son long voyage ! » Il les pose près de la cheminée." },
+  { img: "images/prepare-noel/p08.jpg", text: "Adam accroche son bas de Noël près de la cheminée. « Père Noël, n'oublie pas mon bas ! » Il est rouge, avec une bordure blanche et douce." },
+  { img: "images/prepare-noel/p09.jpg", text: "Dehors, la neige continue de tomber. Adam regarde les flocons par la fenêtre. « Dors bien, petit flocon. À demain ! »" },
+  { img: "images/prepare-noel/p10.jpg", text: "C'est l'heure d'aller au lit. Adam met son pyjama rouge. « Bonne nuit, sapin. Bonne nuit, étoile. » Il ferme les yeux et fait un beau rêve." },
+  { img: "images/prepare-noel/p11.jpg", text: "Pendant qu'Adam dort, un bruit doux se fait entendre : « Ho, ho, ho ! » Le père Noël dépose les cadeaux sous le sapin. Chut ! Il ne faut pas le réveiller." },
+  { img: "images/prepare-noel/p12.jpg", text: "Le matin de Noël, Adam se réveille en vitesse ! « C'est Noël ! C'est Noël ! » Il court vers le sapin. Les cadeaux sont là !" },
+  { img: "images/prepare-noel/p13.jpg", text: "Adam ouvre ses cadeaux. Un livre d'histoires ! Des crayons de couleur ! « Merci, père Noël ! » Son cœur est plein de joie." },
+  { img: "images/prepare-noel/p14.jpg", text: "Toute la famille est réunie. On joue, on rit et on partage. « Joyeux Noël à tous ! » C'est le plus beau jour de l'année." }
+];
+
+const container = document.getElementById('pages');
+PAGES.forEach((p, i) => {
+  const card = document.createElement('article');
+  card.className = 'page-card bg-white rounded-3xl shadow border border-amber-200 overflow-hidden';
+  card.innerHTML =
+    '<img src="' + p.img + '" alt="Page ' + (i + 1) + ' — Adam prépare Noël" class="w-full" loading="lazy">' +
+    '<div class="p-5 sm:p-6">' +
+      '<p class="text-lg leading-relaxed">' + p.text + '</p>' +
+      '<div class="flex items-center justify-between mt-4">' +
+        '<button onclick="speakPage(' + i + ', this)" class="listen-btn px-5 py-2.5 rounded-full bg-emerald-600 text-white font-black shadow hover:bg-emerald-700">🔊 Écouter</button>' +
+        '<span class="text-sm font-bold text-slate-400">Page ' + (i + 1) + ' / 14</span>' +
+      '</div>' +
+    '</div>';
+  container.appendChild(card);
+});
+
+let currentBtn = null;
+function setPlaying(btn) {
+  document.querySelectorAll('.listen-btn.playing').forEach(b => b.classList.remove('playing'));
+  if (btn) { btn.classList.add('playing'); currentBtn = btn; }
+}
+function speakText(text, btn, onend) {
+  if (!('speechSynthesis' in window)) { alert("La lecture audio n'est pas disponible sur cet appareil."); return; }
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'fr-CA';
+  u.rate = 0.9;
+  u.onend = function() { setPlaying(null); if (onend) onend(); };
+  u.onerror = function() { setPlaying(null); };
+  setPlaying(btn);
+  speechSynthesis.speak(u);
+}
+function speakPage(i, btn) { speakText(PAGES[i].text, btn); }
+function speakAll(btn) {
+  const full = PAGES.map(p => p.text).join(' ');
+  speakText(full, btn);
+}
+function stopSpeaking() {
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  setPlaying(null);
+}
+</script>
+</body>
+</html>
