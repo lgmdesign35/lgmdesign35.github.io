@@ -424,9 +424,9 @@ aBuild();
         <input id="word-search" type="search" placeholder="🔍 Cherche un mot… (ex. : chat, pomme, autobus)" oninput="onWordSearch(this.value)" class="w-full px-4 py-2.5 rounded-full border-2 border-sky-200 bg-white text-sm font-bold text-slate-700 shadow-sm focus:outline-none focus:border-amber-400">
       </div>
       <div class="flex flex-wrap gap-2 justify-center" id="word-level-chips">
-        <button data-lvl="all" onclick="setWordLevel('all')" class="lvl-chip px-4 py-2 rounded-2xl border font-bold text-xs bg-qcblue-600 text-white">🌟 Tous les âges</button>
-        <button data-lvl="1" onclick="setWordLevel(1)" class="lvl-chip px-4 py-2 rounded-2xl border font-bold text-xs bg-white text-slate-600">👶 0 à 3 ans</button>
-        <button data-lvl="2" onclick="setWordLevel(2)" class="lvl-chip px-4 py-2 rounded-2xl border font-bold text-xs bg-white text-slate-600">🧒 4 à 6 ans</button>
+        <button data-lvl="all" onclick="setWordLevel('all')" class="lvl-chip px-4 py-2 rounded-2xl border font-bold text-xs bg-qcblue-600 text-white">🌟 Tous les niveaux</button>
+        <button data-lvl="1" onclick="setWordLevel(1)" class="lvl-chip px-4 py-2 rounded-2xl border font-bold text-xs bg-white text-slate-600">👶 Niveau 1</button>
+        <button data-lvl="2" onclick="setWordLevel(2)" class="lvl-chip px-4 py-2 rounded-2xl border font-bold text-xs bg-white text-slate-600">🧒 Niveau 2</button>
       </div>
     </div>
     <div class="flex flex-wrap gap-2 justify-center" id="category-chips"></div>
@@ -509,7 +509,7 @@ aBuild();
     <div class="bg-gradient-to-br from-emerald-500 to-teal-500 rounded-[2rem] p-6 sm:p-8 text-white shadow-xl">
       <h3 class="brand-font text-2xl sm:text-3xl font-black">👆 Touche et écoute</h3>
       <p class="text-emerald-50 font-semibold text-sm sm:text-base">22 scènes à explorer : touche un animal ou un objet dans l’image et écoute son nom — et de vrais sons d’animaux ! Aucune lecture, juste le plaisir de découvrir. 🔊</p>
-      <p class="inline-block bg-white/20 rounded-full px-3 py-1 text-xs font-black mt-1">🎯 Domaine langagier — vocabulaire et écoute · 0 à 3 ans</p>
+      <p class="inline-block bg-white/20 rounded-full px-3 py-1 text-xs font-black mt-1">🎯 Domaine langagier — vocabulaire et écoute · Niveau 1</p>
     </div>
     <div id="sc-list" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2"></div>
     <div class="bg-white rounded-[2rem] shadow-xl border border-emerald-100 p-3 sm:p-4">
@@ -561,14 +561,14 @@ aBuild();
   <div id="section-games" class="learn-section hidden space-y-6">
     <div class="text-center space-y-2">
       <h3 class="text-xl sm:text-2xl font-black text-slate-800">🎮 Jeux &amp; Quiz — 16 jeux pour apprendre en s'amusant</h3>
-      <p class="text-sm font-bold text-slate-500 mt-1">🎯 Domaine cognitif — logique, mémoire et résolution de problèmes · 4 à 6 ans</p>
-      <p class="text-xs sm:text-sm font-bold text-slate-500 max-w-2xl mx-auto">Choisis un jeu! Chaque partie pioche de nouveaux mots et de nouveaux nombres dans le niveau d'âge choisi (0 à 3 ans ou 4 à 6 ans) : les manches sont toujours différentes, parmi 1 031 mots et 1 000 nombres.</p>
+      <p class="text-sm font-bold text-slate-500 mt-1">🎯 Domaine cognitif — logique, mémoire et résolution de problèmes · Niveau 2</p>
+      <p class="text-xs sm:text-sm font-bold text-slate-500 max-w-2xl mx-auto">Choisis un jeu! Chaque partie pioche de nouveaux mots et de nouveaux nombres dans le niveau choisi (Niveau 1 ou Niveau 2) : les manches sont toujours différentes, parmi 1 031 mots et 1 000 nombres.</p>
     </div>
     <div class="bg-white border-2 border-amber-200 rounded-3xl px-4 py-3 shadow-sm flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-black text-slate-700 max-w-2xl mx-auto w-full">
       <span>🏆 Points : <span id="games-points" class="text-qcblue-700">0</span></span>
       <span>🔥 Série : <span id="games-streak" class="text-rose-500">0</span></span>
       <!-- Système d'étoiles masqué — il reviendra quand le système de récompenses sera prêt. <span>⭐ Étoiles : <span id="games-stars" class="text-amber-500">0</span></span> -->
-      <span>🎚️ Niveau : <span id="games-level" class="text-emerald-600">0 à 3 ans</span></span>
+      <span>🎚️ Niveau : <span id="games-level" class="text-emerald-600">Niveau 1</span></span>
     </div>
     <a href="adam-man.html" class="block max-w-2xl mx-auto w-full bg-gradient-to-r from-red-500 to-sky-600 text-white rounded-3xl px-4 py-3 shadow-lg pop-btn">
       <span class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-center">⭐ La chasse aux étoiles — vole au-dessus des toits du Québec et attrape les ⭐ et les 🎈 — 3 niveaux, seul ou en ligne avec un ami !</span>
@@ -1742,7 +1742,7 @@ function renderFlashcard(){
   document.getElementById('fc-french').innerText=word.fr;
   document.getElementById('fc-phonetic').innerText='['+word.phonetic+']';
   document.getElementById('fc-meaning').innerText=word.meaning;
-  document.getElementById('fc-quebec-note').innerText=catLabel(word.cat)+' — '+(word.level===1?'0 à 3 ans':'4 à 6 ans');
+  document.getElementById('fc-quebec-note').innerText=catLabel(word.cat)+' — '+(word.level===1?'Niveau 1':'Niveau 2');
   document.getElementById('fc-counter').innerText=(state.flashcardIndex+1)+' / '+words.length;
 }
 function flipCard(){document.querySelector('.flip-card').classList.toggle('flipped');playSound('pop');}
