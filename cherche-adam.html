@@ -575,9 +575,12 @@ function renderScene(sc){
     var b = document.createElement("button");
     b.type = "button";
     b.className = "item";
-    b.style.left = it.x + "%";
-    b.style.top = it.y + "%";
     var size = Math.max(56, base * it.s * 1.18);
+    var h = sceneEl.clientHeight || 420;
+    var maxX = Math.max(0, 100 - (size / w) * 100);
+    var maxY = Math.max(0, 100 - (size / h) * 100);
+    b.style.left = Math.max(0, Math.min(maxX, it.x)) + "%";
+    b.style.top = Math.max(0, Math.min(maxY, it.y)) + "%";
     b.style.width = size + "px";
     b.style.height = size + "px";
     b.setAttribute("aria-label", "Élément de l'image");
@@ -639,6 +642,8 @@ function onItemTap(idx, el){
 
 function onFound(el){
   popSound();
+  msgEl.textContent = "";
+  msgEl.className = "";
   if (mode === "solo"){
     roundActive = false;
     clearHintTimer();
