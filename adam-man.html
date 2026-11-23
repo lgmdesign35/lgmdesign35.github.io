@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light" />
     <link rel="icon" href="data:," />
-    <title>Adam-Man : La chasse aux étoiles !</title>
+    <title>La chasse aux étoiles — vole et attrape les étoiles ! | Adam et ses amis</title>
     <script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
     <style>
       :root{
@@ -194,8 +194,8 @@
       <!-- ============ ACCUEIL ============ -->
       <section id="screen-home" class="screen">
         <div class="hero-emoji" aria-hidden="true">🦸🏽‍♂️</div>
-        <h1>Adam-Man : <span class="man">La chasse aux étoiles !</span></h1>
-        <p class="story">Le vent a emporté les étoiles et les ballons des amis ! Aide Adam-Man à les rattraper !</p>
+        <h1><span class="man">La chasse aux étoiles !</span></h1>
+        <p class="story">Le vent a emporté les étoiles et les ballons des amis ! Aide Adam à les rattraper !</p>
         <div class="level-pick">
           <p class="level-title">Choisis ton niveau :</p>
           <div class="level-cards" role="group" aria-label="Choix du niveau de difficulté">
@@ -207,7 +207,7 @@
             <button class="level-card selected" type="button" data-level="2" aria-pressed="true">
               <span class="lvl-emoji" aria-hidden="true">🌤️</span>
               <span class="lvl-name">Niveau 2 · Ciel animé</span>
-              <span class="lvl-desc">Le vol classique d'Adam-Man</span>
+              <span class="lvl-desc">Le vol classique d'Adam</span>
             </button>
             <button class="level-card" type="button" data-level="3" aria-pressed="false">
               <span class="lvl-emoji" aria-hidden="true">🚀</span>
@@ -308,7 +308,7 @@
     <script>
     'use strict';
     /* ================================================================
-       Adam-Man : La chasse aux étoiles !
+       La chasse aux étoiles !
        Jeu de vol doux pour les 4-6 ans. Aucun échec possible.
        ================================================================ */
     /* ---------- Niveaux de difficulté ---------- */
@@ -624,7 +624,7 @@
         floater(sx, sy - 42, '+2 🎈', 22, '#d6336c');
         if(Math.random() < 0.5){
           var f = FRIENDS[(Math.random() * FRIENDS.length) | 0];
-          floater(sx + 10, sy + 46, f + ' Merci, Adam-Man !', 17, '#1d5cb3');
+          floater(sx + 10, sy + 46, f + ' Merci, Adam !', 17, '#1d5cb3');
         }
       }
       if(G.mode === 'solo'){

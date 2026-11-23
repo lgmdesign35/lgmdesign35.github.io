@@ -567,7 +567,7 @@ aBuild();
   </div>
   <div id="section-games" class="learn-section hidden space-y-6">
     <div class="text-center space-y-2">
-      <h3 class="text-xl sm:text-2xl font-black text-slate-800">🎮 Jeux &amp; Quiz — 10 jeux pour apprendre en s'amusant</h3>
+      <h3 class="text-xl sm:text-2xl font-black text-slate-800">🎮 Jeux &amp; Quiz — 16 jeux pour apprendre en s'amusant</h3>
       <p class="text-sm font-bold text-slate-500 mt-1">🎯 Domaine cognitif — logique, mémoire et résolution de problèmes · 4 à 6 ans</p>
       <p class="text-xs sm:text-sm font-bold text-slate-500 max-w-2xl mx-auto">Choisis un jeu! Chaque partie pioche de nouveaux mots et de nouveaux nombres dans le niveau d'âge choisi (0 à 3 ans ou 4 à 6 ans) : les manches sont toujours différentes, parmi 1 031 mots et 1 000 nombres.</p>
     </div>
@@ -578,19 +578,22 @@ aBuild();
       <span>🎚️ Niveau : <span id="games-level" class="text-emerald-600">0 à 3 ans</span></span>
     </div>
     <a href="adam-man.html" class="block max-w-2xl mx-auto w-full bg-gradient-to-r from-red-500 to-sky-600 text-white rounded-3xl px-4 py-3 shadow-lg pop-btn">
-      <span class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-center">🦸🏽‍♂️ Nouveau ! Adam-Man : La chasse aux étoiles — vole au-dessus des toits du Québec et attrape les ⭐ et les 🎈 — 3 niveaux, seul ou en ligne avec un ami !</span>
+      <span class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-center">⭐ La chasse aux étoiles — vole au-dessus des toits du Québec et attrape les ⭐ et les 🎈 — 3 niveaux, seul ou en ligne avec un ami !</span>
     </a>
     <a href="bataille-navale.html" class="block max-w-2xl mx-auto w-full bg-gradient-to-r from-blue-600 to-indigo-500 text-white rounded-3xl px-4 py-3 shadow-lg pop-btn">
-      <span class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-center">🚢 Nouveau ! Bataille navale — cache tes bateaux et devine ceux de ton ami, seul ou en ligne, 3 niveaux !</span>
+      <span class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-center">🚢 Bataille navale — cache tes bateaux et devine ceux de ton ami, seul ou en ligne, 3 niveaux !</span>
     </a>
     <a href="cherche-adam.html" class="block max-w-2xl mx-auto w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-3xl px-4 py-3 shadow-lg pop-btn">
-      <span class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-center">🔍 Nouveau ! Cherche Adam ! — trouve Adam et ses amis cachés dans l'image, seul ou en course avec un ami en ligne !</span>
+      <span class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-center">🔍 Cherche Adam ! — trouve Adam et ses amis cachés dans l'image, seul ou en course avec un ami en ligne !</span>
     </a>
     <a href="xo-en-ligne.html" class="block max-w-2xl mx-auto w-full bg-gradient-to-r from-rose-500 to-orange-500 text-white rounded-3xl px-4 py-3 shadow-lg pop-btn">
-      <span class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-center">❌⭕ Nouveau ! X O en ligne — joue avec un ami, chacun sur son téléphone ou son ordinateur, avec un code de partie !</span>
+      <span class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-center">❌⭕ X O en ligne — joue avec un ami, chacun sur son téléphone ou son ordinateur, avec un code de partie !</span>
     </a>
     <a href="puzzles.html" class="block max-w-2xl mx-auto w-full bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white rounded-3xl px-4 py-3 shadow-lg pop-btn">
-      <span class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-center">🧩 Nouveau ! Puzzles des héros — 100 images, 8 niveaux, de 4 à 50 pièces ! <span class="bg-white text-fuchsia-600 rounded-full px-2 py-0.5 text-xs whitespace-nowrap">Jouer →</span></span>
+      <span class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-center">🧩 Puzzles des héros — 100 images, 8 niveaux, de 4 à 50 pièces ! <span class="bg-white text-fuchsia-600 rounded-full px-2 py-0.5 text-xs whitespace-nowrap">Jouer →</span></span>
+    </a>
+        <a href="coloriage.html" class="block max-w-2xl mx-auto w-full bg-gradient-to-r from-amber-500 to-pink-500 text-white rounded-3xl px-4 py-3 shadow-lg pop-btn">
+      <span class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-center">🎨 Livre de coloriage — 100 dessins à colorier, du plus facile au plus difficile ! <span class="bg-white text-pink-600 rounded-full px-2 py-0.5 text-xs whitespace-nowrap">Jouer →</span></span>
     </a>
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 max-w-3xl mx-auto w-full">
       <button onclick="switchGameMode('quiz')" id="gtab-quiz" class="game-tab active-game px-3 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-white text-slate-700 shadow-sm border border-slate-200 pop-btn">❓ Quiz Sonore</button>
@@ -2450,7 +2453,7 @@ var LM_QA=[
  {t:'👆 Touche et écoute',k:['touche','scene','ferme','toucher','animaux'],a:'👆 « Touche et écoute » : ton enfant touche les animaux de la ferme et entend leur nom et leur vrai son — parfait pour les tout-petits qui ne lisent pas encore !<br><button onclick="lapinGo(\'scenes\')">Ouvrir les scènes</button>'},
  {t:'📚 Livres gratuits',k:['gratuit','gratuite','gratuits','gratuites','lire','lecture','histoire','histoires'],a:'📚 Nos livres gratuits, à lire ET à écouter : « Les couleurs de Bébé Adam », « Les animaux et leurs sons », « Bonne nuit, Bébé Adam », « Le premier Noël de Bébé Adam », « L’étoile de Noël » et « La citrouille courageuse ».<br><button onclick="lapinGo(\'histoire\')">Voir les livres gratuits</button>'},
  {t:'🔤 Apprendre en jouant',k:['mots','chiffres','nombres','lettres','alphabet','quiz','cartes eclair','dictionnaire','apprendre','certificat','abc'],a:'🔤 Dans la section Apprendre : un dictionnaire en images, ABC & 123, des cartes éclair, des jeux et des quiz — et même un certificat pour ton enfant !<br><button onclick="switchSiteTab(\'apprendre\')">Ouvrir Apprendre</button>'},
- {t:'🎮 Jeux en ligne',k:['jeu','jeux','jouer','en ligne','multijoueur','code ami','xo','adam man','navale','tirs au but','soccer','football','partie'],a:'🎮 Nos jeux en ligne se jouent avec un code à 4 chiffres à partager avec un ami : X O, Cherche Adam !, Bataille navale, Adam-Man et les Tirs au but ! Il y a aussi des petits jeux pour apprendre les mots et les nombres.<br><button onclick="lapinGo(\'jouer\')">Aller aux jeux</button>'},
+ {t:'🎮 Jeux en ligne',k:['jeu','jeux','jouer','en ligne','multijoueur','code ami','xo','adam man','navale','partie'],a:'🎮 Nos jeux en ligne se jouent avec un code à 4 chiffres à partager avec un ami : X O, Cherche Adam !, Bataille navale, La chasse aux étoiles ! Il y a aussi des petits jeux pour apprendre les mots et les nombres.<br><button onclick="lapinGo(\'jouer\')">Aller aux jeux</button>'},
  {t:'⭐ Livre gratuit à découvrir',k:['semaine','nouveau','nouveaute','prochain','dernier livre','sortie','decouvrir'],a:function(){var t=lmSpotTitle();return '⭐ Voici le livre gratuit à découvrir en ce moment !'+(t?' En ce moment : '+t+'.':'')+'<br><button onclick="lapinGo(\'semaine\')">Découvrir le livre gratuit</button>';}},
  {t:'👶 Pour quel âge ?',k:['age','ans','bebe','petit','convient','maternelle','prescolaire','garderie','pour quel age'],a:'👶 Pour les 0 à 3 ans : la série Bébé Adam (couleurs, animaux, bonne nuit…). 🧒 Pour les 4 à 6 ans : les grandes aventures d’Adam et ses amis. Sur la page d’accueil, le bloc « Par où commencer ? » aide à choisir selon l’âge !'},
  {t:'🔊 Écouter les histoires',k:['audio','ecouter','son','narration','voix','entendre','raconte'],a:'🔊 Oui ! Nos livres gratuits se lisent ET s’écoutent : ouvre un livre et appuie sur « Écoute l’histoire ». La narration est lente et claire, avec de vrais sons d’animaux.'},
