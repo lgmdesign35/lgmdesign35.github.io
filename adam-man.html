@@ -15,7 +15,7 @@
     <meta name="color-scheme" content="light" />
     <link rel="icon" href="data:," />
     <title>La chasse aux étoiles — vole et attrape les étoiles ! | Adam et ses amis</title>
-    <script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.5/dist/peerjs.min.js"></script>
     <style>
       :root{
         --sky-1:#8fd8ff;
@@ -962,12 +962,14 @@
     /* ================================================================
        EN LIGNE — PeerJS, salles « lgm-adamman- » + code à 4 chiffres
        ================================================================ */
-    var peer = null, conn = null, isHost = false;
+    var peer = null, conn = null, isHost = false, joinTimer = null, hostTimer = null;
 
     function sendMsg(obj){
       try{ if(conn && conn.open){ conn.send(obj); } }catch(e){}
     }
     function cleanupPeer(){
+      if(joinTimer){clearTimeout(joinTimer);joinTimer=null;}
+      if(hostTimer){clearTimeout(hostTimer);hostTimer=null;}
       try{ if(conn) conn.close(); }catch(e){}
       try{ if(peer) peer.destroy(); }catch(e){}
       conn = null; peer = null; isHost = false;
@@ -1023,8 +1025,16 @@
       status.textContent = 'Création de la partie…';
       try{ peer = new Peer(PREFIX + code); }
       catch(e){ peerUnavailableMsg(status); $('btn-create').disabled = false; return; }
+      if(hostTimer){clearTimeout(hostTimer);hostTimer=null;}
+      hostTimer = setTimeout(function(){
+        $('btn-create').disabled = false;
+        status.textContent = 'La connexion en ligne n\'est pas disponible pour le moment. Réessaie dans quelques instants.';
+        status.classList.add('err');
+        cleanupPeer();
+      }, 10000);
 
       peer.on('open', function(){
+        if(hostTimer){clearTimeout(hostTimer);hostTimer=null;}
         $('host-code').textContent = code;
         $('host-box').classList.remove('hidden');
         $('host-status').textContent = 'En attente d\'un ami…';
@@ -1041,6 +1051,7 @@
         });
       });
       peer.on('error', function(err){
+        if(hostTimer){clearTimeout(hostTimer);hostTimer=null;}
         $('btn-create').disabled = false;
         if(err && err.type === 'unavailable-id'){
           /* Code déjà pris : on réessaie avec un autre code */
@@ -1075,16 +1086,25 @@
       status.textContent = 'Connexion à la partie de ton ami…';
       try{ peer = new Peer(); }
       catch(e){ peerUnavailableMsg(status); $('btn-join').disabled = false; return; }
+      if(joinTimer){clearTimeout(joinTimer);joinTimer=null;}
+      joinTimer = setTimeout(function(){
+        $('btn-join').disabled = false;
+        status.textContent = 'La connexion n\'a pas abouti — vérifie ton internet et réessaie.';
+        status.classList.add('err');
+        cleanupPeer();
+      }, 15000);
 
       peer.on('open', function(){
         var c = peer.connect(PREFIX + code, { reliable: true });
         wireConn(c);
         c.on('open', function(){
+          if(joinTimer){clearTimeout(joinTimer);joinTimer=null;}
           status.textContent = 'Connecté ! La partie commence… 🎉';
           $('btn-join').disabled = false;
         });
       });
       peer.on('error', function(err){
+        if(joinTimer){clearTimeout(joinTimer);joinTimer=null;}
         $('btn-join').disabled = false;
         if(err && err.type === 'peer-unavailable'){
           status.textContent = 'On ne trouve pas cette partie… Vérifie le code avec ton ami.';

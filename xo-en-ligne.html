@@ -15,7 +15,7 @@
     <meta name="color-scheme" content="light dark" />
     <link rel="icon" href="data:," />
     <title>X O en ligne — joue avec un ami | Adam et ses amis</title>
-    <script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.5/dist/peerjs.min.js"></script>
     <style>
       :root {
         --bg: #e8f4fc;
@@ -432,6 +432,8 @@
         var conn = null;
         var roomCode = "";
         var joinTimer = null;
+        var openTimer = null;
+        var hostOpenTimer = null;
         var hostAttempts = 0;
         var connAlive = false;
 
@@ -596,6 +598,8 @@
         // ---------- Networking helpers ----------
         function cleanupPeer() {
           if (joinTimer) { clearTimeout(joinTimer); joinTimer = null; }
+          if (openTimer) { clearTimeout(openTimer); openTimer = null; }
+          if (hostOpenTimer) { clearTimeout(hostOpenTimer); hostOpenTimer = null; }
           try { if (conn) conn.close(); } catch (e) {}
           try { if (peer) peer.destroy(); } catch (e) {}
           conn = null; peer = null; connAlive = false;
@@ -681,7 +685,14 @@
         function createHostPeer() {
           roomCode = genCode();
           peer = new Peer(PREFIX + roomCode);
+          if (hostOpenTimer) { clearTimeout(hostOpenTimer); hostOpenTimer = null; }
+          hostOpenTimer = setTimeout(function () {
+            showError($("home-error"), "La connexion se prépare ou Internet est coupé — réessaie dans quelques secondes.");
+            cleanupPeer();
+            mode = "home";
+          }, 10000);
           peer.on("open", function () {
+            if (hostOpenTimer) { clearTimeout(hostOpenTimer); hostOpenTimer = null; }
             $("room-code").textContent = roomCode;
             setConnStatus("yellow", "En attente");
             showScreen("wait");
@@ -721,12 +732,20 @@
           btn.disabled = true;
           btn.textContent = "Connexion en cours…";
           peer = new Peer();
+          if (openTimer) { clearTimeout(openTimer); openTimer = null; }
+          openTimer = setTimeout(function () {
+            showError($("home-error"), "La connexion n'a pas abouti — vérifie ta connexion Internet et réessaie.");
+            resetJoinBtn();
+            cleanupPeer();
+            mode = "home";
+          }, 10000);
           peer.on("open", function () {
+            if (openTimer) { clearTimeout(openTimer); openTimer = null; }
             conn = peer.connect(PREFIX + code, { reliable: true });
             wireConnection(conn, false);
             joinTimer = setTimeout(function () {
               if (!connAlive) {
-                showError($("home-error"), "Ce code n'existe pas — vérifie-le et réessaie.");
+                showError($("home-error"), "La connexion n'a pas abouti — vérifie ta connexion Internet et réessaie.");
                 resetJoinBtn();
                 cleanupPeer();
                 mode = "home";

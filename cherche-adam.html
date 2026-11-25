@@ -15,7 +15,7 @@
 <meta name="color-scheme" content="light dark" />
 <link rel="icon" href="data:," />
 <title>Cherche Adam ! — jeu de cherche-et-trouve | Adam et ses amis</title>
-<script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.5/dist/peerjs.min.js"></script>
 <style>
   :root{
     --bg:#fff7ea;
@@ -419,7 +419,7 @@ var lastThemeKey = null, lastTargetName = null;
 var claimedLocally = false;   // invité : déjà envoyé "found"
 
 /* Réseau */
-var peer = null, conn = null, roomCode = null, connectedOnce = false;
+var peer = null, conn = null, roomCode = null, connectedOnce = false, joinTimer = null, hostTimer = null;
 
 /* ---------- Éléments ---------- */
 function $(id){ return document.getElementById(id); }
@@ -791,6 +791,7 @@ function send(obj){
 function wireConnection(c){
   conn = c;
   c.on("open", function(){
+    if (joinTimer){clearTimeout(joinTimer);joinTimer=null;}
     connectedOnce = true;
     if (role === "guest"){
       lobbyStatus("Connecté ! La partie va commencer…");
@@ -865,7 +866,13 @@ $("btnCreate").addEventListener("click", function(){
   roomCode = String(randInt(1000, 9999));
   lobbyStatus("Création de la partie…");
   peer = new Peer("lgm-cherche-" + roomCode);
+  if (hostTimer){clearTimeout(hostTimer);hostTimer=null;}
+  hostTimer = setTimeout(function(){
+    lobbyStatus("La connexion en ligne n'est pas disponible pour le moment. Réessaie dans quelques instants.", true);
+    leaveOnlineSoft();
+  }, 10000);
   peer.on("open", function(){
+    if (hostTimer){clearTimeout(hostTimer);hostTimer=null;}
     $("btnCreate").hidden = true;
     $("createBox").hidden = false;
     $("codeDisplay").textContent = roomCode;
@@ -873,6 +880,7 @@ $("btnCreate").addEventListener("click", function(){
   });
   peer.on("connection", function(c){ wireConnection(c); });
   peer.on("error", function(err){
+    if (hostTimer){clearTimeout(hostTimer);hostTimer=null;}
     if (err && err.type === "unavailable-id"){
       /* Code déjà pris : on réessaie avec un autre */
       $("btnCreate").click();
@@ -884,6 +892,8 @@ $("btnCreate").addEventListener("click", function(){
 });
 
 function leaveOnlineSoft(){
+  if (joinTimer){clearTimeout(joinTimer);joinTimer=null;}
+  if (hostTimer){clearTimeout(hostTimer);hostTimer=null;}
   try { if (conn) conn.close(); } catch (e) {}
   try { if (peer) peer.destroy(); } catch (e) {}
   conn = null; peer = null; connectedOnce = false;
@@ -917,12 +927,19 @@ $("btnJoin").addEventListener("click", function(){
   roomCode = code;
   lobbyStatus("Connexion en cours…");
   peer = new Peer();
+  if (joinTimer){clearTimeout(joinTimer);joinTimer=null;}
+  joinTimer = setTimeout(function(){
+    lobbyStatus("La connexion n'a pas abouti — vérifie ta connexion Internet et réessaie.", true);
+    leaveOnlineSoft();
+  }, 15000);
   peer.on("open", function(){
     var c = peer.connect("lgm-cherche-" + code, { reliable: true });
     wireConnection(c);
   });
   peer.on("error", function(err){
+    if (joinTimer){clearTimeout(joinTimer);joinTimer=null;}
     if (err && err.type === "peer-unavailable"){
+      leaveOnlineSoft();
       lobbyStatus("Ce code n'existe pas — vérifie-le et réessaie.", true);
     } else {
       lobbyStatus("Petit souci de connexion… réessaie.", true);

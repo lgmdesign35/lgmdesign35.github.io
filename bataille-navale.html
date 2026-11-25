@@ -18,7 +18,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.5/dist/peerjs.min.js"></script>
     <style>
       :root{
         --bg:#8fd3ee;
@@ -772,9 +772,11 @@
     }
 
     /* ================= En ligne (PeerJS) ================= */
-    var peer = null, conn = null, myCode = null;
+    var peer = null, conn = null, myCode = null, joinTimer = null, hostTimer = null;
 
     function closeNet(){
+      if (joinTimer){clearTimeout(joinTimer);joinTimer=null;}
+      if (hostTimer){clearTimeout(hostTimer);hostTimer=null;}
       try { if (conn) conn.close(); } catch(e){}
       try { if (peer) peer.destroy(); } catch(e){}
       conn = null; peer = null; myCode = null;
@@ -829,7 +831,14 @@
       setStatus($("homeStatus"), "Création de la partie…", "");
       try { peer = new Peer(PREFIX + myCode); }
       catch(e){ setStatus($("homeStatus"), "Oups ! La connexion n'a pas marché. Réessaie.", "err"); return; }
+      if (hostTimer){clearTimeout(hostTimer);hostTimer=null;}
+      hostTimer = setTimeout(function(){
+        setStatus($("homeStatus"), "La connexion en ligne n'est pas disponible pour le moment. Réessaie dans quelques instants.", "err");
+        closeNet();
+        show("screen-home");
+      }, 10000);
       peer.on("open", function(){
+        if (hostTimer){clearTimeout(hostTimer);hostTimer=null;}
         $("waitCode").textContent = myCode;
         $("waitLevel").textContent = levelLine(selectedLevel);
         setStatus($("homeStatus"), "", "");
@@ -845,6 +854,7 @@
         });
       });
       peer.on("error", function(err){
+        if (hostTimer){clearTimeout(hostTimer);hostTimer=null;}
         if (err && err.type === "unavailable-id"){
           setStatus($("homeStatus"), "Ce code est déjà pris — réessaie, un autre code sera créé.", "err");
         } else {
@@ -868,15 +878,24 @@
       try { peer = new Peer(); }
       catch(e){ setStatus($("homeStatus"), "Oups ! La connexion n'a pas marché. Réessaie.", "err"); return; }
       var joined = false;
+      if (joinTimer){clearTimeout(joinTimer);joinTimer=null;}
+      joinTimer = setTimeout(function(){
+        if (!joined){
+          closeNet();
+          setStatus($("homeStatus"), "La connexion n'a pas abouti — vérifie ta connexion Internet et réessaie.", "err");
+        }
+      }, 15000);
       peer.on("open", function(){
         var c = peer.connect(PREFIX + code, { reliable: true });
         wireConn(c);
         c.on("open", function(){
           joined = true;
+          if (joinTimer){clearTimeout(joinTimer);joinTimer=null;}
           setStatus($("homeStatus"), "Connecté !", "ok");
         });
       });
       peer.on("error", function(err){
+        if (joinTimer){clearTimeout(joinTimer);joinTimer=null;}
         if (err && err.type === "peer-unavailable"){
           setStatus($("homeStatus"), "Ce code n'existe pas — vérifie-le et réessaie.", "err");
         } else if (!joined) {

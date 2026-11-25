@@ -254,13 +254,13 @@ aBuild();
 <div class="bg-white border-2 border-sky-100 rounded-3xl p-5 sm:p-6 shadow-sm space-y-4">
     <h2 class="brand-font text-xl sm:text-2xl font-black text-slate-800 text-center">👶🧒 Par où commencer ? Choisis l'âge de ton enfant</h2>
     <div class="grid sm:grid-cols-2 gap-4">
-      <button onclick="switchSiteTab('livres'); filterBooks('2-3')" class="text-left bg-gradient-to-br from-amber-50 to-rose-50 border-2 border-amber-200 hover:border-amber-300 rounded-3xl p-5 shadow-sm pop-btn space-y-2">
+      <button onclick="filterBooks('2-3')" class="text-left bg-gradient-to-br from-amber-50 to-rose-50 border-2 border-amber-200 hover:border-amber-300 rounded-3xl p-5 shadow-sm pop-btn space-y-2">
         <span class="text-4xl block">👶</span>
         <span class="brand-font block text-lg font-black text-slate-800">0 à 3 ans — les tout-petits</span>
         <span class="block text-sm font-bold text-slate-500 leading-relaxed">Premiers mots, couleurs, sons d'animaux et histoires douces pour s'endormir : les livres Bébé Adam, gratuits à écouter.</span>
         <span class="inline-block px-4 py-2 bg-amber-400 text-slate-900 text-sm font-extrabold rounded-xl shadow">Voir pour les 0 à 3 ans →</span>
       </button>
-      <button onclick="switchSiteTab('livres'); filterBooks('4-6')" class="text-left bg-gradient-to-br from-sky-50 to-indigo-50 border-2 border-sky-200 hover:border-sky-300 rounded-3xl p-5 shadow-sm pop-btn space-y-2">
+      <button onclick="filterBooks('4-6')" class="text-left bg-gradient-to-br from-sky-50 to-indigo-50 border-2 border-sky-200 hover:border-sky-300 rounded-3xl p-5 shadow-sm pop-btn space-y-2">
         <span class="text-4xl block">🧒</span>
         <span class="brand-font block text-lg font-black text-slate-800">4 à 6 ans — les grands explorateurs</span>
         <span class="block text-sm font-bold text-slate-500 leading-relaxed">De vraies histoires d'aventure avec Adam et ses amis, des jeux de mots et le dictionnaire québécois pour grandir en français.</span>
@@ -547,45 +547,57 @@ aBuild();
   </div>
   <div id="section-games" class="learn-section hidden space-y-6">
     <div class="text-center space-y-2">
-      <h3 class="text-xl sm:text-2xl font-black text-slate-800">🎮 Jeux &amp; Quiz — 16 jeux pour apprendre en s'amusant</h3>
+      <h3 class="text-xl sm:text-2xl font-black text-slate-800">🎮 Jeux &amp; Quiz — pour apprendre en s'amusant</h3>
       <p class="text-sm font-bold text-slate-500 mt-1">🎯 Domaine cognitif — logique, mémoire et résolution de problèmes · Niveau 2</p>
       <p class="text-xs sm:text-sm font-bold text-slate-500 max-w-2xl mx-auto">Choisis un jeu! Chaque partie pioche de nouveaux mots et de nouveaux nombres dans le niveau choisi (Niveau 1 ou Niveau 2) : les manches sont toujours différentes, parmi 1 031 mots et 1 000 nombres.</p>
     </div>
+    <div class="flex flex-wrap justify-center gap-2 max-w-2xl mx-auto w-full" role="group" aria-label="Choisir les jeux selon l'âge">
+      <button onclick="filterGames('all')" id="gfilter-all" class="gfilter-btn px-4 py-2.5 rounded-2xl font-extrabold text-sm bg-qcblue-600 text-white shadow pop-btn">🎮 Tous les jeux</button>
+      <button onclick="filterGames('0-3')" id="gfilter-0-3" class="gfilter-btn px-4 py-2.5 rounded-2xl font-extrabold text-sm bg-white text-slate-600 border border-slate-200 shadow-sm pop-btn">👶 0 à 3 ans</button>
+      <button onclick="filterGames('4-6')" id="gfilter-4-6" class="gfilter-btn px-4 py-2.5 rounded-2xl font-extrabold text-sm bg-white text-slate-600 border border-slate-200 shadow-sm pop-btn">🧒 4 à 6 ans</button>
+    </div>
+    <p id="games-age-note" class="hidden text-center text-sm font-bold text-slate-600 max-w-2xl mx-auto"></p>
     <div class="bg-white border-2 border-amber-200 rounded-3xl px-4 py-3 shadow-sm flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-black text-slate-700 max-w-2xl mx-auto w-full">
       <span>🏆 Points : <span id="games-points" class="text-qcblue-700">0</span></span>
       <span>🔥 Série : <span id="games-streak" class="text-rose-500">0</span></span>
       <!-- Système d'étoiles masqué — il reviendra quand le système de récompenses sera prêt. <span>⭐ Étoiles : <span id="games-stars" class="text-amber-500">0</span></span> -->
       <span>🎚️ Niveau : <span id="games-level" class="text-emerald-600">Niveau 1</span></span>
     </div>
-    <a href="adam-man.html" class="block max-w-2xl mx-auto w-full bg-gradient-to-r from-red-500 to-sky-600 text-white rounded-3xl px-4 py-3 shadow-lg pop-btn">
+    <a href="adam-man.html" data-game-age="4-6" class="block max-w-2xl mx-auto w-full bg-gradient-to-r from-red-500 to-sky-600 text-white rounded-3xl px-4 py-3 shadow-lg pop-btn">
       <span class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-center">⭐ La chasse aux étoiles — vole au-dessus des toits du Québec et attrape les ⭐ et les 🎈 — 3 niveaux, seul ou en ligne avec un ami !</span>
     </a>
-    <a href="bataille-navale.html" class="block max-w-2xl mx-auto w-full bg-gradient-to-r from-blue-600 to-indigo-500 text-white rounded-3xl px-4 py-3 shadow-lg pop-btn">
+    <a href="bataille-navale.html" data-game-age="4-6" class="block max-w-2xl mx-auto w-full bg-gradient-to-r from-blue-600 to-indigo-500 text-white rounded-3xl px-4 py-3 shadow-lg pop-btn">
       <span class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-center">🚢 Bataille navale — cache tes bateaux et devine ceux de ton ami, seul ou en ligne, 3 niveaux !</span>
     </a>
-    <a href="cherche-adam.html" class="block max-w-2xl mx-auto w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-3xl px-4 py-3 shadow-lg pop-btn">
+    <a href="cherche-adam.html" data-game-age="4-6" class="block max-w-2xl mx-auto w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-3xl px-4 py-3 shadow-lg pop-btn">
       <span class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-center">🔍 Cherche Adam ! — trouve Adam et ses amis cachés dans l'image, seul ou en course avec un ami en ligne !</span>
     </a>
-    <a href="xo-en-ligne.html" class="block max-w-2xl mx-auto w-full bg-gradient-to-r from-rose-500 to-orange-500 text-white rounded-3xl px-4 py-3 shadow-lg pop-btn">
+    <a href="xo-en-ligne.html" data-game-age="4-6" class="block max-w-2xl mx-auto w-full bg-gradient-to-r from-rose-500 to-orange-500 text-white rounded-3xl px-4 py-3 shadow-lg pop-btn">
       <span class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-center">❌⭕ X O en ligne — joue avec un ami, chacun sur son téléphone ou son ordinateur, avec un code de partie !</span>
     </a>
-    <a href="puzzles.html" class="block max-w-2xl mx-auto w-full bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white rounded-3xl px-4 py-3 shadow-lg pop-btn">
+    <a href="puzzles.html" data-game-age="0-3 4-6" class="block max-w-2xl mx-auto w-full bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white rounded-3xl px-4 py-3 shadow-lg pop-btn">
       <span class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-center">🧩 Puzzles des héros — 100 images, 8 niveaux, de 4 à 50 pièces ! <span class="bg-white text-fuchsia-600 rounded-full px-2 py-0.5 text-xs whitespace-nowrap">Jouer →</span></span>
     </a>
-        <a href="coloriage.html" class="block max-w-2xl mx-auto w-full bg-gradient-to-r from-amber-500 to-pink-500 text-white rounded-3xl px-4 py-3 shadow-lg pop-btn">
+        <a href="coloriage.html" data-game-age="0-3 4-6" class="block max-w-2xl mx-auto w-full bg-gradient-to-r from-amber-500 to-pink-500 text-white rounded-3xl px-4 py-3 shadow-lg pop-btn">
       <span class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-center">🎨 Livre de coloriage — 100 dessins à colorier, du plus facile au plus difficile ! <span class="bg-white text-pink-600 rounded-full px-2 py-0.5 text-xs whitespace-nowrap">Jouer →</span></span>
     </a>
+    <button type="button" onclick="switchLearnTab('scenes')" data-game-age="0-3" class="block max-w-2xl mx-auto w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-3xl px-4 py-3 shadow-lg pop-btn">
+      <span class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-center">👆 Touche et écoute — touche un animal ou un objet et écoute son nom, sans lecture !</span>
+    </button>
+    <button type="button" onclick="switchLearnTab('perso')" data-game-age="0-3" class="block max-w-2xl mx-auto w-full bg-gradient-to-r from-violet-500 to-purple-500 text-white rounded-3xl px-4 py-3 shadow-lg pop-btn">
+      <span class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-center">✨ Mon histoire — une histoire avec le prénom de ton enfant, racontée à voix haute !</span>
+    </button>
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 max-w-3xl mx-auto w-full">
-      <button onclick="switchGameMode('quiz')" id="gtab-quiz" class="game-tab active-game px-3 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-white text-slate-700 shadow-sm border border-slate-200 pop-btn">❓ Quiz Sonore</button>
-      <button onclick="switchGameMode('match')" id="gtab-match" class="game-tab px-3 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-white text-slate-700 shadow-sm border border-slate-200 pop-btn">🧩 Association</button>
-      <button onclick="switchGameMode('hangman')" id="gtab-hangman" class="game-tab px-3 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-white text-slate-700 shadow-sm border border-slate-200 pop-btn">🔤 Mot Mystère</button>
-      <button onclick="switchGameMode('memory')" id="gtab-memory" class="game-tab px-3 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-white text-slate-700 shadow-sm border border-slate-200 pop-btn">🧠 Mémoire</button>
-      <button onclick="switchGameMode('balloons')" id="gtab-balloons" class="game-tab px-3 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-white text-slate-700 shadow-sm border border-slate-200 pop-btn">🎈 Ballons des mots</button>
-      <button onclick="switchGameMode('devinette')" id="gtab-devinette" class="game-tab px-3 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-white text-slate-700 shadow-sm border border-slate-200 pop-btn">🔎 Devinette</button>
-      <button onclick="switchGameMode('ordre')" id="gtab-ordre" class="game-tab px-3 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-white text-slate-700 shadow-sm border border-slate-200 pop-btn">🔡 Ordre des lettres</button>
-      <button onclick="switchGameMode('vraifaux')" id="gtab-vraifaux" class="game-tab px-3 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-white text-slate-700 shadow-sm border border-slate-200 pop-btn">✅ Vrai ou Faux</button>
-      <button onclick="switchGameMode('nombre')" id="gtab-nombre" class="game-tab px-3 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-white text-slate-700 shadow-sm border border-slate-200 pop-btn">🔢 Trouve le nombre</button>
-      <button onclick="switchGameMode('course')" id="gtab-course" class="game-tab px-3 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-white text-slate-700 shadow-sm border border-slate-200 pop-btn">⏱️ Course éclair</button>
+      <button onclick="switchGameMode('quiz')" id="gtab-quiz" data-game-age="4-6" class="game-tab active-game px-3 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-white text-slate-700 shadow-sm border border-slate-200 pop-btn">❓ Quiz Sonore</button>
+      <button onclick="switchGameMode('match')" id="gtab-match" data-game-age="0-3 4-6" class="game-tab px-3 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-white text-slate-700 shadow-sm border border-slate-200 pop-btn">🧩 Association</button>
+      <button onclick="switchGameMode('hangman')" id="gtab-hangman" data-game-age="4-6" class="game-tab px-3 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-white text-slate-700 shadow-sm border border-slate-200 pop-btn">🔤 Mot Mystère</button>
+      <button onclick="switchGameMode('memory')" id="gtab-memory" data-game-age="0-3 4-6" class="game-tab px-3 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-white text-slate-700 shadow-sm border border-slate-200 pop-btn">🧠 Mémoire</button>
+      <button onclick="switchGameMode('balloons')" id="gtab-balloons" data-game-age="0-3 4-6" class="game-tab px-3 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-white text-slate-700 shadow-sm border border-slate-200 pop-btn">🎈 Ballons des mots</button>
+      <button onclick="switchGameMode('devinette')" id="gtab-devinette" data-game-age="4-6" class="game-tab px-3 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-white text-slate-700 shadow-sm border border-slate-200 pop-btn">🔎 Devinette</button>
+      <button onclick="switchGameMode('ordre')" id="gtab-ordre" data-game-age="4-6" class="game-tab px-3 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-white text-slate-700 shadow-sm border border-slate-200 pop-btn">🔡 Ordre des lettres</button>
+      <button onclick="switchGameMode('vraifaux')" id="gtab-vraifaux" data-game-age="4-6" class="game-tab px-3 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-white text-slate-700 shadow-sm border border-slate-200 pop-btn">✅ Vrai ou Faux</button>
+      <button onclick="switchGameMode('nombre')" id="gtab-nombre" data-game-age="4-6" class="game-tab px-3 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-white text-slate-700 shadow-sm border border-slate-200 pop-btn">🔢 Trouve le nombre</button>
+      <button onclick="switchGameMode('course')" id="gtab-course" data-game-age="4-6" class="game-tab px-3 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm bg-white text-slate-700 shadow-sm border border-slate-200 pop-btn">⏱️ Course éclair</button>
     </div>
 
     <div id="game-quiz-container" class="max-w-xl mx-auto bg-white p-6 sm:p-8 rounded-3xl border-4 border-amber-300 shadow-xl space-y-6 text-center w-full">
@@ -1061,7 +1073,7 @@ aBuild();
     <button onclick="filterBooks('2-3')" id="filter-2-3" class="filter-btn px-4 py-2 rounded-xl font-bold text-xs bg-white text-slate-600 border">0-3 ans (Pouponnière/CPE)</button>
     <button onclick="filterBooks('4-6')" id="filter-4-6" class="filter-btn px-4 py-2 rounded-xl font-bold text-xs bg-white text-slate-600 border">4-6 ans (Préscolaire)</button>
   </div>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="books-grid">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="books-grid" style="scroll-margin-top:84px">
         <div class="book-card bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between" data-age="2-3">
       <div>
         <img loading="lazy" src="images/couverture-bebe-adam.webp" alt="Couverture — Les couleurs de Bébé Adam" class="w-full h-48 object-cover rounded-2xl mb-4 border border-slate-200">
@@ -1127,7 +1139,7 @@ aBuild();
       </div>
       <button onclick="openBookModal('bebepremiersmots')" class="mt-4 w-full py-2.5 bg-sky-50 hover:bg-sky-100 text-sky-700 font-bold text-xs rounded-xl transition-all border border-sky-200">CONSULTER LA FICHE</button>
     </div>
-    <div class="book-card bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between" data-age="4-6">
+    <div class="book-card bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between" data-age="2-3 4-6">
       <div>
         <img loading="lazy" src="images/prepare-noel/cover.jpg" alt="Couverture — Adam prépare Noël" class="w-full h-48 object-cover rounded-2xl mb-4 border border-slate-200">
         <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full mb-2">Préscolaire (3-6 ans)</span> <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full mb-2">Gratuit — avec audio</span> <span class="xmas-badge-green">🎄 Nouveau — Noël 2026</span>
@@ -1198,7 +1210,7 @@ aBuild();
       </div>
       <button onclick="openBookModal('ecoute')" class="mt-4 w-full py-2.5 bg-sky-50 hover:bg-sky-100 text-sky-700 font-bold text-xs rounded-xl transition-all border border-sky-200">CONSULTER LA FICHE</button>
     </div>
-    <div class="book-card bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between" data-age="4-6">
+<div class="book-card bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between" data-age="2-3">-6">
       <div>
             <img loading="lazy" src="images/couverture-bonne-nuit.jpg" alt="Couverture — Bonne nuit, Adam !" class="w-full h-48 object-cover rounded-2xl mb-4 border border-slate-200">
         <span class="inline-block px-3 py-1 bg-sky-100 text-sky-700 text-xs font-bold rounded-full mb-2">Tout-petits (1-2 ans)</span>
@@ -1211,7 +1223,7 @@ aBuild();
       </div>
       <button onclick="openBookModal('bonnenuit')" class="mt-4 w-full py-2.5 bg-sky-50 hover:bg-sky-100 text-sky-700 font-bold text-xs rounded-xl transition-all border border-sky-200">CONSULTER LA FICHE</button>
     </div>
-    <div class="book-card bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between" data-age="4-6">
+<div class="book-card bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between" data-age="2-3 4-6">-6">
       <div>
         <img loading="lazy" src="images/couverture-lettres.jpg" alt="Couverture — Adam et ses amis : Les lettres" class="w-full h-48 object-cover rounded-2xl mb-4 border border-slate-200">
         <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full mb-2">Préscolaire (2-6 ans)</span>
@@ -1223,8 +1235,7 @@ aBuild();
         </div>
       </div>
       <button onclick="openBookModal('lettres')" class="mt-4 w-full py-2.5 bg-sky-50 hover:bg-sky-100 text-sky-700 font-bold text-xs rounded-xl transition-all border border-sky-200">CONSULTER LA FICHE</button>
-    </div>
-    <div class="book-card bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between" data-age="4-6">
+    </d<div class="book-card bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between" data-age="2-3 4-6">e="4-6">
       <div>
         <img loading="lazy" src="images/couverture-2histoires.jpg" alt="Couverture — Adam et ses amis : 2 histoires" class="w-full h-48 object-cover rounded-2xl mb-4 border border-slate-200">
         <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full mb-2">Préscolaire (3-6 ans)</span>
@@ -1249,8 +1260,7 @@ aBuild();
         </div>
       </div>
       <button onclick="openBookModal('noel')" class="mt-4 w-full py-2.5 bg-sky-50 hover:bg-sky-100 text-sky-700 font-bold text-xs rounded-xl transition-all border border-sky-200">CONSULTER LA FICHE</button>
-    </div>
-          <div class="book-card bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between" data-age="4-6">
+    </div<div class="book-card bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between" data-age="2-3 4-6">a-age="4-6">
       <div>
         <img loading="lazy" src="images/coloriage-noel-01.png" alt="Couverture — Coloriage de Noël" class="w-full h-48 object-cover rounded-2xl mb-4 border border-slate-200">
         <span class="inline-block px-3 py-1 bg-red-100 text-red-700 text-xs font-bold rounded-full mb-2">Coloriage (2-6 ans)</span>
@@ -1528,10 +1538,13 @@ function filterBooks(age){
   if(activeBtn){activeBtn.classList.remove('bg-white','text-slate-600');activeBtn.classList.add('bg-qcblue-600','text-white');}
   var visible=0;
   document.querySelectorAll('#books-grid .book-card').forEach(function(card){
-    if(age==='all'||card.getAttribute('data-age')===age){card.classList.remove('hidden');visible++;}else card.classList.add('hidden');
+    var ages=(card.getAttribute('data-age')||'').split(' ');
+    if(age==='all'||ages.indexOf(age)!==-1){card.classList.remove('hidden');visible++;}else card.classList.add('hidden');
   });
   var emptyMsg=document.getElementById('books-empty-msg');
   if(emptyMsg)emptyMsg.classList.toggle('hidden',visible>0);
+  var grid=document.getElementById('books-grid');
+  if(grid)setTimeout(function(){grid.scrollIntoView({behavior:'smooth',block:'start'});},150);
 }
 var ETSY_SHOP_URL='https://www.etsy.com/shop/LGMDesign35';
 var SITE_URL='https://lgmdesign35.com/';
@@ -1775,6 +1788,29 @@ function switchGameMode(mode){
   else if(mode==='vraifaux')initVraiFauxGame();
   else if(mode==='nombre')initNombreGame();
   else if(mode==='course')resetCourseGame();
+  playSound('pop');
+}
+/* Filtre des jeux par âge (section Jeux & Quiz) */
+function filterGames(age){
+  document.querySelectorAll('.gfilter-btn').forEach(function(b){b.classList.remove('bg-qcblue-600','text-white','shadow');b.classList.add('bg-white','text-slate-600','border','border-slate-200','shadow-sm');});
+  var activeBtn=document.getElementById('gfilter-'+age);
+  if(activeBtn){activeBtn.classList.remove('bg-white','text-slate-600','border','border-slate-200','shadow-sm');activeBtn.classList.add('bg-qcblue-600','text-white','shadow');}
+  document.querySelectorAll('[data-game-age]').forEach(function(el){
+    var ages=(el.getAttribute('data-game-age')||'').split(' ');
+    el.classList.toggle('hidden',age!=='all'&&ages.indexOf(age)===-1);
+  });
+  var cur=document.getElementById('gtab-'+currentGameMode);
+  if(cur&&cur.classList.contains('hidden')){
+    var first=null;
+    GAME_MODES.forEach(function(m){var b=document.getElementById('gtab-'+m);if(!first&&b&&!b.classList.contains('hidden'))first=m;});
+    if(first)switchGameMode(first);
+  }
+  var note=document.getElementById('games-age-note');
+  if(note){
+    if(age==='0-3'){note.textContent='Pour les tout-petits : des jeux doux, sans lecture — touche, écoute et découvre.';note.classList.remove('hidden');}
+    else if(age==='4-6'){note.textContent='Pour les grands : des jeux en ligne avec un ami et des défis de mots et de nombres.';note.classList.remove('hidden');}
+    else note.classList.add('hidden');
+  }
   playSound('pop');
 }
 /* Quiz */
@@ -2448,7 +2484,7 @@ var LM_QA=[
  {t:'👆 Touche et écoute',k:['touche','scene','scenes','ferme','toucher','animaux'],a:'👆 « Touche et écoute » : 22 scènes à toucher — la ferme, la maison, le parc… Ton enfant touche un animal ou un objet et entend son nom et son vrai son. Parfait pour les tout-petits qui ne lisent pas encore !<br><button onclick="lapinGo(\'scenes\')">Ouvrir les scènes</button>'},
  {t:'📚 Livres gratuits',k:['gratuit','gratuite','gratuits','gratuites','lire','lecture','histoire','histoires'],a:'📚 Nos livres gratuits, à lire ET à écouter : « Les couleurs de Bébé Adam », « Mes premiers mots », « Les animaux et leurs sons », « Bonne nuit, Bébé Adam », « Le premier Noël de Bébé Adam », « L’étoile de Noël » et « La citrouille courageuse ».<br><button onclick="lapinGo(\'histoire\')">Voir les livres gratuits</button>'},
  {t:'🔤 Apprendre en jouant',k:['mots','chiffres','nombres','lettres','alphabet','apprendre'],a:'🔤 Dans la section Apprendre : un dictionnaire en images, ABC & 123, des cartes éclair, des jeux et des quiz — et même un certificat pour ton enfant !<br><button onclick="switchSiteTab(\'apprendre\')">Ouvrir Apprendre</button>'},
- {t:'🎮 Jeux en ligne',k:['jeu','jeux','des jeux','jouer','en ligne','multijoueur','code ami','xo','adam man','navale','tirs au but','soccer','football','partie'],a:'🎮 Nos jeux en ligne se jouent avec un code à 4 chiffres à partager avec un ami : X O, Cherche Adam !, Bataille navale, Adam-Man : La chasse aux étoiles, et les Tirs au but ! Il y a aussi des petits jeux pour apprendre les mots et les nombres.<br><button onclick="lapinGo(\'jouer\')">Aller aux jeux</button>'},
+ {t:'🎮 Jeux en ligne',k:['jeu','jeux','des jeux','jouer','en ligne','multijoueur','code ami','xo','adam man','navale','partie'],a:'🎮 Nos jeux en ligne se jouent avec un code à 4 chiffres à partager avec un ami : X O, Cherche Adam !, Bataille navale et Adam-Man : La chasse aux étoiles. Il y a aussi des petits jeux pour apprendre les mots et les nombres.<br><button onclick="lapinGo(\'jouer\')">Aller aux jeux</button>'},
  {t:'⭐ Livre gratuit à découvrir',k:['semaine','nouveau','nouveaute','prochain','dernier livre','sortie','decouvrir'],a:function(){var t=lmSpotTitle();return '⭐ Voici le livre gratuit à découvrir en ce moment !'+(t?' En ce moment : '+t+'.':'')+'<br><button onclick="lapinGo(\'semaine\')">Découvrir le livre gratuit</button>';}},
  {t:'👶 Pour quel âge ?',k:['age','ans','bebe','petit','convient','maternelle','prescolaire','garderie','pour quel age'],a:'👶 Pour les 0 à 3 ans : la série Bébé Adam (couleurs, animaux, bonne nuit…). 🧒 Pour les 4 à 6 ans : les grandes aventures d’Adam et ses amis. Sur la page d’accueil, le bloc « Par où commencer ? » aide à choisir selon l’âge !'},
  {t:'🔊 Écouter les histoires',k:['audio','ecouter','son','narration','voix','entendre','raconte'],a:'🔊 Oui ! Nos livres gratuits se lisent ET s’écoutent : ouvre un livre et appuie sur « Écoute l’histoire ». La narration est lente et claire, avec de vrais sons d’animaux.'},
@@ -2480,7 +2516,6 @@ var LM_QA=[
  {t:'🔍 Cherche Adam !',k:['cherche adam','cherche et trouve','trouve adam','ou est adam','cache-cache'],a:'🔍 « Cherche Adam ! » : Adam se cache dans l’image — à toi de le trouver ! Un jeu d’observation pour les petits et les grands. 👀<br><a href="cherche-adam.html" style="color:#0284c7;font-weight:900">Jouer à Cherche Adam ! →</a>'},
  {t:'🚢 Bataille navale',k:['bataille navale','navale','bateaux','coule','touche coule'],a:'🚢 « Bataille navale » : place tes bateaux et coule ceux de ton ami — en 3 niveaux, seul ou en ligne avec un code à 4 chiffres !<br><a href="bataille-navale.html" style="color:#0284c7;font-weight:900">Jouer à la Bataille navale →</a>'},
  {t:'⭐ Adam-Man : La chasse aux étoiles',k:['adam-man','adam man','chasse aux etoiles','etoiles'],a:'⭐ « Adam-Man : La chasse aux étoiles » : ramasse les étoiles dans le labyrinthe, en 3 niveaux — et ici, on ne perd jamais, on joue pour le plaisir !<br><a href="adam-man.html" style="color:#0284c7;font-weight:900">Jouer à Adam-Man →</a>'},
- {t:'⚽ Tirs au but !',k:['tirs au but','penalty','penalties','tirs','but','soccer','football','jouer'],a:'⚽ « Tirs au but ! » : 5 tirs chacun, 3 niveaux — marque le plus de buts possible ! Seul ou en ligne avec un ami.<br><a href="grand-match.html" style="color:#0284c7;font-weight:900">Jouer aux Tirs au but →</a>'},
  {t:'🔤 Dictionnaire en images',k:['dictionnaire','dictionnaire en images','definition','mots en images'],a:'🔤 Le Dictionnaire en images : plus de 1 000 mots à découvrir avec des images — touche un mot pour l’entendre !<br><button onclick="switchSiteTab(\'apprendre\');switchLearnTab(\'words\')">Ouvrir le Dictionnaire</button>'},
  {t:'🔢 ABC & 123',k:['abc','123','abc et 123','apprendre l alphabet','lettres et chiffres'],a:'🔢 ABC & 123 : les lettres et les chiffres en images et en jeux — pour apprendre en s’amusant !<br><button onclick="switchSiteTab(\'apprendre\');switchLearnTab(\'abc123\')">Ouvrir ABC & 123</button>'},
  {t:'🃏 Cartes éclair',k:['cartes eclair','carte eclair','eclair','flashcard','flashcards','memoriser','reviser'],a:'🃏 Les Cartes éclair : on retourne la carte, on dit le mot — parfait pour réviser et mémoriser en jouant !<br><button onclick="switchSiteTab(\'apprendre\');switchLearnTab(\'cards\')">Ouvrir les Cartes éclair</button>'},
