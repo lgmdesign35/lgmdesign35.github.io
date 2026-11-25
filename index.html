@@ -192,28 +192,15 @@ h1,h2,h3,h4,.brand-font{font-family:'Fredoka',sans-serif}
 
 <!-- ================= PAGE : ACCUEIL (site) ================= -->
 <section id="page-accueil" class="site-page space-y-10">
-  <div class="hero-dark-gradient relative overflow-hidden rounded-3xl bg-gradient-to-r from-sky-500 via-qcblue-600 to-indigo-700 p-6 sm:p-10 text-white shadow-xl" style="background-image:linear-gradient(to right,#0ea5e9 0%,#0055a5 50%,#4338ca 100%);background-color:#0055a5;color:#ffffff">
-    <div class="max-w-2xl relative z-10 space-y-4">
-      <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-extrabold uppercase tracking-wider text-amber-300">100 % en français québécois ⚜️</span>
-      <!-- CHRISTMAS: pastille de Noël dans le héros — supprimer cette ligne pour revenir au thème normal -->
-      <a href="etoile-de-noel.html" class="xmas-hero-chip">🎄 L'étoile de Noël — livre complet gratuit à écouter</a>
-      <h1 class="brand-font text-3xl sm:text-5xl font-black leading-tight" style="color:#ffffff">Éveillez leur curiosité avec des histoires et jeux au Québec</h1>
-      <p class="text-sky-100 text-base sm:text-lg font-bold leading-relaxed" style="color:#e0f2fe">Des histoires qui forment votre enfant à aimer le français du Québec</p>
-      <p class="text-sky-100 text-sm sm:text-base leading-relaxed" style="color:#e0f2fe">Avec <strong>Adam et ses amis</strong>, votre enfant apprend le français québécois en s'amusant : des histoires gratuites à écouter, des jeux pour chaque âge et des livres à garder précieusement.</p>
-      <div class="pt-2 flex flex-wrap gap-3">
-        <button onclick="switchSiteTab('livres')" class="brand-font px-6 py-3 bg-emerald-400 hover:bg-emerald-500 text-slate-900 font-extrabold rounded-2xl shadow-lg pop-btn text-base">🎁 Lire une histoire gratuite</button>
-        <button onclick="switchSiteTab('apprendre')" class="brand-font px-6 py-3 bg-white hover:bg-sky-50 text-qcblue-700 font-extrabold rounded-2xl shadow-lg pop-btn text-base">🎮 Jouer et apprendre</button>
-      </div>
-<div class="mascot-chip pt-2"><img src="images/mascotte-lapin.png" alt="Le lapin d'Adam, votre petit guide" onerror="this.style.display='none'"><div class="bg-white/95 text-slate-800 text-xs sm:text-sm font-bold rounded-2xl rounded-bl-sm px-3.5 py-2.5 shadow-lg max-w-xs">Salut ! Moi, c'est le lapin d'Adam 🐰 Choisis une histoire, un mot ou un jeu — je t'accompagne !</div></div>
-      <div class="flex flex-wrap gap-2 pt-2">
-        <span class="px-3 py-1.5 bg-white/15 border border-white/30 rounded-full text-xs font-bold text-white">✔ 100 % français québécois</span>
-        <span class="px-3 py-1.5 bg-white/15 border border-white/30 rounded-full text-xs font-bold text-white">✔ Pour les 0 à 6 ans</span>
-      </div>
+  <!-- HÉROS QUÉBEC (2026-11-25) : bannière aquarelle Adam et ses amis + Castor et Orignal — érables, cabane à sucre, drapeau du Québec -->
+  <div class="hero-quebec relative overflow-hidden rounded-3xl shadow-xl">
+    <h1 class="sr-only">Éveillez leur curiosité avec des histoires et jeux au Québec</h1>
+    <img src="images/hero-quebec.jpg" alt="Bienvenue ! Adam et ses amis — Lapin, Canard et Renard — avec Castor et Orignal, au Québec : érables, cabane à sucre et drapeau du Québec" class="w-full block" fetchpriority="high">
+    <div class="absolute inset-x-0 bottom-0 h-24 sm:h-28 bg-gradient-to-t from-black/35 via-black/10 to-transparent pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute inset-x-0 bottom-3 sm:bottom-5 flex flex-wrap justify-center gap-3 sm:gap-4 px-4">
+      <button onclick="switchSiteTab('apprendre');switchLearnTab('games')" class="brand-font px-5 sm:px-8 py-2.5 sm:py-4 min-h-[44px] bg-green-500 hover:bg-green-600 text-white font-black rounded-full shadow-xl pop-btn text-base sm:text-xl">🎮 JOUER !</button>
+      <a href="livres.html" class="brand-font px-5 sm:px-8 py-2.5 sm:py-4 min-h-[44px] bg-orange-500 hover:bg-orange-600 text-white font-black rounded-full shadow-xl pop-btn text-base sm:text-xl inline-flex items-center justify-center">📖 DÉCOUVRIR</a>
     </div>
-    <!-- CHRISTMAS: image du père Noël dans le héros (bureau seulement) — supprimer ce bloc pour revenir au thème normal -->
-    <a href="livres.html#livre-noel" class="xmas-hero-img" aria-label="Voir le livre de Noël — L'étoile de Noël">
-      <img src="images/noel-hero.jpg" alt="Le père Noël avec Adam et ses amis autour du sapin de Noël" loading="lazy">
-    </a>
   </div>
 
 <!-- ===== Lecteur audio enregistré (voix Aria) ===== -->
